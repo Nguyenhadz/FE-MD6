@@ -1,7 +1,9 @@
 import './Login.css'
 import {Outlet} from "react-router";
+import {useNavigate} from "react-router-dom";
 
 export default function Login() {
+    let navigate = useNavigate();
     return (
         <>
             <div className="container-login">
@@ -22,7 +24,7 @@ export default function Login() {
                             <Outlet></Outlet>
                             <div className="main-left-bot">
                                 <span>Don't have an account?</span>
-                                <button className="btn btn-btn-primary signup">Sign up</button>
+                                <button className="btn btn-btn-primary signup" onClick = {() => navigate('/register')}>Sign up</button>
                             </div>
                         </div>
                         <div className="main-right"></div>
