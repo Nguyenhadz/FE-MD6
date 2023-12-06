@@ -64,10 +64,10 @@ export const getTeacherPending = createAsyncThunk(
         return res.data;
     }
 )
-export const approveTeacher = createAsyncThunk(
-    'user/approveTeacher',
-    async (id) => {
-        const res = await customAxios.put('admin/teachers/' + id, axiosConfig);
+export const approveTeacherPending = createAsyncThunk(
+    'user/approveTeacherPending',
+    async (idPending) => {
+        const res = await customAxios.put('admin/teachers/' + idPending, axiosConfig);
         return res.data;
     }
 )

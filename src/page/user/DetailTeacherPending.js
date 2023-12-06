@@ -1,7 +1,7 @@
 import "./UserDetail.css";
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {approveTeacher, getStudentById} from "../../service/UserService";
+import { approveTeacherPending, getStudentById} from "../../service/UserService";
 import {useEffect} from "react";
 import {toast} from "react-toastify";
 export default function DetailTeacherPending() {
@@ -14,13 +14,14 @@ export default function DetailTeacherPending() {
     const user = useSelector(state => {
         return state.users.user;
     })
-    const handleApprove = () => {
-        // Dispatch action logout
-        dispatch(approveTeacher(id));
-        toast.success('\n' +
-            'Approve successfully\n', {
+    const handleApprove = (idPending) => {
+        dispatch(approveTeacherPending(idPending)).then(()=> {
+            console.log('123')
+            toast.success('\n' +
+                'Approve successfully\n', {
+            });
+            navigate('/home/showTeacherPending')
         });
-        navigate('/home/showTeacherPending')
     };
     const timeCreate = new Date(user.timeCreate);
     const dayCreate = timeCreate.getDate();
@@ -72,8 +73,8 @@ export default function DetailTeacherPending() {
                                                     navigate('/home/showTeacherPending')
                                                 }}><button type="button" className="btn btn-primary">Trở Lại</button></div>
                                             </div>
-                                            <button type="button" className="btn btn-primary" style={{margin: '0 20px 20px 0'}} onClick={
-                                                handleApprove
+                                            <button type="button" className="btn btn-primary" style={{margin: '0 20px 20px 0'}} onClick={() =>
+                                                handleApprove(id)
                                             }>
                                                 Duyệt
                                             </button>
