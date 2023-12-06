@@ -5,15 +5,15 @@ import {useEffect} from "react";
 import {getStudentById} from "../../service/UserService";
 
 export default function UpdateUser() {
-    const dispatch = useDispatch;
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const {id} = useParams();
     useEffect(() => {
         dispatch(getStudentById(id))
     }, [])
     const user = useSelector(state => {
-        console.log(state)
-        return state.user.currentUser
+        console.log(state.users.user)
+        return state.users.user
     })
 
     return (
@@ -35,10 +35,18 @@ export default function UpdateUser() {
                     <div className="avatar">
                         <span className={"lineAvatar"}>Name</span>
                         <div className={"line1"}>
-                            <span className={"rotini"}> </span>
+                            <span className={"rotini"}>{user.name} </span>
                             <span className={"nut1"}> > </span>
                         </div>
                     </div>
+                    <div className="avatar">
+                        <span className={"lineAvatar"}>Email</span>
+                        <div className={"line1"}>
+                            <span className={"rotini"}>{user.username} </span>
+                            <span className={"nut1"}> > </span>
+                        </div>
+                    </div>
+                    <button type="submit" className="btn btn-primary ml-3">Save</button>
                 </div>
 
             </div>

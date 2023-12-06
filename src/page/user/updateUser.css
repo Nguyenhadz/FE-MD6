@@ -7,6 +7,7 @@
     font-family: Quicksand, Helvetica, Arial;
 }
 .title{
+    margin-top: 150px;
     text-align: center;
     font-weight: 10;
     font-size: 28px;
@@ -54,4 +55,8 @@
     margin-left: 10px;
     color: #BBCBDB;
     font-size: 14px;
+}
+.body button{
+    margin-top: 10px;
+    margin-left: 5px;
 }
