@@ -3,13 +3,39 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {getStudentById, updateUser} from "../../service/UserService";
-import {auth, firestore, storage} from '../../firebase/FireBase';
+
 import {Field, Form, Formik} from "formik";
 
+import {
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    listAll,
+} from "firebase/storage";
+import { v4 } from "uuid";
+import {FormControl, FormGroup, FormLabel} from "react-bootstrap";
+import {storage} from "../../firebase/FireBase";
+import {keyboard} from "@testing-library/user-event/dist/keyboard";
 export default function UpdateUser() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {id} = useParams();
+    const [image, setImage] = useState(null);
+    const [imageurl, setImageUrl] = useState([]);
+    const imagelistref = ref(storage, "kien/");
+    const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
+
+    const  uploadFile = () => {
+        if (image === null) return;
+        const imageRef = ref(storage, `kien/${image.name + v4()}`);
+        uploadBytes(imageRef, image).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((url) => {
+                setImageUrl((prev) => [...prev, url]); // Lưu trữ URL của image vào state imageurl
+                console.log("image uploaded successfully", imageurl);
+                setUploadedImageUrl(url); // Lưu URL sau khi upload thành công vào state mới
+            });
+        });
+    };
     useEffect(() => {
         dispatch(getStudentById(id))
     }, [])
@@ -17,50 +43,7 @@ export default function UpdateUser() {
         console.log(state.users.user)
         return state.users.user
     })
-    // useEffect(() => {
-    //     // Làm việc với Firestore
-    //     const fetchData = async () => {
-    //         const data = await firestore.collection('exampleCollection').get();
-    //         console.log(data.docs.map(doc => doc.data()));
-    //     };
-    //     fetchData();
-    //     // Làm việc với Authentication
-    //     const checkAuthState = () => {
-    //         auth.onAuthStateChanged(user => {
-    //             if (user) {
-    //                 console.log('User is signed in:', user.uid);
-    //             } else {
-    //                 console.log('User is signed out');
-    //             }
-    //         });
-    //     };
-    //     checkAuthState();
-    // }, []);
-    // const handleImageUpload = async (event) => {
-    //     const file = event.target.files[0];
-    //
-    //     // Tạo tên duy nhất cho tệp ảnh được tải lên
-    //     const fileName = `${Date.now()}_${file.name}`;
-    //
-    //     // Tải tệp lên Firebase Storage
-    //     const storageRef = storage.ref();
-    //     const fileRef = storageRef.child(fileName);
-    //     await fileRef.put(file);
-    //
-    //     // Lấy URL tải về của tệp đã tải lên
-    //     const url = await fileRef.getDownloadURL();
-    //
-    //     // Cập nhật URL ảnh của người dùng trong Firestore
-    //     await firestore.collection('users').doc(id).update({
-    //         image: url,
-    //     });
-    //
-    //     // Cập nhật trạng thái local với URL ảnh mới
-    //     dispatch({
-    //         type: "UPDATE_USER_IMAGE",
-    //         payload: {id, image: url},
-    //     });
-    // };
+
     const handleImageClick = () => {
         document.getElementById('imageInput').click();
     };
@@ -75,15 +58,17 @@ export default function UpdateUser() {
                             <span>Profile</span>
                         </div>
                         <Formik initialValues={{
+                            id: user.id,
                             name: user.name,
-                            image: user.image,
-                            roles:{id: user.roles[0].id}
-
+                            image: uploadedImageUrl,
+                            // roles:{id: user.roles[0]?.id},
+                            status: user.status
                         }}
                                 enableReinitialize={true}
                                 onSubmit={(values) => {
                                     console.log(values)
-                                    dispatch(updateUser(values))
+                                    console.log(user.image)
+                                    uploadFile( () => {dispatch(updateUser(values))})
                                 }}>
                             <Form>
                             <div className="image" onClick={handleImageClick}>
@@ -92,8 +77,10 @@ export default function UpdateUser() {
                                     type="file"
                                     name="image"
                                     style={{ display: 'none' }}
-                                />
-                                <img src={user.image} alt={"lỗi"} />
+                                    onChange={(event) => {
+                                        setImage(event.target.files[0]);
+                                    }}/>
+                                <img src={imageurl[0]} alt={"lỗi"} />
                             </div>
                             <div className="avatar">
                                 <span className={"lineAvatar"}>Name</span>
@@ -108,7 +95,6 @@ export default function UpdateUser() {
                             </Form>
                         </Formik>
                     </div>
-
                 </div>}
         </>
     )

@@ -1,18 +1,21 @@
-// import firebase from 'firebase/app';
-// import 'firebase/firestore';
-// import 'firebase/auth';
-//
-// export const firebaseConfig = {
-//     apiKey: "AIzaSyCjfN-7toqg77iJdjvI0BSKtMFJd-g93Co",
-//     authDomain: "casemd6-54b3e.firebaseapp.com",
-//     projectId: "casemd6-54b3e",
-//     storageBucket: "casemd6-54b3e.appspot.com",
-//     messagingSenderId: "603191490596",
-//     appId: "1:603191490596:web:fe784b63cd74d8911740b1",
-//     measurementId: "G-PF7J6SV6CZ"
-// };
-// firebase.initializeApp(firebaseConfig);
-//
-// export const firestore = firebase.firestore();
-// export const auth = firebase.auth();
-//
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+    apiKey: "AIzaSyBYwhcJE-WrIAAePLLEoFJ33ba1D2P38zc",
+    authDomain: "kien-b06e6.firebaseapp.com",
+    projectId: "kien-b06e6",
+    storageBucket: "kien-b06e6.appspot.com",
+    messagingSenderId: "234517503542",
+    appId: "1:234517503542:web:b1841470b3a52471bac297",
+    measurementId: "G-NYS2P0C4YT"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+export const storage = getStorage(app);
