@@ -2,9 +2,10 @@ import './updateUser.css'
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {getStudentById, updateUser} from "../../service/UserService";
+import {changePassword, getStudentById, updateUser} from "../../service/UserService";
 import {auth, firestore, storage} from '../../firebase/FireBase';
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
+import * as Yup from "yup";
 
 export default function UpdateUser() {
     const dispatch = useDispatch();
@@ -21,12 +22,32 @@ export default function UpdateUser() {
     const handleImageClick = () => {
         document.getElementById('imageInput').click();
     };
+    const validate = Yup.object().shape({
+        name: Yup.string()
+            .min(2, "Too Short!")
+            .max(50, "Too Long!")
+            .required("Không được để trống"),
+        currentPassword: Yup.string()
+            .min(2, "Too Short!")
+            .max(50, "Too Long!")
+            .required("Không được để trống"),
+        newPassword: Yup.string()
+            .min(2, "Too Short!")
+            .max(50, "Too Long!")
+            .required("Không được để trống"),
+        confirmPassword: Yup.string()
+            .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
+            .min(2, "Too Short!")
+            .max(50, "Too Long!")
+            .required("Không được để trống")
+    });
 
     return (
         <>
-            {Object.keys(user).length > 0 &&
+
                 <div className={"updateUser"}>
                     <p className={"title"}>Settings</p>
+                    {Object.keys(user).length > 0 &&
                     <div className={"body"}>
                         <div className={"profile"}>
                             <span>Profile</span>
@@ -43,9 +64,11 @@ export default function UpdateUser() {
 
                         }}
                                 enableReinitialize={true}
+                                validationSchema={validate}
                                 onSubmit={(values) => {
                                     console.log(values)
                                     dispatch(updateUser(values))
+                                    navigate("/home")
                                 }}>
                             <Form>
                             <div className="image" onClick={handleImageClick}>
@@ -60,18 +83,56 @@ export default function UpdateUser() {
                             <div className="avatar">
                                 <span className={"lineAvatar"}>Name</span>
                                     <Field className={"form-control"} name={"name"} id={"line1"}></Field>
+                                <ErrorMessage name="name"></ErrorMessage>
                             </div>
                             <div className="avatar">
                                 <span className={"lineAvatar"}>Email</span>
-                                <input type="text" placeholder={user.username} id={"line2"} disabled={true}/>
-                                    {/*<Field className={"form-control"}  id={"line2"}></Field>*/}
+                                <input  type="text" placeholder={user.username} id={"line2"} disabled={true}/>
+
                             </div>
                             <button type="submit" className="btn btn-primary ml-3">Save</button>
                             </Form>
                         </Formik>
-                    </div>
+                    </div>}
+                    <p className={"title"} style={{marginTop: "10px"}}>Change Password</p>
+                    <div className={"body"}>
+                        <div className={"profile"}>
 
-                </div>}
+                        </div>
+                        <Formik initialValues={{
+                            currentPassword: '',
+                            newPassword: '',
+                            confirmPassword: ''
+
+                        }}
+                                validationSchema={validate}
+                                onSubmit={(values) => {
+                                    console.log(values)
+                                    dispatch(changePassword(values))
+                                    navigate("/home")
+                                }}>
+                            <Form>
+
+                                <div className="avatar">
+                                    <span className={"lineAvatar"}>Current Password</span>
+                                    <Field className={"form-control"} name={"currentPassword"} id={"line3"}></Field>
+                                    <ErrorMessage name="currentPassword"></ErrorMessage>
+                                </div>
+                                <div className="avatar">
+                                    <span className={"lineAvatar"}>New Password</span>
+                                    <Field className={"form-control"} name={"newPassword"} id={"line3"}></Field>
+                                    <ErrorMessage name="newPassword"></ErrorMessage>
+                                </div>
+                                <div className="avatar">
+                                    <span className={"lineAvatar"}>Confirm Password</span>
+                                    <Field className={"form-control"} name={"confirmPassword"} id={"line3"}></Field>
+                                    <ErrorMessage name="confirmPassword"></ErrorMessage>
+                                </div>
+                                <button type="submit" className="btn btn-primary ml-3" style={{marginTop:"20px"}}>Save</button>
+                            </Form>
+                        </Formik>
+                    </div>
+                </div>
         </>
     )
 }

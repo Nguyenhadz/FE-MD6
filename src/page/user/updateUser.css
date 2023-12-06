@@ -48,14 +48,16 @@
     font-size: 18px;
 }
 #line1 {
-    margin-top: 310px;
-    margin-left: 100px;
+    margin-top: -30px;
+    margin-left: 150px;
     width: 300px;
 }
 #line2 {
-    margin-top: 350px;
-    margin-left: 100px;
+    margin-top: 30px;
+    margin-left: 87px;
     width: 300px;
+    height: 35px;
+    border-radius: 5px;
 }
 .form-control {
     color: #BBCBDB;
@@ -69,4 +71,9 @@
 
 .image{
     margin-left: 200px;
+}
+#line3 {
+    margin-top: -30px;
+    margin-left: 180px;
+    width: 300px;
 }
