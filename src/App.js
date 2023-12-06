@@ -11,6 +11,7 @@ import UserDetail from "./page/user/UserDetail";
 import UpdateUser from "./page/user/UpdateUser";
 import ShowListTeacherPending from "./page/user/ShowListTeacherPending";
 import DetailTeacherPending from "./page/user/DetailTeacherPending";
+import RegisterForm from "./page/RegisterForm";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                 <Route path={'/'} element={<Login/>}>
                     <Route path={'/'} element={<MenuLogin/>}></Route>
                     <Route path={'/loginWithEmail'} element={<LoginWithGmailForm/>}></Route>
+                    <Route path={'/register'} element={<RegisterForm/>}></Route>
                 </Route>
                 <Route path={'/home'} element={<Home/>}>
                     <Route path={'/home/showListStudent'} element={<ShowListStudent/>}></Route>
