@@ -44,3 +44,10 @@ export const logout = createAsyncThunk(
     'user/logout', async () => {
     return {};
 });
+export const updateUser = createAsyncThunk(
+    'user/update',
+    async (data)=>{
+        const res = await customAxios.put('/users' + data.id, data, axiosConfig)
+        return res.data
+    }
+)
