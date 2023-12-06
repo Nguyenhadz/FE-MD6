@@ -1,15 +1,17 @@
 import './NavbarAdmin.css';
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {logout} from "../service/UserService";
+import {getStudent, getStudentById, getUserByIdLogin, logout} from "../service/UserService";
 import {toast} from "react-toastify";
+import {useEffect} from "react";
 export default function NavbarAdmin() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const userLogin = useSelector(state => {
-        console.log(state.user.currentUser)
-        return state.user.currentUser
+
+    const user = useSelector(state => {
+        return state.users.currentUser;
     })
+
     const handleLogout = () => {
         // Dispatch action logout
         dispatch(logout());
@@ -55,7 +57,7 @@ export default function NavbarAdmin() {
             </div>
             <div className="info-login" style={{display: 'flex', alignItems: 'center'}}>
                 <img src={'https://devo.vn/wp-content/uploads/2023/01/meo-buon-ba.jpg'} alt={'...'} style={{width: '40px', height: '40px', borderRadius: '50%', margin: '0 10px 0 10px'}}/>
-                <p style={{textAlign: 'center', margin: '0 0 0 0'}}>{userLogin.username}</p>
+               <Link to={"/home/findUserById/" + user.id}> <p style={{textAlign: 'center', margin: '0 0 0 0'}}>{user.username}</p></Link>
             </div>
         </div>
     )

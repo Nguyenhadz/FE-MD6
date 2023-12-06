@@ -12,7 +12,7 @@ export default function UserDetail() {
         dispatch(getStudentById(id))
     }, [])
     const user = useSelector(state => {
-        return state.users.users;
+        return state.users.user;
     })
     const handleDelete = () => {
         // Dispatch action logout
