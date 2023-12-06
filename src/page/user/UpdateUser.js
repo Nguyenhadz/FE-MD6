@@ -61,6 +61,10 @@ export default function UpdateUser() {
     //         payload: {id, image: url},
     //     });
     // };
+    const handleImageClick = () => {
+        document.getElementById('imageInput').click();
+    };
+
     return (
         <>
             {Object.keys(user).length > 0 &&
@@ -81,21 +85,22 @@ export default function UpdateUser() {
                                     dispatch(updateUser(values))
                                 }}>
                             <Form>
-                            <div className="image">
-                                <input type="file" />
-                                <img src={user.image} alt={"lỗi"}/>
+                            <div className="image" onClick={handleImageClick}>
+                                <input
+                                    id="imageInput"
+                                    type="file"
+                                    name="image"
+                                    style={{ display: 'none' }}
+                                />
+                                <img src={user.image} alt={"lỗi"} />
                             </div>
                             <div className="avatar">
                                 <span className={"lineAvatar"}>Name</span>
-                                <div className={"line1"}>
-                                    <Field className={"rotini"} name={"name"}></Field>
-                                </div>
+                                    <Field className={"form-control"} name={"name"} id={"line1"}></Field>
                             </div>
                             <div className="avatar">
                                 <span className={"lineAvatar"}>Email</span>
-                                <div className={"line1"}>
-                                    <Field className={"rotini"} name={"username"}></Field>
-                                </div>
+                                    <Field className={"form-control"} name={"username"} id={"line2"}></Field>
                             </div>
                             <button type="submit" className="btn btn-primary ml-3">Save</button>
                             </Form>
