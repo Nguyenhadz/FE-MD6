@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
-    approveTeacher,
+    approveTeacher, approveTeacherPending,
     deleteUser,
     getStudent,
     getStudentById,
@@ -38,11 +38,8 @@ const userSlice = createSlice({
         builder.addCase(getTeacherPending.fulfilled, (state, action) => {
             state.users = action.payload
         })
-        builder.addCase(approveTeacher.fulfilled, (state, action) => {
+        builder.addCase(approveTeacherPending.fulfilled, (state, action) => {
             state.users = action.payload
-        })
-        builder.addCase(updateUser.fulfilled, (state, action) => {
-            state.user = action.payload
         })
     }
 })
