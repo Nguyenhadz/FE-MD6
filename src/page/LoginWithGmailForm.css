@@ -1,0 +1,10 @@
+.input-login {
+    border:0;
+    outline:0;
+}
+.input-login:focus {
+    outline:none;
+}
+.input-login:focus + .parent-login {
+    border: solid blue 2px;
+}
