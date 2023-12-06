@@ -14,14 +14,6 @@ export default function Login() {
                                      alt="Quizizz"/>
                             </a>
                         </div>
-                        <div className="login-header-right">
-                            <div className="block">
-                                <a href="#">Login</a>
-                            </div>
-                            <div className="block">
-                                <a href="#">Login</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div className="main">
