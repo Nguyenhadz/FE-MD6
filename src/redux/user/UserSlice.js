@@ -1,12 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
+    approveTeacher, approveTeacherPending,
     deleteUser,
     getStudent,
     getStudentById,
+    getTeacherPending,
     getUserByIdLogin,
     login,
-    logout,
-    updateUser
+    logout
 } from "../../service/UserService";
 
 const initialState = {
@@ -34,8 +35,11 @@ const userSlice = createSlice({
         builder.addCase(logout.fulfilled, (state, action) => {
             state.currentUser = JSON.parse(localStorage.getItem('currentUser')) || {}
         })
-        builder.addCase(updateUser.fulfilled, (state, action) => {
-            state.user = action.payload
+        builder.addCase(getTeacherPending.fulfilled, (state, action) => {
+            state.users = action.payload
+        })
+        builder.addCase(approveTeacherPending.fulfilled, (state, action) => {
+            state.users = action.payload
         })
     }
 })
