@@ -22,7 +22,10 @@ export default function RegisterForm() {
             .email("Định dạng email không hợp lệ")
             .required("Không được để trống"),
         name: Yup.string()
-            .matches(/^[a-zA-Z\s]+$/, "Tên chỉ được chứa ký tự chữ cái")
+            .matches(/^[a-zA-ZÀ-Ỹà-ỹ]+(\s[a-zA-ZÀ-Ỹà-ỹ]+)*$/, {
+                message: "Tên không hợp lệ",
+                excludeEmptyString: true
+            })
             .required("Không được để trống"),
         password: Yup.string()
             .required("Không được để trống"),
