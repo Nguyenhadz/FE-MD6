@@ -56,7 +56,7 @@ export default function NavbarAdmin() {
                 <p style={{margin: '10px -8px', width: '100px', height: '15px'}} onClick={handleLogout}>Đăng xuất</p>
             </div>
             <div className="info-login" style={{display: 'flex', alignItems: 'center'}}>
-                <img src={'https://devo.vn/wp-content/uploads/2023/01/meo-buon-ba.jpg'} alt={'...'} style={{width: '40px', height: '40px', borderRadius: '50%', margin: '0 10px 0 10px'}}/>
+                <img src={`${user.image}`} alt={'...'} style={{width: '40px', height: '40px', borderRadius: '50%', margin: '0 10px 0 10px'}}/>
                 <p style={{textAlign: 'center', margin: '0 0 0 0'}}>{user.name}</p>
             </div>
         </div>
