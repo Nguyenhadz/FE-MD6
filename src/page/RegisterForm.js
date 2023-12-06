@@ -1,14 +1,21 @@
-import {Field, Form, Formik} from "formik";
-import {Button, FormLabel} from "react-bootstrap";
-import {useDispatch} from "react-redux";
+import {ErrorMessage, Field, Form, Formik} from "formik";
+import { Button, FormLabel} from 'react-bootstrap';
 import {toast} from "react-toastify";
-import {login} from "../service/UserService";
 import {useNavigate} from "react-router-dom";
 import "./LoginWithGmailForm.css"
 import * as Yup from "yup";
+import customAxios from "../service/Api";
+import React from "react";
 
 export default function RegisterForm() {
-    const dispatch = useDispatch();
+    const currentPath = window.location.pathname;
+    const mainLeftBot = document.querySelector('.main-left-bot');
+    console.log(currentPath)
+    if (currentPath === '/register') {
+        mainLeftBot.style.display = 'none';
+    } else {
+        mainLeftBot.style.display = 'block';
+    }
     const navigate = useNavigate();
     let validate = Yup.object().shape({
         username: Yup.string()
@@ -23,22 +30,31 @@ export default function RegisterForm() {
             .oneOf([Yup.ref('password')], "Mật khẩu không khớp!")
             .required("Không được để trống")
     });
-    const handleRegister = async (values) => {
-        try {
-            // await dispatch(register(values))
-            navigate('/loginWithEmail');
-        } catch (error) {
-        }
-    };
     return (
         <div className="main-left-top">
             <div>
-                <button onClick={() => {navigate("/")}} style={{fontSize: '12px', color: 'rgb(136 84 192)', fontWeight: 'bold', border: 'none', width: '80px', height: '25px', borderRadius: '5px'}}>
+                <button onClick={() => {
+                    navigate("/")
+                }} style={{
+                    fontSize: '12px',
+                    color: 'rgb(136 84 192)',
+                    fontWeight: 'bold',
+                    border: 'none',
+                    width: '80px',
+                    height: '25px',
+                    borderRadius: '5px'
+                }}>
                     &lt;&nbsp;&nbsp;Go back
                 </button>
             </div>
             <div style={{width: '400px', height: '32px', marginTop: '10px'}}>
-                <p style={{fontSize: '20px', color: 'rgb(0,0,0)', fontWeight: 'bold', margin: '0 0 16px', textAlign:'center'}}>
+                <p style={{
+                    fontSize: '20px',
+                    color: 'rgb(0,0,0)',
+                    fontWeight: 'bold',
+                    margin: '0 0 16px',
+                    textAlign: 'center'
+                }}>
                     FORM REGISTER
                 </p>
             </div>
@@ -46,14 +62,28 @@ export default function RegisterForm() {
                 name: '',
                 username: '',
                 password: '',
-                roles : [
+                roles: [
                     {
-                        id: 1
+                        id: 3
                     }
                 ]
             }}
                     validationSchema={validate}
-                    onSubmit={handleRegister}
+                    onSubmit={ async (values) => {
+                        try {
+                            const res = await customAxios.post("/register", values);
+                            if (res.status === 201) {
+                                toast.success('Tạo tài khoản thành công', {});
+                                navigate('/loginWithEmail');
+                            }
+                        } catch (error) {
+                            if (error.response && error.response.status === 400) {
+                                toast.error('Tài khoản đã tồn tại', {});
+                            } else {
+                                console.error("Đã xảy ra lỗi:", error);
+                            }
+                        }
+                    }}
             >
                 <div style={{width: '400px', height: '176px', marginTop: '0px'}}>
                     <Form>
@@ -105,6 +135,15 @@ export default function RegisterForm() {
                                 >
                                 </Field>
                             </div>
+                            <div style={{
+                                display:'flex',
+                                justifyContent:'center',
+                                color:'red',
+                                fontWeight:'bold',
+                                fontSize : '12px'
+                            }}>
+                                <ErrorMessage name="username"></ErrorMessage>
+                            </div>
                         </div>
                         {/*Nhập tên*/}
                         <div className={'form-input'} style={{width: '400px', height: '64px', marginTop: '20px'}}>
@@ -154,7 +193,17 @@ export default function RegisterForm() {
                                 >
                                 </Field>
                             </div>
+                            <div style={{
+                                display:'flex',
+                                justifyContent:'center',
+                                color:'red',
+                                fontWeight:'bold',
+                                fontSize : '12px'
+                            }}>
+                                <ErrorMessage name="name"></ErrorMessage>
+                            </div>
                         </div>
+
                         {/*Nhập password*/}
                         <div className={'form-input'} style={{width: '400px', height: '64px', marginTop: '20px'}}>
                             <FormLabel
@@ -203,7 +252,17 @@ export default function RegisterForm() {
                                 >
                                 </Field>
                             </div>
+                            <div style={{
+                                display:'flex',
+                                justifyContent:'center',
+                                color:'red',
+                                fontWeight:'bold',
+                                fontSize : '12px'
+                            }}>
+                                <ErrorMessage name="password"></ErrorMessage>
+                            </div>
                         </div>
+
                         {/*Nhập confirmPassword*/}
                         <div className={'form-input'} style={{width: '400px', height: '64px', marginTop: '20px'}}>
                             <FormLabel
@@ -252,33 +311,51 @@ export default function RegisterForm() {
                                 >
                                 </Field>
                             </div>
+                            <div style={{
+                                display:'flex',
+                                justifyContent:'center',
+                                color:'red',
+                                fontWeight:'bold',
+                                fontSize : '12px'
+                            }}>
+                                <ErrorMessage name="confirmPassword"></ErrorMessage>
+                            </div>
                         </div>
-                        {/* Radio buttons */}
-                        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', marginTop: '20px' }}>
-                            <label style={{ marginRight: '10px' }}>
-                                <Field
-                                    type="radio"
-                                    name="id"
-                                    value="3"
-                                    // checked={values.selectedOption === "A"}
-                                    // onChange={handleChange}
-                                />
-                                Student
-                            </label>
-                            <label>
-                                <Field
-                                    type="radio"
-                                    name="id"
-                                    value="2"
-                                    // checked={values.selectedOption === "B"}
-                                    // onChange={handleChange}
-                                />
-                                Teacher
-                            </label>
-                        </div>
+
+                        {/*Chọn role*/}
+                        <Field
+                            as="select"
+                            style={{
+                                width: '100px',
+                                height: '24px',
+                                border: 'solid 1px rgb(227,192,192)',
+                                backgroundColor : 'rgb(227,192,192)',
+                                borderRadius:'5px',
+                                padding: '0',
+                                marginLeft: '10px',
+                                marginTop: '30px',
+                                fontSize: '16px'
+                            }}
+                            className={'input-login'}
+                            name="roles[0].id"
+                        >
+                            <option value="3" label="Student" />
+                            <option value="2" label="Teacher" />
+                        </Field>
                         {/*Nút đăng ký*/}
-                        <div style={{marginTop : '10px', width: '400px', height: '40px', display: 'flex', justifyContent: 'center'}}>
-                            <Button style={{backgroundColor: 'rgb(136 84 192)', width: '150px', height: '40px', fontSize: '16px'}} type="submit">
+                        <div style={{
+                            marginTop: '30px',
+                            width: '400px',
+                            height: '40px',
+                            display: 'flex',
+                            justifyContent: 'center'
+                        }}>
+                            <Button style={{
+                                backgroundColor: 'rgb(136 84 192)',
+                                width: '150px',
+                                height: '40px',
+                                fontSize: '16px'
+                            }} type="submit">
                                 Register
                             </Button>
                         </div>
