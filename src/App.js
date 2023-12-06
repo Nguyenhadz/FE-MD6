@@ -8,6 +8,7 @@ import Home from "./page/Home";
 import MenuLogin from "./page/MenuLogin";
 import LoginWithGmailForm from "./page/LoginWithGmailForm";
 import UserDetail from "./page/user/UserDetail";
+import UpdateUser from "./page/user/UpdateUser";
 
 function App() {
     return (
@@ -21,6 +22,8 @@ function App() {
                 <Route path={'/home'} element={<Home/>}>
                     <Route path={'/home/showListStudent'} element={<ShowListStudent/>}></Route>
                     <Route path={'/home/userDetail/:id'} element={<UserDetail/>}></Route>
+                    <Route path={'/home/findUserById/:id'} element={<UpdateUser/>}></Route>
+
                 </Route>
             </Routes>
         </div>

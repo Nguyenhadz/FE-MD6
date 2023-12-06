@@ -4,7 +4,7 @@ import customAxios from "./Api";
 
 const user = JSON.parse(localStorage.getItem('currentUser'));
 
-const TOKEN = user.accessToken;
+const TOKEN = user?.accessToken;
 console.log(TOKEN)
 let axiosConfig = {
     headers: {
@@ -44,3 +44,10 @@ export const logout = createAsyncThunk(
     'user/logout', async () => {
     return {};
 });
+export const updateUser = createAsyncThunk(
+    'user/update',
+    async (data)=>{
+        const res = await customAxios.put('/users' + data.id, data, axiosConfig)
+        return res.data
+    }
+)
