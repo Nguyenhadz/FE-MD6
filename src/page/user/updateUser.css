@@ -34,29 +34,39 @@
 }
 .profile span {
     margin-top: 102px;
-    color: #BBCBDB;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .avatar {
     margin-top: 10px;
 }
 .avatar span {
-    margin-left: 10px;
+    margin-left: 20px;
 }
 .lineAvatar {
     font-size: 18px;
 }
-.line1 {
-    margin-top: 5px;
-    display: flex;
-    justify-content: space-between;
+#line1 {
+    margin-top: 310px;
+    margin-left: 100px;
+    width: 300px;
 }
-.rotini {
-    margin-left: 10px;
+#line2 {
+    margin-top: 350px;
+    margin-left: 100px;
+    width: 300px;
+}
+.form-control {
     color: #BBCBDB;
     font-size: 14px;
+
 }
 .body button{
     margin-top: 10px;
     margin-left: 5px;
+}
+
+.image{
+    margin-left: 200px;
 }

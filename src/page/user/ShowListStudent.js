@@ -25,9 +25,9 @@ export default function ShowListStudent() {
                             <div className="image-student">
                                 <img src={`${item.image}`} className="card-img-top" alt={'...'} style={{width: '100%', height: '100%'}}/>
                             </div>
-                            <div className="card-body">
+                            <div className="card-body" style={{marginBottom: '20px'}}>
                                 <h5 className="card-title">{item.name}</h5>
-                                <Link to={'/home/userDetail/' + item.id}>Xem chi tiết</Link>
+                                <div style={{position: 'absolute', bottom: '10px', marginTop: 'auto' }}><Link to={'/home/userDetail/' + item.id}>Xem chi tiết</Link></div>
                             </div>
                         </div>
                     ))}

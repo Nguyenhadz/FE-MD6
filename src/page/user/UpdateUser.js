@@ -1,8 +1,10 @@
 import './updateUser.css'
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
-import {useEffect} from "react";
-import {getStudentById} from "../../service/UserService";
+import {useEffect, useState} from "react";
+import {getStudentById, updateUser} from "../../service/UserService";
+import {auth, firestore, storage} from '../../firebase/FireBase';
+import {Field, Form, Formik} from "formik";
 
 export default function UpdateUser() {
     const dispatch = useDispatch();
@@ -16,40 +18,60 @@ export default function UpdateUser() {
         return state.users.user
     })
 
+    const handleImageClick = () => {
+        document.getElementById('imageInput').click();
+    };
+
     return (
         <>
-            <div className={"updateUser"}>
-                <p className={"title"}>Settings</p>
-                <div className={"body"}>
-                    <div className={"profile"}><img
-                        src={"https://firebasestorage.googleapis.com/v0/b/casemd6-54b3e.appspot.com/o/Iconmoon-Web-Application-Profile.48.png?alt=media&token=9c80eb15-3ff1-48f6-9a0f-c6d97374eee6"}/>
-                        <span>Profile</span>
-                    </div>
-                    <div className="avatar">
-                        <span className={"lineAvatar"}>Avatar</span>
-                        <div className={"line1"}>
-                            <span className={"rotini"}> Rotini</span>
-                            <span className={"nut1"}> > </span>
+            {Object.keys(user).length > 0 &&
+                <div className={"updateUser"}>
+                    <p className={"title"}>Settings</p>
+                    <div className={"body"}>
+                        <div className={"profile"}>
+                            <span>Profile</span>
                         </div>
-                    </div>
-                    <div className="avatar">
-                        <span className={"lineAvatar"}>Name</span>
-                        <div className={"line1"}>
-                            <span className={"rotini"}>{user.name} </span>
-                            <span className={"nut1"}> > </span>
-                        </div>
-                    </div>
-                    <div className="avatar">
-                        <span className={"lineAvatar"}>Email</span>
-                        <div className={"line1"}>
-                            <span className={"rotini"}>{user.username} </span>
-                            <span className={"nut1"}> > </span>
-                        </div>
-                    </div>
-                    <button type="submit" className="btn btn-primary ml-3">Save</button>
-                </div>
+                        <Formik initialValues={{
+                            id: parseInt(id),
+                            name: user.name,
+                            image: user.image,
+                            roles: [
+                                {
+                                    id: user.roles[0].id
+                                }
+                            ]
 
-            </div>
+                        }}
+                                enableReinitialize={true}
+                                onSubmit={(values) => {
+                                    console.log(values)
+                                    dispatch(updateUser(values))
+                                }}>
+                            <Form>
+                            <div className="image" onClick={handleImageClick}>
+                                <input
+                                    id="imageInput"
+                                    type="file"
+                                    name="image"
+                                    style={{ display: 'none' }}
+                                />
+                                <img src={user.image} alt={"lỗi"} />
+                            </div>
+                            <div className="avatar">
+                                <span className={"lineAvatar"}>Name</span>
+                                    <Field className={"form-control"} name={"name"} id={"line1"}></Field>
+                            </div>
+                            <div className="avatar">
+                                <span className={"lineAvatar"}>Email</span>
+                                <input type="text" placeholder={user.username} id={"line2"} disabled={true}/>
+                                    {/*<Field className={"form-control"}  id={"line2"}></Field>*/}
+                            </div>
+                            <button type="submit" className="btn btn-primary ml-3">Save</button>
+                            </Form>
+                        </Formik>
+                    </div>
+
+                </div>}
         </>
     )
 }
