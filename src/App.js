@@ -18,6 +18,7 @@ import ShowListTeacher from "./page/user/ShowListTeacher";
 import TeacherDetail from "./page/user/TeacherDetail";
 import ShowListTeacherFindByName from "./page/user/ShowListTeacherFindByName";
 import ShowListTeacherFindByMail from "./page/user/ShowListTeacherFindByMail";
+import RegisterForm from "./page/RegisterForm";
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                 <Route path={'/'} element={<Login/>}>
                     <Route path={'/'} element={<MenuLogin/>}></Route>
                     <Route path={'/loginWithEmail'} element={<LoginWithGmailForm/>}></Route>
+                    <Route path={'/register'} element={<RegisterForm/>}></Route>
                 </Route>
                 <Route path={'/home'} element={<Home/>}>
                     <Route path={'/home'} element={<AdminFindStudent/>}></Route>

@@ -208,7 +208,6 @@ export default function LoginWithGmailForm() {
                         </div>
                     </Form>
                 </div>
-
             </Formik>
         </div>
     )
