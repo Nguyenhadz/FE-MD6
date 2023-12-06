@@ -7,7 +7,7 @@ const middleware = [LocalStorageMiddleware, RemoveFromLocalStorageMiddleware];
 export const store = configureStore({
     reducer: {
        users: userReducer,
-        user: userReducer,
+        // user: userReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(middleware),
