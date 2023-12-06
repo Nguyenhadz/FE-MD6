@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container-login {
+    background-color: rgb(70 26 66);
+    padding: 0;
+    height: 930px;
+    width: 1920px;
+}
+
+.header {
+    background-color: rgb(70 26 66);
+    width: 1920px;
+    height: 56px;
+    padding: 12px;
+    box-shadow: rgba(0, 0, 0, 0.55) 0 15px 15px;
+}
+
+.login-header {
+    justify-content: space-between;
+    height: 32px;
+    display: flex;
+}
+
+.login-header-left {
+    height: 28px;
+}
+
+.login-header-left img{
+    height: 28px;
+    margin: 0 0 0 40px;
+}
+
+.login-header-right {
+    justify-content: space-between;
+    display: flex;
+    width: 210px;
+    padding: 4px 16px;
+    margin-right: 10px;
+}
+
+.login-header-right .block {
+    background-color: rgb(93 32 87);
+    justify-content: center;
+    text-align: center;
+    border-radius: 6px;
+    margin-right: 10px;
+    width: 100px;
+}
+
+.login-header-right a {
+    height: 19px;
+    color: rgb(238 231 237);
+    font-size: 14px;
+    line-height: 24px;
+    text-decoration: none;
+}
+
+.block {
+    transition: transform 0.3s ease; /* Thêm hiệu ứng chuyển động */
+}
+
+.block:hover {
+    transform: scale(1.1); /* Kích thước tăng lên 10% khi di chuột vào */
+}
+
+.main {
+    position: absolute;
+    top: 83px;
+    width: 1920px;
+    padding: 0;
+    height: 850px;
+    background-color: rgb(70 26 66);
+}
+
+.main-content {
+    position: relative;
+    top: 80px;
+    width: 780px;
+    height: 575px;
+    background-color: white;
+    margin-left: 570px;
+    border-radius: 15px;
+    display: flex;
+}
+.main-left {
+    width: 480px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+.main-left-top {
+    height: 429px;
+    padding: 40px;
+    border-top-left-radius: 15px;
+}
+.main-left-bot {
+    border-bottom-left-radius: 15px;
+    width: 480px;
+}
+.wrap-login {
+    width: 400px;
+    height: 50px;
+    border: #323438 solid 1px;
+    margin-top: 20px;
+    padding: 6px;
+    border-radius: 5px;
+    text-align: center;
+}
+.main-right {
+    width: 300px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: magenta;
+}
+.wrap-login a {
+    font-weight: bold;
+}
+.title-form {
+    width: 400px;
+    height: 50px;
+    font-size: 20px;
+    margin-top: 20px;
+    padding: 6px;
+    font-weight: bold;
+    line-height: 19px;
+}
+.wrap-login:hover {
+    box-shadow: rgba(0, 0, 0, 0.2) 0 5px 5px;
+}
+.main-left-bot {
+    background-color: aliceblue;
+    justify-content: center;
+    display: flex;
+    height: 38px;
+    position: absolute;
+    bottom: 0;
+}
+.signup {
+    background-color: #61dafb;
+}
+
+.main-right {
+    background-image: url(https://cf.quizizz.com/image/classroom-enjoyment.png);
+}
+.main-left-bot span {
+    line-height: 16px;
+    padding: 11px;
+    vertical-align: middle;
+}
+.main-left-bot button {
+    margin-top: 4px;
+    height: 30px;
+    line-height: 16px;
+    border-radius: 10px;
+}
+.input-type {
+    width: 350px;
+    margin-left: 100px;
+    margin-top: 5px;
+}
+.input-type-2 {
+    width: 350px;
+    margin-left: 100px;
+    margin-top: 50px;
+}
