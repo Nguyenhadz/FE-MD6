@@ -51,3 +51,10 @@ export const updateUser = createAsyncThunk(
         return res.data
     }
 )
+export const findUserByName = createAsyncThunk(
+    'user/findByName',
+    async (data) =>{
+        const res = await customAxios.get('/admin/students/'+ data, axiosConfig)
+        return res.data
+    }
+)
