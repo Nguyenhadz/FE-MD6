@@ -75,13 +75,14 @@ export default function UpdateUser() {
                             <span>Profile</span>
                         </div>
                         <Formik initialValues={{
-                            id: id,
                             name: user.name,
-                            username: user.username
+                            image: user.image,
+                            roles:{id: user.roles[0].id}
 
                         }}
                                 enableReinitialize={true}
                                 onSubmit={(values) => {
+                                    console.log(values)
                                     dispatch(updateUser(values))
                                 }}>
                             <Form>
@@ -100,7 +101,8 @@ export default function UpdateUser() {
                             </div>
                             <div className="avatar">
                                 <span className={"lineAvatar"}>Email</span>
-                                    <Field className={"form-control"} name={"username"} id={"line2"}></Field>
+                                <input type="text" placeholder={user.username} id={"line2"} disabled={true}/>
+                                    {/*<Field className={"form-control"}  id={"line2"}></Field>*/}
                             </div>
                             <button type="submit" className="btn btn-primary ml-3">Save</button>
                             </Form>
