@@ -9,6 +9,8 @@ import MenuLogin from "./page/MenuLogin";
 import LoginWithGmailForm from "./page/LoginWithGmailForm";
 import UserDetail from "./page/user/UserDetail";
 import UpdateUser from "./page/user/UpdateUser";
+import ShowListTeacherPending from "./page/user/ShowListTeacherPending";
+import DetailTeacherPending from "./page/user/DetailTeacherPending";
 
 function App() {
     return (
@@ -23,7 +25,8 @@ function App() {
                     <Route path={'/home/showListStudent'} element={<ShowListStudent/>}></Route>
                     <Route path={'/home/userDetail/:id'} element={<UserDetail/>}></Route>
                     <Route path={'/home/findUserById/:id'} element={<UpdateUser/>}></Route>
-
+                    <Route path={'/home/showTeacherPending'} element={<ShowListTeacherPending/>}></Route>
+                    <Route path={'/home/detailTeacherPending/:id'} element={<DetailTeacherPending/>}></Route>
                 </Route>
             </Routes>
         </div>

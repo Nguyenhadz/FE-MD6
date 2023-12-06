@@ -23,11 +23,13 @@ export default function NavbarAdmin() {
     return (
         <div className={'navbar-vertical'}>
             <div className="logo-image" onClick={()=>{
-                navigate('/');
+                navigate('/home');
             }}>
-                <img src={'https://cf.quizizz.com/img/qfw/Logo.png'} alt={'...'} style={{width: '55%', height: '40px', margin: '20px 17px'}}/>
+                <img src={'https://cf.quizizz.com/img/qfw/Logo.png'} alt={'...'} style={{width: '55%', height: '40px', margin: '20px 17px'}} />
             </div>
-            <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px', margin: '10px 0 0 0'}}>
+            <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px', margin: '10px 0 0 0' }} onClick={()=>{
+                navigate('/home');
+            }}>
                 <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-home-24%20(1).png?alt=media&token=8528cb79-3169-4d62-b5be-570c5f16e124'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
                 <p style={{margin: '10px 0 0 -35px', width: '150px', height: '15px', color: 'rgb(136 84 192 / var(--tw-text-opacity))', textAlign: 'center'}}>Trang chủ</p>
             </div>
@@ -48,7 +50,7 @@ export default function NavbarAdmin() {
             </div>
             <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
                 <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
-                <p style={{margin: '10px 0 0 -10px', width: '150px', height: '15px'}}><Link to={"/home/showListStudent"} style={{color: 'inherit', textDecoration: 'none'}}>Đăng kí giáo viên</Link></p>
+                <p style={{margin: '10px 0 0 -10px', width: '150px', height: '15px'}}><Link to={"/home/showTeacherPending"} style={{color: 'inherit', textDecoration: 'none'}}>Đăng kí giáo viên</Link></p>
             </div>
 
             <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
