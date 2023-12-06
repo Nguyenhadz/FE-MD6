@@ -1,15 +1,17 @@
 import './NavbarAdmin.css';
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {logout} from "../service/UserService";
+import {getStudent, getStudentById, getUserByIdLogin, logout} from "../service/UserService";
 import {toast} from "react-toastify";
+import {useEffect} from "react";
 export default function NavbarAdmin() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const userLogin = useSelector(state => {
-        console.log(state.user.currentUser)
-        return state.user.currentUser
+
+    const user = useSelector(state => {
+        return state.users.currentUser;
     })
+
     const handleLogout = () => {
         // Dispatch action logout
         dispatch(logout());

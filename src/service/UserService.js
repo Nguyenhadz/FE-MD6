@@ -4,7 +4,7 @@ import customAxios from "./Api";
 
 const user = JSON.parse(localStorage.getItem('currentUser'));
 
-const TOKEN = user?.accessToken;
+const TOKEN = user?.accessToken ;
 console.log(TOKEN)
 let axiosConfig = {
     headers: {
