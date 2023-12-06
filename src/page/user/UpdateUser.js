@@ -17,50 +17,7 @@ export default function UpdateUser() {
         console.log(state.users.user)
         return state.users.user
     })
-    // useEffect(() => {
-    //     // Làm việc với Firestore
-    //     const fetchData = async () => {
-    //         const data = await firestore.collection('exampleCollection').get();
-    //         console.log(data.docs.map(doc => doc.data()));
-    //     };
-    //     fetchData();
-    //     // Làm việc với Authentication
-    //     const checkAuthState = () => {
-    //         auth.onAuthStateChanged(user => {
-    //             if (user) {
-    //                 console.log('User is signed in:', user.uid);
-    //             } else {
-    //                 console.log('User is signed out');
-    //             }
-    //         });
-    //     };
-    //     checkAuthState();
-    // }, []);
-    // const handleImageUpload = async (event) => {
-    //     const file = event.target.files[0];
-    //
-    //     // Tạo tên duy nhất cho tệp ảnh được tải lên
-    //     const fileName = `${Date.now()}_${file.name}`;
-    //
-    //     // Tải tệp lên Firebase Storage
-    //     const storageRef = storage.ref();
-    //     const fileRef = storageRef.child(fileName);
-    //     await fileRef.put(file);
-    //
-    //     // Lấy URL tải về của tệp đã tải lên
-    //     const url = await fileRef.getDownloadURL();
-    //
-    //     // Cập nhật URL ảnh của người dùng trong Firestore
-    //     await firestore.collection('users').doc(id).update({
-    //         image: url,
-    //     });
-    //
-    //     // Cập nhật trạng thái local với URL ảnh mới
-    //     dispatch({
-    //         type: "UPDATE_USER_IMAGE",
-    //         payload: {id, image: url},
-    //     });
-    // };
+
     const handleImageClick = () => {
         document.getElementById('imageInput').click();
     };
@@ -75,9 +32,14 @@ export default function UpdateUser() {
                             <span>Profile</span>
                         </div>
                         <Formik initialValues={{
+                            id: parseInt(id),
                             name: user.name,
                             image: user.image,
-                            roles:{id: user.roles[0].id}
+                            roles: [
+                                {
+                                    id: user.roles[0].id
+                                }
+                            ]
 
                         }}
                                 enableReinitialize={true}
