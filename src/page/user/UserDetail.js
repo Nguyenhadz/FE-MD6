@@ -21,7 +21,7 @@ export default function UserDetail() {
     };
     const timeCreate = new Date(user.timeCreate);
     const dayCreate = timeCreate.getDate();
-    const monthCreate = timeCreate.getMonth() + 1; // Tháng trong JavaScript bắt đầu từ 0
+    const monthCreate = timeCreate.getMonth() + 1;
     const yearCreate = timeCreate.getFullYear();
     const lastTimeVisit = new Date(user.lastTimeVisit);
     const dayLast = lastTimeVisit.getDate();

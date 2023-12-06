@@ -39,7 +39,7 @@ export default function NavbarAdmin() {
             </div>
             <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
                 <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
-                <p style={{margin: '10px 5px', width: '150px', height: '15px'}}>Danh sách giáo viên</p>
+                <p style={{margin: '10px 5px', width: '150px', height: '15px'}}><Link to={"/home/showListTeacher"} style={{color: 'inherit', textDecoration: 'none'}}>Danh sách giáo viên</Link></p>
             </div>
 
             <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
