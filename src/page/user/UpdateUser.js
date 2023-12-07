@@ -32,9 +32,10 @@ export default function UpdateUser() {
             .max(50, "Too Long!")
             .required("Không được để trống"),
         newPassword: Yup.string()
-            .min(2, "Too Short!")
+            .min(8, "Too Short!")
             .max(50, "Too Long!")
-            .required("Không được để trống"),
+            .required("Không được để trống")
+            .matches(/^(?=.*[a-zA-Z])(?=.*[0-9]).+$/, "Mật khẩu phải có cả chữ và số"),
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
             .min(2, "Too Short!")
