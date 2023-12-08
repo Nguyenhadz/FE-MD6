@@ -6,9 +6,11 @@ import {changePassword, getStudentById, updateUser} from "../../service/UserServ
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import {v4} from "uuid";
-import { IoIosMail } from "react-icons/io";
+import {IoIosMail} from "react-icons/io";
+import {keyboard} from "@testing-library/user-event/dist/keyboard";
 import {storage} from "../../firebase/FireBase";
 import {Button} from "react-bootstrap";
+import {FormControl, FormGroup, FormLabel} from "react-bootstrap";
 import {
     ref,
     uploadBytes,
@@ -20,6 +22,8 @@ export default function UpdateUser() {
     const navigate = useNavigate();
     const {id} = useParams();
     const [image, setImage] = useState(null);
+    const [file, setFile] = useState(null);
+
     const [uploadedImageUrl, setUploadedImageUrl] = useState('');
     useEffect(() => {
         dispatch(getStudentById(id))
@@ -37,13 +41,21 @@ export default function UpdateUser() {
 
                 setUploadedImageUrl(url); // Lưu URL sau khi upload thành công vào state mới
                 console.log("image uploaded successfully", url);
-                console.log("image uploaded successfully", uploadedImageUrl);
+
             });
         });
     };
     const handleImageClick = () => {
-        document.getElementById('imageInput').click();
+        const input = document.querySelector("input[name='image']");
+        input.click();
     };
+
+    function handleChange(e) {
+        console.log(e.target.files);
+        setFile(URL.createObjectURL(e.target.files[0]));
+        setImage(e.target.files[0]);
+    }
+
     const validate = Yup.object().shape({
         name: Yup.string()
             .min(2, "Too Short!")
@@ -82,7 +94,7 @@ export default function UpdateUser() {
                                 <Formik initialValues={{
                                     id: parseInt(id),
                                     name: user.name,
-                                    image: user.image,
+                                    image: uploadedImageUrl ? uploadedImageUrl : user.image,
                                     roles: [
                                         {
                                             id: user.roles[0].id
@@ -94,48 +106,47 @@ export default function UpdateUser() {
                                         validationSchema={validate}
                                         onSubmit={(values) => {
                                             dispatch((updateUser(values)))
+                                            console.log("save", uploadedImageUrl);
                                             navigate("/home")
                                         }}>
                                     <Form>
-                                                <div className={"justify-center flex"}>
-                                                    <input
-                                                        id="imageInput"
-                                                        type="file"
-                                                        name="image"
-                                                        style={{display: 'none'}}
-                                                        onChange={(event) => {
-                                                            setImage(event.target.files[0]);
-                                                        }}/>
-                                                    <img onClick={handleImageClick}
-                                                         className={"h-24 w-24 rounded-full "} src={user.image}
-                                                         alt={"lỗi"}/>
-                                                </div>
-                                                <div className={"justify-center flex"}>
-                                                    <Button
-                                                        className={"mt-2 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-2 rounded"}
-                                                        onClick={uploadFile}>Upload File</Button>
-                                                </div>
+                                        <div className={"justify-center flex"}>
+                                            <input
+                                                id="imageInput"
+                                                type="file"
+                                                name="image"
+                                                style={{display: 'none'}}
+                                                onChange={handleChange}/>
+                                            <img onClick={handleImageClick}
+                                                 className={"h-24 w-24 rounded-full "} src={file ? file : user.image}
+                                                 alt={"lỗi"}/>
+                                        </div>
+                                        <div className={"justify-center flex"}>
+                                            <Button
+                                                className={"mt-2 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-2 rounded"}
+                                                onClick={uploadFile}>Upload File</Button>
+                                        </div>
 
-                                            <div>
-                                                <span className={"ml-8 font-black"}>Name</span>
-                                                <Field className={"form-control w-4/5 ml-16"} name={"name"}></Field>
-                                                <div className="ml-16">
-                                                    <ErrorMessage name="name"></ErrorMessage>
-                                                </div>
-
+                                        <div>
+                                            <span className={"ml-8 font-black"}>Name</span>
+                                            <Field className={"form-control w-4/5 ml-16"} name={"name"}></Field>
+                                            <div className="ml-16">
+                                                <ErrorMessage name="name"></ErrorMessage>
                                             </div>
-                                            <div className="mt-4">
-                                                <span className={"ml-8 font-black"}>Email</span>
-                                                <div className={"flex"}><IoIosMail  className={"ml-10"}/>
-                                                <Field className={"form-control w-4/5 ml-2"}  value={user.username}
+
+                                        </div>
+                                        <div className="mt-4">
+                                            <span className={"ml-8 font-black"}>Email</span>
+                                            <div className={"flex"}><IoIosMail className={"ml-10"}/>
+                                                <Field className={"form-control w-4/5 ml-2"} value={user.username}
                                                        id={"line2"}
                                                        disabled={true}/>
-                                                </div>
-
                                             </div>
-                                            <Field type={"hidden"} name={"image"} value={uploadedImageUrl}></Field>
-                                            <Button type="submit"
-                                                    className="mt-4 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-2 rounded ml-8 mb-4" >Save</Button>
+
+                                        </div>
+                                        <Field type={"hidden"} name={"image"} value={uploadedImageUrl}></Field>
+                                        <Button type="submit"
+                                                className="mt-4 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-2 rounded ml-8 mb-4">Save</Button>
                                     </Form>
                                 </Formik>
                             </div>}

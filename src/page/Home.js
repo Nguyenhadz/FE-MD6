@@ -12,7 +12,7 @@ export default function Home() {
             {/*<AdminFindStudent></AdminFindStudent>*/}
             <div style={{backgroundColor: 'whitesmoke', height: '200vh', margin: '0 0 0 170px'}}>
                 <Outlet></Outlet>
-                <Outlet></Outlet>
+                {/*<Outlet></Outlet>*/}
             </div>
         </div>
 
