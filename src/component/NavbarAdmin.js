@@ -11,7 +11,6 @@ export default function NavbarAdmin() {
     const user = useSelector(state => {
         return state.users.currentUser;
     })
-
     const handleLogout = () => {
         // Dispatch action logout
         dispatch(logout());
@@ -37,25 +36,33 @@ export default function NavbarAdmin() {
                 <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-test-80.png?alt=media&token=d4488616-f14e-4df7-860e-30a2571628d3'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
                 <p style={{margin: '10px -8px', width: '150px', height: '15px'}}>Danh sách bài thi</p>
             </div>
-            <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
-                <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
-                <p style={{margin: '10px 5px', width: '150px', height: '15px'}}><Link to={"/home/showListTeacher"} style={{color: 'inherit', textDecoration: 'none'}}>Danh sách giáo viên</Link></p>
-            </div>
-
-            <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
-                <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
-
-                <p style={{margin: '10px 0px', width: '150px', height: '15px'}}><Link to={"/home/showListStudent"} style={{color: 'inherit', textDecoration: 'none'}}>Danh sách học viên</Link></p>
-
-            </div>
-            <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
-                <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
-                <p style={{margin: '10px 0 0 -10px', width: '150px', height: '15px'}}><Link to={"/home/showTeacherPending"} style={{color: 'inherit', textDecoration: 'none'}}>Đăng kí giáo viên</Link></p>
-            </div>
-
+            {user.roles[0].authority === 'ADMIN' && (<div>
+                <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
+                    <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
+                    <p style={{margin: '10px 0px', width: '150px', height: '15px'}}><Link to={"/home/showListStudent"} style={{color: 'inherit', textDecoration: 'none'}}>Danh sách học viên</Link></p>
+                </div>
+                <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
+                    <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
+                    <p style={{margin: '10px 5px', width: '150px', height: '15px'}}><Link to={"/home/showListTeacher"} style={{color: 'inherit', textDecoration: 'none'}}>Danh sách giáo viên</Link></p>
+                </div>
+                <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
+                    <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
+                    <p style={{margin: '10px 0 0 -10px', width: '150px', height: '15px'}}><Link to={"/home/showTeacherPending"} style={{color: 'inherit', textDecoration: 'none'}}>Đăng kí giáo viên</Link></p>
+                </div>
+            </div>)}
+            {user.roles[0].authority === 'TEACHER' && (
+                <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
+                    <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
+                    <p style={{margin: '10px 0px', width: '150px', height: '15px'}}><Link to={"/home/showListStudent"} style={{color: 'inherit', textDecoration: 'none'}}>Danh sách học viên</Link></p>
+                </div>
+            )}
             <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
                 <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-analytics-100.png?alt=media&token=5fd96729-bf20-4de0-a48d-0838dcd32bc9'} alt={'...'} style={{margin: '15px 6px 0 14px', width: '18px', height: '18px', textAlign: 'center'}}/>
                 <p style={{margin: '10px -12px', width: '100px', height: '15px'}}>Thống kê</p>
+            </div>
+            <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
+                <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-user-account-25.png?alt=media&token=9e5cf6ec-764d-4d5d-860d-e0b96845474d'} alt={'...'} style={{margin: '15px 6px 0 14px', width: '18px', height: '18px', textAlign: 'center'}}/>
+                <p style={{margin: '10px 0px 0 -20px', width: '100px', height: '15px'}}>Hồ sơ</p>
             </div>
             <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
                 <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-logout-50.png?alt=media&token=1f6e0ff9-dbeb-4164-9db8-d2e4c27e04ac'} alt={'...'} style={{margin: '15px 8px 0 17px', width: '12px', height: '12px', textAlign: 'center'}}/>
