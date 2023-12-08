@@ -4,7 +4,7 @@ import customAxios from "./Api";
 
 const user = JSON.parse(localStorage.getItem('currentUser'));
 
-const TOKEN = user?.accessToken;
+const TOKEN = user?.accessToken ;
 let axiosConfig = {
     headers: {
         Authorization: `Bearer ` + TOKEN
@@ -83,6 +83,12 @@ export const getTeacher = createAsyncThunk(
     async () => {
         const res = await customAxios.get('admin/teachers/active/sort', axiosConfig);
         return res.data;
+    }
+)
+export const changePassword = createAsyncThunk(
+    "users/changePassword",
+    async (data) =>{
+        const res = await customAxios.post('users/changePassword', data , axiosConfig)
     }
 )
 export const findTeacherByName = createAsyncThunk(
