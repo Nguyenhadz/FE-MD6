@@ -90,6 +90,7 @@ export default function ForgotForm() {
                         if (res.status === 200) {
                             toast.success("Đã gửi mail reset password về email cua bạn", {})
                             await customAxios.get("/forgot/" + document.getElementById("username").value)
+                            navigate("/loginWithEmail")
                         }
                     }catch (e) {
                         toast.error('Tài khoản không tồn tại', {});
