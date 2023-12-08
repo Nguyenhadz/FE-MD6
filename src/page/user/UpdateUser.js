@@ -11,7 +11,7 @@ import {
     getDownloadURL,
 } from "firebase/storage";
 import {v4} from "uuid";
-
+import { IoIosMail } from "react-icons/io";
 import {keyboard} from "@testing-library/user-event/dist/keyboard";
 import {storage} from "../../firebase/FireBase";
 import {Button} from "react-bootstrap";
@@ -76,7 +76,7 @@ export default function UpdateUser() {
                     <p className={"justify-center flex mt-24 text-3xl font-bold"}>Settings</p>
                     <div className={"flex justify-center "}>
                         {Object.keys(user).length > 0 &&
-                            <div className={"h-3/5 w-5/12 mt-2 bg-white"}>
+                            <div className={"h-3/5 w-5/12 mt-2  shadow-lg p-6 bg-white rounded-2xl"}>
                                 <div className={"mt-4"}>
                                     <span className={"ml-8 text-2xl  font-bold text-orange-200"}>Profile</span>
                                 </div>
@@ -118,7 +118,7 @@ export default function UpdateUser() {
                                                 </div>
 
                                             <div>
-                                                <span className={"ml-8"}>Name</span>
+                                                <span className={"ml-8 font-black"}>Name</span>
                                                 <Field className={"form-control w-4/5 ml-16"} name={"name"}></Field>
                                                 <div className="ml-16">
                                                     <ErrorMessage name="name"></ErrorMessage>
@@ -126,10 +126,12 @@ export default function UpdateUser() {
 
                                             </div>
                                             <div className="mt-4">
-                                                <span className={"ml-8"}>Email</span>
-                                                <Field className={"form-control w-4/5 ml-16"} value={user.username}
+                                                <span className={"ml-8 font-black"}>Email</span>
+                                                <div className={"flex"}><IoIosMail  className={"ml-10"}/>
+                                                <Field className={"form-control w-4/5 ml-2"}  value={user.username}
                                                        id={"line2"}
                                                        disabled={true}/>
+                                                </div>
 
                                             </div>
                                             <Field type={"hidden"} name={"image"} value={uploadedImageUrl}></Field>
@@ -144,7 +146,7 @@ export default function UpdateUser() {
                 <div className={"-mt-6 flex flex-col justify-center"}>
                     <p className={"justify-center flex mt-20 text-3xl font-bold mb-10"}>Change Password</p>
                     <div className={"flex justify-center "}>
-                        <div className={"h-3/5 w-5/12 mt-2 bg-white"}>
+                        <div className={"h-3/5 w-5/12 mt-2 shadow-lg p-6 bg-white rounded-2xl"}>
                             <Formik initialValues={{
                                 currentPassword: '',
                                 newPassword: '',
@@ -159,28 +161,28 @@ export default function UpdateUser() {
                                     }}>
                                 <Form>
                                     <div className="mt-3">
-                                        <span className={"ml-8"}>Current Password</span>
+                                        <span className={"ml-8 font-black"}>Current Password</span>
                                         <Field className={"form-control w-4/5 ml-16"} name={"currentPassword"}
-                                               id={"line3"}></Field>
+                                               type={"password"}></Field>
                                         <div className={"ml-16"}>
                                             <ErrorMessage name="currentPassword"></ErrorMessage>
                                         </div>
 
                                     </div>
                                     <div className="mt-3">
-                                        <span className={"ml-8"}>New Password</span>
+                                        <span className={"ml-8 font-black"}>New Password</span>
                                         <Field className={"form-control w-4/5 ml-16"} name={"newPassword"}
-                                               id={"line3"}></Field>
-                                        <div className="ml-8">
+                                               type={"password"}></Field>
+                                        <div className="ml-16">
                                             <ErrorMessage name="newPassword"></ErrorMessage>
                                         </div>
 
                                     </div>
                                     <div className="mt-3">
-                                        <span className={"ml-8"}>Confirm Password</span>
+                                        <span className={"ml-8 font-black"}>Confirm Password</span>
                                         <Field className={"form-control w-4/5 ml-16"} name={"confirmPassword"}
-                                               id={"line3"}></Field>
-                                        <div className="ml-8">
+                                               type={"password"}></Field>
+                                        <div className="ml-16">
                                             <ErrorMessage name="confirmPassword"></ErrorMessage>
                                         </div>
                                     </div>
