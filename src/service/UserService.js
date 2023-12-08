@@ -46,14 +46,21 @@ export const logout = createAsyncThunk(
 export const updateUser = createAsyncThunk(
     'user/update',
     async (data)=>{
-        const res = await customAxios.put('/users/' + data.id, data, axiosConfig)
+        const res = await customAxios.put('users/' + data.id, data, axiosConfig)
         return res.data
     }
 )
-export const findUserByName = createAsyncThunk(
-    'user/findByName',
+export const findStudentByName = createAsyncThunk(
+    'user/findStudentByName',
     async (data) =>{
-        const res = await customAxios.get('admin/students/'+ data, axiosConfig)
+        const res = await customAxios.get('admin/students/search/'+ data, axiosConfig)
+        return res.data
+    }
+)
+export const findStudentByMail = createAsyncThunk(
+    'user/findStudentByMail',
+    async (data) =>{
+        const res = await customAxios.get('admin/students/searchUsername/'+ data, axiosConfig)
         return res.data
     }
 )
@@ -66,8 +73,15 @@ export const getTeacherPending = createAsyncThunk(
 )
 export const approveTeacherPending = createAsyncThunk(
     'user/approveTeacherPending',
-    async (idPending) => {
-        const res = await customAxios.put('admin/teachers/' + idPending, axiosConfig);
+    async (id) => {
+        const res = await customAxios.put('admin/teachers/'+ id, axiosConfig);
+        return res.data
+    }
+)
+export const getTeacher = createAsyncThunk(
+    'user/getTeacher',
+    async () => {
+        const res = await customAxios.get('admin/teachers/active/sort', axiosConfig);
         return res.data;
     }
 )
@@ -75,5 +89,19 @@ export const changePassword = createAsyncThunk(
     "users/changePassword",
     async (data) =>{
         const res = await customAxios.post('users/changePassword', data , axiosConfig)
+    }
+)
+export const findTeacherByName = createAsyncThunk(
+    'user/findTeacherByName',
+    async (data) =>{
+        const res = await customAxios.get('admin/teachers/active/search/'+ data, axiosConfig)
+        return res.data
+    }
+)
+export const findTeacherByMail = createAsyncThunk(
+    'user/findTeacherByMail',
+    async (data) =>{
+        const res = await customAxios.get('admin/teachers/active/searchUsername/'+ data, axiosConfig)
+        return res.data
     }
 )

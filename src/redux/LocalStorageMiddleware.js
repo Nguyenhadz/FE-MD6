@@ -10,5 +10,6 @@ export const LocalStorageMiddleware = (store) => (next) => (action) => {
         // Nếu action liên quan đến user và là fulfilled, lưu thông tin vào localStorage
         localStorage.setItem('currentUser', JSON.stringify(store.getState().users.currentUser));
     }
+
     return result;
 };
