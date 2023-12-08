@@ -5,17 +5,17 @@ import {useEffect, useState} from "react";
 import {changePassword, getStudentById, updateUser} from "../../service/UserService";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
-import {
-    ref,
-    uploadBytes,
-    getDownloadURL,
-} from "firebase/storage";
 import {v4} from "uuid";
 import {IoIosMail} from "react-icons/io";
 import {keyboard} from "@testing-library/user-event/dist/keyboard";
 import {storage} from "../../firebase/FireBase";
 import {Button} from "react-bootstrap";
 import {FormControl, FormGroup, FormLabel} from "react-bootstrap";
+import {
+    ref,
+    uploadBytes,
+    getDownloadURL
+} from "firebase/storage";
 
 export default function UpdateUser() {
     const dispatch = useDispatch();

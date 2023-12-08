@@ -83,19 +83,17 @@ export default function ForgotForm() {
                     marginTop:'50px'
                 }}
                 type="submit"
-                onClick = {() => {
-                    customAxios.get("/forgot/" + document.getElementById("username").value).then(() => {
-                        toast.success("Đã gửi mail reset password về email cua bạn",{})
-                        navigate('/loginWithEmail')
-                    }
-                    ).catch ((error) => {
-                        if (error.response && error.response.status === 404) {
-                            toast.error('Tài khoản không tồn tại', {});
-                        } else {
-                            console.error("Đã xảy ra lỗi:", error);
+                onClick = {async () => {
+                    try {
+                        const res = await customAxios.get("users/fbu/" + document.getElementById("username").value)
+                        console.log(res)
+                        if (res.status === 200) {
+                            toast.success("Đã gửi mail reset password về email cua bạn", {})
+                            await customAxios.get("/forgot/" + document.getElementById("username").value)
                         }
-                    })
-
+                    }catch (e) {
+                        toast.error('Tài khoản không tồn tại', {});
+                    }
                 }}
             >
                 Reset Password
