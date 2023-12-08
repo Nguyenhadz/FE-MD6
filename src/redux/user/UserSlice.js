@@ -7,7 +7,7 @@ import {
     getTeacherPending,
     getUserByIdLogin,
     login,
-    logout
+    logout, updateUser
 } from "../../service/UserService";
 
 const initialState = {
@@ -40,6 +40,9 @@ const userSlice = createSlice({
         })
         builder.addCase(approveTeacherPending.fulfilled, (state, action) => {
             state.users = action.payload
+        })
+        builder.addCase(updateUser.fulfilled, (state, action) => {
+            state.currentUser = action.payload
         })
     }
 })

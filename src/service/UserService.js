@@ -71,3 +71,9 @@ export const approveTeacherPending = createAsyncThunk(
         return res.data;
     }
 )
+export const changePassword = createAsyncThunk(
+    "users/changePassword",
+    async (data) =>{
+        const res = await customAxios.post('users/changePassword', data , axiosConfig)
+    }
+)
