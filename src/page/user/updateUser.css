@@ -1,3 +1,4 @@
+
 .updateUser{
     background-color: #F9F9F9;
     display: flex;
@@ -26,12 +27,12 @@
 .profile{
     padding: 10px;
 }
-.profile img {
-    width: 20px; /* Độ rộng của hình ảnh */
-    height: 20px; /* Độ cao của hình ảnh */
-    margin-right: 10px; /* Khoảng cách giữa hình ảnh và văn bản "Profile" */
-    padding-top: 5px;
-}
+/*.profile img {*/
+/*    width: 20px; !* Độ rộng của hình ảnh *!*/
+/*    height: 20px; !* Độ cao của hình ảnh *!*/
+/*    margin-right: 10px; !* Khoảng cách giữa hình ảnh và văn bản "Profile" *!*/
+/*    padding-top: 5px;*/
+/*}*/
 .profile span {
     margin-top: 102px;
     font-weight: bold;
