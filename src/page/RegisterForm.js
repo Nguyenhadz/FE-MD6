@@ -23,12 +23,13 @@ export default function RegisterForm() {
             .required("Không được để trống"),
         name: Yup.string()
             .matches(/^[a-zA-ZÀ-Ỹà-ỹ]+(\s[a-zA-ZÀ-Ỹà-ỹ]+)*$/, {
-                message: "Tên không hợp lệ",
+                message: "Tên không được có ký tự đặc biệt và số!",
                 excludeEmptyString: true
             })
             .required("Không được để trống"),
         password: Yup.string()
-            .required("Không được để trống"),
+            .required("Không được để trống")
+            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, "Tối thiểu 8 ký tự, ít nhất 1 chữ hoa, thường, ký tự đặc biệt và số"),
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password')], "Mật khẩu không khớp!")
             .required("Không được để trống")

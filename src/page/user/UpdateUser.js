@@ -5,17 +5,18 @@ import {useEffect, useState} from "react";
 import {changePassword, getStudentById, updateUser} from "../../service/UserService";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
-import {
-    ref,
-    uploadBytes,
-    getDownloadURL,
-} from "firebase/storage";
 import {v4} from "uuid";
 import {IoIosMail} from "react-icons/io";
 import {keyboard} from "@testing-library/user-event/dist/keyboard";
 import {storage} from "../../firebase/FireBase";
 import {Button} from "react-bootstrap";
 import {FormControl, FormGroup, FormLabel} from "react-bootstrap";
+import {
+    ref,
+    uploadBytes,
+    getDownloadURL
+} from "firebase/storage";
+import {toast} from "react-toastify";
 
 export default function UpdateUser() {
     const dispatch = useDispatch();
@@ -71,7 +72,7 @@ export default function UpdateUser() {
             .min(2, "Too Short!")
             .max(50, "Too Long!")
             .required("Không được để trống")
-            .matches(/^(?=.*[a-zA-Z])(?=.*[0-9]).+$/, "Mật khẩu phải có cả chữ và số"),
+            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, "Tối thiểu 8 ký tự, ít nhất 1 chữ hoa, thường, ký tự đặc biệt và số"),
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
             .min(2, "Too Short!")
