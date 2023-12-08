@@ -89,6 +89,7 @@ export const changePassword = createAsyncThunk(
     "users/changePassword",
     async (data) =>{
         const res = await customAxios.post('users/changePassword', data , axiosConfig)
+        return res.data
     }
 )
 export const findTeacherByName = createAsyncThunk(
