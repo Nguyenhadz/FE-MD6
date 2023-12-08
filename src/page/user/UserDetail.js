@@ -14,6 +14,10 @@ export default function UserDetail() {
     const user = useSelector(state => {
         return state.users.user;
     })
+    const userLogin = useSelector(state => {
+        return state.users.currentUser
+    })
+    console.log()
     const handleDelete = () => {
         // Dispatch action logout
         dispatch(deleteUser(id))
@@ -21,7 +25,7 @@ export default function UserDetail() {
     };
     const timeCreate = new Date(user.timeCreate);
     const dayCreate = timeCreate.getDate();
-    const monthCreate = timeCreate.getMonth() + 1; // Tháng trong JavaScript bắt đầu từ 0
+    const monthCreate = timeCreate.getMonth() + 1;
     const yearCreate = timeCreate.getFullYear();
     const lastTimeVisit = new Date(user.lastTimeVisit);
     const dayLast = lastTimeVisit.getDate();
@@ -69,12 +73,15 @@ export default function UserDetail() {
                                                     navigate('/home/showListStudent')
                                                 }}><button type="button" className="btn btn-primary">Trở Lại</button></div>
                                             </div>
-                                            <div className="col-sm-6">
-                                                <ConfirmDeleteComponent
-                                                    onDelete={handleDelete}
-                                                    id={id}
-                                                />
-                                            </div>
+                                            {userLogin.roles[0].authority === 'ADMIN' && (
+                                                <div className="col-sm-6">
+                                                    <ConfirmDeleteComponent
+                                                        onDelete={handleDelete}
+                                                        id={id}
+                                                    />
+                                                </div>
+                                            )}
+
                                         </div>
 
                                     </div>

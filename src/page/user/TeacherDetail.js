@@ -1,10 +1,10 @@
 import "./UserDetail.css";
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import { approveTeacherPending, getStudentById} from "../../service/UserService";
+import {deleteUser, getStudentById} from "../../service/UserService";
 import {useEffect} from "react";
-import {toast} from "react-toastify";
-export default function DetailTeacherPending() {
+import ConfirmDeleteComponent from "../../component/ConfirmDeleteComponent";
+export default function TeacherDetail() {
     const {id} = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -14,17 +14,14 @@ export default function DetailTeacherPending() {
     const user = useSelector(state => {
         return state.users.user;
     })
-    const handleApprove = (idPending) => {
-        dispatch(approveTeacherPending(idPending)).then(()=> {
-            toast.success('\n' +
-                'Approve successfully\n', {
-            });
-            // navigate('/home/showTeacherPending')
-        });
+    const handleDelete = () => {
+        // Dispatch action logout
+        dispatch(deleteUser(id))
+        navigate('/home/showListTeacher')
     };
     const timeCreate = new Date(user.timeCreate);
     const dayCreate = timeCreate.getDate();
-    const monthCreate = timeCreate.getMonth() + 1; // Tháng trong JavaScript bắt đầu từ 0
+    const monthCreate = timeCreate.getMonth() + 1;
     const yearCreate = timeCreate.getFullYear();
     const lastTimeVisit = new Date(user.lastTimeVisit);
     const dayLast = lastTimeVisit.getDate();
@@ -69,14 +66,15 @@ export default function DetailTeacherPending() {
                                             </div>
                                             <div className="col-sm-6">
                                                 <div onClick={()=>{
-                                                    navigate('/home/showTeacherPending')
+                                                    navigate('/home/showListTeacher')
                                                 }}><button type="button" className="btn btn-primary">Trở Lại</button></div>
                                             </div>
-                                            <button type="button" className="btn btn-primary" style={{margin: '0 20px 20px 0'}} onClick={() =>
-                                                handleApprove(id)
-                                            }>
-                                                Duyệt
-                                            </button>
+                                            <div className="col-sm-6">
+                                                <ConfirmDeleteComponent
+                                                    onDelete={handleDelete}
+                                                    id={id}
+                                                />
+                                            </div>
                                         </div>
 
                                     </div>
