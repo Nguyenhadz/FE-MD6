@@ -3,7 +3,7 @@ import {Button, FormLabel} from "react-bootstrap";
 import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
 import {login} from "../service/UserService";
-import {useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import "./LoginWithGmailForm.css"
 
 export default function LoginWithGmailForm() {
@@ -177,15 +177,21 @@ export default function LoginWithGmailForm() {
                                 </Field>
                             </div>
                         </div>
-                        <div>
-                            <p
+                        <div
+                            style={{
+                                marginTop : '15px',
+                                textDecoration: 'none'
+                            }}
+                        >
+                            <NavLink
                                 style={{
                                     marginTop : '20px',
                                     fontSize: '14px'
                                 }}
+                                to={'/forgot'}
                             >
                                 Forgot password?
-                            </p>
+                            </NavLink>
                         </div>
                         <div
                             style={{

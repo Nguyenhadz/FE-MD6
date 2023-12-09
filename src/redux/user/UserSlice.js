@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
-    approveTeacher, approveTeacherPending,
+    approveTeacher, approveTeacherPending, changePassword,
     deleteUser, findStudentByMail, findStudentByName, findTeacherByMail, findTeacherByName,
     getStudent,
     getStudentById, getTeacher,
@@ -9,6 +9,7 @@ import {
     login,
     logout, updateUser
 } from "../../service/UserService";
+import {toast} from "react-toastify";
 
 const initialState = {
     users: [],
@@ -58,6 +59,12 @@ const userSlice = createSlice({
         })
         builder.addCase(updateUser.fulfilled, (state, action) => {
             state.currentUser = action.payload
+        })
+        builder.addCase(changePassword.rejected, (state, action) => {
+            toast.error("Đổi mật khẩu thất bại", {})
+        })
+        builder.addCase(changePassword.fulfilled, (state, action) => {
+            toast.success("Đổi mật khẩu thành công", {})
         })
     }
 })
