@@ -8,8 +8,8 @@ const ConfirmDeleteComponent = ({ onDelete, id }) => {
             <>
                 <div>
                     <p>Bạn có chắc chắn muốn xóa?</p>
-                    <button className="btn btn-primary" type="submit" style={{margin: '20px'}} onClick={() => {onDelete(id); toast.dismiss();}}>Xác nhận</button>
-                    <button className="btn btn-primary" type="submit" style={{margin: '20px'}} onClick={() => toast.dismiss()}>Hủy bỏ</button>
+                    <button className={"w-20 h-10 bg-amber-600 rounded text-white"} type="submit" style={{margin: '20px'}} onClick={() => {onDelete(id); toast.dismiss();}}>Xác nhận</button>
+                    <button className={"w-20 h-10 bg-amber-600 rounded text-white"} type="submit" style={{margin: '20px'}} onClick={() => toast.dismiss()}>Hủy bỏ</button>
                 </div>
             </>,
             {
@@ -27,7 +27,7 @@ const ConfirmDeleteComponent = ({ onDelete, id }) => {
 
     return (
         <button
-            type="button" className="btn btn-primary"
+            type="button" className={"w-20 h-10 bg-amber-600 rounded text-white"}
             onClick={handleDelete}
         >
             Xoá

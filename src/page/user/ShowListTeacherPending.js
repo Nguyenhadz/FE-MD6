@@ -1,8 +1,12 @@
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {getStudent, getTeacherPending} from "../../service/UserService";
 import './ShowListStudent.css';
+import {DataGrid} from "@mui/x-data-grid";
+import Box from "@mui/material/Box";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSearch} from "@fortawesome/free-solid-svg-icons";
 export default function ShowListTeacherPending() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -13,25 +17,86 @@ export default function ShowListTeacherPending() {
         return Array.from(state.users.users)
     })
 
+    const columns = [
+        {field: 'id', headerName: 'STT', width: 90},
+        {
+            field: 'name',
+            headerName: 'Tên',
+            width: 200,
+            editable: false,
+        },
+        {
+            field: 'email',
+            headerName: 'Email',
+            width: 200,
+            editable: false,
+        },
+        {
+            field: 'timeCreate',
+            headerName: 'Ngày tạo tài khoản',
+            width: 200,
+            editable: false,
+        },
+        {
+            field: 'lastTime',
+            headerName: 'Lần truy cập cuối cùng',
+            sortable: false,
+            width: 200,
+        },
+        {
+            field: 'details',
+            headerName: '',
+            width: 150,
+            renderCell: (params) => (
+                <Link to={`/home/detailTeacherPending/${params.row.hiddenColumn}`}>
+                    <button>Chi tiết</button>
+                </Link>
+            ),
+        },
+    ];
+
+    const rows = [];
+    for (let i = 0; i < teacherPending.length; i++) {
+        const timeCreate = new Date(teacherPending[i].timeCreate);
+        const dayCreate = timeCreate.getDate();
+        const monthCreate = timeCreate.getMonth() + 1;
+        const yearCreate = timeCreate.getFullYear();
+        const lastTimeVisit = new Date(teacherPending[i].lastTimeVisit);
+        const dayLast = lastTimeVisit.getDate();
+        const monthLast = lastTimeVisit.getMonth() + 1;
+        const yearLast = lastTimeVisit.getFullYear();
+        const hoursLast = lastTimeVisit.getHours();
+        const minutesLast = lastTimeVisit.getMinutes()
+        const millisecondsLast = lastTimeVisit.getMilliseconds()
+        console.log(lastTimeVisit)
+        rows.push({
+                id: i + 1,
+                name: teacherPending[i].name,
+                email: teacherPending[i].username,
+                timeCreate: (dayCreate + '-' + ((monthCreate < 10) ? '0' + monthCreate : monthCreate) + '-' + yearCreate),
+                lastTime: (dayLast + '-' + ((monthLast < 10) ? '0' + monthLast : monthLast) + '-' + yearLast + ' ' + ((hoursLast < 10) ? '0' + hoursLast : hoursLast) + ':' + ((minutesLast < 10) ? '0' + minutesLast : minutesLast) + ':' + millisecondsLast),
+                hiddenColumn: teacherPending[i].id,
+            }
+        )
+    }
+
     return(
-        <div className="showListStudent">
-            <h1>Danh sách đăng ký giáo viên</h1>
-            <hr></hr>
-            <div className="container">
-                <div className="row" style={{width: '1500px'}}>
-                    {teacherPending.map((item, index)=>(
-                        <div className="card col-2" >
-                            <div className="image-student">
-                                <img src={`${item.image}`} className="card-img-top" alt={'...'} style={{width: '100%', height: '100%'}}/>
-                            </div>
-                            <div className="card-body" style={{marginBottom: '20px'}}>
-                                <h5 className="card-title">{item.name}</h5>
-                                <div style={{position: 'absolute', bottom: '10px', marginTop: 'auto' }}><Link to={'/home/detailTeacherPending/' + item.id}>Xem chi tiết</Link></div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
+        <div className="col-span-8 w-full items-center">
+            <div className={"flex items-center justify-center mt-5 mb-5"}><h1 className={"text-5xl"}>Danh sách đăng ký giáo viên</h1></div>
+            <Box sx={{height: '630px', width: '70%', textAlign: 'center', margin: 'auto'}}>
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    initialState={{
+                        pagination: {
+                            paginationModel: {
+                                pageSize: 10,
+                            },
+                        },
+                    }}
+                    disableRowSelectionOnClick
+                />
+            </Box>
         </div>
     )
 }
