@@ -52,11 +52,15 @@ export default function LoginWithGmailForm() {
                     onSubmit={(values) => {
                         dispatch(login(values)).then((res) => {
                             if (res.type === 'user/login/rejected') {
-                                toast.error('Login failed, you entered the wrong name or password\n', {});
+                                toast.error('Login failed, you entered the wrong name or password\n', {
+                                    autoClose: 500,
+                                });
                                 navigate('')
                             } else {
                                 // eslint-disable-next-line no-undef
-                                toast.success('Logged in successfully\n', {});
+                                toast.success('Logged in successfully\n', {
+                                    autoClose: 500,
+                                });
                                 navigate('/home')
                             }
                         })

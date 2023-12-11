@@ -20,7 +20,6 @@ export default function ShowListStudentFindByMail() {
     const dispatch = useDispatch();
     const handleSearch = () => {
         if (selectedField === '1' ) {
-            console.log('1' + searchTerm)
             dispatch(findStudentByName(searchTerm))
             navigate('/home/showListStudentFindByName')
         } else {
@@ -63,6 +62,7 @@ export default function ShowListStudentFindByMail() {
             field: 'details',
             headerName: '',
             width: 150,
+            align: 'center',
             renderCell: (params) => (
                 <Link to={`/home/teacherDetail/${params.row.hiddenColumn}`}>
                     <button>Chi tiết</button>
@@ -84,7 +84,6 @@ export default function ShowListStudentFindByMail() {
         const hoursLast = lastTimeVisit.getHours();
         const minutesLast = lastTimeVisit.getMinutes()
         const millisecondsLast = lastTimeVisit.getMilliseconds()
-        console.log(lastTimeVisit)
         rows.push({
                 id: i + 1,
                 name: students[i].name,
@@ -99,7 +98,7 @@ export default function ShowListStudentFindByMail() {
     return(
         <div>
             {students.length > 0 ? (
-                <div className="col-span-8 w-full items-center">
+                <div className="col-span-8 w-full h-full items-center" style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
                     <div className={"w-full h-16 bg-white flex items-center relative"}>
                         <input className={"w-8/12 h-10 ml-4 border border-gray-300 rounded-lg pl-12"} type="text"
                                placeholder="Search..."
@@ -116,7 +115,21 @@ export default function ShowListStudentFindByMail() {
                     <div className={"flex items-center justify-center mt-5 mb-5"}><h1 className={"text-5xl"}>Danh sách
                         học sinh</h1></div>
 
-                    <Box sx={{height: '630px', width: '70%', textAlign: 'center', margin: 'auto'}}>
+                    <Box sx={{
+                        height: '630px',
+                        width: '70%',
+                        textAlign: 'center',
+                        margin: 'auto',
+                        backgroundColor: 'white',
+                        borderRadius: '30px',
+                        "& .MuiDataGrid-root": {
+                            border: 'none',
+                            color: 'black',
+                            fontSize: '16px',
+                            padding: '20px',
+                        },
+                        boxShadow: '30px 30px 30px 30px rgba(0, 0, 0, 0.2)'
+                    }}>
                         <DataGrid
                             rows={rows}
                             columns={columns}
@@ -132,7 +145,7 @@ export default function ShowListStudentFindByMail() {
                     </Box>
                 </div>
             ) : (
-                <div className="col-span-8 w-full items-center">
+                <div className="col-span-8 w-full h-full items-center" style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
                     <div className={"w-full h-16 bg-white flex items-center relative"}>
                         <input className={"w-8/12 h-10 ml-4 border border-gray-300 rounded-lg pl-12"} type="text"
                                placeholder="Search..."
@@ -146,8 +159,8 @@ export default function ShowListStudentFindByMail() {
                                 onClick={handleSearch}>Search
                         </button>
                     </div>
-                    <div className={"flex items-center justify-center mt-5 mb-5"}><h1 className={"text-5xl"}>Không có
-                        học sinh nào có email bạn muốn tìm</h1></div>
+                    <div className={"flex items-center justify-center mt-5 mb-5"}><h1 className={"text-5xl text-orange-600"}><b>Không có
+                        học sinh nào có email bạn muốn tìm</b></h1></div>
 
                 </div>
             )}
