@@ -6,6 +6,7 @@ import {useEffect} from "react";
 import ConfirmDeleteComponent from "../../component/ConfirmDeleteComponent";
 export default function UserDetail() {
     const {id} = useParams();
+    console.log(id)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     useEffect(() => {
