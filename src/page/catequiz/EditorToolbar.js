@@ -35,7 +35,7 @@ function redoChange() {
 
 // Add sizes to whitelist and register them
 const Size = Quill.import("formats/size");
-Size.whitelist = ["extra-small", "small", "medium", "large"];
+Size.whitelist = ["extra-small", "smal", "medium", "large"];
 Quill.register(Size, true);
 
 // Add fonts to whitelist and register them

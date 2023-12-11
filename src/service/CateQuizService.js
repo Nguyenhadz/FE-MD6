@@ -12,7 +12,7 @@ let axiosConfig = {
 export const createCateQuiz = createAsyncThunk(
     'cateQuiz/create',
     async (data) =>{
-        const res = await customAxios.post('categoryQuizzes' + data, axiosConfig);
+        const res = await customAxios.post('categoryQuizzes' , data, axiosConfig);
         return res.data
     }
 )
