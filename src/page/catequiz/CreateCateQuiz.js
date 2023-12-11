@@ -41,11 +41,11 @@ export default function CreateCateQuiz() {
                             </div>
                             <div className={"mt-12 ml-32 text-2xl font-bold font-serif text-orange-500"}>Mô tả</div>
                             <div className={"flex justify-center mt-4 h-3/6"}>
-                                <Field name={"description"}
-                                       component={CustomQuills}
-                                       theme="snow">
+                                {/*<Field name={"description"}*/}
+                                {/*       as={CustomQuills}*/}
+                                {/*       theme="snow">*/}
 
-                                </Field>
+                                {/*</Field>*/}
                             </div>
                             <div className={"mt-8 flex justify-center"}>
                                 <Button
