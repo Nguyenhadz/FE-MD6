@@ -24,6 +24,7 @@ import CreateCateQuiz from "./page/catequiz/CreateCateQuiz";
 import LayoutManagerQuestion from "./page/question/LayoutManagerQuestion";
 import ListQuestion from "./page/question/ListQuestion";
 import CreateQuestion from "./page/question/CreateQuestion";
+import ShowListCategoryQuiz from "./page/user/ShowListCategoryQuiz";
 
 function App() {
     return (
@@ -54,6 +55,7 @@ function App() {
                         <Route path={'listQuestion'} element={<ListQuestion/>}></Route>
                         <Route path={'createQuestion'} element={<CreateQuestion/>}></Route>
                     </Route>
+                    <Route path={'/home/showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>
                 </Route>
             </Routes>
         </div>

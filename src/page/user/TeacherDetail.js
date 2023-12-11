@@ -28,7 +28,7 @@ export default function TeacherDetail() {
     const monthLast = lastTimeVisit.getMonth() + 1;
     const yearLast = lastTimeVisit.getFullYear();
     return (
-        <div className={" flex justify-center items-center"}>
+        <div className={" flex justify-center items-center h-full"} style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
                     <div className="col-xl-6 col-md-12">
                         <div className="card user-card-full">
                             <div className="row m-l-0 m-r-0">

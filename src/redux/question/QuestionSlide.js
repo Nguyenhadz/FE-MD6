@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {findAll, findById} from "../../service/QuestionService";
+import {createQuestion, findAll, findById} from "../../service/QuestionService";
+import {toast} from "react-toastify";
 
 
 const initialState = {
@@ -17,6 +18,12 @@ const questionSlide = createSlice({
         })
         builder.addCase(findById.fulfilled, (state, action)=>{
             state.question = action.payload
+        })
+        builder.addCase(createQuestion.fulfilled, (state, action)=>{
+            toast.success("Tạo câu hỏi mới thành công!", {})
+        })
+        builder.addCase(createQuestion.rejected, (state, action)=>{
+            toast.error("Tạo câu hỏi mới thất bại!", {})
         })
     }
 })

@@ -47,6 +47,7 @@ export default function ShowListTeacherPending() {
             field: 'details',
             headerName: '',
             width: 150,
+            align: 'center',
             renderCell: (params) => (
                 <Link to={`/home/detailTeacherPending/${params.row.hiddenColumn}`}>
                     <button>Chi tiết</button>
@@ -68,7 +69,6 @@ export default function ShowListTeacherPending() {
         const hoursLast = lastTimeVisit.getHours();
         const minutesLast = lastTimeVisit.getMinutes()
         const millisecondsLast = lastTimeVisit.getMilliseconds()
-        console.log(lastTimeVisit)
         rows.push({
                 id: i + 1,
                 name: teacherPending[i].name,
@@ -81,9 +81,23 @@ export default function ShowListTeacherPending() {
     }
 
     return(
-        <div className="col-span-8 w-full items-center">
-            <div className={"flex items-center justify-center mt-5 mb-5"}><h1 className={"text-5xl"}>Danh sách đăng ký giáo viên</h1></div>
-            <Box sx={{height: '630px', width: '70%', textAlign: 'center', margin: 'auto'}}>
+        <div className="col-span-8 w-full h-full items-center" style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
+            <div className={"flex items-center justify-center mb-5"}><h1 className={"text-5xl text-orange-600 mt-5"}><b>Danh sách đăng ký giáo viên</b></h1></div>
+            <Box sx={{
+                height: '630px',
+                width: '70%',
+                textAlign: 'center',
+                margin: 'auto',
+                backgroundColor: 'white',
+                borderRadius: '30px',
+                "& .MuiDataGrid-root": {
+                    border: 'none',
+                    color: 'black',
+                    fontSize: '16px',
+                    padding: '20px',
+                },
+                boxShadow: '30px 30px 30px 30px rgba(0, 0, 0, 0.2)'
+            }}>
                 <DataGrid
                     rows={rows}
                     columns={columns}
