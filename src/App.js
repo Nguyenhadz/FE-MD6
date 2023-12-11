@@ -20,6 +20,7 @@ import ShowListTeacherFindByName from "./page/user/ShowListTeacherFindByName";
 import ShowListTeacherFindByMail from "./page/user/ShowListTeacherFindByMail";
 import RegisterForm from "./page/RegisterForm";
 import ForgotForm from "./page/ForgotForm";
+import ShowListCategoryQuiz from "./page/user/ShowListCategoryQuiz";
 
 function App() {
     return (
@@ -45,6 +46,7 @@ function App() {
                     <Route path={'/home/showListStudentFindByMail'} element={<ShowListStudentFindByMail/>}></Route>
                     <Route path={'/home/showListTeacherFindByName'} element={<ShowListTeacherFindByName/>}></Route>
                     <Route path={'/home/showListTeacherFindByMail'} element={<ShowListTeacherFindByMail/>}></Route>
+                    <Route path={'/home/showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>
                 </Route>
             </Routes>
         </div>
