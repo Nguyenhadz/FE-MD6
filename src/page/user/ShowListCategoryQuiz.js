@@ -93,9 +93,12 @@ export default function ShowListCategoryQuiz() {
                 <button className={"w-20 h-10 rounded-lg ml-5 hover:bg-amber-50"} onClick={handleSearch}>Search</button>
             </div>
             <div className={"flex items-center justify-center mt-5 mb-5"}>
-                <h1 className={"text-5xl text-orange-600 ml-[420px]"}><b>Danh sách danh mục bài thi</b></h1>
+                <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-2 ml-96 flex justify-center"}>Danh sách danh mục bài thi
+                </div>
+                <Link to={"/home/createCateQuiz"}>
                 <button className={"w-44 h-10 rounded-lg ml-56 bg-orange-400 hover:bg-red-500 text-white"}>Thêm mới danh mục
                 </button>
+                </Link>
             </div>
 
             <Box sx={{
