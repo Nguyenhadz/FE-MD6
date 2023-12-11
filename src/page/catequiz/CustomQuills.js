@@ -1,6 +1,8 @@
 import React from "react";
 import ReactQuill from "react-quill";
-import EditorToolbar, { modules, formats } from "./EditorToolbar";
+import "react-quill/dist/quill.snow.css";
+import "quill/dist/quill.snow.css";
+import "./CustomQuill.css"; // Tùy chỉnh CSS nếu cần
 
 function CustomQuills({ field, form, ...props }) {
     const handleChange = (value) => {
@@ -8,12 +10,12 @@ function CustomQuills({ field, form, ...props }) {
     };
 
     return (
-<div className="text-editor">
-    <EditorToolbar></EditorToolbar>
+<div className="w-3/5 bg-amber-50 rounded-3xl bg-opacity-90">
+    {/*<EditorToolbar></EditorToolbar>*/}
     <ReactQuill
-        theme="snow"
-        modules={modules}
-        formats={formats}
+        className={"w-full"}
+        // theme="snow"
+        // modules={modules}
         value={field.value || ''}
         onChange={handleChange}
         {...props}
