@@ -4,8 +4,6 @@ import {useDispatch} from "react-redux";
 import {createCateQuiz} from "../../service/CateQuizService";
 import {Button} from "react-bootstrap";
 import {Field, Form, Formik} from "formik";
-import CustomQuills from "./CustomQuills";
-
 
 export default function CreateCateQuiz() {
 
@@ -34,7 +32,7 @@ export default function CreateCateQuiz() {
                             <div className={"mt-4 ml-32 text-2xl font-bold font-serif text-orange-500"}>Tên</div>
                             <div className={"flex justify-center mt-4"}>
                                 <Field name={"name"}
-                                component={CustomQuills}
+
                                        theme="snow">
 
                                 </Field>
