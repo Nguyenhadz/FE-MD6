@@ -55,6 +55,16 @@ export default function NavbarAdmin() {
                          src={'https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/category-icon.png'}
                          alt={'...'}
                     />
+                    <p className={"ml-2 justify-center"}>Danh mục bài thi</p>
+                </div>
+            </Link>
+
+            <Link to={"/home/123"} style={{color: 'inherit', textDecoration: 'none'}}>
+                <div className={"w-full h-10 flex items-center hover:bg-blue-100"} >
+                    <img className={"ml-3 w-3 h-3 mr-1"}
+                         src={'https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/category-icon.png'}
+                         alt={'...'}
+                    />
                     <p className={"ml-2 justify-center"}>Danh mục câu hỏi</p>
                 </div>
             </Link>
@@ -114,7 +124,7 @@ export default function NavbarAdmin() {
                 <p className={"ml-2 justify-center"}>Đăng xuất</p>
             </div>
 
-            <div className={"w-full h-10 flex items-center hover:bg-blue-100 mt-[200%]"}>
+            <div className={"w-full h-10 flex items-center hover:bg-blue-100 mt-[180%]"}>
                 <img className={"ml-3 w-8 h-8 rounded-full"}
                      src={`${user.image}`}
                      alt={'...'}

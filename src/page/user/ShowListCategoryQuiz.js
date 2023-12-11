@@ -1,21 +1,23 @@
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {findStudentByMail, findStudentByName, getStudent} from "../../service/UserService";
+import {findStudentByMail, findStudentByName} from "../../service/UserService";
 import './ShowListStudent.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import Box from "@mui/material/Box";
 import {DataGrid} from "@mui/x-data-grid";
 import {showAllCategoryQuiz} from "../../service/CateQuizService";
+
 export default function ShowListCategoryQuiz() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(showAllCategoryQuiz())
-    },[])
+    }, [])
     const categories = useSelector(state => {
-        return Array.from(state.categories.categories)
+        console.log(state)
+        return Array.from(state.cateQuiz.cateQuizzes)
     })
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedField, setSelectedField] = useState('1'); // Giá trị mặc định
@@ -25,7 +27,7 @@ export default function ShowListCategoryQuiz() {
     // const navigate = useNavigate();
     // const dispatch = useDispatch();
     const handleSearch = () => {
-        if (selectedField === '1' ) {
+        if (selectedField === '1') {
             dispatch(findStudentByName(searchTerm))
             navigate('/home/showListStudentFindByName')
         } else {
@@ -55,11 +57,13 @@ export default function ShowListCategoryQuiz() {
             field: 'details',
             headerName: '',
             width: 150,
+            align: 'center',
             renderCell: (params) => (
                 <Link to={`/home/userDetail/${params.row.hiddenColumn}`}>
                     <button>Sửa</button>
                 </Link>
             ),
+
         },
     ];
 
@@ -74,8 +78,9 @@ export default function ShowListCategoryQuiz() {
         )
     }
 
-    return(
-        <div className="col-span-8 w-full items-center">
+    return (
+        <div className="col-span-8 w-full h-full items-center"
+             style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
             <div className={"w-full h-16 bg-white flex items-center relative"}>
                 <input className={"w-8/12 h-10 ml-4 border border-gray-300 rounded-lg pl-12"} type="text"
                        placeholder="Search..."
@@ -87,9 +92,27 @@ export default function ShowListCategoryQuiz() {
                 </select>
                 <button className={"w-20 h-10 rounded-lg ml-5 hover:bg-amber-50"} onClick={handleSearch}>Search</button>
             </div>
-            <div className={"flex items-center justify-center mt-5 mb-5"}><h1 className={"text-5xl"}>Danh sách danh mục bài thi</h1></div>
+            <div className={"flex items-center justify-center mt-5 mb-5"}>
+                <h1 className={"text-5xl text-orange-600 ml-[420px]"}><b>Danh sách danh mục bài thi</b></h1>
+                <button className={"w-44 h-10 rounded-lg ml-56 bg-orange-400 hover:bg-red-500 text-white"}>Thêm mới danh mục
+                </button>
+            </div>
 
-            <Box sx={{height: '630px', width: '40%', textAlign: 'center', margin: 'auto'}}>
+            <Box sx={{
+                height: '630px',
+                width: '45%',
+                textAlign: 'center',
+                margin: 'auto',
+                backgroundColor: 'white',
+                borderRadius: '30px',
+                "& .MuiDataGrid-root": {
+                    border: 'none',
+                    color: 'black',
+                    fontSize: '16px',
+                    padding: '20px',
+                },
+                boxShadow: '30px 30px 30px 30px rgba(0, 0, 0, 0.2)'
+            }}>
                 <DataGrid
                     rows={rows}
                     columns={columns}
@@ -101,6 +124,7 @@ export default function ShowListCategoryQuiz() {
                         },
                     }}
                     disableRowSelectionOnClick
+                    className={"text-7xl"}
                 />
             </Box>
         </div>
