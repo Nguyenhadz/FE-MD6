@@ -1,20 +1,18 @@
 import React from "react";
 import NavbarAdmin from "../component/NavbarAdmin";
-import AdminFindStudent from "./find/AdminFindStudent";
 import {Outlet} from "react-router-dom";
 
 
 
 export default function Home() {
     return (
-        <div>
-            <NavbarAdmin/>
-            {/*<AdminFindStudent></AdminFindStudent>*/}
-            <div style={{backgroundColor: 'whitesmoke', height: '200vh', margin: '0 0 0 170px'}}>
+        <div className="grid grid-cols-9 h-screen">
+            <div className="col-span-1">
+                    <NavbarAdmin/>
+            </div>
+            <div className="col-span-8 bg-gray-300 h-full">
                 <Outlet></Outlet>
-                {/*<Outlet></Outlet>*/}
             </div>
         </div>
-
     )
 }

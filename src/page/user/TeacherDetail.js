@@ -28,15 +28,13 @@ export default function TeacherDetail() {
     const monthLast = lastTimeVisit.getMonth() + 1;
     const yearLast = lastTimeVisit.getFullYear();
     return (
-        <div className="page-content page-container" id="page-content">
-            <div className="padding">
-                <div className="row container d-flex justify-content-center" style={{margin: '200px 0 0 270px'}}>
+        <div className={" flex justify-center items-center"}>
                     <div className="col-xl-6 col-md-12">
                         <div className="card user-card-full">
                             <div className="row m-l-0 m-r-0">
                                 <div className="col-sm-4 bg-c-lite-green user-profile">
                                     <div className="card-block text-center text-white">
-                                        <div className="m-b-25">
+                                        <div className={"mb-5 flex justify-center items-center"}>
                                             <img src={`${user.image}`}
                                                  className="img-radius" alt={'...'} style={{width: '140px', height: '140px', borderRadius: '50%', margin: '0 0 0 -5px'}}/>
                                         </div>
@@ -67,7 +65,7 @@ export default function TeacherDetail() {
                                             <div className="col-sm-6">
                                                 <div onClick={()=>{
                                                     navigate('/home/showListTeacher')
-                                                }}><button type="button" className="btn btn-primary">Trở Lại</button></div>
+                                                }}><button type="button" className={"w-20 h-10 bg-amber-600 rounded text-white"}>Trở Lại</button></div>
                                             </div>
                                             <div className="col-sm-6">
                                                 <ConfirmDeleteComponent
@@ -83,7 +81,5 @@ export default function TeacherDetail() {
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
     )
 }

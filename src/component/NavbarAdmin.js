@@ -1,9 +1,10 @@
-import './NavbarAdmin.css';
+// import './NavbarAdmin.css';
+import './style/tailwindNavbar.css';
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {getStudent, getStudentById, getUserByIdLogin, logout} from "../service/UserService";
+import {logout} from "../service/UserService";
 import {toast} from "react-toastify";
-import {useEffect} from "react";
+
 export default function NavbarAdmin() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -15,63 +16,102 @@ export default function NavbarAdmin() {
         // Dispatch action logout
         dispatch(logout());
         toast.success('\n' +
-            'Logout successfully\n', {
-        });
+            'Logout successfully\n', {});
         navigate('/')
     };
     return (
-        <div className={'navbar-vertical'}>
-            <div className="logo-image" onClick={()=>{
+        <div className={"w-full"}>
+            <div className={"w-fit h-5"}>
+            </div>
+
+            <div className={"w-fit h-16"} onClick={() => {
                 navigate('/home');
             }}>
-                <img src={'https://cf.quizizz.com/img/qfw/Logo.png'} alt={'...'} style={{width: '55%', height: '40px', margin: '20px 17px'}} />
+                <img className={"w-28 h-10 ml-3"} src={'https://cf.quizizz.com/img/qfw/Logo.png'} alt={'...'}/>
             </div>
-            <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px', margin: '10px 0 0 0' }} onClick={()=>{
-                navigate('/home');
-            }}>
-                <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-home-24%20(1).png?alt=media&token=8528cb79-3169-4d62-b5be-570c5f16e124'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
-                <p style={{margin: '10px 0 0 -35px', width: '150px', height: '15px', color: 'rgb(136 84 192 / var(--tw-text-opacity))', textAlign: 'center'}}>Trang chủ</p>
+
+            <div className={"w-full h-10 flex items-center hover:bg-blue-100"}
+                onClick={() => {
+                    navigate('/home');
+                }}>
+                <img className={"ml-3 w-4 h-4"}
+                    src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-home-24%20(1).png?alt=media&token=8528cb79-3169-4d62-b5be-570c5f16e124'}
+                    alt={'...'}
+                />
+                <p className={"ml-2 justify-center"}>Trang chủ</p>
             </div>
-            <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
-                <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-test-80.png?alt=media&token=d4488616-f14e-4df7-860e-30a2571628d3'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
-                <p style={{margin: '10px -8px', width: '150px', height: '15px'}}>Danh sách bài thi</p>
+
+            <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
+                <img className={"ml-3 w-4 h-4"}
+                     src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-test-80.png?alt=media&token=d4488616-f14e-4df7-860e-30a2571628d3'}
+                     alt={'...'}
+                />
+                <p className={"ml-2 justify-center"}>Danh sách bài thi</p>
             </div>
-            {(user.roles[0].authority === 'ADMIN' || user.roles[0].name === 'ADMIN') && (<div>
-                <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
-                    <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
-                    <p style={{margin: '10px 0px', width: '150px', height: '15px'}}><Link to={"/home/showListStudent"} style={{color: 'inherit', textDecoration: 'none'}}>Danh sách học viên</Link></p>
-                </div>
-                <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
-                    <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
-                    <p style={{margin: '10px 5px', width: '150px', height: '15px'}}><Link to={"/home/showListTeacher"} style={{color: 'inherit', textDecoration: 'none'}}>Danh sách giáo viên</Link></p>
-                </div>
-                <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
-                    <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
-                    <p style={{margin: '10px 0 0 -10px', width: '150px', height: '15px'}}><Link to={"/home/showTeacherPending"} style={{color: 'inherit', textDecoration: 'none'}}>Đăng kí giáo viên</Link></p>
-                </div>
-            </div>)}
-            {user.roles[0].authority === 'TEACHER' && (
-                <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
-                    <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'} alt={'...'} style={{margin: '15px 7px 0 15px', width: '15px', height: '15px', textAlign: 'center'}}/>
-                    <p style={{margin: '10px 0px', width: '150px', height: '15px'}}><Link to={"/home/showListStudent"} style={{color: 'inherit', textDecoration: 'none'}}>Danh sách học viên</Link></p>
-                </div>
-            )}
-            <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
-                <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-analytics-100.png?alt=media&token=5fd96729-bf20-4de0-a48d-0838dcd32bc9'} alt={'...'} style={{margin: '15px 6px 0 14px', width: '18px', height: '18px', textAlign: 'center'}}/>
-                <p style={{margin: '10px -12px', width: '100px', height: '15px'}}>Thống kê</p>
+
+            <Link to={"/home/showListStudent"} style={{color: 'inherit', textDecoration: 'none'}}>
+            <div className={"w-full h-10 flex items-center hover:bg-blue-100"} >
+                <img className={"ml-3 w-4 h-4"}
+                     src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'}
+                     alt={'...'}
+                />
+                <p className={"ml-2 justify-center"}>Danh sách học viên</p>
             </div>
-            <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
-                <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-user-account-25.png?alt=media&token=9e5cf6ec-764d-4d5d-860d-e0b96845474d'} alt={'...'} style={{margin: '15px 6px 0 14px', width: '18px', height: '18px', textAlign: 'center'}}/>
-                <p style={{margin: '10px 0px 0 -20px', width: '100px', height: '15px'}}>Hồ sơ</p>
+            </Link>
+
+            <Link to={"/home/showListTeacher"} style={{color: 'inherit', textDecoration: 'none'}}>
+            <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
+                <img className={"ml-3 w-4 h-4"}
+                     src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'}
+                     alt={'...'}
+                />
+                <p className={"ml-2 justify-center"}>Danh sách giáo viên</p>
             </div>
-            <div className="elementNav" style={{display: 'flex', textAlign: 'center', width: '100%', height: '40px'}}>
-                <img src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-logout-50.png?alt=media&token=1f6e0ff9-dbeb-4164-9db8-d2e4c27e04ac'} alt={'...'} style={{margin: '15px 8px 0 17px', width: '12px', height: '12px', textAlign: 'center'}}/>
-                <p style={{margin: '10px -8px', width: '100px', height: '15px'}} onClick={handleLogout}>Đăng xuất</p>
+            </Link>
+
+            <Link to={"/home/showTeacherPending"} style={{color: 'inherit', textDecoration: 'none'}}>
+            <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
+                <img className={"ml-3 w-4 h-4"}
+                     src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'}
+                     alt={'...'}
+                />
+                <p className={"ml-2 justify-center"}>Đăng ký giáo viên</p>
             </div>
-            <div className="info-login" style={{display: 'flex', alignItems: 'center'}}>
-                <img src={`${user.image}`} alt={'...'} style={{width: '40px', height: '40px', borderRadius: '50%', margin: '0 10px 0 10px'}}/>
-               <Link to={"/home/findUserById/" + user.id}> <p style={{textAlign: 'center', margin: '0 0 0 0'}}>{user.name}</p></Link>
+            </Link>
+            <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
+                <img className={"ml-3 w-4 h-4"}
+                     src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-analytics-100.png?alt=media&token=5fd96729-bf20-4de0-a48d-0838dcd32bc9'}
+                     alt={'...'}
+                />
+                <p className={"ml-2 justify-center"}>Thống kê</p>
             </div>
+
+            <Link to={"/home/findUserById/" + user.id} style={{color: 'inherit', textDecoration: 'none'}}>
+            <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
+                <img className={"ml-3 w-4 h-4"}
+                     src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-user-account-25.png?alt=media&token=9e5cf6ec-764d-4d5d-860d-e0b96845474d'}
+                     alt={'...'}
+                />
+                <p className={"ml-2 justify-center"}>Hồ sơ</p>
+            </div>
+            </Link>
+
+            <div className={"w-full h-10 flex items-center hover:bg-blue-100"} onClick={handleLogout}>
+                <img className={"ml-3 w-4 h-4"}
+                     src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-logout-50.png?alt=media&token=1f6e0ff9-dbeb-4164-9db8-d2e4c27e04ac'}
+                     alt={'...'}
+                />
+                <p className={"ml-2 justify-center"}>Đăng xuất</p>
+            </div>
+
+            <div className={"w-full h-10 flex items-center hover:bg-blue-100 mt-96"}>
+                <img className={"ml-3 w-8 h-8 rounded-full"}
+                     src={`${user.image}`}
+                     alt={'...'}
+                />
+                <p className={"ml-2 justify-center"}>{user.name}</p>
+            </div>
+
         </div>
     )
 }

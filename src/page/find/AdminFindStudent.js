@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import './SearchInput.css';
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {findStudentByMail, findStudentByName} from "../../service/UserService"; // File CSS cho component
@@ -29,16 +28,20 @@ export default function AdminFindStudent() {
     }, [selectedField]);
 
     return (
-        <div className="horizontalNav" style={{margin: '0 0 0 0', width: '100%',height: '65px', display: 'flex', position: 'fixed', zIndex: '10', backgroundColor: 'white'}}>
-            <div className="search-container">
-                <input type="text" placeholder="Search..." onChange={(e) => setSearchTerm(e.target.value)}/>
-                <FontAwesomeIcon icon={faSearch} className="search-icon" />
+        <div className="col-span-8 w-full items-center">
+            <div className={"w-full h-16 bg-white flex items-center relative"}>
+                <input className={"w-8/12 h-10 ml-4 border border-gray-300 rounded-lg pl-12"} type="text"
+                       placeholder="Search..."
+                       onChange={(e) => setSearchTerm(e.target.value)}/>
+                <FontAwesomeIcon icon={faSearch} className="absolute ml-10"/>
+                <select className={"ml-5"} value={selectedField} onChange={handleFieldChange}>
+                    <option value="1">Tìm kiếm theo tên</option>
+                    <option value="2">Tìm kiếm theo email</option>
+                </select>
+                <button className={"w-20 h-10 rounded-lg ml-5 hover:bg-amber-50"}
+                        onClick={handleSearch}>Search
+                </button>
             </div>
-            <select className="search-select" value={selectedField} onChange={handleFieldChange}>
-                <option value="1">Tìm kiếm theo tên</option>
-                <option value="2">Tìm kiếm theo email</option>
-            </select>
-            <button className="search-button" onClick={handleSearch}>Search</button>
         </div>
     )
 }
