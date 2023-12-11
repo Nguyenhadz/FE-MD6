@@ -10,7 +10,7 @@ export default function Home() {
             <div className="col-span-1">
                     <NavbarAdmin/>
             </div>
-            <div className="col-span-8 bg-gray-300">
+            <div className="col-span-8 bg-gray-300 h-full">
                 <Outlet></Outlet>
             </div>
         </div>

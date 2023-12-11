@@ -20,6 +20,9 @@ import ShowListTeacherFindByName from "./page/user/ShowListTeacherFindByName";
 import ShowListTeacherFindByMail from "./page/user/ShowListTeacherFindByMail";
 import RegisterForm from "./page/RegisterForm";
 import ForgotForm from "./page/ForgotForm";
+import LayoutManagerQuestion from "./page/question/LayoutManagerQuestion";
+import ListQuestion from "./page/question/ListQuestion";
+import CreateQuestion from "./page/question/CreateQuestion";
 
 function App() {
     return (
@@ -45,6 +48,10 @@ function App() {
                     <Route path={'/home/showListStudentFindByMail'} element={<ShowListStudentFindByMail/>}></Route>
                     <Route path={'/home/showListTeacherFindByName'} element={<ShowListTeacherFindByName/>}></Route>
                     <Route path={'/home/showListTeacherFindByMail'} element={<ShowListTeacherFindByMail/>}></Route>
+                    <Route path={'/home/LayoutManagerQuestion'} element={<LayoutManagerQuestion/>}>
+                        <Route path={'listQuestion'} element={<ListQuestion/>}></Route>
+                        <Route path={'createQuestion'} element={<CreateQuestion/>}></Route>
+                    </Route>
                 </Route>
             </Routes>
         </div>
