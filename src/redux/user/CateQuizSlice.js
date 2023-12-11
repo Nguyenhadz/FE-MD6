@@ -15,7 +15,7 @@ const CateQuizSlice = createSlice({
             state.cateQuizzes = action.payload
         })
         builder.addCase(showAllCategoryQuiz.fulfilled, (state, action) =>{
-            state.categories = action.payload
+            state.cateQuizzes = action.payload
         })
     }
 })
