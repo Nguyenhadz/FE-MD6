@@ -1,11 +1,17 @@
 import CustomQuill from "../../react-quill/CustomQuill";
 import {useFormik} from 'formik';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {createQuestion} from "../../service/QuestionService";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 export default function CreateQuestion() {
     const currentUser = useSelector((store) => {
         return store.users.currentUser
     })
+    // const [typeQ, setTypeQ] = useState(2)
+    // useEffect()
+    const dispatch = useDispatch();
     const categoryQuestions = [
         {
             id: 1,
@@ -109,7 +115,6 @@ export default function CreateQuestion() {
             },
         },
         onSubmit: (values) => {
-            // Xử lý logic khi form được gửi
             console.log("Form Values:", values);
             const {question, answer1, answer2, answer3, answer4} = values;
             console.log("Question:", question);
@@ -117,6 +122,9 @@ export default function CreateQuestion() {
             console.log("Answer 2:", answer2);
             console.log("Answer 3:", answer3);
             console.log("Answer 4:", answer4);
+            dispatch((createQuestion({
+                values : question
+            })))
         },
     });
     const answerCount = formik.values.question.typeQuestion.id === 1 ? [1, 2] : [1, 2, 3, 4] ;
