@@ -12,6 +12,7 @@ import {showAllCategoryQuiz} from "../../service/CateQuizService";
 export default function ShowListCategoryQuiz() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const parser = new DOMParser();
     useEffect(() => {
         dispatch(showAllCategoryQuiz())
     }, [])
@@ -71,8 +72,8 @@ export default function ShowListCategoryQuiz() {
     for (let i = 0; i < categories.length; i++) {
         rows.push({
                 id: i + 1,
-                name: categories[i].name,
-                description: categories[i].description,
+                name: (parser.parseFromString(categories[i].name, 'text/html')).body.firstChild.textContent,
+                description: (parser.parseFromString(categories[i].description, 'text/html')).body.firstChild.textContent,
                 hiddenColumn: categories[i].id,
             }
         )
