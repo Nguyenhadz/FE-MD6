@@ -30,7 +30,7 @@ export default function CreateCateQuiz() {
                 <div
                     className={"w-3/5 h-5/6 bg-gray-100 bg-opacity-70 p-4 justify-center rounded-3xl shadow-lg"}>
                     <div className={"text-4xl font-extrabold font-sans text-orange-500 mt-2 flex justify-center"}>Tạo
-                        Danh Mục Câu Hỏi
+                        Danh Mục Bài Thi
                         Của Bạn
                     </div>
                     <form onSubmit={formik.handleSubmit}>
