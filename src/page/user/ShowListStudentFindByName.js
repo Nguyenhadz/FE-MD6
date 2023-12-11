@@ -19,11 +19,9 @@ export default function ShowListStudentFindByName() {
     const dispatch = useDispatch();
     const handleSearch = () => {
         if (selectedField === '1' ) {
-            console.log('1' + searchTerm)
             dispatch(findStudentByName(searchTerm))
             navigate('/home/showListStudentFindByName')
         } else {
-            console.log('2' + searchTerm)
             dispatch(findStudentByMail(searchTerm))
             navigate('/home/showListStudentFindByMail')
         }
@@ -83,7 +81,6 @@ export default function ShowListStudentFindByName() {
         const hoursLast = lastTimeVisit.getHours();
         const minutesLast = lastTimeVisit.getMinutes()
         const millisecondsLast = lastTimeVisit.getMilliseconds()
-        console.log(lastTimeVisit)
         rows.push({
                 id: i + 1,
                 name: students[i].name,

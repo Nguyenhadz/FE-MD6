@@ -82,7 +82,6 @@ export default function ShowListTeacherFindByName() {
         const hoursLast = lastTimeVisit.getHours();
         const minutesLast = lastTimeVisit.getMinutes()
         const millisecondsLast = lastTimeVisit.getMilliseconds()
-        console.log(lastTimeVisit)
         rows.push({
                 id: i + 1,
                 name: teachers[i].name,

@@ -16,3 +16,10 @@ export const createCateQuiz = createAsyncThunk(
         return res.data
     }
 )
+export const showAllCategoryQuiz = createAsyncThunk(
+    'cateQuiz/findAll',
+    async () => {
+        const res = await customAxios.get('categoryQuizzes', axiosConfig);
+        return res.data;
+    }
+)
