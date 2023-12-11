@@ -1,17 +1,15 @@
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import React, {useEffect, useRef, useState} from "react";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 
 import {createCateQuiz} from "../../service/CateQuizService";
 import {Button} from "react-bootstrap";
 import {Field, Form, Formik} from "formik";
+import CustomQuills from "./CustomQuills";
 
 
 export default function CreateCateQuiz() {
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const dispatch = useDispatch();
 
     return (
@@ -35,35 +33,18 @@ export default function CreateCateQuiz() {
                         <Form>
                             <div className={"mt-4 ml-32 text-2xl font-bold font-serif text-orange-500"}>Tên</div>
                             <div className={"flex justify-center mt-4"}>
-                                <Field >
-                                    {({field, form}) => (
-                                        <ReactQuill
-                                            name={"name"}
-                                            className={"w-3/5 h-5/6 bg-blue-300 rounded-3xl bg-opacity-50 shadow-lg"}
-                                            value={field.value}
-                                            onChange={field.onChange}
-                                            modules={{toolbar: true}}
-                                            formats={['bold', 'italic', 'underline', 'list', 'bullet']}
-                                            placeholder="Nhập văn bản..."
-                                        />
-                                    )}
+                                <Field name={"name"}
+                                component={CustomQuills}
+                                       theme="snow">
+
                                 </Field>
                             </div>
                             <div className={"mt-12 ml-32 text-2xl font-bold font-serif text-orange-500"}>Mô tả</div>
                             <div className={"flex justify-center mt-4 h-3/6"}>
-                                <Field >
-                                    {({field, form}) => (
-                                        <ReactQuill
-                                            name={"description"}
-                                            className={"w-3/5 h-5/6 bg-blue-300 rounded-3xl bg-opacity-50  shadow-lg"}
-                                            value={field.value}
-                                            onChange={field.onChange}
-                                            modules={{toolbar: true}}
-                                            formats={['bold', 'italic', 'underline', 'list', 'bullet']}
-                                            placeholder="Nhập văn bản..."
-                                        />
+                                <Field name={"description"}
+                                       component={CustomQuills}
+                                       theme="snow">
 
-                                    )}
                                 </Field>
                             </div>
                             <div className={"mt-8 flex justify-center"}>
