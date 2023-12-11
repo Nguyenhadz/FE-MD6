@@ -22,10 +22,11 @@ import RegisterForm from "./page/RegisterForm";
 import ForgotForm from "./page/ForgotForm";
 import CreateCateQuiz from "./page/catequiz/CreateCateQuiz";
 import LayoutManagerQuestion from "./page/question/LayoutManagerQuestion";
-import ListQuestion from "./page/question/ListQuestion";
 import CreateQuestion from "./page/question/CreateQuestion";
 import ShowListCategoryQuiz from "./page/user/ShowListCategoryQuiz";
 import CreateCateQuestion from "./page/catequestion/CreateCateQuestion";
+import AutoHeightOverlayNoSnap from "./page/question/ListQuestion1";
+
 
 function App() {
     return (
@@ -54,7 +55,7 @@ function App() {
                     <Route path={'/home/showListTeacherFindByName'} element={<ShowListTeacherFindByName/>}></Route>
                     <Route path={'/home/showListTeacherFindByMail'} element={<ShowListTeacherFindByMail/>}></Route>
                     <Route path={'/home/LayoutManagerQuestion'} element={<LayoutManagerQuestion/>}>
-                        <Route path={'listQuestion'} element={<ListQuestion/>}></Route>
+                        <Route path={'listQuestion'} element={<AutoHeightOverlayNoSnap/>}></Route>
                         <Route path={'createQuestion'} element={<CreateQuestion/>}></Route>
                     </Route>
                     <Route path={'/home/showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>

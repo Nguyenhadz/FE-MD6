@@ -5,7 +5,8 @@ import {toast} from "react-toastify";
 
 const initialState = {
     questions: [],
-    question: {}
+    question: {},
+    createdQuestion: {}
 
 }
 
@@ -21,9 +22,7 @@ const questionSlide = createSlice({
         })
         builder.addCase(createQuestion.fulfilled, (state, action)=>{
             toast.success("Tạo câu hỏi mới thành công!", {})
-        })
-        builder.addCase(createQuestion.rejected, (state, action)=>{
-            toast.error("Tạo câu hỏi mới thất bại!", {})
+            state.createdQuestion = action.payload
         })
     }
 })
