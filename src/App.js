@@ -20,6 +20,7 @@ import ShowListTeacherFindByName from "./page/user/ShowListTeacherFindByName";
 import ShowListTeacherFindByMail from "./page/user/ShowListTeacherFindByMail";
 import RegisterForm from "./page/RegisterForm";
 import ForgotForm from "./page/ForgotForm";
+import CreateCateQuiz from "./page/catequiz/CreateCateQuiz";
 import LayoutManagerQuestion from "./page/question/LayoutManagerQuestion";
 import ListQuestion from "./page/question/ListQuestion";
 import CreateQuestion from "./page/question/CreateQuestion";
@@ -37,6 +38,7 @@ function App() {
                     <Route path={'/forgot'} element={<ForgotForm/>}></Route>
                 </Route>
                 <Route path={'/home'} element={<Home/>}>
+                    <Route path={'/home/createCateQuiz'} element={<CreateCateQuiz/>}></Route>
                     <Route path={'/home'} element={<AdminFindStudent/>}></Route>
                     <Route path={'/home/showListStudent'} element={<ShowListStudent/>}></Route>
                     <Route path={'/home/showListTeacher'} element={<ShowListTeacher/>}></Route>
