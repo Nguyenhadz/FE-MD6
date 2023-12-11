@@ -1,14 +1,20 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {showAllCategoryQuiz} from "../../service/CateQuizService";
+import {createCateQuiz, showAllCategoryQuiz} from "../../service/CateQuizService";
 
 const initialState = {
-    categories: [],
+    cateQuizzes: [],
+    cateQuiz: {}
+
 }
+
 const CateQuizSlice = createSlice({
-    name: 'categories',
+    name: 'cateQuiz',
     initialState,
     extraReducers: builder => {
-        builder.addCase( showAllCategoryQuiz.fulfilled, (state, action) =>{
+        builder.addCase(createCateQuiz.fulfilled, (state, action)=>{
+            state.cateQuizzes = action.payload
+        })
+        builder.addCase(showAllCategoryQuiz.fulfilled, (state, action) =>{
             state.categories = action.payload
         })
     }
