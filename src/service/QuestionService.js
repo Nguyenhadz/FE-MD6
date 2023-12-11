@@ -1,6 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import customAxios from "./Api";
-import axios from "axios";
 
 const user = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -27,8 +26,8 @@ export const findById = createAsyncThunk(
 )
 export const createQuestion = createAsyncThunk(
     'questions/createQuestion',
-    async ({values}) =>{
-        const res = await axios.post('http://localhost:8080/questions/', values);
+    async ({question}) =>{
+        const res = await customAxios.post('questions', question);
         return res.data
     }
 )

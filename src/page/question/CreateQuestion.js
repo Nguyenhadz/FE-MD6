@@ -2,8 +2,6 @@ import CustomQuill from "../../react-quill/CustomQuill";
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from "react-redux";
 import {createQuestion} from "../../service/QuestionService";
-import {useEffect, useState} from "react";
-import axios from "axios";
 
 export default function CreateQuestion() {
     const currentUser = useSelector((store) => {
@@ -12,6 +10,7 @@ export default function CreateQuestion() {
     // const [typeQ, setTypeQ] = useState(2)
     // useEffect()
     const dispatch = useDispatch();
+    let createdQuestion = {};
     const categoryQuestions = [
         {
             id: 1,
@@ -115,19 +114,21 @@ export default function CreateQuestion() {
             },
         },
         onSubmit: (values) => {
-            console.log("Form Values:", values);
             const {question, answer1, answer2, answer3, answer4} = values;
-            console.log("Question:", question);
-            console.log("Answer 1:", answer1);
-            console.log("Answer 2:", answer2);
-            console.log("Answer 3:", answer3);
-            console.log("Answer 4:", answer4);
-            dispatch((createQuestion({
-                values : question
-            })))
+            console.log(answer1)
+            console.log(answer2)
+            console.log(answer3)
+            console.log(answer4)
+            dispatch(createQuestion({question : question})).then(
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                createdQuestion = useSelector((store) => {
+                    return store.questionStore.createdQuestion
+            })
+                dispatch()
+            )
         },
     });
-    const answerCount = formik.values.question.typeQuestion.id === 1 ? [1, 2] : [1, 2, 3, 4] ;
+    const answerCount = formik.values.question.typeQuestion.id === 1 ? [1, 2] : [1, 2, 3, 4];
     const isCheckbox = formik.values.question.typeQuestion.id === 3;
     const isRatio = formik.values.question.typeQuestion.id === 1 || formik.values.question.typeQuestion.id === 2;
 
