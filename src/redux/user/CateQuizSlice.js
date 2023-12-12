@@ -1,5 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {createCateQuiz, deleteCateQuiz, showAllCategoryQuiz} from "../../service/CateQuizService";
+import {
+    createCateQuiz,
+    deleteCateQuiz,
+    findCateQuizById,
+    showAllCategoryQuiz,
+    updateCateQuiz
+} from "../../service/CateQuizService";
 import {toast} from "react-toastify";
 
 const initialState = {
@@ -17,13 +23,22 @@ const CateQuizSlice = createSlice({
             toast.success("Tạo Thành Công", {})
         })
         builder.addCase(createCateQuiz.rejected, (state, action)=>{
-            toast.error("Tạo Thất Bại", {})
+            toast.error("Trùng tên danh mục cũ", {})
         })
         builder.addCase(showAllCategoryQuiz.fulfilled, (state, action) =>{
             state.cateQuizzes = action.payload
         })
         builder.addCase(deleteCateQuiz.fulfilled, (state, action) =>{
             state.cateQuizzes = action.payload
+        })
+        builder.addCase(findCateQuizById.fulfilled, (state, action) =>{
+            state.cateQuiz = action.payload
+        })
+        builder.addCase(updateCateQuiz.fulfilled, (state, action) =>{
+            state.cateQuiz = action.payload
+        })
+        builder.addCase(updateCateQuiz.rejected, (state, action) =>{
+            toast.error("Trùng tên danh mục cũ", {})
         })
     }
 })

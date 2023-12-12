@@ -31,3 +31,17 @@ export const deleteCateQuiz = createAsyncThunk(
         return res.data;
     }
 )
+export const findCateQuizById = createAsyncThunk(
+    'cateQuiz/findCateQuizById',
+    async (id) => {
+        const res = await customAxios.get('categoryQuizzes/' + id, axiosConfig);
+        return res.data;
+    }
+)
+export const updateCateQuiz = createAsyncThunk(
+    'cateQuiz/updateQuiz',
+    async (value) => {
+        const res = await customAxios.put('categoryQuizzes/' + value.id, value, axiosConfig);
+        return res.data;
+    }
+)
