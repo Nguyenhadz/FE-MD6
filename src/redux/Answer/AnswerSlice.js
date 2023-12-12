@@ -24,7 +24,7 @@ const answersSlice = createSlice({
         })
         builder.addCase(findAnswersByQuestionId.fulfilled, (state, action)=>{
             console.log()
-            state.answers = action.payload
+            state.currentAnswers = action.payload
         })
         builder.addCase(deleteAnswersByQuestionId.fulfilled, (state, action)=>{
             state.answers = action.payload
