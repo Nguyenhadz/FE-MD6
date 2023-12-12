@@ -7,7 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import Box from "@mui/material/Box";
 import {DataGrid} from "@mui/x-data-grid";
-import {deleteCateQuiz, showAllCategoryQuiz} from "../../service/CateQuizService";
+import {deleteCateQuiz, findCateQuizById, showAllCategoryQuiz} from "../../service/CateQuizService";
 import ConfirmDeleteComponent from "../../component/ConfirmDeleteComponent";
 import {toast} from "react-toastify";
 
@@ -69,9 +69,15 @@ export default function ShowListCategoryQuiz() {
             width: 150,
             align: 'center',
             renderCell: (params) => (
-                <Link to={`/home/userDetail/${params.row.hiddenColumn}`}>
-                    <button>Sửa</button>
-                </Link>
+                <div>
+                {/*<Link to={`/home/updateCateQuiz/${params.row.hiddenColumn}`}>*/}
+                    <button onClick={()=>{
+                        dispatch(findCateQuizById(params.row.hiddenColumn)).then((res)=> {
+                            navigate(`/home/updateCateQuiz/${params.row.hiddenColumn}`)
+                        })
+
+                    }}>Sửa</button>
+                </div>
             ),
         },
         {
