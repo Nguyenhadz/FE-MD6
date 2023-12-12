@@ -70,7 +70,7 @@ export default function NavbarAdmin() {
             </Link>
 
             {((user.roles[0].authority === 'TEACHER') || (user.roles[0].authority === 'STUDENT')) &&
-                <Link to={"123"} style={{color: 'inherit', textDecoration: 'none'}}>
+                <Link to={"/home/layoutManagerQuestion/listQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
                     <div className={"w-full h-10 flex items-center hover:bg-blue-100"} >
                         <img className={"ml-3 w-4 h-4"}
                              src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'}

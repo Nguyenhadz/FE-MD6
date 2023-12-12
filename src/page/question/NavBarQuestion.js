@@ -15,7 +15,7 @@ export default function NavbarAdmin() {
                 <img className={"w-28 h-10 ml-3"} src={'https://cf.quizizz.com/img/qfw/Logo.png'} alt={'...'}/>
             </div>
 
-            <Link to={"/home/LayoutManagerQuestion/listQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
+            <Link to={"/home/layoutManagerQuestion/listQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
                 <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
                     <img className={"ml-3 w-3 h-3 mr-1"}
                          src={'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2Fchecklist_5063946.png?alt=media&token=c9a73284-de36-4317-9c67-5f18a063d5f1'}

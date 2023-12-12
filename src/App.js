@@ -59,7 +59,7 @@ function App() {
                     <Route path={'/home/showListStudentFindByMail'} element={<ShowListStudentFindByMail/>}></Route>
                     <Route path={'/home/showListTeacherFindByName'} element={<ShowListTeacherFindByName/>}></Route>
                     <Route path={'/home/showListTeacherFindByMail'} element={<ShowListTeacherFindByMail/>}></Route>
-                    <Route path={'/home/LayoutManagerQuestion'} element={<LayoutManagerQuestion/>}>
+                    <Route path={'/home/layoutManagerQuestion'} element={<LayoutManagerQuestion/>}>
                         <Route path={'listQuestion'} element={<ListQuestion/>}></Route>
                         <Route path={'createQuestion'} element={<CreateQuestion/>}></Route>
                         <Route path={'editQuestion/:id'} element={<EditQuestion/>}></Route>

@@ -150,7 +150,7 @@ export default function EditQuestion() {
                         <button type="submit" className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
                             Sửa câu hỏi
                         </button>
-                        <button type="button" onClick={() => navigate("/home/LayoutManagerQuestion/listQuestion")} className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
+                        <button type="button" onClick={() => navigate("/home/layoutManagerQuestion/listQuestion")} className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
                             Quay lại
                         </button>
                     </div>
