@@ -8,6 +8,7 @@ import CustomQuills from "./CustomQuills";
 import CustomQuill from "../../react-quill/CustomQuill";
 import React, {useEffect} from "react";
 import {getStudentById} from "../../service/UserService";
+import {toast} from "react-toastify";
 
 
 export default function UpdateCateQuiz() {
@@ -20,7 +21,6 @@ export default function UpdateCateQuiz() {
     // }, [])
 
     const cateQuiz = useSelector(state => {
-        console.log(state)
         return state.cateQuiz.cateQuiz
     })
 
@@ -32,6 +32,7 @@ export default function UpdateCateQuiz() {
         },
         onSubmit:(values,{ resetForm }) =>{
             dispatch(updateCateQuiz(values)).then(()=> {
+                // toast.success("Cập nhật thành công!", {})
                 navigate('/home/showListCateQuiz')
             });
         }
