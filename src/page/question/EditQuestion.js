@@ -2,10 +2,10 @@ import CustomQuill from "../../react-quill/CustomQuill";
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from "react-redux";
 import {createQuestion} from "../../service/QuestionService";
-import {createAnswer} from "../../service/AnswerService";
+import {createAnswer, deleteAnswersByQuestionId} from "../../service/AnswerService";
 import "./CreateQuestion.css"
 import {useNavigate} from "react-router-dom";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {showAllCateQuestion} from "../../service/CateQuestionService";
 import {findAllTypeQuestion} from "../../service/TypeQuestionService";
 import {findAllLevelQuestion} from "../../service/LevelQuestionService";
@@ -13,11 +13,9 @@ import {findAllLevelQuestion} from "../../service/LevelQuestionService";
 export default function EditQuestion() {
     const navigate = useNavigate();
     const currentQuestion = useSelector((store) => {
-        console.log(store.questionStore.currentQuestion)
         return store.questionStore.currentQuestion
     })
     const currentAnswers = useSelector((store) => {
-        console.log(store.answersStore.currentAnswers)
         return store.answersStore.currentAnswers
     })
     const dispatch = useDispatch();
@@ -44,18 +42,22 @@ export default function EditQuestion() {
             question: currentQuestion,
             answer1: currentAnswers[0],
             answer2: currentAnswers[1],
-            answer3: currentAnswers[2],
-            answer4: currentAnswers[3]
+            answer3: currentAnswers[2] || {content: '', status: 0, question: {id: currentQuestion.id}},
+            answer4: currentAnswers[3] || {content: '', status: 0, question: {id: currentQuestion.id}}
         },
         onSubmit: async (values) => {
             const {question, answer1, answer2, answer3, answer4} = values;
-            console.log(question)
+            console.log(values)
+            await dispatch(deleteAnswersByQuestionId(question.id))
             await dispatch(createQuestion({question: question}))
             await dispatch(createAnswer({answer: answer1}))
             await dispatch(createAnswer({answer: answer2}))
-            await dispatch(createAnswer({answer: answer3}))
-            await dispatch(createAnswer({answer: answer4}))
-            // toast("Sửa thành công", {})
+            console.log(question.typeQuestion.id)
+            if (question && question.typeQuestion && (question.typeQuestion.id === 2 || question.typeQuestion.id === 3)) {
+                console.log(answer3.question.id)
+                await dispatch(createAnswer({answer: answer3}))
+                await dispatch(createAnswer({answer: answer4}))
+            }
             navigate("/home/LayoutManagerQuestion/listQuestion")
         },
     });
@@ -93,7 +95,13 @@ export default function EditQuestion() {
                                                 type={"radio"}
                                                 name={"answer.status"}
                                                 checked={formik.values[`answer${index}`]?.status === 1}
-                                                onChange={() => formik.setFieldValue(`answer${index}.status`, 1)}
+                                                onChange={() => {
+                                                    // Trước khi đặt giá trị mới, đặt tất cả status về 0
+                                                    for (let i = 1; i <= 4; i++) {
+                                                        formik.setFieldValue(`answer${i}.status`, 0);
+                                                    }
+                                                    formik.setFieldValue(`answer${index}.status`, 1);
+                                                }}
                                             />
                                         )
                                     )}
@@ -113,13 +121,14 @@ export default function EditQuestion() {
                     <div className={"flex h-10 justify-around items-center mt-2 rounded-[1rem] bg-amber-200"}>
                         <select
                             name="question.categoryQuestion.id"
-                            value={formik.values.question.categoryQuestion?.id}
+                            value={formik.values.question.categoryQuestion.id}
                             onChange={formik.handleChange}
                             className={"rounded-[1rem] h-6 w-1/5 text-center"}
                         >
-                            {/*<option value={0}>-Category question-</option>*/}
-                            {categoryQuestions.map((category) => (
-                                <option key={category.id} value={category.id}>{category.name}</option>
+                            {categoryQuestions && categoryQuestions.length > 0 && categoryQuestions.map((category) => (
+                                <option key={category.id} value={category.id}>
+                                    <span dangerouslySetInnerHTML={{ __html: category.name }} />
+                                </option>
                             ))}
                         </select>
                         <select

@@ -113,7 +113,13 @@ export default function CreateQuestion() {
                                                 type={"radio"}
                                                 name={"answer.status"}
                                                 checked={formik.values[`answer${index}`].status === 1}
-                                                onChange={() => formik.setFieldValue(`answer${index}.status`, 1)}
+                                                onChange={() => {
+                                                    // Trước khi đặt giá trị mới, đặt tất cả status về 0
+                                                    for (let i = 1; i <= 4; i++) {
+                                                        formik.setFieldValue(`answer${i}.status`, 0);
+                                                    }
+                                                    formik.setFieldValue(`answer${index}.status`, 1);
+                                                }}
                                             />
                                         )
                                     )}
