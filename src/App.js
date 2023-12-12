@@ -58,6 +58,7 @@ function App() {
                     <Route path={'/home/LayoutManagerQuestion'} element={<LayoutManagerQuestion/>}>
                         <Route path={'listQuestion'} element={<AutoHeightOverlayNoSnap/>}></Route>
                         <Route path={'createQuestion'} element={<CreateQuestion/>}></Route>
+                        <Route path={'editQuestion/:id'} element={<EditQuestion/>}></Route>
                     </Route>
                     <Route path={'/home/showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>
                     <Route path={'/home/updateCateQuiz/:id'} element={<UpdateCateQuiz/>}></Route>
