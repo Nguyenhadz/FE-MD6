@@ -46,3 +46,10 @@ export const findQuestionsByCategory = createAsyncThunk(
         return res.data
     }
 )
+export const editQuestions = createAsyncThunk(
+    'questions/editQuestions',
+    async (data) =>{
+        const res = await customAxios.put('questions/' + data.id, data , axiosConfig);
+        return res.data
+    }
+)
