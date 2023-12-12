@@ -5,12 +5,14 @@ import {createQuestion} from "../../service/QuestionService";
 import {createAnswer} from "../../service/AnswerService";
 import {useEffect, useState} from "react";
 import "./CreateQuestion.css"
+import {useNavigate} from "react-router-dom";
 
 export default function CreateQuestion() {
     const [test,setTest] = useState(1)
     const currentUser = useSelector((store) => {
         return store.users.currentUser
     })
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const categoryQuestions =
         [
@@ -166,7 +168,8 @@ export default function CreateQuestion() {
                         </select>
                     </div>
                     <div className={"flex justify-center"}>
-                        <button type="submit" className={"bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900 w-24"}>Tạo câu hỏi</button>
+                        <button type="submit" className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>Tạo câu hỏi</button>
+                        <button type="button" onClick={() => navigate("/home/LayoutManagerQuestion/listQuestion")} className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>Quay lại</button>
                     </div>
                 </form>
             </div>
