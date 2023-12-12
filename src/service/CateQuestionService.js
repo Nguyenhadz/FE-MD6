@@ -24,3 +24,11 @@ export const showAllCateQuestion = createAsyncThunk(
         return res.data
     }
 )
+export const deleteCateQuestion = createAsyncThunk(
+    'cateQuestion/delete',
+    async (id) =>{
+        await customAxios.delete('/categoryQuestion/' + id, axiosConfig);
+        const res = await customAxios.get('categoryQuestion/sort', axiosConfig);
+        return res.data
+    }
+)

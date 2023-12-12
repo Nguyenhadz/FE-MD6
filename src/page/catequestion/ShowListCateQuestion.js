@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import {DataGrid} from "@mui/x-data-grid";
 import {deleteCateQuiz, findCateQuizById, showAllCategoryQuiz} from "../../service/CateQuizService";
 import {toast} from "react-toastify";
-import {showAllCateQuestion} from "../../service/CateQuestionService";
+import {deleteCateQuestion, showAllCateQuestion} from "../../service/CateQuestionService";
 
 export default function ShowListCateQuestion() {
     const dispatch = useDispatch();
@@ -40,7 +40,7 @@ export default function ShowListCateQuestion() {
     }, [selectedField]);
 
     const handleDelete = (id) => {
-        dispatch(deleteCateQuiz(id)).then(()=>{
+        dispatch(deleteCateQuestion(id)).then(()=>{
                 toast.success('Xoá danh mục thành công!')
             }
         )

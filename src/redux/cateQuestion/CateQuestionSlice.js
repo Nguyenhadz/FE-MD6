@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {toast} from "react-toastify";
-import {createCateQuestion, showAllCateQuestion} from "../../service/CateQuestionService";
+import {createCateQuestion, deleteCateQuestion, showAllCateQuestion} from "../../service/CateQuestionService";
 
 const initialState = {
     cateQuestions: [],
@@ -15,6 +15,13 @@ const CateQuestionSlice = createSlice({
         })
         builder.addCase(showAllCateQuestion.fulfilled, (state, action)=>{
             state.cateQuestions = action.payload
+        })
+        builder.addCase(deleteCateQuestion.fulfilled, (state, action)=>{
+            state.cateQuestions = action.payload
+            toast.success('Xoá danh mục thành công', {})
+        })
+        builder.addCase(deleteCateQuestion.rejected, (state, action)=>{
+            toast.error('Không thể xoá danh mục', {})
         })
     }
 })
