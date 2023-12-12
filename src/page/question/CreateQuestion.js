@@ -82,7 +82,9 @@ export default function CreateQuestion() {
 
     return (
         <>
-            <div className={"rounded-[1rem] w-10/12 bg-purple-100 p-2 justify-center font-bold text-1xl"}>
+            <div className={"rounded-[1rem] w-10/12 bg-purple-100 p-2 justify-center font-bold text-1xl h-max"}
+                 style={{boxShadow: '30px 30px 30px 30px rgba(0, 0, 0, 0.2)'}}
+            >
                 <form onSubmit={formik.handleSubmit}>
                     <div className={"content-question w-full bg-amber-300 rounded-[0.5rem] p-2"}>
                         <span>Câu hỏi:</span>

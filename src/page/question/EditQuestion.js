@@ -13,7 +13,7 @@ export default function EditQuestion() {
     const currentUser = useSelector((store) => {
         return store.users.currentUser
     })
-    dispatch(findAnswerByQuestionId({id: id}))
+
     // const currentAnswer = useSelector((store) => {return store.answersStore.currentAnswer})
     // console.log(currentAnswer)
     // console.log(currentQuestion)
@@ -71,7 +71,7 @@ export default function EditQuestion() {
     return (
         <>
             <div className={"rounded-[1rem] w-10/12 bg-purple-100 p-2 justify-center font-bold text-1xl"}>
-                hihi
+
             </div>
         </>
     );
