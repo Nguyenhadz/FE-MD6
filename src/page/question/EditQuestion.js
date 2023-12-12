@@ -9,9 +9,11 @@ import {useNavigate} from "react-router-dom";
 export default function EditQuestion() {
     const navigate = useNavigate();
     const currentQuestion = useSelector((store) => {
+        console.log(store.questionStore.currentQuestion)
         return store.questionStore.currentQuestion
     })
     const currentAnswers = useSelector((store) => {
+        console.log(store.answersStore.currentAnswers)
         return store.answersStore.currentAnswers
     })
     const dispatch = useDispatch();

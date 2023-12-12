@@ -53,3 +53,18 @@ export const editQuestions = createAsyncThunk(
         return res.data
     }
 )
+export const deleteQuestions = createAsyncThunk(
+    'questions/deleteQuestions',
+    async (id) =>{
+         await customAxios.delete('questions/' + id , axiosConfig);
+        const res = await customAxios.get('questions', axiosConfig);
+        return res.data
+    }
+)
+export const findAllQuestionByUser = createAsyncThunk(
+    'questions/findAllQuestionByUser',
+    async (id) =>{
+        const res = await customAxios.get('questions/user/' + id, axiosConfig);
+        return res.data
+    }
+)
