@@ -48,20 +48,44 @@ import "react-quill/dist/quill.snow.css";
 import "quill/dist/quill.snow.css";
 import "./CustomQuill.css"; // Tùy chỉnh CSS nếu cần
 
-function CustomQuill({ field, form, ...props }) {
+function CustomQuill({field, form, ...props}) {
     const handleChange = (value) => {
         form.setFieldValue(field.name, value);
     };
 
     const modules = {
-        toolbar: [
-            [{ header: [1, 2, false] }],
-            ["image"],
-            ["clean"],
-        ],
+        toolbar: {
+            container: [
+                [
+                    {header: "1"},
+                    {header: "2"},
+                    // { font: [] }
+                ],
+                // [{ size: [] }],
+                [
+                    "bold",
+                    "italic",
+                    "underline",
+                    // "strike",
+                    // "blockquote"
+                ],
+                // [
+                //     { list: "ordered" },
+                //     { list: "bullet" },
+                //     { indent: "-1" },
+                //     { indent: "+1" },
+                // ],
+                // ["link", "image", "video"],
+                // ["code-block"],
+                ["clean"],
+            ],
+        },
+        clipboard: {
+            matchVisual: false,
+        },
     };
 
-    const formats = ["header", "image"];
+    const formats = ["header", "bold", "italic", "underline", "clean"];
 
     return (
         <ReactQuill

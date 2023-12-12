@@ -7,18 +7,12 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import {v4} from "uuid";
 import {IoIosMail} from "react-icons/io";
-import {keyboard} from "@testing-library/user-event/dist/keyboard";
 import {storage} from "../../firebase/FireBase";
 import {Button} from "react-bootstrap";
-import {FormControl, FormGroup, FormLabel} from "react-bootstrap";
-import {
-    ref,
-    uploadBytes,
-    getDownloadURL
-} from "firebase/storage";
-import {toast} from "react-toastify";
+import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 
 export default function UpdateUser() {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {id} = useParams();
@@ -34,17 +28,18 @@ export default function UpdateUser() {
         return state.users.user
     })
 
-    const uploadFile = () => {
-        if (image === null) return
+    const uploadFile = async () => {
+        if (image === null) return;
         const imageRef = ref(storage, `kien/${image.name + v4()}`);
-        uploadBytes(imageRef, image).then((snapshot) => {
-            getDownloadURL(snapshot.ref).then((url) => {
-
-                setUploadedImageUrl(url); // Lưu URL sau khi upload thành công vào state mới
-                console.log("image uploaded successfully", url);
-
-            });
-        });
+        try {
+            const snapshot = await uploadBytes(imageRef, image);
+            const url = await getDownloadURL(snapshot.ref);
+            setUploadedImageUrl(url); // Lưu URL sau khi upload thành công vào state mới
+            console.log("image uploaded successfully", url);
+            return url;
+        } catch (error) {
+            console.error("Error uploading image:", error);
+        }
     };
     const handleImageClick = () => {
         const input = document.querySelector("input[name='image']");
@@ -80,7 +75,11 @@ export default function UpdateUser() {
             .required("Không được để trống")
     })
 
-
+    const handleSubmit = async (values) => {
+        const url = await uploadFile(); // Chờ cho uploadFile hoàn thành và lấy URL trả về
+        console.log(url); // Kiểm tra giá trị URL được trả về từ uploadFile
+        dispatch(updateUser({...values, image: url}));
+    }
     return (
         <>
             <div className={"flex flex-col justify-center"}>
@@ -106,9 +105,9 @@ export default function UpdateUser() {
                                         enableReinitialize={true}
                                         validationSchema={validate}
                                         onSubmit={(values) => {
-                                            dispatch((updateUser(values)))
-                                            console.log("save", uploadedImageUrl);
-                                            navigate("/home")
+                                            handleSubmit(values).then(r => {
+                                                navigate("/home")
+                                            })
                                         }}>
                                     <Form>
                                         <div className={"justify-center flex"}>
@@ -121,11 +120,9 @@ export default function UpdateUser() {
                                             <img onClick={handleImageClick}
                                                  className={"h-24 w-24 rounded-full "} src={file ? file : user.image}
                                                  alt={"lỗi"}/>
-                                        </div>
-                                        <div className={"justify-center flex"}>
-                                            <Button
-                                                className={"mt-2 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-2 rounded"}
-                                                onClick={uploadFile}>Upload File</Button>
+                                            <div className={"justify-center flex"}>
+
+                                            </div>
                                         </div>
 
                                         <div>
@@ -146,8 +143,10 @@ export default function UpdateUser() {
 
                                         </div>
                                         <Field type={"hidden"} name={"image"} value={uploadedImageUrl}></Field>
-                                        <Button type="submit"
-                                                className="mt-4 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-2 rounded ml-8 mb-4">Save</Button>
+                                        <div className={"justify-center flex"}>
+                                            <Button type="submit"
+                                                    className="mt-4 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-2 rounded ml-8 mb-4 justify-center flex w-25 h-25">Save</Button>
+                                        </div>
                                     </Form>
                                 </Formik>
                             </div>}
@@ -197,9 +196,11 @@ export default function UpdateUser() {
                                             <ErrorMessage name="confirmPassword"></ErrorMessage>
                                         </div>
                                     </div>
-                                    <Button type="submit"
-                                            className="mt-4 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-2 rounded ml-8 mb-4">Save
-                                    </Button>
+                                    <div className={"justify-center flex"}>
+                                        <Button type="submit"
+                                                className="mt-4 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-2 rounded ml-8 mb-4 w-25 h-25">Save
+                                        </Button>
+                                    </div>
                                 </Form>
                             </Formik>
                         </div>
