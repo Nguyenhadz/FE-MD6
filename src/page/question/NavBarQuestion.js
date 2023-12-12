@@ -87,6 +87,7 @@ const StyledTreeItem = React.forwardRef(function StyledTreeItem(props, ref) {
 });
 
 export default function NavBarQuestion() {
+
     return (
         <TreeView
             aria-label="gmail"
@@ -96,7 +97,7 @@ export default function NavBarQuestion() {
             defaultEndIcon={<div style={{ width: 24 }} />}
             sx={{ height: 500, flexGrow: 1, overflowY: 'auto', marginTop: '144px', padding: '10px'}}
         >
-            <StyledTreeItem nodeId="1" labelText="All quiz" labelIcon={QuizOutlinedIcon} />
+            <StyledTreeItem nodeId="1" labelText="My question" labelIcon={QuizOutlinedIcon}/>
             <StyledTreeItem nodeId="2" labelText="All quiz" labelIcon={QuizOutlinedIcon} />
             <StyledTreeItem nodeId="3" labelText="All quiz" labelIcon={QuizOutlinedIcon} />
             <StyledTreeItem nodeId="4" labelText="All quiz" labelIcon={QuizOutlinedIcon} />
