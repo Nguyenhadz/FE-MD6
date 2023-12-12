@@ -23,3 +23,11 @@ export const showAllCategoryQuiz = createAsyncThunk(
         return res.data;
     }
 )
+export const deleteCateQuiz = createAsyncThunk(
+    'cateQuiz/delete',
+    async (id) => {
+        await customAxios.delete('categoryQuizzes/' + id, axiosConfig);
+        const res = await customAxios.get('categoryQuizzes', axiosConfig);
+        return res.data;
+    }
+)

@@ -23,7 +23,7 @@ import ForgotForm from "./page/ForgotForm";
 import CreateCateQuiz from "./page/catequiz/CreateCateQuiz";
 import LayoutManagerQuestion from "./page/question/LayoutManagerQuestion";
 import CreateQuestion from "./page/question/CreateQuestion";
-import ShowListCategoryQuiz from "./page/user/ShowListCategoryQuiz";
+import ShowListCategoryQuiz from "./page/catequiz/ShowListCategoryQuiz";
 import CreateCateQuestion from "./page/catequestion/CreateCateQuestion";
 import AutoHeightOverlayNoSnap from "./page/question/ListQuestion1";
 

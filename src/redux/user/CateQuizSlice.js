@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {createCateQuiz, showAllCategoryQuiz} from "../../service/CateQuizService";
+import {createCateQuiz, deleteCateQuiz, showAllCategoryQuiz} from "../../service/CateQuizService";
 import {toast} from "react-toastify";
 
 const initialState = {
@@ -20,6 +20,9 @@ const CateQuizSlice = createSlice({
             toast.error("Tạo Thất Bại", {})
         })
         builder.addCase(showAllCategoryQuiz.fulfilled, (state, action) =>{
+            state.cateQuizzes = action.payload
+        })
+        builder.addCase(deleteCateQuiz.fulfilled, (state, action) =>{
             state.cateQuizzes = action.payload
         })
     }
