@@ -59,7 +59,7 @@ export default function NavbarAdmin() {
                 </div>
             </Link>
 
-            <Link to={"/home/123"} style={{color: 'inherit', textDecoration: 'none'}}>
+            <Link to={"/home/showListCateQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
                 <div className={"w-full h-10 flex items-center hover:bg-blue-100"} >
                     <img className={"ml-3 w-3 h-3 mr-1"}
                          src={'https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/category-icon.png'}

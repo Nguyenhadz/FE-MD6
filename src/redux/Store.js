@@ -5,6 +5,7 @@ import RemoveFromLocalStorageMiddleware from "./RemoveFromLocalStorageMiddleware
 import cateQuizReducer from "./user/CateQuizSlice";
 import questionSlide from "./question/QuestionSlide";
 import answerReducer from "./Answer/AnswerSlice";
+import cateQuestionReducer from "./cateQuestion/CateQuestionSlice";
 const middleware = [LocalStorageMiddleware, RemoveFromLocalStorageMiddleware];
 
 export const store = configureStore({
@@ -13,7 +14,8 @@ export const store = configureStore({
         questionStore : questionSlide,
         // user: userReducer,
         cateQuiz: cateQuizReducer,
-        answersStore: answerReducer
+        answersStore: answerReducer,
+        cateQuestions: cateQuestionReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(middleware),

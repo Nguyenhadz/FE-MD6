@@ -36,6 +36,7 @@ const CateQuizSlice = createSlice({
         })
         builder.addCase(updateCateQuiz.fulfilled, (state, action) =>{
             state.cateQuiz = action.payload
+            toast.success("Cập nhật thành công!", {})
         })
         builder.addCase(updateCateQuiz.rejected, (state, action) =>{
             toast.error("Trùng tên danh mục cũ", {})

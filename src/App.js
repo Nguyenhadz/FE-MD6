@@ -27,6 +27,7 @@ import ShowListCategoryQuiz from "./page/catequiz/ShowListCategoryQuiz";
 import CreateCateQuestion from "./page/catequestion/CreateCateQuestion";
 import AutoHeightOverlayNoSnap from "./page/question/ListQuestion1";
 import UpdateCateQuiz from "./page/catequiz/UpdateCateQuiz";
+import ShowListCateQuestion from "./page/catequestion/ShowListCateQuestion";
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
                     </Route>
                     <Route path={'/home/showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>
                     <Route path={'/home/updateCateQuiz/:id'} element={<UpdateCateQuiz/>}></Route>
+                    <Route path={'/home/showListCateQuestion'} element={<ShowListCateQuestion/>}></Route>
                 </Route>
             </Routes>
         </div>
