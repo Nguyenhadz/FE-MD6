@@ -1,13 +1,15 @@
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {findStudentByMail, findStudentByName} from "../../service/UserService";
-import './ShowListStudent.css';
+import {deleteUser, findStudentByMail, findStudentByName} from "../../service/UserService";
+import '../user/ShowListStudent.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import Box from "@mui/material/Box";
 import {DataGrid} from "@mui/x-data-grid";
-import {showAllCategoryQuiz} from "../../service/CateQuizService";
+import {deleteCateQuiz, showAllCategoryQuiz} from "../../service/CateQuizService";
+import ConfirmDeleteComponent from "../../component/ConfirmDeleteComponent";
+import {toast} from "react-toastify";
 
 export default function ShowListCategoryQuiz() {
     const dispatch = useDispatch();
@@ -40,6 +42,13 @@ export default function ShowListCategoryQuiz() {
     useEffect(() => {
     }, [selectedField]);
 
+    const handleDelete = (id) => {
+        dispatch(deleteCateQuiz(id)).then(()=>{
+            toast.success('Xoá danh mục thành công!')
+            }
+        )
+    };
+
     const columns = [
         {field: 'id', headerName: 'STT', width: 90},
         {
@@ -55,7 +64,7 @@ export default function ShowListCategoryQuiz() {
             editable: false,
         },
         {
-            field: 'details',
+            field: 'update',
             headerName: '',
             width: 150,
             align: 'center',
@@ -64,7 +73,40 @@ export default function ShowListCategoryQuiz() {
                     <button>Sửa</button>
                 </Link>
             ),
+        },
+        {
+            field: 'delete',
+            headerName: '',
+            width: 150,
+            align: 'center',
+            renderCell: (params) => (
+                <button
+                    onClick={() => {
+                        toast.warning(
+                            <>
+                                <div>
+                                    <p>Bạn có chắc chắn muốn xóa?</p>
+                                    <button className={"w-20 h-10 bg-amber-600 rounded text-white"} type="submit" style={{margin: '20px'}} onClick={() => {handleDelete(params.row.hiddenColumn); toast.dismiss();}}>Xác nhận</button>
+                                    <button className={"w-20 h-10 bg-amber-600 rounded text-white"} type="submit" style={{margin: '20px'}} onClick={() => toast.dismiss()}>Hủy bỏ</button>
+                                </div>
+                            </>,
+                            {
+                                position: 'top-center',
+                                autoClose: false,
+                                hideProgressBar: false,
+                                closeOnClick: false,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                closeButton: false,
+                            }
+                        );
+                    }}
+                >
+                    Xoá
+                </button>
 
+            ),
         },
     ];
 
@@ -104,7 +146,7 @@ export default function ShowListCategoryQuiz() {
 
             <Box sx={{
                 height: '630px',
-                width: '45%',
+                width: '50%',
                 textAlign: 'center',
                 margin: 'auto',
                 backgroundColor: 'white',
