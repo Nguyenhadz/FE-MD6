@@ -6,7 +6,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {useDispatch, useSelector} from "react-redux";
-import {findAllAnswer, findAnswerByQuestionId} from "../../service/AnswerService";
+import {findAllAnswer, findAnswersByQuestionId} from "../../service/AnswerService";
 import {findAll, findByContent, findById} from "../../service/QuestionService";
 import {Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
@@ -143,7 +143,7 @@ export default function ListQuestion() {
                                     <Button className={"btn btn-outline-warning bg-amber-100 "}
                                             onClick={async () => {
                                                 await dispatch(findById({id: question.id}))
-                                                await dispatch(findAnswerByQuestionId({id: question.id}))
+                                                await dispatch(findAnswersByQuestionId({id: question.id}))
                                                 navigate("/home/LayoutManagerQuestion/editQuestion/" + question.id)
                                             }}>Sửa</Button>
                                 </Typography>
