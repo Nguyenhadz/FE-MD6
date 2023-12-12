@@ -29,7 +29,7 @@ const questionSlide = createSlice({
             state.currentQuestion = action.payload
         })
         builder.addCase(createQuestion.fulfilled, (state, action)=>{
-            toast.success("Tạo câu hỏi mới thành công!", {})
+            toast("Thành công!", {})
             state.createdQuestion = action.payload
         })
         builder.addCase(findByContent.fulfilled, (state, action)=>{
