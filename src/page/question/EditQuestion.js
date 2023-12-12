@@ -2,15 +2,17 @@ import CustomQuill from "../../react-quill/CustomQuill";
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from "react-redux";
 import {createQuestion} from "../../service/QuestionService";
-import {createAnswer, findAnswerByQuestionId} from "../../service/AnswerService";
-import {useEffect, useState} from "react";
+import {createAnswer} from "../../service/AnswerService";
 import "./CreateQuestion.css"
-import {useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export default function EditQuestion() {
-    const [test,setTest] = useState(1)
-    const currentUser = useSelector((store) => {
-        return store.users.currentUser
+    const navigate = useNavigate();
+    const currentQuestion = useSelector((store) => {
+        return store.questionStore.currentQuestion
+    })
+    const currentAnswers = useSelector((store) => {
+        return store.answersStore.currentAnswers
     })
     const dispatch = useDispatch();
 
@@ -35,50 +37,27 @@ export default function EditQuestion() {
         ]
     const formik = useFormik({
         initialValues: {
-            question: {content: '', status: 1, categoryQuestion: {id: 1,}, levelQuestion: {id: 1,}, typeQuestion: {id: 2,}, user: {id: currentUser.id,}},
-            answer1: {content: '', status: 0, question: {id: 0}},
-            answer2: {content: '', status: 0, question: {id: 0}},
-            answer3: {content: '', status: 0, question: {id: 0}},
-            answer4: {content: '', status: 0, question: {id: 0}}
+            question: currentQuestion,
+            answer1: currentAnswers[0],
+            answer2: currentAnswers[1],
+            answer3: currentAnswers[2],
+            answer4: currentAnswers[3]
         },
         onSubmit: async (values) => {
-            const {question} = values;
+            const {question, answer1, answer2, answer3, answer4} = values;
+            console.log(question)
             await dispatch(createQuestion({question: question}))
+            await dispatch(createAnswer({answer: answer1}))
+            await dispatch(createAnswer({answer: answer2}))
+            await dispatch(createAnswer({answer: answer3}))
+            await dispatch(createAnswer({answer: answer4}))
+            // toast("Sửa thành công", {})
+            navigate("/home/LayoutManagerQuestion/listQuestion")
         },
     });
-    const createdQuestion = useSelector((store) => {return store.questionStore.createdQuestion});
-    useEffect(() => {
-        console.log(test)
-    }, [test])
-    useEffect(() => {
-        setTest(1)
-    },[])
-    useEffect(() => {
-        formik.values.answer1.question.id = createdQuestion.id
-        formik.values.answer2.question.id = createdQuestion.id
-        formik.values.answer3.question.id = createdQuestion.id
-        formik.values.answer4.question.id = createdQuestion.id
-        // console.log(formik.values.answer1)
-        // console.log(formik.values.answer2)
-        // console.log(formik.values.answer3)
-        // console.log(formik.values.answer4)
-        console.log(createdQuestion)
-        console.log(test)
-        if (createdQuestion !== {}) {
-            if (test !== 0) {
-                dispatch(createAnswer({answer: formik.values.answer1})).then(()=> console.log(1))
-                dispatch(createAnswer({answer: formik.values.answer2})).then(()=> console.log(2))
-                if (test === 2 || test === 3) {
-                    dispatch(createAnswer({answer: formik.values.answer3})).then(()=> console.log(3))
-                    dispatch(createAnswer({answer: formik.values.answer4})).then(()=> console.log(4))
-                }
-                formik.resetForm()
-            }
-        }
-    }, [createdQuestion])
-    const answerCount = formik.values.question.typeQuestion.id === 1 ? [1, 2] : [1, 2, 3, 4];
-    const isCheckbox = formik.values.question.typeQuestion.id === 3;
-    const isRatio = formik.values.question.typeQuestion.id === 1 || formik.values.question.typeQuestion.id === 2;
+    const answerCount = formik.values.question.typeQuestion?.id === 1 ? [1, 2] : [1, 2, 3, 4];
+    const isCheckbox = formik.values.question.typeQuestion?.id === 3;
+    const isRatio = formik.values.question.typeQuestion?.id === 1 || formik.values.question.typeQuestion?.id === 2;
     return (
         <>
             <div className={"rounded-[1rem] w-10/12 bg-purple-100 p-2 justify-center font-bold text-1xl h-max"}
@@ -87,7 +66,7 @@ export default function EditQuestion() {
                 <form onSubmit={formik.handleSubmit}>
                     <div className={"content-question w-full bg-amber-300 rounded-[0.5rem] p-2"}>
                         <span>Câu hỏi:</span>
-                        <CustomQuill field={{name: "question.content", value: formik.values.question.content}}
+                        <CustomQuill field={{name: "question.content", value: formik.values.question?.content}}
                                      form={formik}></CustomQuill>
                     </div>
                     <div className={"answer-question flex justify-around w-full mt-2 p-2"}>
@@ -100,7 +79,7 @@ export default function EditQuestion() {
                                             // className={"rounded-[0.5rem] bg-amber-200"}
                                             type={"checkbox"}
                                             name={`answer${index}.status`}
-                                            checked={formik.values[`answer${index}`].status === 1}
+                                            checked={formik.values[`answer${index}`]?.status === 1}
                                             onChange={(e) => formik.setFieldValue(`answer${index}.status`, e.target.checked ? 1 : 0)}
                                         />
                                     ) : (
@@ -109,7 +88,7 @@ export default function EditQuestion() {
                                                 // className={"rounded-[0.5rem] bg-amber-200"}
                                                 type={"radio"}
                                                 name={"answer.status"}
-                                                checked={formik.values[`answer${index}`].status === 1}
+                                                checked={formik.values[`answer${index}`]?.status === 1}
                                                 onChange={() => formik.setFieldValue(`answer${index}.status`, 1)}
                                             />
                                         )
@@ -119,7 +98,7 @@ export default function EditQuestion() {
                                     <CustomQuill
                                         field={{
                                             name: `answer${index}.content`,
-                                            value: formik.values[`answer${index}`].content
+                                            value: formik.values[`answer${index}`]?.content
                                         }}
                                         form={formik}>
                                     </CustomQuill>
@@ -130,7 +109,7 @@ export default function EditQuestion() {
                     <div className={"flex h-10 justify-around items-center mt-2 rounded-[1rem] bg-amber-200"}>
                         <select
                             name="question.categoryQuestion.id"
-                            value={formik.values.question.categoryQuestion.id}
+                            value={formik.values.question.categoryQuestion?.id}
                             onChange={formik.handleChange}
                             className={"rounded-[1rem] h-6 w-1/5 text-center"}
                         >
@@ -141,11 +120,10 @@ export default function EditQuestion() {
                         </select>
                         <select
                             name="question.typeQuestion.id"
-                            value={formik.values.question.typeQuestion.id}
+                            value={formik.values.question.typeQuestion?.id}
                             onChange={(e) => {
                                 formik.handleChange(e);
                                 formik.setFieldValue('question.typeQuestion.id', parseInt(e.target.value));
-                                setTest(parseInt(e.target.value))
                             }}
                             className={"rounded-[1rem] h-6 w-1/5 text-center"}
                         >
@@ -156,7 +134,7 @@ export default function EditQuestion() {
                         </select>
                         <select
                             name="question.levelQuestion.id"
-                            value={formik.values.question.levelQuestion.id}
+                            value={formik.values.question.levelQuestion?.id}
                             onChange={formik.handleChange}
                             className={"rounded-[1rem] h-6 w-1/5 text-center"}
                         >

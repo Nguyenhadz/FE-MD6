@@ -25,8 +25,8 @@ export const createAnswer = createAsyncThunk(
         return res.data
     }
 )
-export const findAnswerByQuestionId = createAsyncThunk(
-    'answers/findByQuestionId',
+export const findAnswersByQuestionId = createAsyncThunk(
+    'answers/findAnswerByQuestionId',
     async ({id}) => {
         const res = await customAxios.get('answers/fbq/' + id, axiosConfig);
         return res.data
