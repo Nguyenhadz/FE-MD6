@@ -9,12 +9,17 @@
 .ql-toolbar .ql-code {
     display: none;
 }
-.ql-toolbar.ql-snow {
+.ql-editor .ql-blank {
+
+}
+.ql-toolbar.ql-snow:hover {
     border: none;
+    display: block;
 }
 .ql-container.ql-snow {
     border: none;
 }
+
 /* Cải thiện giao diện của nút hình ảnh */
 .ql-toolbar .ql-image {
     background-color: #5cb85c; /* Màu nền của nút */
