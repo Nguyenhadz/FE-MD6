@@ -111,9 +111,9 @@ export default function ShowListTeacherFindByName() {
                                 onClick={handleSearch}>Search
                         </button>
                     </div>
-                    <div className={"flex items-center justify-center mt-5 mb-5"}><h1 className={"text-5xl text-orange-600"}><b>Danh sách
-                        giáo
-                        viên</b></h1></div>
+                    <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-5 mb-5 flex justify-center"}>Danh sách
+                        giáo viên
+                    </div>
 
                     <Box sx={{
                         height: '630px',
@@ -159,8 +159,9 @@ export default function ShowListTeacherFindByName() {
                                 onClick={handleSearch}>Search
                         </button>
                     </div>
-                    <div className={"flex items-center justify-center mt-5 mb-5"}><h1 className={"text-5xl"}>Không có
-                        giáo viên nào có tên bạn muốn tìm</h1></div>
+                    <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-5 mb-5 flex justify-center"}>Không có
+                        giáo viên nào có tên bạn muốn tìm
+                    </div>
 
                 </div>
             )}

@@ -82,7 +82,8 @@ export default function ShowListTeacherPending() {
 
     return(
         <div className="col-span-8 w-full h-full items-center" style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
-            <div className={"flex items-center justify-center mb-5"}><h1 className={"text-5xl text-orange-600 mt-5"}><b>Danh sách đăng ký giáo viên</b></h1></div>
+            <div className={"text-5xl font-extrabold font-sans text-orange-500 pt-5 mb-5 flex justify-center"}>Danh sách đăng ký giáo viên
+            </div>
             <Box sx={{
                 height: '630px',
                 width: '70%',
