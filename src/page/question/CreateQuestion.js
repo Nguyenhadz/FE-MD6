@@ -11,8 +11,6 @@ export default function CreateQuestion() {
     const currentUser = useSelector((store) => {
         return store.users.currentUser
     })
-    // const [typeQ, setTypeQ] = useState(2)
-    // useEffect()
     const dispatch = useDispatch();
     const categoryQuestions =
         [
