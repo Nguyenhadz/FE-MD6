@@ -30,11 +30,9 @@ export default function CreateQuestion() {
         return store.cateQuestions.cateQuestions
     })
     const typeQuestions = useSelector((store) => {
-        console.log(store.typeQuestionStore.typeQuestions)
         return store.typeQuestionStore.typeQuestions
     })
     const levelQuestions = useSelector((store) => {
-        console.log(store.levelQuestionStore.levelQuestions)
         return store.levelQuestionStore.levelQuestions
     })
     const formik = useFormik({

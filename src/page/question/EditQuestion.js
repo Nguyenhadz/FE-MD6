@@ -5,6 +5,10 @@ import {createQuestion} from "../../service/QuestionService";
 import {createAnswer} from "../../service/AnswerService";
 import "./CreateQuestion.css"
 import {useNavigate} from "react-router-dom";
+import {useEffect} from "react";
+import {showAllCateQuestion} from "../../service/CateQuestionService";
+import {findAllTypeQuestion} from "../../service/TypeQuestionService";
+import {findAllLevelQuestion} from "../../service/LevelQuestionService";
 
 export default function EditQuestion() {
     const navigate = useNavigate();
@@ -17,26 +21,24 @@ export default function EditQuestion() {
         return store.answersStore.currentAnswers
     })
     const dispatch = useDispatch();
-
-    const categoryQuestions =
-        [
-            {id: 1, name: 'Toán', user: {id: 1}},
-            {id: 2, name: 'Vật lý', user: {id: 1}},
-            {id: 3, name: 'Hóa', user: {id: 1}},
-            {id: 4, name: 'Sinh học', user: {id: 1}}
-        ]
-    const levelQuestions =
-        [
-            {id: 1, name: 'Dễ', user: {id: 1}},
-            {id: 2, name: 'Trung bình', user: {id: 1}},
-            {id: 3, name: 'Khó', user: {id: 1}}
-        ]
-    const typeQuestions =
-        [
-            {id: 1, name: "Đúng sai"},
-            {id: 2, name: "Một đáp án"},
-            {id: 3, name: "Nhiều đáp án"}
-        ]
+    useEffect(() => {
+        dispatch(showAllCateQuestion())
+    },[dispatch])
+    useEffect(() => {
+        dispatch(findAllTypeQuestion())
+    },[dispatch])
+    useEffect(() => {
+        dispatch(findAllLevelQuestion())
+    },[dispatch])
+    const categoryQuestions = useSelector((store) => {
+        return store.cateQuestions.cateQuestions
+    })
+    const typeQuestions = useSelector((store) => {
+        return store.typeQuestionStore.typeQuestions
+    })
+    const levelQuestions = useSelector((store) => {
+        return store.levelQuestionStore.levelQuestions
+    })
     const formik = useFormik({
         initialValues: {
             question: currentQuestion,
