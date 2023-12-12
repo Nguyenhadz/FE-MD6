@@ -6,31 +6,37 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {useDispatch, useSelector} from "react-redux";
-import {findAllAnswer, findAnswersByQuestionId} from "../../service/AnswerService";
-import {findAll, findByContent, findById} from "../../service/QuestionService";
+import {deleteAnswersByQuestionId, findAllAnswer, findAnswersByQuestionId} from "../../service/AnswerService";
+import {deleteQuestions, findAll, findByContent, findById} from "../../service/QuestionService";
 import {Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 
 
 export default function ListQuestion() {
+    useEffect(() => {
+        dispatch(findAll())
+        dispatch(findAllAnswer())
+    }, [])
     const parser = new DOMParser();
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const [currentPage, setCurrentPage] = useState(1);
     const questionsPerPage = 5;
     const [searchTerm, setSearchTerm] = useState('');
-
-
     const user = useSelector((store) => {
-        console.log(store.users.currentUser)
         return store.users.currentUser
     })
-    const currentUserQuestions = useSelector((store) => {
-        return store.questionStore.questions.filter((question) => question.user?.id === user?.id);
+    const questions = useSelector((store) => {
+        return store.questionStore.questions
     });
-    const filteredAnswers = useSelector((store) => {
-        return store.answersStore.answers.filter((answer) => answer.question?.id === currentUserQuestions.id);
+    const answers = useSelector((store) => {
+        return store.answersStore.answers
     })
+    const currentUserQuestions = questions
+        ? Object.values(questions).filter(
+            (question) => question.user?.id === user?.id
+        )
+        : [];
 
     const handleSearch = () => {
         if (searchTerm.trim() === '') {
@@ -39,16 +45,13 @@ export default function ListQuestion() {
             dispatch(findByContent(searchTerm));
         }
     };
-    useEffect(() => {
-        dispatch(findAll())
-        dispatch(findAllAnswer())
-    }, [dispatch])
 
-    const filteredQuestions = searchTerm
-        ? currentUserQuestions.filter((question) =>
+
+    const filteredQuestions = Array.from(searchTerm
+        ? currentUserQuestions.filter((question, index) =>
             question.content.toLowerCase().includes(searchTerm.toLowerCase())
         )
-        : currentUserQuestions;
+        : currentUserQuestions);
 
 
     const indexOfLastQuestion = currentPage * questionsPerPage;
@@ -56,7 +59,6 @@ export default function ListQuestion() {
     const totalQuestions = filteredQuestions.length;
 
     const currentQuestions = filteredQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
-    console.log(totalQuestions)
     const getTotalQuestionCountBeforeCurrentPage = () => {
         if (currentPage === 1) {
             return 0;
@@ -81,13 +83,14 @@ export default function ListQuestion() {
         setCurrentPage(pageNumber);
     };
 
-    return (
-        <div className={"w-11/12 mt-0 justify-content-lg-end shadow-md from-blue-800" } style = {{marginTop: "0 !important"}}>
+    return  (
+        <div className={"w-11/12 mt-0 justify-content-lg-end shadow-md from-blue-800"}
+             style={{marginTop: "0 !important"}}>
             <form className="form-inline my-5 my-lg-0 ">
                 <input className="form-control mr-sm-2 my-2" type="search" placeholder="Search" aria-label="Search"
                        onChange={(e) => setSearchTerm(e.target.value)}/>
-                <Button className="btn btn-info bg-indigo-500 my-2 my-sm-0 " type="submit" onClick={handleSearch}>Tìm
-                    kiếm
+                <Button className="btn btn-info bg-indigo-500 my-2 my-sm-0 " type="submit" onClick={handleSearch}>
+                    Tìm kiếm
                 </Button>
             </form>
             {currentQuestions.map((question, index) => {
@@ -98,14 +101,14 @@ export default function ListQuestion() {
                 const questionNumber = getQuestionNumber(index);
 
                 return (
-                    <Accordion key={question?.id}>
+                    <Accordion className={"bg-emerald-300"} key={question?.id}>
                         <AccordionSummary
-                            className={"ql-color-red bg-blue-500"}
+                            className={"bg-green-300"}
                             expandIcon={<ExpandMoreIcon/>}
                             aria-controls={`panel${question?.id}-content`}
                             id={`panel${question?.id}-header`}
                         >
-                            <div className={"flex justify-center"}>
+                            <div className={"flex justify-content-lg-start rounded w-full h-full"}>
                                 <div>
                                     <Typography>
                                         <h1 className={"font-sans font-bold hover:font-serif"}>Câu {questionNumber}: &nbsp;</h1>
@@ -118,10 +121,10 @@ export default function ListQuestion() {
                                 </div>
                             </div>
                         </AccordionSummary>
-                        <AccordionDetails>
-                            {filteredAnswers
-                                .filter((answer) => answer.question?.id === question?.id)
-                                .map((answer) => {
+                        <AccordionDetails className={"bg-neutral-200"}>
+                            {answers
+                                .filter((answer, index) => answer.question?.id === question?.id)
+                                .map((answer, index) => {
                                     const currentLetter = String.fromCharCode(65 + (letterIndex % 26));
 
                                     // Increment letter index for next iteration
@@ -142,10 +145,17 @@ export default function ListQuestion() {
                                 <Typography className={"mr-0"}>
                                     <Button className={"btn btn-outline-warning bg-amber-100 "}
                                             onClick={async () => {
-                                                await dispatch(findById({id: question.id}))
-                                                await dispatch(findAnswersByQuestionId({id: question.id}))
+                                                await dispatch(findById({id :question.id}))
+                                                await dispatch(findAnswersByQuestionId({id :question.id}))
                                                 navigate("/home/LayoutManagerQuestion/editQuestion/" + question.id)
                                             }}>Sửa</Button>
+                                </Typography>
+                                <Typography className={"mr-0"}>
+                                    <Button className={"btn btn-outline-warning bg-amber-100 "}
+                                            onClick={async () => {
+                                                await dispatch(deleteAnswersByQuestionId(question?.id))
+                                                await dispatch(deleteQuestions(question?.id))
+                                            }}>Xóa</Button>
                                 </Typography>
                             </div>
                         </AccordionDetails>
@@ -155,14 +165,14 @@ export default function ListQuestion() {
             {/* Pagination */}
             <nav aria-label="Page navigation example" className={"flex w-10/12"}>
                 <div>
-                    <button onClick={goToPrevPage} disabled={currentPage === 1} className="page-link disabled">
-                        Trang trước
+                    <button onClick={goToPrevPage} disabled={currentPage === 1} className="page-link disabled bg-green-300 rounded">
+                        Trước
                     </button>
                 </div>
                 <ul className="pagination justify-content-end">
-                    {Array.from({length: Math.ceil(totalQuestions / questionsPerPage)}, (_, i) => i + 1).map((pageNumber) => (
-                        <li key={pageNumber} className="page-item">
-                            <button className="page-link" onClick={() => paginate(pageNumber)}>
+                    {Array.from({length: Math.ceil(totalQuestions / questionsPerPage)}, (_, i) => i + 1).map((pageNumber, index) => (
+                        <li key={pageNumber} className="page-item bg-green-300 rounded">
+                            <button className="page-link bg-green-300 rounded" onClick={() => paginate(pageNumber)}>
                                 {pageNumber}
                             </button>
                         </li>
@@ -172,12 +182,12 @@ export default function ListQuestion() {
                 <div className="pagination-navigation">
                     <button onClick={goToNextPage}
                             disabled={currentPage === Math.ceil(currentUserQuestions.length / questionsPerPage)}
-                            className="page-link">
-                        Trang tiếp theo
+                            className="page-link bg-green-300 rounded">
+                        Sau
                     </button>
                 </div>
                 <div className="pagination-navigation">
-                    <button className="page-link disabled">Trang hiện
+                    <button className="page-link disabled bg-green-300 rounded">Trang hiện
                         tại: &nbsp;{currentPage}</button>
                 </div>
             </nav>

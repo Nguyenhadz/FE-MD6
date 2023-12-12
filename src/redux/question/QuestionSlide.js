@@ -6,7 +6,7 @@ import {
     findById,
     findByContent,
     findQuestionsByCategory,
-    editQuestions
+    editQuestions, deleteQuestions, findAllQuestionByUser
 } from "../../service/QuestionService";
 import {toast} from "react-toastify";
 
@@ -25,6 +25,7 @@ const questionSlide = createSlice({
             state.questions = action.payload
         })
         builder.addCase(findById.fulfilled, (state, action)=>{
+            console.log(action.payload)
             state.currentQuestion = action.payload
         })
         builder.addCase(createQuestion.fulfilled, (state, action)=>{
@@ -39,6 +40,13 @@ const questionSlide = createSlice({
         })
         builder.addCase(editQuestions.fulfilled, (state, action)=>{
             state.currentQuestion = action.payload
+        })
+        builder.addCase(deleteQuestions.fulfilled, (state, action)=>{
+            toast.success("Xóa câu hỏi thành công!", {})
+            state.questions= action.payload
+        })
+        builder.addCase(findAllQuestionByUser.fulfilled, (state, action)=>{
+            state.questions= action.payload
         })
     }
 })

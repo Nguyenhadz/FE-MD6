@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
-    createAnswer,
+    createAnswer, deleteAnswersByQuestionId,
     findAllAnswer,
     findAnswersByQuestionId
 } from "../../service/AnswerService";
@@ -23,8 +23,13 @@ const answersSlice = createSlice({
             console.log(state.createdAnswer)
         })
         builder.addCase(findAnswersByQuestionId.fulfilled, (state, action)=>{
-            state.currentAnswers = action.payload
+            console.log()
+            state.answers = action.payload
         })
+        builder.addCase(deleteAnswersByQuestionId.fulfilled, (state, action)=>{
+            state.answers = action.payload
+        })
+
     }
 })
 
