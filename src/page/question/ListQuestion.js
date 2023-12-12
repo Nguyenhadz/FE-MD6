@@ -19,13 +19,19 @@ export default function ListQuestion() {
     const [currentPage, setCurrentPage] = useState(1);
     const questionsPerPage = 5;
     const [searchTerm, setSearchTerm] = useState('');
-    const questions = useSelector((store) => {
-        console.log(store.questionStore.questions)
-        return store.questionStore.questions
+
+
+    const user = useSelector((store) => {
+        console.log(store.users.currentUser)
+        return store.users.currentUser
     })
-    const answers = useSelector((store) => {
-        return store.answersStore.answers
+    const currentUserQuestions = useSelector((store) => {
+        return store.questionStore.questions.filter((question) => question.user?.id === user?.id);
+    });
+    const filteredAnswers = useSelector((store) => {
+        return store.answersStore.answers.filter((answer) => answer.question?.id === currentUserQuestions.id);
     })
+
     const handleSearch = () => {
         if (searchTerm.trim() === '') {
             dispatch(findAll()); // Hiển thị lại danh sách câu hỏi ban đầu khi ô tìm kiếm trống
@@ -38,9 +44,19 @@ export default function ListQuestion() {
         dispatch(findAllAnswer())
     }, [dispatch])
 
+    const filteredQuestions = searchTerm
+        ? currentUserQuestions.filter((question) =>
+            question.content.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        : currentUserQuestions;
+
+
     const indexOfLastQuestion = currentPage * questionsPerPage;
     const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
-    const currentQuestions = questions.slice(indexOfFirstQuestion, indexOfLastQuestion);
+    const totalQuestions = filteredQuestions.length;
+
+    const currentQuestions = filteredQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
+    console.log(totalQuestions)
     const getTotalQuestionCountBeforeCurrentPage = () => {
         if (currentPage === 1) {
             return 0;
@@ -48,7 +64,7 @@ export default function ListQuestion() {
         return questionsPerPage * (currentPage - 1);
     };
     const goToNextPage = () => {
-        if (currentPage < Math.ceil(questions.length / questionsPerPage)) {
+        if (currentPage < Math.ceil(currentUserQuestions.length / questionsPerPage)) {
             setCurrentPage((prevPage) => prevPage + 1);
         }
     };
@@ -71,19 +87,23 @@ export default function ListQuestion() {
             <form className="form-inline my-5 my-lg-0 ">
                 <input className="form-control mr-sm-2 my-2" type="search" placeholder="Search" aria-label="Search"
                        onChange={(e) => setSearchTerm(e.target.value)}/>
-                <button className="btn btn-outline-info my-2 my-sm-0" type="submit" onClick={handleSearch}>Tìm kiếm</button>
+                <button className="btn btn-outline-info my-2 my-sm-0" type="submit" onClick={handleSearch}>Tìm kiếm
+                </button>
             </form>
             {currentQuestions.map((question, index) => {
+                if (question.user?.id !== user?.id) {
+                    return null; // Nếu user.id không khớp, bỏ qua câu hỏi này
+                }
                 let letterIndex = 0; // Reset index for each question
                 const questionNumber = getQuestionNumber(index);
 
                 return (
-                    <Accordion key={question.id}>
+                    <Accordion key={question?.id}>
                         <AccordionSummary
                             className={"ql-color-red bg-blue-500"}
                             expandIcon={<ExpandMoreIcon/>}
-                            aria-controls={`panel${question.id}-content`}
-                            id={`panel${question.id}-header`}
+                            aria-controls={`panel${question?.id}-content`}
+                            id={`panel${question?.id}-header`}
                         >
                             <Typography>
                                 <h1 className={"font-sans font-bold hover:font-serif"}>Câu {questionNumber}: &nbsp;</h1>
@@ -92,16 +112,16 @@ export default function ListQuestion() {
                                 <p className={"font-serif"}>{parser.parseFromString(question.content, 'text/html').body.firstChild.textContent}</p>
                             </Typography>
                             <Typography className={"mr-0"}>
-                            <Button className={"btn btn-outline-warning mr-0"} onClick={async () => {
-                                await dispatch(findById({id: question.id}))
-                                navigate("/home/LayoutManagerQuestion/editQuestion/" + question.id)
-                            }}>Sửa</Button>
+                                <Button className={"btn btn-outline-warning mr-0"} onClick={async () => {
+                                    await dispatch(findById({id: question?.id}))
+                                    navigate("/home/LayoutManagerQuestion/editQuestion/" + question?.id)
+                                }}>Sửa</Button>
 
                             </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            {answers
-                                .filter((answer) => answer.question.id === question.id)
+                            {filteredAnswers
+                                .filter((answer) => answer.question?.id === question?.id)
                                 .map((answer) => {
                                     const currentLetter = String.fromCharCode(65 + (letterIndex % 26));
 
@@ -112,7 +132,7 @@ export default function ListQuestion() {
                                         <>
             <span className={"flex"}>
          <h3 className="font-serif">{currentLetter}.&nbsp;</h3>
-         <p className="font-mono" key={answer.id} style={{color: answer.status === 1 ? 'red' : 'black'}}>
+         <p className="font-mono" key={answer?.id} style={{color: answer.status === 1 ? 'red' : 'black'}}>
           {parser.parseFromString(answer.content, 'text/html').body.firstChild.textContent}
          </p>
                         </span>
@@ -132,7 +152,7 @@ export default function ListQuestion() {
                     </button>
                 </div>
                 <ul className="pagination justify-content-end">
-                    {Array.from({length: Math.ceil(questions.length / questionsPerPage)}, (_, i) => i + 1).map((pageNumber) => (
+                    {Array.from({length: Math.ceil(totalQuestions / questionsPerPage)}, (_, i) => i + 1).map((pageNumber) => (
                         <li key={pageNumber} className="page-item">
                             <button className="page-link" onClick={() => paginate(pageNumber)}>
                                 {pageNumber}
@@ -143,13 +163,13 @@ export default function ListQuestion() {
                 {/* Nút điều hướng */}
                 <div className="pagination-navigation">
                     <button onClick={goToNextPage}
-                            disabled={currentPage === Math.ceil(questions.length / questionsPerPage)}
+                            disabled={currentPage === Math.ceil(currentUserQuestions.length / questionsPerPage)}
                             className="page-link">
                         Trang tiếp theo
                     </button>
                 </div>
-                <div className="pagination-navigation ml-auto">
-                    <button className="page-link disabled">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Trang hiện
+                <div className="pagination-navigation">
+                    <button className="page-link disabled">Trang hiện
                         tại: &nbsp;{currentPage}</button>
                 </div>
             </nav>
