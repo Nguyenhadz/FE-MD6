@@ -2,12 +2,12 @@ import {createSlice} from "@reduxjs/toolkit";
 import {
     createAnswer,
     findAllAnswer,
-    findAnswerByQuestionId
+    findAnswersByQuestionId
 } from "../../service/AnswerService";
 
 const initialState = {
     answers: [],
-    currentAnswer: [],
+    currentAnswers: [],
     createdAnswer: {}
 }
 
@@ -22,8 +22,8 @@ const answersSlice = createSlice({
             state.createdAnswer = action.payload
             console.log(state.createdAnswer)
         })
-        builder.addCase(findAnswerByQuestionId.fulfilled, (state, action)=>{
-            state.currentAnswer = action.payload
+        builder.addCase(findAnswersByQuestionId.fulfilled, (state, action)=>{
+            state.currentAnswers = action.payload
         })
     }
 })
