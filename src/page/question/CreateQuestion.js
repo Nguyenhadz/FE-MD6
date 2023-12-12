@@ -124,7 +124,7 @@ export default function CreateQuestion() {
                 createdQuestion = useSelector((store) => {
                     return store.questionStore.createdQuestion
             })
-                dispatch()
+                // dispatch();
             )
         },
     });
