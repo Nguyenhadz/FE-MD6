@@ -3,9 +3,12 @@ import {useFormik} from 'formik';
 import {useDispatch, useSelector} from "react-redux";
 import {createQuestion} from "../../service/QuestionService";
 import {createAnswer} from "../../service/AnswerService";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./CreateQuestion.css"
 import {useNavigate} from "react-router-dom";
+import {showAllCateQuestion} from "../../service/CateQuestionService";
+import {findAllTypeQuestion} from "../../service/TypeQuestionService";
+import {findAllLevelQuestion} from "../../service/LevelQuestionService";
 
 export default function CreateQuestion() {
     const [test,setTest] = useState(1)
@@ -14,25 +17,26 @@ export default function CreateQuestion() {
     })
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const categoryQuestions =
-        [
-            {id: 1, name: 'Toán', user: {id: 1}},
-            {id: 2, name: 'Vật lý', user: {id: 1}},
-            {id: 3, name: 'Hóa', user: {id: 1}},
-            {id: 4, name: 'Sinh học', user: {id: 1}}
-        ]
-    const levelQuestions =
-        [
-            {id: 1, name: 'Dễ', user: {id: 1}},
-            {id: 2, name: 'Trung bình', user: {id: 1}},
-            {id: 3, name: 'Khó', user: {id: 1}}
-        ]
-    const typeQuestions =
-        [
-            {id: 1, name: "Đúng sai"},
-            {id: 2, name: "Một đáp án"},
-            {id: 3, name: "Nhiều đáp án"}
-        ]
+    useEffect(() => {
+        dispatch(showAllCateQuestion())
+    },[dispatch])
+    useEffect(() => {
+        dispatch(findAllTypeQuestion())
+    },[dispatch])
+    useEffect(() => {
+        dispatch(findAllLevelQuestion())
+    },[dispatch])
+    const categoryQuestions = useSelector((store) => {
+        return store.cateQuestions.cateQuestions
+    })
+    const typeQuestions = useSelector((store) => {
+        console.log(store.typeQuestionStore.typeQuestions)
+        return store.typeQuestionStore.typeQuestions
+    })
+    const levelQuestions = useSelector((store) => {
+        console.log(store.levelQuestionStore.levelQuestions)
+        return store.levelQuestionStore.levelQuestions
+    })
     const formik = useFormik({
         initialValues: {
             question: {content: '', status: 1, categoryQuestion: {id: 1,}, levelQuestion: {id: 1,}, typeQuestion: {id: 2,}, user: {id: currentUser.id,}},
@@ -135,9 +139,10 @@ export default function CreateQuestion() {
                             onChange={formik.handleChange}
                             className={"rounded-[1rem] h-6 w-1/5 text-center"}
                         >
-                            {/*<option value={0}>-Category question-</option>*/}
-                            {categoryQuestions.map((category) => (
-                                <option key={category.id} value={category.id}>{category.name}</option>
+                            {categoryQuestions && categoryQuestions.length > 0 && categoryQuestions.map((category) => (
+                                <option key={category.id} value={category.id}>
+                                    <span dangerouslySetInnerHTML={{ __html: category.name }} />
+                                </option>
                             ))}
                         </select>
                         <select
