@@ -19,6 +19,7 @@ export default function ShowListCateQuestion() {
         dispatch(showAllCateQuestion())
     }, [])
     const categories = useSelector(state => {
+        console.log(state.cateQuestions.cateQuestions)
         return Array.from(state.cateQuestions.cateQuestions)
     })
     const [searchTerm, setSearchTerm] = useState('');
@@ -54,6 +55,12 @@ export default function ShowListCateQuestion() {
         {
             field: 'description',
             headerName: 'Mô tả',
+            width: 200,
+            editable: false,
+        },
+        {
+            field: 'useCreate',
+            headerName: 'Người tạo',
             width: 200,
             editable: false,
         },
@@ -114,6 +121,7 @@ export default function ShowListCateQuestion() {
                 id: i + 1,
                 name: (parser.parseFromString(categories[i].name, 'text/html')).body.firstChild.textContent,
                 description: (parser.parseFromString(categories[i].description, 'text/html')).body.firstChild.textContent,
+            useCreate: (parser.parseFromString(categories[i].user.name, 'text/html')).body.firstChild.textContent,
                 hiddenColumn: categories[i].id,
             }
         )
