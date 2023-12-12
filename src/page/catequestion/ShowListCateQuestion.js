@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import {DataGrid} from "@mui/x-data-grid";
 import {deleteCateQuiz, findCateQuizById, showAllCategoryQuiz} from "../../service/CateQuizService";
 import {toast} from "react-toastify";
-import {deleteCateQuestion, showAllCateQuestion} from "../../service/CateQuestionService";
+import {deleteCateQuestion, findCateQuestionById, showAllCateQuestion} from "../../service/CateQuestionService";
 
 export default function ShowListCateQuestion() {
     const dispatch = useDispatch();
@@ -40,10 +40,7 @@ export default function ShowListCateQuestion() {
     }, [selectedField]);
 
     const handleDelete = (id) => {
-        dispatch(deleteCateQuestion(id)).then(()=>{
-                toast.success('Xoá danh mục thành công!')
-            }
-        )
+        dispatch(deleteCateQuestion(id))
     };
 
     const columns = [
@@ -68,8 +65,8 @@ export default function ShowListCateQuestion() {
             renderCell: (params) => (
                 <div>
                     <button onClick={()=>{
-                        dispatch(findCateQuizById(params.row.hiddenColumn)).then((res)=> {
-                            navigate(`/home/updateCateQuiz/${params.row.hiddenColumn}`)
+                        dispatch(findCateQuestionById(params.row.hiddenColumn)).then((res)=> {
+                            navigate(`/home/updateCateQuestion/${params.row.hiddenColumn}`)
                         })
                     }}>Sửa</button>
                 </div>
@@ -139,7 +136,7 @@ export default function ShowListCateQuestion() {
             <div className={"flex items-center justify-center mt-5 mb-5"}>
                 <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-2 ml-96 flex justify-center"}>Danh sách danh mục câu hỏi
                 </div>
-                <Link to={"/home/createCateQuiz"}>
+                <Link to={"/home/createCateQuestion"}>
                     <button className={"w-44 h-10 rounded-lg ml-56 bg-orange-400 hover:bg-red-500 text-white"}>Thêm mới danh mục
                     </button>
                 </Link>

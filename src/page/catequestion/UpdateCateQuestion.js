@@ -1,31 +1,43 @@
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {store} from "../../redux/Store";
-import {useFormik} from "formik";
-import {createCateQuestion} from "../../service/CateQuestionService";
+
+import {createCateQuiz, findCateQuizById, updateCateQuiz} from "../../service/CateQuizService";
+import {Button} from "react-bootstrap";
+import {Field, Form, Formik, useFormik} from "formik";
+import CustomQuill from "../../react-quill/CustomQuill";
+import React, {useEffect} from "react";
+import {getStudentById} from "../../service/UserService";
+import {toast} from "react-toastify";
 import CustomQuills from "../catequiz/CustomQuills";
-import {Link} from "react-router-dom";
-import React from "react";
+import {updateCateQuestion} from "../../service/CateQuestionService";
 
-export default function CreateCateQuestion(){
 
-    const currentUser = useSelector((store) =>{
-        return store.users.currentUser
-    })
+export default function UpdateCateQuestion() {
+
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+    // const {id} = useParams();
+    // useEffect(() => {
+    //     dispatch(findCateQuizById(id))
+    // }, [])
+
+    const cateQuestion = useSelector(state => {
+        return state.cateQuestions.cateQuestion
+    })
+
     const formik = useFormik({
         initialValues:{
-            name:'',
-            description:'',
-            user:{
-                id: currentUser.id
-            }
+            id: cateQuestion.id,
+            name: cateQuestion.name,
+            description: cateQuestion.description,
         },
-        onSubmit:(values, {resetForm}) =>{
-            console.log(values)
-            dispatch(createCateQuestion(values))
-            resetForm();
+        onSubmit:(values,{ resetForm }) =>{
+            dispatch(updateCateQuestion(values)).then(()=> {
+                navigate('/home/showListCateQuestion')
+            });
         }
     })
+
     return (
         <>
             <div className={"bg-cover bg-center h-screen flex"}
@@ -36,10 +48,6 @@ export default function CreateCateQuestion(){
                 </Link>
                 <div
                     className={"w-3/5 h-5/6 bg-gray-100 bg-opacity-70 p-4 mt-20 ml-64 rounded-3xl shadow-lg"}>
-                    <div className={"text-4xl font-extrabold font-sans text-orange-500 mt-2 flex justify-center"}>Tạo
-                        Danh Mục Câu Hỏi
-                        Của Bạn
-                    </div>
                     <form onSubmit={formik.handleSubmit}>
                         <div className={"mt-4 ml-32 text-2xl font-bold font-serif text-orange-500"}>Tên</div>
                         <div className={"flex justify-center mt-4"}>
@@ -54,7 +62,7 @@ export default function CreateCateQuestion(){
                         <div className={"mt-8 flex justify-center"}>
                             <button
                                 className={"w-40 h-10 bg-amber-50 text-orange-500 font-bold font-serif rounded-3xl shadow-lg"}
-                                type={"submit"}>Tạo Mới</button>
+                                type={"submit"}>Cập nhật</button>
                         </div>
                     </form>
                 </div>
@@ -62,4 +70,5 @@ export default function CreateCateQuestion(){
             </div>
         </>
     )
+
 }

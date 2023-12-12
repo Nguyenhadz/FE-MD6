@@ -20,7 +20,7 @@ const CateQuizSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(createCateQuiz.fulfilled, (state, action)=>{
             state.cateQuizzes = action.payload
-            toast.success("Tạo Thành Công", {})
+            toast.success("Tạo danh mục thành công", {})
         })
         builder.addCase(createCateQuiz.rejected, (state, action)=>{
             toast.error("Trùng tên danh mục cũ", {})

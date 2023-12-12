@@ -1,6 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {toast} from "react-toastify";
-import {createCateQuestion, deleteCateQuestion, showAllCateQuestion} from "../../service/CateQuestionService";
+import {
+    createCateQuestion,
+    deleteCateQuestion,
+    findCateQuestionById,
+    showAllCateQuestion, updateCateQuestion
+} from "../../service/CateQuestionService";
+import {updateCateQuiz} from "../../service/CateQuizService";
 
 const initialState = {
     cateQuestions: [],
@@ -12,6 +18,10 @@ const CateQuestionSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(createCateQuestion.fulfilled, (state, action)=>{
             state.cateQuestion = action.payload
+            toast.success("Tạo danh mục thành công", {})
+        })
+        builder.addCase(createCateQuestion.rejected, (state, action)=>{
+            toast.error("Trùng tên danh mục cũ", {})
         })
         builder.addCase(showAllCateQuestion.fulfilled, (state, action)=>{
             state.cateQuestions = action.payload
@@ -22,6 +32,16 @@ const CateQuestionSlice = createSlice({
         })
         builder.addCase(deleteCateQuestion.rejected, (state, action)=>{
             toast.error('Không thể xoá danh mục', {})
+        })
+        builder.addCase(findCateQuestionById.fulfilled, (state, action)=>{
+            state.cateQuestion = action.payload
+        })
+        builder.addCase(updateCateQuestion.fulfilled, (state, action) =>{
+            state.cateQuestion = action.payload
+            toast.success("Cập nhật thành công!", {})
+        })
+        builder.addCase(updateCateQuestion.rejected, (state, action) =>{
+            toast.error("Trùng tên danh mục cũ", {})
         })
     }
 })
