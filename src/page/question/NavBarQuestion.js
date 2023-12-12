@@ -1,106 +1,67 @@
-import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined';
+// import './NavbarAdmin.css';
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {toast} from "react-toastify";
+import {logout} from "../../service/UserService";
 
-import { TreeView } from '@mui/x-tree-view/TreeView';
-import { TreeItem, treeItemClasses } from '@mui/x-tree-view/TreeItem';
+export default function NavbarAdmin() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
-    color: theme.palette.text.secondary,
-    [`& .${treeItemClasses.content}`]: {
-        color: theme.palette.text.secondary,
-        borderTopRightRadius: theme.spacing(2),
-        borderBottomRightRadius: theme.spacing(2),
-        paddingRight: theme.spacing(1),
-        fontWeight: theme.typography.fontWeightMedium,
-        '&.Mui-expanded': {
-            fontWeight: theme.typography.fontWeightRegular,
-        },
-        '&:hover': {
-            backgroundColor: theme.palette.action.hover,
-        },
-        '&.Mui-focused, &.Mui-selected, &.Mui-selected.Mui-focused': {
-            backgroundColor: `var(--tree-view-bg-color, ${theme.palette.action.selected})`,
-            color: 'var(--tree-view-color)',
-        },
-        [`& .${treeItemClasses.label}`]: {
-            fontWeight: 'inherit',
-            color: 'inherit',
-        },
-    },
-    [`& .${treeItemClasses.group}`]: {
-        marginLeft: 0,
-        [`& .${treeItemClasses.content}`]: {
-            paddingLeft: theme.spacing(2),
-        },
-    },
-}));
-
-const StyledTreeItem = React.forwardRef(function StyledTreeItem(props, ref) {
-    const theme = useTheme();
-    const {
-        bgColor,
-        color,
-        labelIcon: LabelIcon,
-        labelInfo,
-        labelText,
-        colorForDarkMode,
-        bgColorForDarkMode,
-        ...other
-    } = props;
-
-    const styleProps = {
-        '--tree-view-color': theme.palette.mode !== 'dark' ? color : colorForDarkMode,
-        '--tree-view-bg-color':
-            theme.palette.mode !== 'dark' ? bgColor : bgColorForDarkMode,
-    };
-
+    // const user = useSelector(state => {
+    //     return state.users.currentUser;
+    // })
+    // const handleLogout = () => {
+    //     // Dispatch action logout
+    //     dispatch(logout());
+    //     toast.success('\n' +
+    //         'Logout successfully\n', {});
+    //     navigate('/')
+    // };
     return (
-        <StyledTreeItemRoot
-            label={
-                <Box
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        p: 0.5,
-                        pr: 0,
-                    }}
-                >
-                    <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />
-                    <Typography variant="body2" sx={{ fontWeight: 'inherit', flexGrow: 1 }}>
-                        {labelText}
-                    </Typography>
-                    <Typography variant="caption" color="inherit">
-                        {labelInfo}
-                    </Typography>
-                </Box>
-            }
-            style={styleProps}
-            {...other}
-            ref={ref}
-        />
-    );
-});
+        <div className={"w-full"}>
+            <div className={"w-fit h-5"}>
+            </div>
 
-export default function NavBarQuestion() {
+            <div className={"w-fit h-16"} onClick={() => {
+                navigate('/home');
+            }}>
+                <img className={"w-28 h-10 ml-3"} src={'https://cf.quizizz.com/img/qfw/Logo.png'} alt={'...'}/>
+            </div>
 
-    return (
-        <TreeView
-            aria-label="gmail"
-            defaultExpanded={['3']}
-            defaultCollapseIcon={<ArrowDropDownIcon />}
-            defaultExpandIcon={<ArrowRightIcon />}
-            defaultEndIcon={<div style={{ width: 24 }} />}
-            sx={{ height: 500, flexGrow: 1, overflowY: 'auto', marginTop: '144px', padding: '10px'}}
-        >
-            <StyledTreeItem nodeId="1" labelText="My question" labelIcon={QuizOutlinedIcon}/>
-            <StyledTreeItem nodeId="2" labelText="All quiz" labelIcon={QuizOutlinedIcon} />
-            <StyledTreeItem nodeId="3" labelText="All quiz" labelIcon={QuizOutlinedIcon} />
-            <StyledTreeItem nodeId="4" labelText="All quiz" labelIcon={QuizOutlinedIcon} />
-        </TreeView>
-    );
+            <div className={"w-full h-10 flex items-center hover:bg-blue-100"}
+                 onClick={() => {
+                     navigate('/home');
+                 }}>
+                <img className={"ml-3 w-4 h-4"}
+                     src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-home-24%20(1).png?alt=media&token=8528cb79-3169-4d62-b5be-570c5f16e124'}
+                     alt={'...'}
+                />
+                <p className={"ml-2 justify-center"}>Trang chủ</p>
+            </div>
+
+
+            <Link to={"/home/LayoutManagerQuestion/listQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
+                <div className={"w-full h-10 flex items-center hover:bg-blue-100"} >
+                    <img className={"ml-3 w-3 h-3 mr-1"}
+                         src={'https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/category-icon.png'}
+                         alt={'...'}
+                    />
+                    <p className={"ml-2 justify-center"}>Danh sách câu hỏi</p>
+                </div>
+            </Link>
+
+            <Link to={"/home/LayoutManagerQuestion/CreateQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
+                <div className={"w-full h-10 flex items-center hover:bg-blue-100"} >
+                    <img className={"ml-3 w-3 h-3 mr-1"}
+                         src={'https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/category-icon.png'}
+                         alt={'...'}
+                    />
+                    <p className={"ml-2 justify-center"}>Tạo câu hỏi mới</p>
+                </div>
+            </Link>
+
+
+        </div>
+    )
 }
