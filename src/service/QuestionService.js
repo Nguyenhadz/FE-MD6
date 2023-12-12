@@ -26,7 +26,7 @@ export const findById = createAsyncThunk(
 )
 export const createQuestion = createAsyncThunk(
     'questions/createQuestion',
-    async ({question}) => {
+    async ({question}) =>{
         const res = await customAxios.post('questions', question, axiosConfig);
         return res.data
     }
@@ -36,6 +36,13 @@ export const findByContent = createAsyncThunk(
     async (content) => {
         const res = await customAxios.get('questions/content/' + content, axiosConfig);
         console.log(res.data)
+        return res.data
+    }
+)
+export const findQuestionsByCategory = createAsyncThunk(
+    'questions/findQuestionsByCategory',
+    async ({id}) =>{
+        const res = await customAxios.get('questions/category/' + id , axiosConfig);
         return res.data
     }
 )
