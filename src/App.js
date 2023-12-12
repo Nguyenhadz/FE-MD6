@@ -27,6 +27,7 @@ import ShowListCategoryQuiz from "./page/catequiz/ShowListCategoryQuiz";
 import CreateCateQuestion from "./page/catequestion/CreateCateQuestion";
 import AutoHeightOverlayNoSnap from "./page/question/ListQuestion1";
 import UpdateCateQuiz from "./page/catequiz/UpdateCateQuiz";
+import EditQuestion from "./page/question/EditQuestion";
 
 
 function App() {
