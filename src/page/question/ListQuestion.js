@@ -6,7 +6,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {useDispatch, useSelector} from "react-redux";
-import {findAllAnswer} from "../../service/AnswerService";
+import {findAllAnswer, findAnswerByQuestionId} from "../../service/AnswerService";
 import {findAll, findByContent, findById} from "../../service/QuestionService";
 import {Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
@@ -81,14 +81,14 @@ export default function ListQuestion() {
         setCurrentPage(pageNumber);
     };
 
-
     return (
-        <div className={"w-75 justify-content-lg-end shadow-md from-blue-800"}>
+        <div className={"w-11/12 mt-0 justify-content-lg-end shadow-md from-blue-800" } style = {{marginTop: "0 !important"}}>
             <form className="form-inline my-5 my-lg-0 ">
                 <input className="form-control mr-sm-2 my-2" type="search" placeholder="Search" aria-label="Search"
                        onChange={(e) => setSearchTerm(e.target.value)}/>
-                <button className="btn btn-outline-info my-2 my-sm-0" type="submit" onClick={handleSearch}>Tìm kiếm
-                </button>
+                <Button className="btn btn-info bg-indigo-500 my-2 my-sm-0 " type="submit" onClick={handleSearch}>Tìm
+                    kiếm
+                </Button>
             </form>
             {currentQuestions.map((question, index) => {
                 if (question.user?.id !== user?.id) {
@@ -105,19 +105,18 @@ export default function ListQuestion() {
                             aria-controls={`panel${question?.id}-content`}
                             id={`panel${question?.id}-header`}
                         >
-                            <Typography>
-                                <h1 className={"font-sans font-bold hover:font-serif"}>Câu {questionNumber}: &nbsp;</h1>
-                            </Typography>
-                            <Typography>
-                                <p className={"font-serif"}>{parser.parseFromString(question.content, 'text/html').body.firstChild.textContent}</p>
-                            </Typography>
-                            <Typography className={"mr-0"}>
-                                <Button className={"btn btn-outline-warning mr-0"} onClick={async () => {
-                                    await dispatch(findById({id: question?.id}))
-                                    navigate("/home/LayoutManagerQuestion/editQuestion/" + question?.id)
-                                }}>Sửa</Button>
-
-                            </Typography>
+                            <div className={"flex justify-center"}>
+                                <div>
+                                    <Typography>
+                                        <h1 className={"font-sans font-bold hover:font-serif"}>Câu {questionNumber}: &nbsp;</h1>
+                                    </Typography>
+                                </div>
+                                <div>
+                                    <Typography>
+                                        <p className={"font-serif"}>{parser.parseFromString(question.content, 'text/html').body.firstChild.textContent}</p>
+                                    </Typography>
+                                </div>
+                            </div>
                         </AccordionSummary>
                         <AccordionDetails>
                             {filteredAnswers
@@ -127,19 +126,28 @@ export default function ListQuestion() {
 
                                     // Increment letter index for next iteration
                                     letterIndex++;
-
                                     return (
                                         <>
-            <span className={"flex"}>
-         <h3 className="font-serif">{currentLetter}.&nbsp;</h3>
-         <p className="font-mono" key={answer?.id} style={{color: answer.status === 1 ? 'red' : 'black'}}>
-          {parser.parseFromString(answer.content, 'text/html').body.firstChild.textContent}
-         </p>
-                        </span>
+                                            <span className={"flex"}>
+                                                <h3 className="font-serif">{currentLetter}.&nbsp;</h3>
+                                                <p className="font-mono" key={answer?.id}
+                                                   style={{color: answer.status === 1 ? 'red' : 'black'}}>
+                                                    {parser.parseFromString(answer.content, 'text/html').body.firstChild.textContent}
+                                                </p>
+                                            </span>
                                         </>
-
                                     );
                                 })}
+                            <div className={"flex justify-center"}>
+                                <Typography className={"mr-0"}>
+                                    <Button className={"btn btn-outline-warning bg-amber-100 "}
+                                            onClick={async () => {
+                                                await dispatch(findById({id: question.id}))
+                                                await dispatch(findAnswerByQuestionId({id: question.id}))
+                                                navigate("/home/LayoutManagerQuestion/editQuestion/" + question.id)
+                                            }}>Sửa</Button>
+                                </Typography>
+                            </div>
                         </AccordionDetails>
                     </Accordion>
                 );
