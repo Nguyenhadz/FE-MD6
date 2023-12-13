@@ -40,3 +40,11 @@ export const deleteAnswersByQuestionId = createAsyncThunk(
         return res.data;
     }
 )
+export const deleteAnswerIsEmpty = createAsyncThunk(
+    'answers/deleteAnswerIsEmpty',
+    async () => {
+        await customAxios.delete('answers', axiosConfig);
+        const res = await customAxios.get('answers', axiosConfig);
+        return res.data;
+    }
+)

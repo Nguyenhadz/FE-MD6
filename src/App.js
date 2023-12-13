@@ -31,13 +31,9 @@ import UpdateCateQuiz from "./page/catequiz/UpdateCateQuiz";
 import EditQuestion from "./page/question/EditQuestion";
 import ShowListCateQuestion from "./page/catequestion/ShowListCateQuestion";
 import UpdateCateQuestion from "./page/catequestion/UpdateCateQuestion";
-import {useSelector} from "react-redux";
 
 
 function App() {
-    const user = useSelector(state => {
-        return state.users.currentUser;
-    })
     return (
         <div>
             <ToastContainer/>
@@ -48,7 +44,6 @@ function App() {
                     <Route path={'/register'} element={<RegisterForm/>}></Route>
                     <Route path={'/forgot'} element={<ForgotForm/>}></Route>
                 </Route>
-                { user != null ?
                 <Route path={'/home'} element={<Home/>}>
                     <Route path={'/home/createCateQuiz'} element={<CreateCateQuiz/>}></Route>
                     <Route path={'/home/createCateQuestion'} element={<CreateCateQuestion/>}></Route>
@@ -74,11 +69,6 @@ function App() {
                     <Route path={'/home/showListCateQuestion'} element={<ShowListCateQuestion/>}></Route>
                     <Route path={'/home/updateCateQuestion/:id'} element={<UpdateCateQuestion/>}></Route>
                 </Route>
-                :
-                    <Route path={'*'} element={<Login/>}>
-                        <Route path={'*'} element={<MenuLogin/>}></Route>
-                    </Route>
-                }
             </Routes>
         </div>
     );
