@@ -83,7 +83,7 @@ export default function ListQuestion() {
         setCurrentPage(pageNumber);
     };
 
-    return (
+    return  (
         <div className={"w-11/12 mt-0 justify-content-lg-end shadow-md from-blue-800"}
              style={{marginTop: "0 !important"}}>
             <form className="form-inline my-5 my-lg-0 ">
@@ -116,7 +116,7 @@ export default function ListQuestion() {
                                 </div>
                                 <div>
                                     <Typography>
-                                        <p className={"font-serif"}>{parser.parseFromString(question.content, 'text/html').body.firstChild?.textContent}</p>
+                                        <p className={"font-serif"}>{parser.parseFromString(question.content, 'text/html').body.firstChild.textContent}</p>
                                     </Typography>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@ export default function ListQuestion() {
                                                 <h3 className="font-serif">{currentLetter}.&nbsp;</h3>
                                                 <p className="font-mono" key={answer?.id}
                                                    style={{color: answer.status === 1 ? 'red' : 'black'}}>
-                                                    {parser.parseFromString(answer.content, 'text/html').body.firstChild?.textContent}
+                                                    {parser.parseFromString(answer.content, 'text/html').body.firstChild.textContent}
                                                 </p>
                                             </span>
                                         </>
@@ -145,19 +145,17 @@ export default function ListQuestion() {
                                 <Typography className={"mr-0"}>
                                     <Button className={"btn btn-outline-warning bg-amber-100 "}
                                             onClick={async () => {
-                                                await dispatch(findById({id: question.id}))
-                                                await dispatch(findAnswersByQuestionId({id: question.id}))
+                                                await dispatch(findById({id :question.id}))
+                                                await dispatch(findAnswersByQuestionId({id :question.id}))
                                                 navigate("/home/LayoutManagerQuestion/editQuestion/" + question.id)
                                             }}>Sửa</Button>
                                 </Typography>
                                 <Typography className={"mr-0"}>
-                                    {question &&
-                                        <Button className={"btn btn-outline-warning bg-amber-100 "}
-                                                onClick={async () => {
-                                                    await dispatch(deleteAnswersByQuestionId(question.id))
-                                                    await dispatch(deleteQuestions(question.id))
-                                                }}>Xóa
-                                        </Button>}
+                                    <Button className={"btn btn-outline-warning bg-amber-100 "}
+                                            onClick={async () => {
+                                                await dispatch(deleteAnswersByQuestionId(question?.id))
+                                                await dispatch(deleteQuestions(question?.id))
+                                            }}>Xóa</Button>
                                 </Typography>
                             </div>
                         </AccordionDetails>
@@ -167,8 +165,7 @@ export default function ListQuestion() {
             {/* Pagination */}
             <nav aria-label="Page navigation example" className={"flex w-10/12"}>
                 <div>
-                    <button onClick={goToPrevPage} disabled={currentPage === 1}
-                            className="page-link disabled bg-green-300 rounded">
+                    <button onClick={goToPrevPage} disabled={currentPage === 1} className="page-link disabled bg-green-300 rounded">
                         Trước
                     </button>
                 </div>
