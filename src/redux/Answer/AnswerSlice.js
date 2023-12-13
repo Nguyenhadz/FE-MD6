@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
-    createAnswer, deleteAnswersByQuestionId,
+    createAnswer, deleteAnswerIsEmpty, deleteAnswersByQuestionId,
     findAllAnswer,
     findAnswersByQuestionId
 } from "../../service/AnswerService";
@@ -29,7 +29,9 @@ const answersSlice = createSlice({
         builder.addCase(deleteAnswersByQuestionId.fulfilled, (state, action)=>{
             state.answers = action.payload
         })
-
+        builder.addCase(deleteAnswerIsEmpty.fulfilled, (state, action)=>{
+            state.answers = action.payload
+        })
     }
 })
 

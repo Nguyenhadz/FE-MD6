@@ -2,7 +2,7 @@ import CustomQuill from "../../react-quill/CustomQuill";
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from "react-redux";
 import {createQuestion} from "../../service/QuestionService";
-import {createAnswer, deleteAnswersByQuestionId} from "../../service/AnswerService";
+import {createAnswer, deleteAnswerIsEmpty, deleteAnswersByQuestionId} from "../../service/AnswerService";
 import "./CreateQuestion.css"
 import {useNavigate} from "react-router-dom";
 import React, {useEffect} from "react";
@@ -46,8 +46,8 @@ export default function EditQuestion() {
             answer4: currentAnswers[3] || {content: '', status: 0, question: {id: currentQuestion.id}}
         },
         onSubmit: async (values) => {
+            dispatch(deleteAnswerIsEmpty())
             const {question, answer1, answer2, answer3, answer4} = values;
-            console.log(values)
             await dispatch(deleteAnswersByQuestionId(question.id))
             await dispatch(createQuestion({question: question}))
             await dispatch(createAnswer({answer: answer1}))
