@@ -16,3 +16,11 @@ export const createCateQuestion = createAsyncThunk(
         return res.data
     }
 )
+
+export const findAllCateQuestions = createAsyncThunk(
+    'cateQuestion/findAll',
+    async () =>{
+        const res = await customAxios.get('showAllCateQuestion', axiosConfig);
+        return res.data
+    }
+)

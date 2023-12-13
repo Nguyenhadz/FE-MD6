@@ -29,6 +29,7 @@ export default function UpdateUser() {
     useEffect(() => {
         dispatch(getStudentById(id))
     }, [])
+
     const user = useSelector(state => {
         console.log(state.users.user)
         return state.users.user
@@ -104,11 +105,12 @@ export default function UpdateUser() {
 
                                 }}
                                         enableReinitialize={true}
-                                        validationSchema={validate}
+                                        // validationSchema={validate}
                                         onSubmit={(values) => {
+                                            console.log(values);
                                             dispatch((updateUser(values)))
-                                            console.log("save", uploadedImageUrl);
-                                            navigate("/home")
+
+                                            // navigate("/home")
                                         }}>
                                     <Form>
                                         <div className={"justify-center flex"}>
@@ -132,7 +134,7 @@ export default function UpdateUser() {
                                             <span className={"ml-8 font-black"}>Name</span>
                                             <Field className={"form-control w-4/5 ml-16"} name={"name"}></Field>
                                             <div className="ml-16">
-                                                <ErrorMessage name="name"></ErrorMessage>
+                                                {/*<ErrorMessage name="name"></ErrorMessage>*/}
                                             </div>
 
                                         </div>

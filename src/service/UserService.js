@@ -21,6 +21,7 @@ export const getStudentById = createAsyncThunk(
     'user/getStudentById',
     async (id) => {
         const res = await customAxios.get('users/' + id, axiosConfig);
+        console.log(res)
         return res.data;
     }
 )
@@ -47,6 +48,7 @@ export const updateUser = createAsyncThunk(
     'user/update',
     async (data)=>{
         const res = await customAxios.put('users/' + data.id, data, axiosConfig)
+        console.log("aaaaaaaa", data)
         return res.data
     }
 )
