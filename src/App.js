@@ -44,6 +44,7 @@ function App() {
                     <Route path={'/register'} element={<RegisterForm/>}></Route>
                     <Route path={'/forgot'} element={<ForgotForm/>}></Route>
                 </Route>
+
                 <Route path={'/home'} element={<Home/>}>
                     <Route path={'/home/createCateQuiz'} element={<CreateCateQuiz/>}></Route>
                     <Route path={'/home/createCateQuestion'} element={<CreateCateQuestion/>}></Route>
