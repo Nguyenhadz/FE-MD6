@@ -46,3 +46,10 @@ export const updateCateQuestion = createAsyncThunk(
         return res.data;
     }
 )
+export const findCateQuestionByTeacher = createAsyncThunk(
+    'cateQuiz/findByTeacher',
+    async (id) => {
+        const res = await customAxios.get('categoryQuestion/findByTeacher/' + id, axiosConfig);
+        return res.data;
+    }
+)

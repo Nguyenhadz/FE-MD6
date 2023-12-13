@@ -31,6 +31,8 @@ import UpdateCateQuiz from "./page/catequiz/UpdateCateQuiz";
 import EditQuestion from "./page/question/EditQuestion";
 import ShowListCateQuestion from "./page/catequestion/ShowListCateQuestion";
 import UpdateCateQuestion from "./page/catequestion/UpdateCateQuestion";
+import ShowListCateQuestionByTeacher from "./page/catequestion/ShowListCateQuestionByTeacher";
+import UpdateCateQuestionByTeacher from "./page/catequestion/UpdateCateQuestionByTeacher";
 
 
 function App() {
@@ -63,6 +65,8 @@ function App() {
                         <Route path={'listQuestion'} element={<ListQuestion/>}></Route>
                         <Route path={'createQuestion'} element={<CreateQuestion/>}></Route>
                         <Route path={'editQuestion/:id'} element={<EditQuestion/>}></Route>
+                        <Route path={'showListCateQuestionByTeacher'} element={<ShowListCateQuestionByTeacher/>}></Route>
+                        <Route path={'updateCateQuestionByTeacher/:id'} element={<UpdateCateQuestionByTeacher/>}></Route>
                     </Route>
                     <Route path={'/home/showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>
                     <Route path={'/home/updateCateQuiz/:id'} element={<UpdateCateQuiz/>}></Route>

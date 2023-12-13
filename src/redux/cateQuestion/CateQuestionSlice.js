@@ -3,7 +3,7 @@ import {toast} from "react-toastify";
 import {
     createCateQuestion,
     deleteCateQuestion,
-    findCateQuestionById,
+    findCateQuestionById, findCateQuestionByTeacher,
     showAllCateQuestion, updateCateQuestion
 } from "../../service/CateQuestionService";
 import {updateCateQuiz} from "../../service/CateQuizService";
@@ -42,6 +42,9 @@ const CateQuestionSlice = createSlice({
         })
         builder.addCase(updateCateQuestion.rejected, (state, action) =>{
             toast.error("Trùng tên danh mục cũ", {})
+        })
+        builder.addCase(findCateQuestionByTeacher.fulfilled, (state, action) =>{
+            state.cateQuestions = action.payload
         })
     }
 })

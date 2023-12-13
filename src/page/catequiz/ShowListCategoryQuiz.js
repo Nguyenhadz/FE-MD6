@@ -29,6 +29,7 @@ export default function ShowListCategoryQuiz() {
     };
     // const navigate = useNavigate();
     // const dispatch = useDispatch();
+    const userLogin = JSON.parse(localStorage.getItem('currentUser'));
     const handleSearch = () => {
         if (selectedField === '1') {
             dispatch(findStudentByName(searchTerm))
@@ -69,15 +70,16 @@ export default function ShowListCategoryQuiz() {
             width: 150,
             align: 'center',
             renderCell: (params) => (
-                <div>
-                {/*<Link to={`/home/updateCateQuiz/${params.row.hiddenColumn}`}>*/}
+                ((userLogin.roles[0].name === 'ADMIN') || (userLogin.roles[0].authority === 'ADMIN') && (
+                    <div>
                     <button onClick={()=>{
                         dispatch(findCateQuizById(params.row.hiddenColumn)).then((res)=> {
                             navigate(`/home/updateCateQuiz/${params.row.hiddenColumn}`)
                         })
 
                     }}>Sửa</button>
-                </div>
+                </div>))
+
             ),
         },
         {
@@ -86,31 +88,34 @@ export default function ShowListCategoryQuiz() {
             width: 150,
             align: 'center',
             renderCell: (params) => (
-                <button
-                    onClick={() => {
-                        toast.warning(
-                            <>
-                                <div>
-                                    <p>Bạn có chắc chắn muốn xóa?</p>
-                                    <button className={"w-20 h-10 bg-amber-600 rounded text-white"} type="submit" style={{margin: '20px'}} onClick={() => {handleDelete(params.row.hiddenColumn); toast.dismiss();}}>Xác nhận</button>
-                                    <button className={"w-20 h-10 bg-amber-600 rounded text-white"} type="submit" style={{margin: '20px'}} onClick={() => toast.dismiss()}>Hủy bỏ</button>
-                                </div>
-                            </>,
-                            {
-                                position: 'top-center',
-                                autoClose: false,
-                                hideProgressBar: false,
-                                closeOnClick: false,
-                                pauseOnHover: true,
-                                draggable: true,
-                                progress: undefined,
-                                closeButton: false,
-                            }
-                        );
-                    }}
-                >
-                    Xoá
-                </button>
+                ((userLogin.roles[0].name === 'ADMIN') || (userLogin.roles[0].authority === 'ADMIN') && (
+                    <button
+                        onClick={() => {
+                            toast.warning(
+                                <>
+                                    <div>
+                                        <p>Bạn có chắc chắn muốn xóa?</p>
+                                        <button className={"w-20 h-10 bg-amber-600 rounded text-white"} type="submit" style={{margin: '20px'}} onClick={() => {handleDelete(params.row.hiddenColumn); toast.dismiss();}}>Xác nhận</button>
+                                        <button className={"w-20 h-10 bg-amber-600 rounded text-white"} type="submit" style={{margin: '20px'}} onClick={() => toast.dismiss()}>Hủy bỏ</button>
+                                    </div>
+                                </>,
+                                {
+                                    position: 'top-center',
+                                    autoClose: false,
+                                    hideProgressBar: false,
+                                    closeOnClick: false,
+                                    pauseOnHover: true,
+                                    draggable: true,
+                                    progress: undefined,
+                                    closeButton: false,
+                                }
+                            );
+                        }}
+                    >
+                        Xoá
+                    </button>
+                ))
+
 
             ),
         },
