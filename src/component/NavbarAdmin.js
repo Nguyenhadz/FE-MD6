@@ -19,7 +19,7 @@ export default function NavbarAdmin() {
             'Logout successfully\n', {});
         navigate('/')
     };
-    return (
+    return user && (
         <div className={"w-full"}>
             <div className={"w-fit h-5"}>
             </div>
@@ -31,12 +31,12 @@ export default function NavbarAdmin() {
             </div>
 
             <div className={"w-full h-10 flex items-center hover:bg-blue-100"}
-                onClick={() => {
-                    navigate('/home');
-                }}>
+                 onClick={() => {
+                     navigate('/home');
+                 }}>
                 <img className={"ml-3 w-4 h-4"}
-                    src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-home-24%20(1).png?alt=media&token=8528cb79-3169-4d62-b5be-570c5f16e124'}
-                    alt={'...'}
+                     src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-home-24%20(1).png?alt=media&token=8528cb79-3169-4d62-b5be-570c5f16e124'}
+                     alt={'...'}
                 />
                 <p className={"ml-2 justify-center"}>Trang chủ</p>
             </div>
@@ -50,7 +50,7 @@ export default function NavbarAdmin() {
             </div>
 
             <Link to={"/home/showListCateQuiz"} style={{color: 'inherit', textDecoration: 'none'}}>
-                <div className={"w-full h-10 flex items-center hover:bg-blue-100"} >
+                <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
                     <img className={"ml-3 w-3 h-3 mr-1"}
                          src={'https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/category-icon.png'}
                          alt={'...'}
@@ -60,7 +60,7 @@ export default function NavbarAdmin() {
             </Link>
 
             <Link to={"/home/showListCateQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
-                <div className={"w-full h-10 flex items-center hover:bg-blue-100"} >
+                <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
                     <img className={"ml-3 w-3 h-3 mr-1"}
                          src={'https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/category-icon.png'}
                          alt={'...'}
@@ -70,8 +70,9 @@ export default function NavbarAdmin() {
             </Link>
 
             {((user.roles[0].authority === 'TEACHER') || (user.roles[0].authority === 'STUDENT')) &&
-                <Link to={"/home/layoutManagerQuestion/listQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
-                    <div className={"w-full h-10 flex items-center hover:bg-blue-100"} >
+                <Link to={"/home/layoutManagerQuestion/listQuestion"}
+                      style={{color: 'inherit', textDecoration: 'none'}}>
+                    <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
                         <img className={"ml-3 w-4 h-4"}
                              src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'}
                              alt={'...'}
@@ -82,7 +83,7 @@ export default function NavbarAdmin() {
 
             {(user.roles[0].authority === 'ADMIN') &&
                 <Link to={"/home/showListStudent"} style={{color: 'inherit', textDecoration: 'none'}}>
-                    <div className={"w-full h-10 flex items-center hover:bg-blue-100"} >
+                    <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
                         <img className={"ml-3 w-4 h-4"}
                              src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'}
                              alt={'...'}
@@ -123,13 +124,13 @@ export default function NavbarAdmin() {
             </div>
 
             <Link to={"/home/findUserById/" + user.id} style={{color: 'inherit', textDecoration: 'none'}}>
-            <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
-                <img className={"ml-3 w-4 h-4"}
-                     src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-user-account-25.png?alt=media&token=9e5cf6ec-764d-4d5d-860d-e0b96845474d'}
-                     alt={'...'}
-                />
-                <p className={"ml-2 justify-center"}>Hồ sơ</p>
-            </div>
+                <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
+                    <img className={"ml-3 w-4 h-4"}
+                         src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-user-account-25.png?alt=media&token=9e5cf6ec-764d-4d5d-860d-e0b96845474d'}
+                         alt={'...'}
+                    />
+                    <p className={"ml-2 justify-center"}>Hồ sơ</p>
+                </div>
             </Link>
 
             <div className={"w-full h-10 flex items-center hover:bg-blue-100"} onClick={handleLogout}>
@@ -139,7 +140,6 @@ export default function NavbarAdmin() {
                 />
                 <p className={"ml-2 justify-center"}>Đăng xuất</p>
             </div>
-
             <div className={"w-full h-10 flex items-center hover:bg-blue-100 mt-[180%]"}>
                 <img className={"ml-3 w-8 h-8 rounded-full"}
                      src={`${user.image}`}
@@ -147,7 +147,6 @@ export default function NavbarAdmin() {
                 />
                 <p className={"ml-2 justify-center"}>{user.name}</p>
             </div>
-
         </div>
     )
 }
