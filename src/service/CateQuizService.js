@@ -23,3 +23,25 @@ export const showAllCategoryQuiz = createAsyncThunk(
         return res.data;
     }
 )
+export const deleteCateQuiz = createAsyncThunk(
+    'cateQuiz/delete',
+    async (id) => {
+        await customAxios.delete('categoryQuizzes/' + id, axiosConfig);
+        const res = await customAxios.get('categoryQuizzes', axiosConfig);
+        return res.data;
+    }
+)
+export const findCateQuizById = createAsyncThunk(
+    'cateQuiz/findCateQuizById',
+    async (id) => {
+        const res = await customAxios.get('categoryQuizzes/' + id, axiosConfig);
+        return res.data;
+    }
+)
+export const updateCateQuiz = createAsyncThunk(
+    'cateQuiz/updateQuiz',
+    async (value) => {
+        const res = await customAxios.put('categoryQuizzes/' + value.id, value, axiosConfig);
+        return res.data;
+    }
+)

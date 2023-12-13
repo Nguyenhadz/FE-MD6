@@ -1,12 +1,20 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {createQuestion, findAll, findById} from "../../service/QuestionService";
+
+import {
+    createQuestion,
+    findAll,
+    findById,
+    findByContent,
+    findQuestionsByCategory,
+    editQuestions, deleteQuestions, findAllQuestionByUser
+} from "../../service/QuestionService";
 import {toast} from "react-toastify";
 
 
 const initialState = {
     questions: [],
-    question: {}
-
+    currentQuestion: {},
+    createdQuestion: {},
 }
 
 const questionSlide = createSlice({
@@ -17,13 +25,29 @@ const questionSlide = createSlice({
             state.questions = action.payload
         })
         builder.addCase(findById.fulfilled, (state, action)=>{
-            state.question = action.payload
+            console.log(action.payload)
+            state.currentQuestion = action.payload
         })
         builder.addCase(createQuestion.fulfilled, (state, action)=>{
-            toast.success("Tạo câu hỏi mới thành công!", {})
+            toast("Thành công!", {})
+            console.log(action.payload)
+            state.createdQuestion = action.payload
         })
-        builder.addCase(createQuestion.rejected, (state, action)=>{
-            toast.error("Tạo câu hỏi mới thất bại!", {})
+        builder.addCase(findByContent.fulfilled, (state, action)=>{
+            state.questions = action.payload
+        })
+        builder.addCase(findQuestionsByCategory.fulfilled, (state, action)=>{
+            state.questions = action.payload
+        })
+        builder.addCase(editQuestions.fulfilled, (state, action)=>{
+            state.currentQuestion = action.payload
+        })
+        builder.addCase(deleteQuestions.fulfilled, (state, action)=>{
+            toast.success("Xóa câu hỏi thành công!", {})
+            state.questions= action.payload
+        })
+        builder.addCase(findAllQuestionByUser.fulfilled, (state, action)=>{
+            state.questions= action.payload
         })
     }
 })

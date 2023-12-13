@@ -35,7 +35,9 @@ export default function LayoutManagerQuestion() {
     useEffect(() => {
     }, [selectedField]);
     return (
-        <div className="flex flex-col justify-center h-full">
+        <div className="flex flex-col justify-center h-full"
+             style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}
+        >
             <div className={"w-full h-16 bg-white flex items-center relative"}>
                 <input className={"w-8/12 h-10 ml-4 border border-gray-300 rounded-lg pl-12"} type="text"
                        placeholder="Search..."
@@ -50,10 +52,10 @@ export default function LayoutManagerQuestion() {
                 <button className={"w-20 h-10 rounded-lg ml-5 hover:bg-amber-50"} onClick={handleSearch}>Search</button>
             </div>
             <div className={"w-full flex flex-grow"}>
-                <div className={"ml-0 mt-0 w-2/12 border border-yellow-300 bg-blue-400 h-full"}>
+                <div className={"ml-0 mt-0 w-[200px] border border-yellow-300 bg-blue-400 h-full"}>
                     <NavBarQuestion></NavBarQuestion>
                 </div>
-                <div className={"w-10/12 flex justify-center bg-amber-6000 h-full items-center"}>
+                <div className={"w-full flex justify-center bg-amber-6000 h-full items-center"}>
                     <Outlet></Outlet>
                 </div>
             </div>

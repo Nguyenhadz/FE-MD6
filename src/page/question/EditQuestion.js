@@ -2,20 +2,22 @@ import CustomQuill from "../../react-quill/CustomQuill";
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from "react-redux";
 import {createQuestion} from "../../service/QuestionService";
-import {createAnswer} from "../../service/AnswerService";
-import React, {useEffect, useState} from "react";
+import {createAnswer, deleteAnswersByQuestionId} from "../../service/AnswerService";
 import "./CreateQuestion.css"
 import {useNavigate} from "react-router-dom";
+import React, {useEffect} from "react";
 import {showAllCateQuestion} from "../../service/CateQuestionService";
 import {findAllTypeQuestion} from "../../service/TypeQuestionService";
 import {findAllLevelQuestion} from "../../service/LevelQuestionService";
 
-export default function CreateQuestion() {
-    const [test,setTest] = useState(1)
-    const currentUser = useSelector((store) => {
-        return store.users.currentUser
-    })
+export default function EditQuestion() {
     const navigate = useNavigate();
+    const currentQuestion = useSelector((store) => {
+        return store.questionStore.currentQuestion
+    })
+    const currentAnswers = useSelector((store) => {
+        return store.answersStore.currentAnswers
+    })
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(showAllCateQuestion())
@@ -37,51 +39,31 @@ export default function CreateQuestion() {
     })
     const formik = useFormik({
         initialValues: {
-            question: {content: '', status: 1, categoryQuestion: {id: 1,}, levelQuestion: {id: 1,}, typeQuestion: {id: 2,}, user: {id: currentUser.id,}},
-            answer1: {content: '', status: 0, question: {id: 0}},
-            answer2: {content: '', status: 0, question: {id: 0}},
-            answer3: {content: '', status: 0, question: {id: 0}},
-            answer4: {content: '', status: 0, question: {id: 0}}
+            question: currentQuestion,
+            answer1: currentAnswers[0],
+            answer2: currentAnswers[1],
+            answer3: currentAnswers[2] || {content: '', status: 0, question: {id: currentQuestion.id}},
+            answer4: currentAnswers[3] || {content: '', status: 0, question: {id: currentQuestion.id}}
         },
         onSubmit: async (values) => {
-            const {question} = values;
+            const {question, answer1, answer2, answer3, answer4} = values;
+            console.log(values)
+            await dispatch(deleteAnswersByQuestionId(question.id))
             await dispatch(createQuestion({question: question}))
+            await dispatch(createAnswer({answer: answer1}))
+            await dispatch(createAnswer({answer: answer2}))
+            console.log(question.typeQuestion.id)
+            if (question && question.typeQuestion && (question.typeQuestion.id === 2 || question.typeQuestion.id === 3)) {
+                console.log(answer3.question.id)
+                await dispatch(createAnswer({answer: answer3}))
+                await dispatch(createAnswer({answer: answer4}))
+            }
+            navigate("/home/LayoutManagerQuestion/listQuestion")
         },
     });
-    const createdQuestion = useSelector((store) => {return store.questionStore.createdQuestion});
-    useEffect(() => {
-        console.log(test)
-    }, [test])
-    useEffect(() => {
-        setTest(1)
-    },[])
-    useEffect(() => {
-        formik.values.answer1.question.id = createdQuestion.id
-        formik.values.answer2.question.id = createdQuestion.id
-        formik.values.answer3.question.id = createdQuestion.id
-        formik.values.answer4.question.id = createdQuestion.id
-        // console.log(formik.values.answer1)
-        // console.log(formik.values.answer2)
-        // console.log(formik.values.answer3)
-        // console.log(formik.values.answer4)
-        console.log(createdQuestion)
-        console.log(test)
-        if (createdQuestion !== {}) {
-            if (test !== 0) {
-                dispatch(createAnswer({answer: formik.values.answer1})).then(()=> console.log(1))
-                dispatch(createAnswer({answer: formik.values.answer2})).then(()=> console.log(2))
-                if (test === 2 || test === 3) {
-                    dispatch(createAnswer({answer: formik.values.answer3})).then(()=> console.log(3))
-                    dispatch(createAnswer({answer: formik.values.answer4})).then(()=> console.log(4))
-                }
-                formik.resetForm()
-            }
-        }
-    }, [createdQuestion])
-    const answerCount = formik.values.question.typeQuestion.id === 1 ? [1, 2] : [1, 2, 3, 4];
-    const isCheckbox = formik.values.question.typeQuestion.id === 3;
-    const isRatio = formik.values.question.typeQuestion.id === 1 || formik.values.question.typeQuestion.id === 2;
-
+    const answerCount = formik.values.question.typeQuestion?.id === 1 ? [1, 2] : [1, 2, 3, 4];
+    const isCheckbox = formik.values.question.typeQuestion?.id === 3;
+    const isRatio = formik.values.question.typeQuestion?.id === 1 || formik.values.question.typeQuestion?.id === 2;
     return (
         <>
             <div className={"rounded-[1rem] w-10/12 bg-purple-100 p-2 justify-center font-bold text-1xl h-max"}
@@ -90,7 +72,7 @@ export default function CreateQuestion() {
                 <form onSubmit={formik.handleSubmit}>
                     <div className={"content-question w-full bg-amber-300 rounded-[0.5rem] p-2"}>
                         <span>Câu hỏi:</span>
-                        <CustomQuill field={{name: "question.content", value: formik.values.question.content}}
+                        <CustomQuill field={{name: "question.content", value: formik.values.question?.content}}
                                      form={formik}></CustomQuill>
                     </div>
                     <div className={"answer-question flex justify-around w-full mt-2 p-2"}>
@@ -103,7 +85,7 @@ export default function CreateQuestion() {
                                             // className={"rounded-[0.5rem] bg-amber-200"}
                                             type={"checkbox"}
                                             name={`answer${index}.status`}
-                                            checked={formik.values[`answer${index}`].status === 1}
+                                            checked={formik.values[`answer${index}`]?.status === 1}
                                             onChange={(e) => formik.setFieldValue(`answer${index}.status`, e.target.checked ? 1 : 0)}
                                         />
                                     ) : (
@@ -112,7 +94,7 @@ export default function CreateQuestion() {
                                                 // className={"rounded-[0.5rem] bg-amber-200"}
                                                 type={"radio"}
                                                 name={"answer.status"}
-                                                checked={formik.values[`answer${index}`].status === 1}
+                                                checked={formik.values[`answer${index}`]?.status === 1}
                                                 onChange={() => {
                                                     // Trước khi đặt giá trị mới, đặt tất cả status về 0
                                                     for (let i = 1; i <= 4; i++) {
@@ -128,7 +110,7 @@ export default function CreateQuestion() {
                                     <CustomQuill
                                         field={{
                                             name: `answer${index}.content`,
-                                            value: formik.values[`answer${index}`].content
+                                            value: formik.values[`answer${index}`]?.content
                                         }}
                                         form={formik}>
                                     </CustomQuill>
@@ -151,11 +133,10 @@ export default function CreateQuestion() {
                         </select>
                         <select
                             name="question.typeQuestion.id"
-                            value={formik.values.question.typeQuestion.id}
+                            value={formik.values.question.typeQuestion?.id}
                             onChange={(e) => {
                                 formik.handleChange(e);
                                 formik.setFieldValue('question.typeQuestion.id', parseInt(e.target.value));
-                                setTest(parseInt(e.target.value))
                             }}
                             className={"rounded-[1rem] h-6 w-1/5 text-center"}
                         >
@@ -166,7 +147,7 @@ export default function CreateQuestion() {
                         </select>
                         <select
                             name="question.levelQuestion.id"
-                            value={formik.values.question.levelQuestion.id}
+                            value={formik.values.question.levelQuestion?.id}
                             onChange={formik.handleChange}
                             className={"rounded-[1rem] h-6 w-1/5 text-center"}
                         >
@@ -177,8 +158,12 @@ export default function CreateQuestion() {
                         </select>
                     </div>
                     <div className={"flex justify-center"}>
-                        <button type="submit" className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>Tạo câu hỏi</button>
-                        <button type="button" onClick={() => navigate("/home/layoutManagerQuestion/listQuestion")} className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>Quay lại</button>
+                        <button type="submit" className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
+                            Sửa câu hỏi
+                        </button>
+                        <button type="button" onClick={() => navigate("/home/layoutManagerQuestion/listQuestion")} className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
+                            Quay lại
+                        </button>
                     </div>
                 </form>
             </div>

@@ -2,30 +2,31 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {findStudentByMail, findStudentByName} from "../../service/UserService";
-import './ShowListStudent.css';
+import '../user/ShowListStudent.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import Box from "@mui/material/Box";
 import {DataGrid} from "@mui/x-data-grid";
-import {showAllCategoryQuiz} from "../../service/CateQuizService";
+import {deleteCateQuiz, findCateQuizById, showAllCategoryQuiz} from "../../service/CateQuizService";
+import {toast} from "react-toastify";
+import {deleteCateQuestion, findCateQuestionById, showAllCateQuestion} from "../../service/CateQuestionService";
 
-export default function ShowListCategoryQuiz() {
+export default function ShowListCateQuestion() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const parser = new DOMParser();
     useEffect(() => {
-        dispatch(showAllCategoryQuiz())
+        dispatch(showAllCateQuestion())
     }, [])
     const categories = useSelector(state => {
-        console.log(state)
-        return Array.from(state.cateQuiz.cateQuizzes)
+        console.log(state.cateQuestions.cateQuestions)
+        return Array.from(state.cateQuestions.cateQuestions)
     })
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedField, setSelectedField] = useState('1'); // Giá trị mặc định
     const handleFieldChange = (event) => {
         setSelectedField(event.target.value);
     };
-    // const navigate = useNavigate();
-    // const dispatch = useDispatch();
     const handleSearch = () => {
         if (selectedField === '1') {
             dispatch(findStudentByName(searchTerm))
@@ -38,6 +39,10 @@ export default function ShowListCategoryQuiz() {
 
     useEffect(() => {
     }, [selectedField]);
+
+    const handleDelete = (id) => {
+        dispatch(deleteCateQuestion(id))
+    };
 
     const columns = [
         {field: 'id', headerName: 'STT', width: 90},
@@ -54,16 +59,59 @@ export default function ShowListCategoryQuiz() {
             editable: false,
         },
         {
-            field: 'details',
+            field: 'useCreate',
+            headerName: 'Người tạo',
+            width: 200,
+            editable: false,
+        },
+        {
+            field: 'update',
             headerName: '',
             width: 150,
             align: 'center',
             renderCell: (params) => (
-                <Link to={`/home/userDetail/${params.row.hiddenColumn}`}>
-                    <button>Sửa</button>
-                </Link>
+                <div>
+                    <button onClick={()=>{
+                        dispatch(findCateQuestionById(params.row.hiddenColumn)).then((res)=> {
+                            navigate(`/home/updateCateQuestion/${params.row.hiddenColumn}`)
+                        })
+                    }}>Sửa</button>
+                </div>
             ),
+        },
+        {
+            field: 'delete',
+            headerName: '',
+            width: 150,
+            align: 'center',
+            renderCell: (params) => (
+                <button
+                    onClick={() => {
+                        toast.warning(
+                            <>
+                                <div>
+                                    <p>Bạn có chắc chắn muốn xóa?</p>
+                                    <button className={"w-20 h-10 bg-amber-600 rounded text-white"} type="submit" style={{margin: '20px'}} onClick={() => {handleDelete(params.row.hiddenColumn); toast.dismiss();}}>Xác nhận</button>
+                                    <button className={"w-20 h-10 bg-amber-600 rounded text-white"} type="submit" style={{margin: '20px'}} onClick={() => toast.dismiss()}>Hủy bỏ</button>
+                                </div>
+                            </>,
+                            {
+                                position: 'top-center',
+                                autoClose: false,
+                                hideProgressBar: false,
+                                closeOnClick: false,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                closeButton: false,
+                            }
+                        );
+                    }}
+                >
+                    Xoá
+                </button>
 
+            ),
         },
     ];
 
@@ -71,8 +119,9 @@ export default function ShowListCategoryQuiz() {
     for (let i = 0; i < categories.length; i++) {
         rows.push({
                 id: i + 1,
-                name: categories[i].name,
-                description: categories[i].description,
+                name: (parser.parseFromString(categories[i].name, 'text/html')).body.firstChild.textContent,
+                description: (parser.parseFromString(categories[i].description, 'text/html')).body.firstChild.textContent,
+            useCreate: (parser.parseFromString(categories[i].user.name, 'text/html')).body.firstChild.textContent,
                 hiddenColumn: categories[i].id,
             }
         )
@@ -93,14 +142,17 @@ export default function ShowListCategoryQuiz() {
                 <button className={"w-20 h-10 rounded-lg ml-5 hover:bg-amber-50"} onClick={handleSearch}>Search</button>
             </div>
             <div className={"flex items-center justify-center mt-5 mb-5"}>
-                <h1 className={"text-5xl text-orange-600 ml-[420px]"}><b>Danh sách danh mục bài thi</b></h1>
-                <button className={"w-44 h-10 rounded-lg ml-56 bg-orange-400 hover:bg-red-500 text-white"}>Thêm mới danh mục
-                </button>
+                <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-2 ml-96 flex justify-center"}>Danh sách danh mục câu hỏi
+                </div>
+                <Link to={"/home/createCateQuestion"}>
+                    <button className={"w-44 h-10 rounded-lg ml-56 bg-orange-400 hover:bg-red-500 text-white"}>Thêm mới danh mục
+                    </button>
+                </Link>
             </div>
 
             <Box sx={{
                 height: '630px',
-                width: '45%',
+                width: '50%',
                 textAlign: 'center',
                 margin: 'auto',
                 backgroundColor: 'white',

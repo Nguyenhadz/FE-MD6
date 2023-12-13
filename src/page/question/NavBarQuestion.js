@@ -1,107 +1,67 @@
-import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Label from '@mui/icons-material/Label';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined';
+import {Link, useNavigate} from "react-router-dom";
+import React from "react";
 
-import { TreeView } from '@mui/x-tree-view/TreeView';
-import { TreeItem, treeItemClasses } from '@mui/x-tree-view/TreeItem';
 
-const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
-    color: theme.palette.text.secondary,
-    [`& .${treeItemClasses.content}`]: {
-        color: theme.palette.text.secondary,
-        borderTopRightRadius: theme.spacing(2),
-        borderBottomRightRadius: theme.spacing(2),
-        paddingRight: theme.spacing(1),
-        fontWeight: theme.typography.fontWeightMedium,
-        '&.Mui-expanded': {
-            fontWeight: theme.typography.fontWeightRegular,
-        },
-        '&:hover': {
-            backgroundColor: theme.palette.action.hover,
-        },
-        '&.Mui-focused, &.Mui-selected, &.Mui-selected.Mui-focused': {
-            backgroundColor: `var(--tree-view-bg-color, ${theme.palette.action.selected})`,
-            color: 'var(--tree-view-color)',
-        },
-        [`& .${treeItemClasses.label}`]: {
-            fontWeight: 'inherit',
-            color: 'inherit',
-        },
-    },
-    [`& .${treeItemClasses.group}`]: {
-        marginLeft: 0,
-        [`& .${treeItemClasses.content}`]: {
-            paddingLeft: theme.spacing(2),
-        },
-    },
-}));
-
-const StyledTreeItem = React.forwardRef(function StyledTreeItem(props, ref) {
-    const theme = useTheme();
-    const {
-        bgColor,
-        color,
-        labelIcon: LabelIcon,
-        labelInfo,
-        labelText,
-        colorForDarkMode,
-        bgColorForDarkMode,
-        ...other
-    } = props;
-
-    const styleProps = {
-        '--tree-view-color': theme.palette.mode !== 'dark' ? color : colorForDarkMode,
-        '--tree-view-bg-color':
-            theme.palette.mode !== 'dark' ? bgColor : bgColorForDarkMode,
-    };
-
+export default function NavbarAdmin() {
+    const navigate = useNavigate();
     return (
-        <StyledTreeItemRoot
-            label={
-                <Box
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        p: 0.5,
-                        pr: 0,
-                    }}
-                >
-                    <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />
-                    <Typography variant="body2" sx={{ fontWeight: 'inherit', flexGrow: 1 }}>
-                        {labelText}
-                    </Typography>
-                    <Typography variant="caption" color="inherit">
-                        {labelInfo}
-                    </Typography>
-                </Box>
-            }
-            style={styleProps}
-            {...other}
-            ref={ref}
-        />
-    );
-});
+        <div className={"w-full h-full bg-gray-200"}>
+            <div className={"w-fit h-5"}>
+            </div>
 
-export default function NavBarQuestion() {
-    return (
-        <TreeView
-            aria-label="gmail"
-            defaultExpanded={['3']}
-            defaultCollapseIcon={<ArrowDropDownIcon />}
-            defaultExpandIcon={<ArrowRightIcon />}
-            defaultEndIcon={<div style={{ width: 24 }} />}
-            sx={{ height: 500, flexGrow: 1, overflowY: 'auto', marginTop: '144px', padding: '10px'}}
-        >
-            <StyledTreeItem nodeId="1" labelText="All quiz" labelIcon={QuizOutlinedIcon} />
-            <StyledTreeItem nodeId="2" labelText="All quiz" labelIcon={QuizOutlinedIcon} />
-            <StyledTreeItem nodeId="3" labelText="All quiz" labelIcon={QuizOutlinedIcon} />
-            <StyledTreeItem nodeId="4" labelText="All quiz" labelIcon={QuizOutlinedIcon} />
-        </TreeView>
-    );
+            <div className={"w-fit h-16"} onClick={() => {
+                navigate('/home');
+            }}>
+                <img className={"w-28 h-10 ml-3"} src={'https://cf.quizizz.com/img/qfw/Logo.png'} alt={'...'}/>
+            </div>
+
+            <Link to={"/home/layoutManagerQuestion/listQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
+                <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
+                    <img className={"ml-3 w-3 h-3 mr-1"}
+                         src={'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2Fchecklist_5063946.png?alt=media&token=c9a73284-de36-4317-9c67-5f18a063d5f1'}
+                         alt={'...'}
+                    />
+                    <p className={"ml-2 justify-center"}>
+                        Danh sách câu hỏi</p>
+                </div>
+            </Link>
+
+            <Link to={"/home/LayoutManagerQuestion/CreateQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
+                <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
+                <img className={"ml-3 w-3 h-3 mr-1"}
+                         src={'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2Fpencil_800844.png?alt=media&token=b246d5ec-c628-4d3a-ab86-0e76fb45e8c1'}
+                         alt={'...'}
+                    />
+                    <p className={"ml-2 justify-center"}>Tạo câu hỏi mới</p>
+                </div>
+            </Link>
+            <Link to={"/home/LayoutManagerQuestion/CreateQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
+                <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
+                    <img className={"ml-3 w-3 h-3 mr-1"}
+                         src={'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2Fchecklist_5063946.png?alt=media&token=c9a73284-de36-4317-9c67-5f18a063d5f1'}
+                         alt={'...'}
+                    />
+                    <p className={"ml-2 justify-center"}>Danh sách bài thi</p>
+                </div>
+            </Link>
+            <Link to={"/home/LayoutManagerQuestion/CreateQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
+                <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
+                    <img className={"ml-3 w-3 h-3 mr-1"}
+                         src={'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2Fchecklist_5063946.png?alt=media&token=c9a73284-de36-4317-9c67-5f18a063d5f1'}
+                         alt={'...'}
+                    />
+                    <p className={"ml-2 justify-center"}>Danh sách danh mục</p>
+                </div>
+            </Link>
+            <Link to={"/home/LayoutManagerQuestion/CreateQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
+                <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
+                    <img className={"ml-3 w-3 h-3 mr-1"}
+                         src={'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2Fchecklist_5063946.png?alt=media&token=c9a73284-de36-4317-9c67-5f18a063d5f1'}
+                         alt={'...'}
+                    />
+                    <p className={"ml-2 justify-center"}>Danh sách học viên</p>
+                </div>
+            </Link>
+        </div>
+    )
 }

@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 
 import {createCateQuiz} from "../../service/CateQuizService";
@@ -6,6 +6,7 @@ import {Button} from "react-bootstrap";
 import {Field, Form, Formik, useFormik} from "formik";
 import CustomQuills from "./CustomQuills";
 import CustomQuill from "../../react-quill/CustomQuill";
+import React from "react";
 
 
 export default function CreateCateQuiz() {
@@ -17,18 +18,23 @@ export default function CreateCateQuiz() {
             name:'',
             description:''
         },
-        onSubmit:(values) =>{
+        onSubmit:(values,{ resetForm }) =>{
             console.log(values)
-            dispatch(createCateQuiz(values))
+            dispatch(createCateQuiz(values));
+            resetForm();
         }
     })
 
     return (
         <>
-            <div className={"bg-cover bg-center h-screen flex items-center justify-center"}
+            <div className={"bg-cover bg-center h-screen flex"}
                  style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
+                <Link to={"/home/showListCateQuiz"}>
+                    <button className={"w-20 h-10 rounded-lg ml-6 mt-5 bg-orange-400 hover:bg-red-500 text-white"}>Trở về
+                    </button>
+                </Link>
                 <div
-                    className={"w-3/5 h-5/6 bg-gray-100 bg-opacity-70 p-4 justify-center rounded-3xl shadow-lg"}>
+                    className={"w-3/5 h-5/6 bg-gray-100 bg-opacity-70 p-4 mt-20 ml-64 rounded-3xl shadow-lg"}>
                     <div className={"text-4xl font-extrabold font-sans text-orange-500 mt-2 flex justify-center"}>Tạo
                         Danh Mục Bài Thi
                         Của Bạn
