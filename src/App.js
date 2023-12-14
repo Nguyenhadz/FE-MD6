@@ -8,7 +8,7 @@ import Home from "./page/Home";
 import MenuLogin from "./page/MenuLogin";
 import LoginWithGmailForm from "./page/LoginWithGmailForm";
 import UserDetail from "./page/user/UserDetail";
-import UpdateUser from "./page/user/UpdateUser";
+import UserProfile from "./page/user/UserProfile";
 import ShowListTeacherPending from "./page/user/ShowListTeacherPending";
 import DetailTeacherPending from "./page/user/DetailTeacherPending";
 import ShowListTeacher from "./page/user/ShowListTeacher";
@@ -27,6 +27,7 @@ import EditQuestion from "./page/question/EditQuestion";
 import ShowListCateQuestion from "./page/catequestion/ShowListCateQuestion";
 import UpdateCateQuestion from "./page/catequestion/UpdateCateQuestion";
 import {useSelector} from "react-redux";
+import ChangePassword from "./page/user/UserPassword";
 
 
 function App() {
@@ -51,7 +52,8 @@ function App() {
                         <Route path={'/home/showListTeacher'} element={<ShowListTeacher/>}></Route>
                         <Route path={'/home/userDetail/:id'} element={<UserDetail/>}></Route>
                         <Route path={'/home/teacherDetail/:id'} element={<TeacherDetail/>}></Route>
-                        <Route path={'/home/findUserById/:id'} element={<UpdateUser/>}></Route>
+                        <Route path={'/home/findUserById/:id'} element={<UserProfile/>}></Route>
+                        <Route path={'/home/changeUserPasswordById/:id'} element={<ChangePassword/>}></Route>
                         <Route path={'/home/showTeacherPending'} element={<ShowListTeacherPending/>}></Route>
                         <Route path={'/home/detailTeacherPending/:id'} element={<DetailTeacherPending/>}></Route>z
                         <Route path={'/home/layoutManagerQuestion'} element={<LayoutManagerQuestion/>}>
