@@ -2,7 +2,7 @@ import CustomQuill from "../../react-quill/CustomQuill";
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from "react-redux";
 import {createQuestion} from "../../service/QuestionService";
-import {createAnswer} from "../../service/AnswerService";
+import {createAnswer, deleteAnswerIsEmpty} from "../../service/AnswerService";
 import React, {useEffect, useState} from "react";
 import "./CreateQuestion.css"
 import {useNavigate} from "react-router-dom";
@@ -44,6 +44,7 @@ export default function CreateQuestion() {
             answer4: {content: '', status: 0, question: {id: 0}}
         },
         onSubmit: async (values) => {
+            await dispatch(deleteAnswerIsEmpty())
             const {question} = values;
             await dispatch(createQuestion({question: question}))
         },
