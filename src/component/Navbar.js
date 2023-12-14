@@ -44,7 +44,7 @@ function ResponsiveAppBar() {
     })
     const settings = [
         {name: 'Profile', href: '/home/findUserById/' + user.id},
-        {name: 'Account', href: '/account'},
+        {name: 'Account', href: '/home/changeUserPasswordById/' + user.id},
         {name: 'Dashboard', href: '/home/layoutManagerQuestion/listQuestion'},
         {name: 'Logout', href: '/logout'},
     ];
@@ -143,8 +143,7 @@ function ResponsiveAppBar() {
                     <MenuItem value={1} valueText="Tìm kiếm theo tên">Tìm kiếm theo tên</MenuItem>,
                     <MenuItem value={2} valueText="Tìm kiếm theo email">Tìm kiếm theo email</MenuItem>,
                     <MenuItem value={3} valueText="Tìm kiếm giáo viên theo tên">Tìm kiếm giáo viên theo tên</MenuItem>,
-                    <MenuItem value={4} valueText="Tìm kiếm giáo viên theo email">Tìm kiếm giáo viên theo
-                        email</MenuItem>,
+                    <MenuItem value={4} valueText="Tìm kiếm giáo viên theo email">Tìm kiếm giáo viên theo email</MenuItem>,
                 ];
         }
     };
@@ -164,12 +163,12 @@ function ResponsiveAppBar() {
                                 <SearchIcon/>
                             </SearchIconWrapper>
                             <StyledInputBase
-                                placeholder="Search…"
+                                placeholder="Nội dung…"
                                 onChange={(event) => (searchTermRef.current = event.target.value)}
                             />
 
                         </Search>
-                        <Button onClick={handleSearch}>Search</Button>
+                        <Button onClick={handleSearch}>Tìm kiếm</Button>
 
                     </Box>
                     <Box sx={{flexGrow: 6, display: {xs: 'none', md: 'flex'}}}>
@@ -181,8 +180,7 @@ function ResponsiveAppBar() {
                                     id="demo-simple-select-autowidth"
                                     value={selectedField}
                                     onChange={handleChange}
-                                    autoWidth
-                                >
+                                    autoWidth>
                                     {renderMenuItems()}
                                 </Select>
                             </FormControl>
