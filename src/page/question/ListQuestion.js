@@ -18,7 +18,6 @@ export default function ListQuestion() {
         dispatch(findAll())
         dispatch(findAllAnswer())
     }, [])
-
     const parser = new DOMParser();
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -28,15 +27,12 @@ export default function ListQuestion() {
     const user = useSelector((store) => {
         return store.users.currentUser
     })
-
     const questions = useSelector((store) => {
         return store.questionStore.questions
     });
-
     const answers = useSelector((store) => {
         return store.answersStore.answers
     })
-
     const currentUserQuestions = questions
         ? Object.values(questions).filter(
             (question) => question.user?.id === user?.id
@@ -45,11 +41,12 @@ export default function ListQuestion() {
 
     const handleSearch = () => {
         if (searchTerm.trim() === '') {
-            dispatch(findAll());
+            dispatch(findAll()); // Hiển thị lại danh sách câu hỏi ban đầu khi ô tìm kiếm trống
         } else {
             dispatch(findByContent(searchTerm));
         }
     };
+
 
     const filteredQuestions = Array.from(searchTerm
         ? currentUserQuestions.filter((question, index) =>
@@ -57,28 +54,26 @@ export default function ListQuestion() {
         )
         : currentUserQuestions);
 
+
     const indexOfLastQuestion = currentPage * questionsPerPage;
     const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
     const totalQuestions = filteredQuestions.length;
-    const currentQuestions = filteredQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
 
+    const currentQuestions = filteredQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
     const getTotalQuestionCountBeforeCurrentPage = () => {
         if (currentPage === 1) {
             return 0;
         }
         return questionsPerPage * (currentPage - 1);
     };
-
-
     const getQuestionNumber = (index) => {
         return getTotalQuestionCountBeforeCurrentPage() + index + 1;
     };
-
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
 
-    return currentQuestions && (
+    return  (
         <div className={"w-11/12 mt-0 justify-content-lg-end shadow-md from-blue-800"}
              style={{marginTop: "0 !important"}}>
             <form className="form-inline my-5 my-lg-0 ">
@@ -90,18 +85,20 @@ export default function ListQuestion() {
             </form>
 
             {currentQuestions.map((question, index) => {
-                if (question.user.id !== user.id) {
-                    return null;
+                if (question.user?.id !== user?.id) {
+                    return null; // Nếu user.id không khớp, bỏ qua câu hỏi này
                 }
-                let letterIndex = 0;
+                let letterIndex = 0; // Reset index for each question
                 const questionNumber = getQuestionNumber(index);
+
                 return (
-                    <Accordion className={"bg-emerald-300"} key={question.id}>
+                    <Accordion className={"bg-emerald-300"} key={question?.id}>
                         <AccordionSummary
                             className={"bg-green-300"}
                             expandIcon={<ExpandMoreIcon/>}
-                            aria-controls={`panel${question.id}-content`}
-                            id={`panel${question.id}-header`}>
+                            aria-controls={`panel${question?.id}-content`}
+                            id={`panel${question?.id}-header`}
+                        >
                             <div className={"flex justify-content-lg-start rounded w-full h-full"}>
                                 <div>
                                     <Typography className={"font-sans font-bold hover:font-serif"}>

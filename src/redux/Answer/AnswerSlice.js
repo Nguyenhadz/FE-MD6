@@ -30,7 +30,9 @@ const answersSlice = createSlice({
         builder.addCase(deleteAnswersByQuestionId.fulfilled, (state, action) => {
             state.answers = action.payload
         })
-
+        builder.addCase(deleteAnswerIsEmpty.fulfilled, (state, action)=>{
+            state.answers = action.payload
+        })
     }
 })
 

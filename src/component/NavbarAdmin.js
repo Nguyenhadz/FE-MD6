@@ -22,7 +22,6 @@ export default function NavbarAdmin() {
             <div>
                 <div className={"w-fit h-5"}>
                 </div>
-
                 <div className={"w-fit h-16"} onClick={() => {
                     navigate('/home');
                 }}>
@@ -57,7 +56,6 @@ export default function NavbarAdmin() {
                         <p className={"ml-2 justify-center"}>Danh mục bài thi</p>
                     </div>
                 </Link>
-
                 <Link to={"/home/showListCateQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
                     <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
                         <img className={"ml-3 w-3 h-3 mr-1"}
@@ -90,8 +88,6 @@ export default function NavbarAdmin() {
                             <p className={"ml-2 justify-center"}>Danh sách học viên</p>
                         </div>
                     </Link>}
-
-
                 {(user.roles[0].authority === 'ADMIN') &&
                     <Link to={"/home/showListTeacher"} style={{color: 'inherit', textDecoration: 'none'}}>
                         <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
@@ -121,8 +117,6 @@ export default function NavbarAdmin() {
                     />
                     <p className={"ml-2 justify-center"}>Thống kê</p>
                 </div>
-
-
             </div>
 
         </div>
