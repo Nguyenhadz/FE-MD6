@@ -1,38 +1,30 @@
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
-import {createCateQuiz, findCateQuizById, updateCateQuiz} from "../../service/CateQuizService";
-import {Button} from "react-bootstrap";
-import {Field, Form, Formik, useFormik} from "formik";
+import {updateCateQuiz} from "../../service/CateQuizService";
+import {useFormik} from "formik";
 import CustomQuills from "./CustomQuills";
-import CustomQuill from "../../react-quill/CustomQuill";
-import React, {useEffect} from "react";
-import {getStudentById} from "../../service/UserService";
-import {toast} from "react-toastify";
+import React from "react";
 
 
 export default function UpdateCateQuiz() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    // const {id} = useParams();
-    // useEffect(() => {
-    //     dispatch(findCateQuizById(id))
-    // }, [])
+
 
     const cateQuiz = useSelector(state => {
         return state.cateQuiz.cateQuiz
     })
 
     const formik = useFormik({
-        initialValues:{
+        initialValues: {
             id: cateQuiz.id,
             name: cateQuiz.name,
             description: cateQuiz.description,
         },
-        onSubmit:(values,{ resetForm }) =>{
-            dispatch(updateCateQuiz(values)).then(()=> {
-                // toast.success("Cập nhật thành công!", {})
+        onSubmit: (values, {resetForm}) => {
+            dispatch(updateCateQuiz(values)).then(() => {
                 navigate('/home/showListCateQuiz')
             });
         }
@@ -43,7 +35,8 @@ export default function UpdateCateQuiz() {
             <div className={"bg-cover bg-center h-screen flex"}
                  style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
                 <Link to={"/home/showListCateQuiz"}>
-                    <button className={"w-20 h-10 rounded-lg ml-6 mt-5 bg-orange-400 hover:bg-red-500 text-white"}>Trở về
+                    <button className={"w-20 h-10 rounded-lg ml-6 mt-5 bg-orange-400 hover:bg-red-500 text-white"}>Trở
+                        về
                     </button>
                 </Link>
                 <div
@@ -62,7 +55,8 @@ export default function UpdateCateQuiz() {
                         <div className={"mt-8 flex justify-center"}>
                             <button
                                 className={"w-40 h-10 bg-amber-50 text-orange-500 font-bold font-serif rounded-3xl shadow-lg"}
-                                type={"submit"}>Cập nhật</button>
+                                type={"submit"}>Cập nhật
+                            </button>
                         </div>
                     </form>
                 </div>

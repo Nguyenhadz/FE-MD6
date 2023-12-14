@@ -1,18 +1,16 @@
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import React, {useEffect} from "react";
-import {getStudent, getTeacherPending} from "../../service/UserService";
-import './ShowListStudent.css';
+import {getTeacherPending} from "../../service/UserService";
 import {DataGrid} from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSearch} from "@fortawesome/free-solid-svg-icons";
+
 export default function ShowListTeacherPending() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getTeacherPending())
-    },[])
+    }, [])
     const teacherPending = useSelector(state => {
         return Array.from(state.users.users)
     })
@@ -80,9 +78,11 @@ export default function ShowListTeacherPending() {
         )
     }
 
-    return(
-        <div className="col-span-8 w-full h-full items-center" style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
-            <div className={"text-5xl font-extrabold font-sans text-orange-500 pt-5 mb-5 flex justify-center"}>Danh sách đăng ký giáo viên
+    return (
+        <div className="col-span-8 w-full h-full items-center"
+             style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
+            <div className={"text-5xl font-extrabold font-sans text-orange-500 pt-5 mb-5 flex justify-center"}>Danh sách
+                đăng ký giáo viên
             </div>
             <Box sx={{
                 height: '630px',

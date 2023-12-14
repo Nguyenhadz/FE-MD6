@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
-    createAnswer, deleteAnswersByQuestionId,
+    createAnswer,
+    deleteAnswersByQuestionId,
     findAllAnswer,
     findAnswersByQuestionId
 } from "../../service/AnswerService";
@@ -15,18 +16,18 @@ const answersSlice = createSlice({
     name: 'answerSlice',
     initialState,
     extraReducers: builder => {
-        builder.addCase(findAllAnswer.fulfilled, (state, action)=>{
+        builder.addCase(findAllAnswer.fulfilled, (state, action) => {
             state.answers = action.payload
         })
-        builder.addCase(createAnswer.fulfilled, (state, action)=>{
+        builder.addCase(createAnswer.fulfilled, (state, action) => {
             state.createdAnswer = action.payload
             console.log(state.createdAnswer)
         })
-        builder.addCase(findAnswersByQuestionId.fulfilled, (state, action)=>{
+        builder.addCase(findAnswersByQuestionId.fulfilled, (state, action) => {
             console.log()
             state.currentAnswers = action.payload
         })
-        builder.addCase(deleteAnswersByQuestionId.fulfilled, (state, action)=>{
+        builder.addCase(deleteAnswersByQuestionId.fulfilled, (state, action) => {
             state.answers = action.payload
         })
 

@@ -3,7 +3,6 @@ import {useFormik} from 'formik';
 import {useDispatch, useSelector} from "react-redux";
 import {createQuestion} from "../../service/QuestionService";
 import {createAnswer, deleteAnswersByQuestionId} from "../../service/AnswerService";
-import "./CreateQuestion.css"
 import {useNavigate} from "react-router-dom";
 import React, {useEffect} from "react";
 import {showAllCateQuestion} from "../../service/CateQuestionService";
@@ -21,13 +20,13 @@ export default function EditQuestion() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(showAllCateQuestion())
-    },[dispatch])
+    }, [dispatch])
     useEffect(() => {
         dispatch(findAllTypeQuestion())
-    },[dispatch])
+    }, [dispatch])
     useEffect(() => {
         dispatch(findAllLevelQuestion())
-    },[dispatch])
+    }, [dispatch])
     const categoryQuestions = useSelector((store) => {
         return store.cateQuestions.cateQuestions
     })
@@ -78,11 +77,11 @@ export default function EditQuestion() {
                     <div className={"answer-question flex justify-around w-full mt-2 p-2"}>
                         {answerCount.map((index) => (
                             <div className={"w-1/5 m-2 rounded-[1rem] bg-amber-50"} key={index}>
-                                <label className={"answer flex justify-around  w-full bg-blue-400 mt-0 p-2 rounded-t-[1rem]"}>
+                                <label
+                                    className={"answer flex justify-around  w-full bg-blue-400 mt-0 p-2 rounded-t-[1rem]"}>
                                     <span>{`Câu trả lời ${index}`}</span>
                                     {isCheckbox ? (
                                         <input
-                                            // className={"rounded-[0.5rem] bg-amber-200"}
                                             type={"checkbox"}
                                             name={`answer${index}.status`}
                                             checked={formik.values[`answer${index}`]?.status === 1}
@@ -91,7 +90,6 @@ export default function EditQuestion() {
                                     ) : (
                                         isRatio && (
                                             <input
-                                                // className={"rounded-[0.5rem] bg-amber-200"}
                                                 type={"radio"}
                                                 name={"answer.status"}
                                                 checked={formik.values[`answer${index}`]?.status === 1}
@@ -127,7 +125,7 @@ export default function EditQuestion() {
                         >
                             {categoryQuestions && categoryQuestions.length > 0 && categoryQuestions.map((category) => (
                                 <option key={category.id} value={category.id}>
-                                    <span dangerouslySetInnerHTML={{ __html: category.name }} />
+                                    <span dangerouslySetInnerHTML={{__html: category.name}}/>
                                 </option>
                             ))}
                         </select>
@@ -140,7 +138,6 @@ export default function EditQuestion() {
                             }}
                             className={"rounded-[1rem] h-6 w-1/5 text-center"}
                         >
-                            {/*<option value={0}>-Type question-</option>*/}
                             {typeQuestions.map((type) => (
                                 <option key={type.id} value={type.id}>{type.name}</option>
                             ))}
@@ -151,17 +148,18 @@ export default function EditQuestion() {
                             onChange={formik.handleChange}
                             className={"rounded-[1rem] h-6 w-1/5 text-center"}
                         >
-                            {/*<option value={0}>-Level question-</option>*/}
                             {levelQuestions.map((level) => (
                                 <option key={level.id} value={level.id}>{level.name}</option>
                             ))}
                         </select>
                     </div>
                     <div className={"flex justify-center"}>
-                        <button type="submit" className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
+                        <button type="submit"
+                                className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
                             Sửa câu hỏi
                         </button>
-                        <button type="button" onClick={() => navigate("/home/layoutManagerQuestion/listQuestion")} className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
+                        <button type="button" onClick={() => navigate("/home/layoutManagerQuestion/listQuestion")}
+                                className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
                             Quay lại
                         </button>
                     </div>

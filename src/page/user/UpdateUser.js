@@ -1,4 +1,3 @@
-import './styles/tailwind.css';
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
@@ -10,6 +9,7 @@ import {IoIosMail} from "react-icons/io";
 import {storage} from "../../firebase/FireBase";
 import {Button} from "react-bootstrap";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
+import {Avatar, Stack} from "@mui/material";
 
 export default function UpdateUser() {
 
@@ -83,6 +83,7 @@ export default function UpdateUser() {
     return (
         <>
             <div className={"flex flex-col justify-center"}>
+
                 <div className={"flex flex-col justify-center"}>
                     <p className={"justify-center flex mt-24 text-3xl font-bold"}>Settings</p>
                     <div className={"flex justify-center "}>
@@ -117,12 +118,14 @@ export default function UpdateUser() {
                                                 name="image"
                                                 style={{display: 'none'}}
                                                 onChange={handleChange}/>
-                                            <img onClick={handleImageClick}
-                                                 className={"h-24 w-24 rounded-full "} src={file ? file : user.image}
-                                                 alt={"lỗi"}/>
-                                            <div className={"justify-center flex"}>
-
-                                            </div>
+                                            <Stack direction="row" spacing={2}>
+                                                <Avatar
+                                                    alt="Remy Sharp"
+                                                    src={file ? file : user.image}
+                                                    sx={{width: 112, height: 112}}
+                                                    onClick={handleImageClick}
+                                                />
+                                            </Stack>
                                         </div>
 
                                         <div>

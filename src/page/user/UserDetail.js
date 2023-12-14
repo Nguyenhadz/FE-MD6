@@ -1,9 +1,9 @@
-import "./UserDetail.css";
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteUser, getStudentById} from "../../service/UserService";
 import {useEffect} from "react";
 import ConfirmDeleteComponent from "../../component/ConfirmDeleteComponent";
+
 export default function UserDetail() {
     const {id} = useParams();
     console.log(id)
@@ -15,12 +15,9 @@ export default function UserDetail() {
     const user = useSelector(state => {
         return state.users.user;
     })
-    const userLogin = useSelector(state => {
-        return state.users.currentUser
-    })
+
     console.log()
     const handleDelete = () => {
-        // Dispatch action logout
         dispatch(deleteUser(id))
         navigate('/home/showListStudent')
     };
@@ -33,7 +30,8 @@ export default function UserDetail() {
     const monthLast = lastTimeVisit.getMonth() + 1;
     const yearLast = lastTimeVisit.getFullYear();
     return (
-        <div className={" flex justify-center items-center h-full"} style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
+        <div className={" flex justify-center items-center h-full"}
+             style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
             <div className="col-xl-6 col-md-12">
                 <div className="card user-card-full">
                     <div className="row m-l-0 m-r-0">
@@ -41,7 +39,12 @@ export default function UserDetail() {
                             <div className="card-block text-center text-white">
                                 <div className={"mb-5 flex justify-center items-center"}>
                                     <img src={`${user.image}`}
-                                         className="img-radius" alt={'...'} style={{width: '140px', height: '140px', borderRadius: '50%', margin: '0 0 0 -5px'}}/>
+                                         className="img-radius" alt={'...'} style={{
+                                        width: '140px',
+                                        height: '140px',
+                                        borderRadius: '50%',
+                                        margin: '0 0 0 -5px'
+                                    }}/>
                                 </div>
                                 <h6 className="f-w-600">{user.name}</h6>
                                 <i className=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
@@ -68,9 +71,13 @@ export default function UserDetail() {
                                         <h6 className="text-muted f-w-400">{dayLast}-{monthLast < 10 ? '0' + monthLast : monthLast}-{yearLast}</h6>
                                     </div>
                                     <div className="col-sm-6">
-                                        <div onClick={()=>{
+                                        <div onClick={() => {
                                             navigate('/home/showListStudent')
-                                        }}><button type="button" className={"w-20 h-10 bg-amber-600 rounded text-white"}>Trở Lại</button></div>
+                                        }}>
+                                            <button type="button"
+                                                    className={"w-20 h-10 bg-amber-600 rounded text-white"}>Trở Lại
+                                            </button>
+                                        </div>
                                     </div>
                                     <div className="col-sm-6">
                                         <ConfirmDeleteComponent
@@ -79,7 +86,6 @@ export default function UserDetail() {
                                         />
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

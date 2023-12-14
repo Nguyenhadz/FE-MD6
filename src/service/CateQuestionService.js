@@ -3,7 +3,7 @@ import customAxios from "./Api";
 
 const user = JSON.parse(localStorage.getItem('currentUser'));
 
-const TOKEN = user?.accessToken ;
+const TOKEN = user?.accessToken;
 let axiosConfig = {
     headers: {
         Authorization: `Bearer ` + TOKEN
@@ -12,21 +12,21 @@ let axiosConfig = {
 
 export const createCateQuestion = createAsyncThunk(
     'cateQuestion/create',
-    async (data) =>{
+    async (data) => {
         const res = await customAxios.post('categoryQuestion', data, axiosConfig);
         return res.data
     }
 )
 export const showAllCateQuestion = createAsyncThunk(
     'cateQuestion/showAll',
-    async (data) =>{
+    async (data) => {
         const res = await customAxios.get('categoryQuestion/sort', axiosConfig);
         return res.data
     }
 )
 export const deleteCateQuestion = createAsyncThunk(
     'cateQuestion/delete',
-    async (id) =>{
+    async (id) => {
         await customAxios.delete('/categoryQuestion/' + id, axiosConfig);
         const res = await customAxios.get('categoryQuestion/sort', axiosConfig);
         return res.data
