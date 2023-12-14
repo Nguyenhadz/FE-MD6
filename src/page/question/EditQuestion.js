@@ -2,7 +2,7 @@ import CustomQuill from "../../react-quill/CustomQuill";
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from "react-redux";
 import {createQuestion} from "../../service/QuestionService";
-import {createAnswer, deleteAnswersByQuestionId} from "../../service/AnswerService";
+import {createAnswer, deleteAnswerIsEmpty, deleteAnswersByQuestionId} from "../../service/AnswerService";
 import {useNavigate} from "react-router-dom";
 import React, {useEffect} from "react";
 import {showAllCateQuestion} from "../../service/CateQuestionService";
