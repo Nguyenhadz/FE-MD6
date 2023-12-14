@@ -26,9 +26,13 @@ import UpdateCateQuiz from "./page/catequiz/UpdateCateQuiz";
 import EditQuestion from "./page/question/EditQuestion";
 import ShowListCateQuestion from "./page/catequestion/ShowListCateQuestion";
 import UpdateCateQuestion from "./page/catequestion/UpdateCateQuestion";
+import {useSelector} from "react-redux";
 
 
 function App() {
+    const user = useSelector(state => {
+        return state.users.currentUser;
+    })
     return (
         <div>
             <ToastContainer/>
