@@ -1,42 +1,19 @@
 import {useDispatch, useSelector} from "react-redux";
-import {Link, useNavigate} from "react-router-dom";
-import React, {useEffect, useState} from "react";
-import {findStudentByMail, findStudentByName, getStudent} from "../../service/UserService";
-import './ShowListStudent.css';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSearch} from "@fortawesome/free-solid-svg-icons";
+import {Link} from "react-router-dom";
+import React, {useEffect} from "react";
+import {getStudent} from "../../service/UserService";
 import Box from "@mui/material/Box";
 import {DataGrid} from "@mui/x-data-grid";
+
 export default function ShowListStudent() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getStudent())
-    },[])
+    }, [])
     const students = useSelector(state => {
         console.log(state.users.users)
-        return Array.from(state.users.users)
+        return state.users.users
     })
-    const [searchTerm, setSearchTerm] = useState('');
-    const [selectedField, setSelectedField] = useState('1'); // Giá trị mặc định
-    const handleFieldChange = (event) => {
-        setSelectedField(event.target.value);
-    };
-    // const navigate = useNavigate();
-    // const dispatch = useDispatch();
-    const handleSearch = () => {
-        if (selectedField === '1' ) {
-            dispatch(findStudentByName(searchTerm))
-            navigate('/home/showListStudentFindByName')
-        } else {
-            console.log('2' + searchTerm)
-            dispatch(findStudentByMail(searchTerm))
-            navigate('/home/showListStudentFindByMail')
-        }
-    };
-
-    useEffect(() => {
-    }, [selectedField]);
 
     const columns = [
         {field: 'id', headerName: 'STT', width: 90},
@@ -101,50 +78,41 @@ export default function ShowListStudent() {
         )
     }
 
-    return(
-            <div className="col-span-8 w-full h-full items-center" style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
-                <div className={"w-full h-16 bg-white flex items-center relative"}>
-                    <input className={"w-8/12 h-10 ml-4 border border-gray-300 rounded-lg pl-12"} type="text"
-                           placeholder="Search..."
-                           onChange={(e) => setSearchTerm(e.target.value)}/>
-                    <FontAwesomeIcon icon={faSearch} className="absolute ml-10"/>
-                    <select className={"ml-5"} value={selectedField} onChange={handleFieldChange}>
-                        <option value="1">Tìm kiếm học sinh theo tên</option>
-                        <option value="2">Tìm kiếm theo email</option>
-                    </select>
-                    <button className={"w-20 h-10 rounded-lg ml-5 hover:bg-amber-50"} onClick={handleSearch}>Search</button>
-                </div>
-                <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-5 mb-5 flex justify-center"}>Danh sách học sinh
-                </div>
-
-                <Box sx={{
-                    height: '630px',
-                    width: '70%',
-                    textAlign: 'center',
-                    margin: 'auto',
-                    backgroundColor: 'white',
-                    borderRadius: '30px',
-                    "& .MuiDataGrid-root": {
-                        border: 'none',
-                        color: 'black',
-                        fontSize: '16px',
-                        padding: '20px',
-                    },
-                    boxShadow: '30px 30px 30px 30px rgba(0, 0, 0, 0.2)'
-                }}>
-                    <DataGrid
-                        rows={rows}
-                        columns={columns}
-                        initialState={{
-                            pagination: {
-                                paginationModel: {
-                                    pageSize: 10,
-                                },
-                            },
-                        }}
-                        disableRowSelectionOnClick
-                    />
-                </Box>
+    return (
+        <div className="col-span-8 w-full h-full items-center"
+             style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
+            <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-5 mb-5 flex justify-center"}>Danh sách
+                học sinh
             </div>
+
+            <Box sx={{
+                height: '630px',
+                width: '70%',
+                textAlign: 'center',
+                margin: 'auto',
+                backgroundColor: 'white',
+                borderRadius: '30px',
+                "& .MuiDataGrid-root": {
+                    border: 'none',
+                    color: 'black',
+                    fontSize: '16px',
+                    padding: '20px',
+                },
+                boxShadow: '30px 30px 30px 30px rgba(0, 0, 0, 0.2)'
+            }}>
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    initialState={{
+                        pagination: {
+                            paginationModel: {
+                                pageSize: 10,
+                            },
+                        },
+                    }}
+                    disableRowSelectionOnClick
+                />
+            </Box>
+        </div>
     )
 }

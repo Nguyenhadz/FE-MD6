@@ -3,7 +3,7 @@ import customAxios from "./Api";
 
 const user = JSON.parse(localStorage.getItem('currentUser'));
 
-const TOKEN = user?.accessToken ;
+const TOKEN = user?.accessToken;
 let axiosConfig = {
     headers: {
         Authorization: `Bearer ` + TOKEN
@@ -11,8 +11,8 @@ let axiosConfig = {
 };
 export const createCateQuiz = createAsyncThunk(
     'cateQuiz/create',
-    async (data) =>{
-        const res = await customAxios.post('categoryQuizzes' , data, axiosConfig);
+    async (data) => {
+        const res = await customAxios.post('categoryQuizzes', data, axiosConfig);
         return res.data
     }
 )

@@ -95,8 +95,7 @@ export default function ForgotForm() {
                     }catch (e) {
                         toast.error('Tài khoản không tồn tại', {});
                     }
-                }}
-            >
+                }}>
                 Reset Password
             </Button>
         </div>

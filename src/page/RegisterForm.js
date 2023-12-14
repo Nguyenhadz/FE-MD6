@@ -1,5 +1,5 @@
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import { Button, FormLabel} from 'react-bootstrap';
+import {Button, FormLabel} from 'react-bootstrap';
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import "./LoginWithGmailForm.css"
@@ -48,7 +48,7 @@ export default function RegisterForm() {
                     height: '25px',
                     borderRadius: '5px'
                 }}>
-                    &lt;&nbsp;&nbsp;Go back
+                    &lt;&nbsp;&nbsp;Quay lại
                 </button>
             </div>
             <div style={{width: '400px', height: '32px', marginTop: '10px'}}>
@@ -59,7 +59,7 @@ export default function RegisterForm() {
                     margin: '0 0 16px',
                     textAlign: 'center'
                 }}>
-                    FORM REGISTER
+                    ĐĂNG KÝ
                 </p>
             </div>
             <Formik initialValues={{
@@ -73,7 +73,7 @@ export default function RegisterForm() {
                 ]
             }}
                     validationSchema={validate}
-                    onSubmit={ async (values) => {
+                    onSubmit={async (values) => {
                         try {
                             const res = await customAxios.post("/register", values);
                             if (res.status === 201) {
@@ -101,7 +101,7 @@ export default function RegisterForm() {
                                     height: '17px'
                                 }}
                             >
-                                Enter email address:
+                                Nhập địa chỉ email:
                             </FormLabel>
                             <div
                                 style={{
@@ -140,16 +140,15 @@ export default function RegisterForm() {
                                 </Field>
                             </div>
                             <div style={{
-                                display:'flex',
-                                justifyContent:'center',
-                                color:'red',
-                                fontWeight:'bold',
-                                fontSize : '12px'
+                                display: 'flex',
+                                justifyContent: 'center',
+                                color: 'red',
+                                fontWeight: 'bold',
+                                fontSize: '12px'
                             }}>
                                 <ErrorMessage name="username"></ErrorMessage>
                             </div>
                         </div>
-                        {/*Nhập tên*/}
                         <div className={'form-input'} style={{width: '400px', height: '64px', marginTop: '20px'}}>
                             <FormLabel
                                 style={{
@@ -159,7 +158,7 @@ export default function RegisterForm() {
                                     height: '17px'
                                 }}
                             >
-                                Name:
+                                Họ và tên:
                             </FormLabel>
                             <div
                                 style={{
@@ -198,17 +197,16 @@ export default function RegisterForm() {
                                 </Field>
                             </div>
                             <div style={{
-                                display:'flex',
-                                justifyContent:'center',
-                                color:'red',
-                                fontWeight:'bold',
-                                fontSize : '12px'
+                                display: 'flex',
+                                justifyContent: 'center',
+                                color: 'red',
+                                fontWeight: 'bold',
+                                fontSize: '12px'
                             }}>
                                 <ErrorMessage name="name"></ErrorMessage>
                             </div>
                         </div>
 
-                        {/*Nhập password*/}
                         <div className={'form-input'} style={{width: '400px', height: '64px', marginTop: '20px'}}>
                             <FormLabel
                                 style={{
@@ -218,7 +216,7 @@ export default function RegisterForm() {
                                     height: '17px'
                                 }}
                             >
-                                Password:
+                                Mật khẩu:
                             </FormLabel>
                             <div
                                 style={{
@@ -257,17 +255,16 @@ export default function RegisterForm() {
                                 </Field>
                             </div>
                             <div style={{
-                                display:'flex',
-                                justifyContent:'center',
-                                color:'red',
-                                fontWeight:'bold',
-                                fontSize : '12px'
+                                display: 'flex',
+                                justifyContent: 'center',
+                                color: 'red',
+                                fontWeight: 'bold',
+                                fontSize: '12px'
                             }}>
                                 <ErrorMessage name="password"></ErrorMessage>
                             </div>
                         </div>
 
-                        {/*Nhập confirmPassword*/}
                         <div className={'form-input'} style={{width: '400px', height: '64px', marginTop: '20px'}}>
                             <FormLabel
                                 style={{
@@ -277,7 +274,7 @@ export default function RegisterForm() {
                                     height: '17px'
                                 }}
                             >
-                                Confirm Password:
+                                Nhập lại mật khẩu:
                             </FormLabel>
                             <div
                                 style={{
@@ -316,25 +313,24 @@ export default function RegisterForm() {
                                 </Field>
                             </div>
                             <div style={{
-                                display:'flex',
-                                justifyContent:'center',
-                                color:'red',
-                                fontWeight:'bold',
-                                fontSize : '12px'
+                                display: 'flex',
+                                justifyContent: 'center',
+                                color: 'red',
+                                fontWeight: 'bold',
+                                fontSize: '12px'
                             }}>
                                 <ErrorMessage name="confirmPassword"></ErrorMessage>
                             </div>
                         </div>
 
-                        {/*Chọn role*/}
                         <Field
                             as="select"
                             style={{
                                 width: '100px',
                                 height: '24px',
                                 border: 'solid 1px rgb(227,192,192)',
-                                backgroundColor : 'rgb(227,192,192)',
-                                borderRadius:'5px',
+                                backgroundColor: 'rgb(227,192,192)',
+                                borderRadius: '5px',
                                 padding: '0',
                                 marginLeft: '10px',
                                 marginTop: '30px',
@@ -343,10 +339,9 @@ export default function RegisterForm() {
                             className={'input-login'}
                             name="roles[0].id"
                         >
-                            <option value="3" label="Student" />
-                            <option value="2" label="Teacher" />
+                            <option value="3" label="Student"/>
+                            <option value="2" label="Teacher"/>
                         </Field>
-                        {/*Nút đăng ký*/}
                         <div style={{
                             marginTop: '30px',
                             width: '400px',
@@ -360,7 +355,7 @@ export default function RegisterForm() {
                                 height: '40px',
                                 fontSize: '16px'
                             }} type="submit">
-                                Register
+                                Đăng ký
                             </Button>
                         </div>
                     </Form>

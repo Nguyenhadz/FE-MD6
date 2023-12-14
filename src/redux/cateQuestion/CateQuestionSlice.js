@@ -6,7 +6,6 @@ import {
     findCateQuestionById, findCateQuestionByTeacher,
     showAllCateQuestion, updateCateQuestion
 } from "../../service/CateQuestionService";
-import {updateCateQuiz} from "../../service/CateQuizService";
 
 const initialState = {
     cateQuestions: [],
@@ -16,31 +15,31 @@ const CateQuestionSlice = createSlice({
     name: 'cateQuestion',
     initialState,
     extraReducers: builder => {
-        builder.addCase(createCateQuestion.fulfilled, (state, action)=>{
+        builder.addCase(createCateQuestion.fulfilled, (state, action) => {
             state.cateQuestion = action.payload
             toast.success("Tạo danh mục thành công", {})
         })
-        builder.addCase(createCateQuestion.rejected, (state, action)=>{
+        builder.addCase(createCateQuestion.rejected, (state, action) => {
             toast.error("Trùng tên danh mục cũ", {})
         })
-        builder.addCase(showAllCateQuestion.fulfilled, (state, action)=>{
+        builder.addCase(showAllCateQuestion.fulfilled, (state, action) => {
             state.cateQuestions = action.payload
         })
-        builder.addCase(deleteCateQuestion.fulfilled, (state, action)=>{
+        builder.addCase(deleteCateQuestion.fulfilled, (state, action) => {
             state.cateQuestions = action.payload
             toast.success('Xoá danh mục thành công', {})
         })
-        builder.addCase(deleteCateQuestion.rejected, (state, action)=>{
+        builder.addCase(deleteCateQuestion.rejected, (state, action) => {
             toast.error('Không thể xoá danh mục', {})
         })
-        builder.addCase(findCateQuestionById.fulfilled, (state, action)=>{
+        builder.addCase(findCateQuestionById.fulfilled, (state, action) => {
             state.cateQuestion = action.payload
         })
-        builder.addCase(updateCateQuestion.fulfilled, (state, action) =>{
+        builder.addCase(updateCateQuestion.fulfilled, (state, action) => {
             state.cateQuestion = action.payload
             toast.success("Cập nhật thành công!", {})
         })
-        builder.addCase(updateCateQuestion.rejected, (state, action) =>{
+        builder.addCase(updateCateQuestion.rejected, (state, action) => {
             toast.error("Trùng tên danh mục cũ", {})
         })
         builder.addCase(findCateQuestionByTeacher.fulfilled, (state, action) =>{
