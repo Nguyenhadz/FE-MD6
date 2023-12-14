@@ -3,16 +3,16 @@ export default function MenuLogin() {
     return(
         <div className="main-left-top">
             <div className="title-form">
-                <p>Log in to Quizizz</p>
+                <p>Đăng nhập vào Quizizz</p>
             </div>
             <div className="wrap-login">
-                <NavLink className="btn btn-btn-primary" to={'#'}>Login with Google</NavLink>
+                <NavLink className="btn btn-btn-primary" to={'#'}>Đăng nhập bằng Google</NavLink>
             </div>
             <div className="wrap-login">
-                <NavLink to={'/loginWithEmail'} className="btn btn-btn-primary">Login with Gmail</NavLink>
+                <NavLink to={'/loginWithEmail'} className="btn btn-btn-primary">Đăng nhập bằng Email</NavLink>
             </div>
             <div className="wrap-login">
-                <NavLink className="btn btn-btn-primary" to={'#'}>Login with Github</NavLink>
+                <NavLink className="btn btn-btn-primary" to={'#'}>Đăng nhập bằng Github</NavLink>
             </div>
         </div>
     )

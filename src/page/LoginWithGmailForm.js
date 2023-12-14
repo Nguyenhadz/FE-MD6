@@ -87,7 +87,7 @@ export default function LoginWithGmailForm() {
                                     height: '17px'
                                 }}
                             >
-                                Enter email address or username:
+                                Email hoặc tên đăng nhập:
                             </FormLabel>
                             <div
                                 style={{
@@ -142,7 +142,7 @@ export default function LoginWithGmailForm() {
                                     height: '17px'
                                 }}
                             >
-                                Password:
+                                Mật khẩu:
                             </FormLabel>
                             <div
                                 style={{
@@ -183,23 +183,23 @@ export default function LoginWithGmailForm() {
                         </div>
                         <div
                             style={{
-                                marginTop : '15px',
+                                marginTop: '15px',
                                 textDecoration: 'none'
                             }}
                         >
                             <NavLink
                                 style={{
-                                    marginTop : '20px',
+                                    marginTop: '20px',
                                     fontSize: '14px'
                                 }}
                                 to={'/forgot'}
                             >
-                                Forgot password?
+                                Quên mật khẩu?
                             </NavLink>
                         </div>
                         <div
                             style={{
-                                marginTop : '20px',
+                                marginTop: '20px',
                                 width: '400px',
                                 height: '40px',
                                 display: 'flex',
@@ -213,7 +213,7 @@ export default function LoginWithGmailForm() {
                                     fontSize: '16px'
                                 }}
                                 type="submit">
-                                Login
+                                Đăng nhập
                             </Button>
                         </div>
                     </Form>

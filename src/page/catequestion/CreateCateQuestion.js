@@ -1,26 +1,25 @@
 import {useDispatch, useSelector} from "react-redux";
-import {store} from "../../redux/Store";
 import {useFormik} from "formik";
 import {createCateQuestion} from "../../service/CateQuestionService";
 import CustomQuills from "../catequiz/CustomQuills";
 import {Link} from "react-router-dom";
 import React from "react";
 
-export default function CreateCateQuestion(){
+export default function CreateCateQuestion() {
 
-    const currentUser = useSelector((store) =>{
+    const currentUser = useSelector((store) => {
         return store.users.currentUser
     })
     const dispatch = useDispatch();
     const formik = useFormik({
-        initialValues:{
-            name:'',
-            description:'',
-            user:{
+        initialValues: {
+            name: '',
+            description: '',
+            user: {
                 id: currentUser.id
             }
         },
-        onSubmit:(values, {resetForm}) =>{
+        onSubmit: (values, {resetForm}) => {
             console.log(values)
             dispatch(createCateQuestion(values))
             resetForm();
@@ -31,7 +30,8 @@ export default function CreateCateQuestion(){
             <div className={"bg-cover bg-center h-screen flex"}
                  style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
                 <Link to={"/home/showListCateQuestion"}>
-                    <button className={"w-20 h-10 rounded-lg ml-6 mt-5 bg-orange-400 hover:bg-red-500 text-white"}>Trở về
+                    <button className={"w-20 h-10 rounded-lg ml-6 mt-5 bg-orange-400 hover:bg-red-500 text-white"}>Trở
+                        về
                     </button>
                 </Link>
                 <div
@@ -54,11 +54,11 @@ export default function CreateCateQuestion(){
                         <div className={"mt-8 flex justify-center"}>
                             <button
                                 className={"w-40 h-10 bg-amber-50 text-orange-500 font-bold font-serif rounded-3xl shadow-lg"}
-                                type={"submit"}>Tạo Mới</button>
+                                type={"submit"}>Tạo Mới
+                            </button>
                         </div>
                     </form>
                 </div>
-
             </div>
         </>
     )

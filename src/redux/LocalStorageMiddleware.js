@@ -3,11 +3,9 @@ export const LocalStorageMiddleware = (store) => (next) => (action) => {
 
 
     if (action.type.startsWith('user/login') && action.type.endsWith('/fulfilled')) {
-        // Nếu action liên quan đến user và là fulfilled, lưu thông tin vào localStorage
         localStorage.setItem('currentUser', JSON.stringify(store.getState().users.currentUser));
     }
     if (action.type.startsWith('user/update') && action.type.endsWith('/fulfilled')) {
-        // Nếu action liên quan đến user và là fulfilled, lưu thông tin vào localStorage
         localStorage.setItem('currentUser', JSON.stringify(store.getState().users.currentUser));
     }
 

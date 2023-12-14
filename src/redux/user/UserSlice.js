@@ -1,13 +1,19 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
-    approveTeacher, approveTeacherPending, changePassword,
-    deleteUser, findStudentByMail, findStudentByName, findTeacherByMail, findTeacherByName,
+    approveTeacherPending,
+    changePassword,
+    deleteUser,
+    findStudentByMail,
+    findStudentByName,
+    findTeacherByMail,
+    findTeacherByName,
     getStudent,
-    getStudentById, getTeacher,
+    getStudentById,
+    getTeacher,
     getTeacherPending,
-    getUserByIdLogin,
     login,
-    logout, updateUser
+    logout,
+    updateUser
 } from "../../service/UserService";
 import {toast} from "react-toastify";
 
