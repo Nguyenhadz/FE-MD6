@@ -1,27 +1,35 @@
-/*!* CustomImageQuill.css *!*/
-/*!* Các điều chỉnh CSS của bạn tại đây nếu cần *!*/
+/* CustomImageQuill.css */
+/* Các điều chỉnh CSS của bạn tại đây nếu cần */
 
-/*!* Ẩn các nút không cần thiết *!*/
-/*.ql-toolbar .ql-clean,*/
-/*.ql-toolbar .ql-header,*/
-/*.ql-toolbar .ql-list,*/
-/*.ql-toolbar .ql-link,*/
-/*.ql-toolbar .ql-code {*/
-/*    display: none;*/
-/*}*/
-/*.ql-toolbar .ql-snow {*/
-/*    border: none;*/
-/*}*/
-/*!* Cải thiện giao diện của nút hình ảnh *!*/
-/*.ql-toolbar .ql-image {*/
-/*    background-color: #5cb85c; !* Màu nền của nút *!*/
-/*    color: #fff; !* Màu chữ của nút *!*/
-/*    border-radius: 4px; !* Độ cong góc *!*/
-/*    padding: 5px 10px; !* Khoảng cách nội dung *!*/
-/*    cursor: pointer; !* Con trỏ khi di chuột vào nút *!*/
-/*}*/
+/* Ẩn các nút không cần thiết */
+.ql-toolbar .ql-clean,
+.ql-toolbar .ql-header,
+.ql-toolbar .ql-list,
+.ql-toolbar .ql-link,
+.ql-toolbar .ql-code {
+    display: none;
+}
+.ql-editor .ql-blank {
 
-/*!* Ẩn thanh công cụ khi không được focus *!*/
-/*.ql-container.ql-snow:not(.ql-focus) .ql-toolbar {*/
-/*    display: none;*/
-/*}*/
+}
+.ql-toolbar.ql-snow:hover {
+    border: none;
+    display: block;
+}
+.ql-container.ql-snow {
+    border: none;
+}
+
+/* Cải thiện giao diện của nút hình ảnh */
+.ql-toolbar .ql-image {
+    background-color: #5cb85c; /* Màu nền của nút */
+    color: #fff; /* Màu chữ của nút */
+    border-radius: 4px; /* Độ cong góc */
+    padding: 5px 10px; /* Khoảng cách nội dung */
+    cursor: pointer; /* Con trỏ khi di chuột vào nút */
+}
+
+/* Ẩn thanh công cụ khi không được focus */
+.ql-container.ql-snow:not(.ql-focus) .ql-toolbar {
+    display: none;
+}

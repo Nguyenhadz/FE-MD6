@@ -26,7 +26,7 @@ export const findById = createAsyncThunk(
 )
 export const createQuestion = createAsyncThunk(
     'questions/createQuestion',
-    async ({question}) =>{
+    async ({question}) => {
         const res = await customAxios.post('questions', question, axiosConfig);
         return res.data
     }
@@ -41,29 +41,29 @@ export const findByContent = createAsyncThunk(
 )
 export const findQuestionsByCategory = createAsyncThunk(
     'questions/findQuestionsByCategory',
-    async ({id}) =>{
-        const res = await customAxios.get('questions/category/' + id , axiosConfig);
+    async ({id}) => {
+        const res = await customAxios.get('questions/category/' + id, axiosConfig);
         return res.data
     }
 )
 export const editQuestions = createAsyncThunk(
     'questions/editQuestions',
-    async (data) =>{
-        const res = await customAxios.put('questions/' + data.id, data , axiosConfig);
+    async (data) => {
+        const res = await customAxios.put('questions/' + data.id, data, axiosConfig);
         return res.data
     }
 )
 export const deleteQuestions = createAsyncThunk(
     'questions/deleteQuestions',
-    async (id) =>{
-         await customAxios.delete('questions/' + id , axiosConfig);
+    async (id) => {
+        await customAxios.delete('questions/' + id, axiosConfig);
         const res = await customAxios.get('questions', axiosConfig);
         return res.data
     }
 )
 export const findAllQuestionByUser = createAsyncThunk(
     'questions/findAllQuestionByUser',
-    async (id) =>{
+    async (id) => {
         const res = await customAxios.get('questions/user/' + id, axiosConfig);
         return res.data
     }

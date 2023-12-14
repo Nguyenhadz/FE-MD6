@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {createQuestion} from "../../service/QuestionService";
 import {createAnswer, deleteAnswerIsEmpty} from "../../service/AnswerService";
 import React, {useEffect, useState} from "react";
-import "./CreateQuestion.css"
 import {useNavigate} from "react-router-dom";
 import {showAllCateQuestion} from "../../service/CateQuestionService";
 import {findAllTypeQuestion} from "../../service/TypeQuestionService";
@@ -61,10 +60,6 @@ export default function CreateQuestion() {
         formik.values.answer2.question.id = createdQuestion.id
         formik.values.answer3.question.id = createdQuestion.id
         formik.values.answer4.question.id = createdQuestion.id
-        // console.log(formik.values.answer1)
-        // console.log(formik.values.answer2)
-        // console.log(formik.values.answer3)
-        // console.log(formik.values.answer4)
         console.log(createdQuestion)
         console.log(test)
         if (createdQuestion !== {}) {

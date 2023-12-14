@@ -1,10 +1,9 @@
-import "./UserDetail.css";
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import { approveTeacherPending, getStudentById} from "../../service/UserService";
+import {approveTeacherPending, getStudentById} from "../../service/UserService";
 import {useEffect} from "react";
 import {toast} from "react-toastify";
-import ConfirmDeleteComponent from "../../component/ConfirmDeleteComponent";
+
 export default function DetailTeacherPending() {
     const {id} = useParams();
     const dispatch = useDispatch();
@@ -16,10 +15,9 @@ export default function DetailTeacherPending() {
         return state.users.user;
     })
     const handleApprove = (idPending) => {
-        dispatch(approveTeacherPending(idPending)).then(()=> {
+        dispatch(approveTeacherPending(idPending)).then(() => {
             toast.success('\n' +
-                'Approve successfully\n', {
-            });
+                'Approve successfully\n', {});
             navigate('/home/showTeacherPending')
         });
     };
@@ -32,7 +30,8 @@ export default function DetailTeacherPending() {
     const monthLast = lastTimeVisit.getMonth() + 1;
     const yearLast = lastTimeVisit.getFullYear();
     return (
-        <div className={" flex justify-center items-center h-full"} style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
+        <div className={" flex justify-center items-center h-full"}
+             style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
             <div className="col-xl-6 col-md-12">
                 <div className="card user-card-full">
                     <div className="row m-l-0 m-r-0">
@@ -40,7 +39,12 @@ export default function DetailTeacherPending() {
                             <div className="card-block text-center text-white">
                                 <div className={"mb-5 flex justify-center items-center"}>
                                     <img src={`${user.image}`}
-                                         className="img-radius" alt={'...'} style={{width: '140px', height: '140px', borderRadius: '50%', margin: '0 0 0 -5px'}}/>
+                                         className="img-radius" alt={'...'} style={{
+                                        width: '140px',
+                                        height: '140px',
+                                        borderRadius: '50%',
+                                        margin: '0 0 0 -5px'
+                                    }}/>
                                 </div>
                                 <h6 className="f-w-600">{user.name}</h6>
                                 <i className=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
@@ -67,17 +71,21 @@ export default function DetailTeacherPending() {
                                         <h6 className="text-muted f-w-400">{dayLast}-{monthLast < 10 ? '0' + monthLast : monthLast}-{yearLast}</h6>
                                     </div>
                                     <div className="col-sm-6">
-                                        <div onClick={()=>{
+                                        <div onClick={() => {
                                             navigate('/home/showTeacherPending')
-                                        }}><button type="button" className={"w-20 h-10 bg-amber-600 rounded text-white"}>Trở Lại</button></div>
+                                        }}>
+                                            <button type="button"
+                                                    className={"w-20 h-10 bg-amber-600 rounded text-white"}>Trở Lại
+                                            </button>
+                                        </div>
                                     </div>
-                                    <button type="button" className={"w-20 h-10 bg-amber-600 rounded text-white"} onClick={() =>
-                                        handleApprove(id)
-                                    }>
+                                    <button type="button" className={"w-20 h-10 bg-amber-600 rounded text-white"}
+                                            onClick={() =>
+                                                handleApprove(id)
+                                            }>
                                         Duyệt
                                     </button>
                                 </div>
-
                             </div>
                         </div>
                     </div>

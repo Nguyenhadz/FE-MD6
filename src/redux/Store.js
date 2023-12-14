@@ -8,13 +8,13 @@ import answerReducer from "./Answer/AnswerSlice";
 import cateQuestionReducer from "./cateQuestion/CateQuestionSlice";
 import typeQuestionSlide from "./typeQuestion/TypeQuestionSlide";
 import levelQuestionSlide from "./levelQuestion/LevelQuestionSlide";
+
 const middleware = [LocalStorageMiddleware, RemoveFromLocalStorageMiddleware];
 
 export const store = configureStore({
     reducer: {
         users: userReducer,
-        questionStore : questionSlide,
-        // user: userReducer,
+        questionStore: questionSlide,
         cateQuiz: cateQuizReducer,
         answersStore: answerReducer,
         cateQuestions: cateQuestionReducer,
