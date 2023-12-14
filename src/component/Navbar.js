@@ -175,7 +175,7 @@ function ResponsiveAppBar() {
                     <Box sx={{flexGrow: 6, display: {xs: 'none', md: 'flex'}}}>
                         <div>
                             <FormControl sx={{m: 1, minWidth: 80}}>
-                                <InputLabel id="demo-simple-select-autowidth-label">Danh mục</InputLabel>
+                                <InputLabel id="demo-simple-select-autowidth-label"></InputLabel>
                                 <Select
                                     labelId="demo-simple-select-autowidth-label"
                                     id="demo-simple-select-autowidth"
