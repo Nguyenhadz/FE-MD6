@@ -117,7 +117,7 @@ export default function ListQuestion() {
                                 <div className={"flex justify-content-lg-start rounded w-full h-full"}>
                                     <div>
                                         <Typography className={"font-sans font-bold hover:font-serif"}>
-                                            Câu {questionNumber}: &nbsp;{parser.parseFromString(question.content, 'text/html').body.firstChild.textContent}
+                                            Câu {questionNumber}: &nbsp;{parser.parseFromString(question.content, 'text/html').body.firstChild?.textContent}
                                         </Typography>
                                     </div>
 
