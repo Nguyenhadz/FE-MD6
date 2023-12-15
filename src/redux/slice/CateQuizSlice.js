@@ -5,7 +5,7 @@ import {
     findCateQuizById,
     showAllCategoryQuiz,
     updateCateQuiz
-} from "../../service/CateQuizService";
+} from "../service/CateQuizService";
 import {toast} from "react-toastify";
 
 const initialState = {

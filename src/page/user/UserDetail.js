@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteUser, getStudentById} from "../../service/UserService";
+import {deleteUser, getStudentById} from "../../redux/service/UserService";
 import {useEffect} from "react";
 import ConfirmDeleteComponent from "../../component/ConfirmDeleteComponent";
 

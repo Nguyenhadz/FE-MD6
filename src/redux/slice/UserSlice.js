@@ -14,7 +14,7 @@ import {
     login,
     logout,
     updateUser
-} from "../../service/UserService";
+} from "../service/UserService";
 import {toast} from "react-toastify";
 
 const initialState = {

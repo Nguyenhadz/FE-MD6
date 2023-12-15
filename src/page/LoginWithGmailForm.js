@@ -2,7 +2,7 @@ import {Field, Form, Formik} from "formik";
 import {Button, FormLabel} from "react-bootstrap";
 import {useDispatch} from "react-redux";
 import {toast} from "react-toastify";
-import {login} from "../service/UserService";
+import {login} from "../redux/service/UserService";
 import {NavLink, useNavigate} from "react-router-dom";
 import "./LoginWithGmailForm.css"
 

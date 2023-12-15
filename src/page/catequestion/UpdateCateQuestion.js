@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
 import React from "react";
 import CustomQuills from "../catequiz/CustomQuills";
-import {updateCateQuestion} from "../../service/CateQuestionService";
+import {updateCateQuestion} from "../../redux/service/CateQuestionService";
 
 
 export default function UpdateCateQuestion() {

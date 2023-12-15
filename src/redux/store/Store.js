@@ -1,13 +1,13 @@
 import {configureStore} from "@reduxjs/toolkit";
-import userReducer from "./user/UserSlice";
+import userReducer from "../slice/UserSlice";
 import {LocalStorageMiddleware} from "./LocalStorageMiddleware";
 import RemoveFromLocalStorageMiddleware from "./RemoveFromLocalStorageMiddleware";
-import cateQuizReducer from "./user/CateQuizSlice";
-import questionSlide from "./question/QuestionSlide";
-import answerReducer from "./Answer/AnswerSlice";
-import cateQuestionReducer from "./cateQuestion/CateQuestionSlice";
-import typeQuestionSlide from "./typeQuestion/TypeQuestionSlide";
-import levelQuestionSlide from "./levelQuestion/LevelQuestionSlide";
+import cateQuizReducer from "../slice/CateQuizSlice";
+import questionSlide from "../slice/QuestionSlice";
+import answerReducer from "../slice/AnswerSlice";
+import cateQuestionReducer from "../slice/CateQuestionSlice";
+import typeQuestionSlide from "../slice/TypeQuestionSlice";
+import levelQuestionSlide from "../slice/LevelQuestionSlice";
 
 const middleware = [LocalStorageMiddleware, RemoveFromLocalStorageMiddleware];
 

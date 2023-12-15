@@ -1,7 +1,7 @@
 import {useDispatch} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect} from "react";
-import {changePassword, getStudentById} from "../../service/UserService";
+import {changePassword, getStudentById} from "../../redux/service/UserService";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import {Button} from "react-bootstrap";

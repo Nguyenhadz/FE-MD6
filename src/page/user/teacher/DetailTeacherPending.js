@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {approveTeacherPending, getStudentById} from "../../service/UserService";
+import {approveTeacherPending, getStudentById} from "../../../redux/service/UserService";
 import {useEffect} from "react";
 import {toast} from "react-toastify";
 

@@ -2,10 +2,10 @@ import {Link, useNavigate} from "react-router-dom";
 import React from "react";
 
 
-export default function NavbarAdmin() {
+export default function NavBarQuestion() {
     const navigate = useNavigate();
     return (
-        <div className={"w-full h-full bg-gray-200"}>
+        <div className={"w-screen h-screen bg-gray-200"}>
             <div className={"w-fit h-5"}>
             </div>
 

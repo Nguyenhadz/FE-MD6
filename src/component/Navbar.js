@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {useEffect} from 'react';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -21,7 +20,7 @@ import {
     findTeacherByMail,
     findTeacherByName,
     logout
-} from "../service/UserService";
+} from "../redux/service/UserService";
 import {toast} from "react-toastify";
 import {useLocation, useNavigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
@@ -46,7 +45,7 @@ function ResponsiveAppBar() {
         {name: 'Profile', href: '/home/findUserById/' + user.id},
         {name: 'Account', href: '/home/changeUserPasswordById/' + user.id},
         {name: 'Dashboard', href: '/home/layoutManagerQuestion/listQuestion'},
-        {name: 'Logout', href: '/logout'},
+        {name: 'Logout'},
     ];
 
     const handleChange = (event) => {
@@ -119,6 +118,11 @@ function ResponsiveAppBar() {
             dispatch(findStudentByMail(searchTermRef.current))
             navigate('/home/showListStudent')
         }
+        // else if (selectedField === 2) {
+        //     console.log('2' + searchTermRef.current)
+        //     dispatch(find(searchTermRef.current))
+        //     navigate('/home/showListStudent')
+        // }
     };
     const renderMenuItems = () => {
         switch (showSelect) {
@@ -126,9 +130,9 @@ function ResponsiveAppBar() {
                 return [
                     <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
                     <MenuItem value={1} valueText="Tìm kiếm học sinh theo tên">Tìm kiếm học sinh theo tên</MenuItem>,
-                    <MenuItem value={2} valueText="Tìm kiếm học sinh theo email">Tìm kiếm học sinh theo email</MenuItem>,
+                    <MenuItem value={2} valueText="Tìm kiếm học sinh theo email">Tìm kiếm học sinh theo
+                        email</MenuItem>,
                 ];
-                break;
             case '/home/showListTeacher':
                 return [
                     <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
@@ -136,27 +140,43 @@ function ResponsiveAppBar() {
                     <MenuItem value={4} valueText="Tìm kiếm giáo viên theo email">Tìm kiếm giáo viên theo
                         email</MenuItem>,
                 ];
-                break;
+            case '/home/showTeacherPending':
+                return [
+                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
+                    <MenuItem value={3} valueText="Tìm kiếm giáo viên theo tên">Tìm kiếm giáo viên theo tên</MenuItem>,
+                    <MenuItem value={4} valueText="Tìm kiếm giáo viên theo email">Tìm kiếm giáo viên theo
+                        email</MenuItem>,
+                ];
+            case '/home/showListCateQuestion':
+                return [
+                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
+                    <MenuItem value={5}>Tìm kiếm danh mục câu hỏi theo tên</MenuItem>,
+                    <MenuItem value={6}>Tìm kiếm danh mục câu hỏi theo nội dung</MenuItem>,
+                ];
+            case '/home/showListCateQuiz':
+                return [
+                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
+                    <MenuItem value={7}>Tìm kiếm danh mục quiz theo tên</MenuItem>,
+                    <MenuItem value={8}>Tìm kiếm danh mục quiz theo nội dung</MenuItem>,
+                ];
             default:
                 return [
                     <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
-                    <MenuItem value={1} valueText="Tìm kiếm theo tên">Tìm kiếm theo tên</MenuItem>,
-                    <MenuItem value={2} valueText="Tìm kiếm theo email">Tìm kiếm theo email</MenuItem>,
-                    <MenuItem value={3} valueText="Tìm kiếm giáo viên theo tên">Tìm kiếm giáo viên theo tên</MenuItem>,
-                    <MenuItem value={4} valueText="Tìm kiếm giáo viên theo email">Tìm kiếm giáo viên theo email</MenuItem>,
+                    <MenuItem value={1}>Tìm kiếm theo tên</MenuItem>,
+                    <MenuItem value={2}>Tìm kiếm theo email</MenuItem>,
+                    <MenuItem value={3}>Tìm kiếm giáo viên theo tên</MenuItem>,
+                    <MenuItem value={4}>Tìm kiếm giáo viên theo email</MenuItem>,
                 ];
         }
     };
 
     return (
-        <AppBar position="static">
-            <Container maxWidth="xl">
+            <Container maxWidth="xxl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
-
-
+                    <AdbIcon
+                        sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}
+                    />
                     <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
-
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         <Search>
                             <SearchIconWrapper>
@@ -228,7 +248,6 @@ function ResponsiveAppBar() {
                     </Box>
                 </Toolbar>
             </Container>
-        </AppBar>
     );
 }
 

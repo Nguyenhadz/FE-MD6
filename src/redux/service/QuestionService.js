@@ -13,7 +13,6 @@ export const findAll = createAsyncThunk(
     'questions/findAll',
     async () => {
         const res = await customAxios.get('questions', axiosConfig);
-        console.log(res.data)
         return res.data
     }
 )
@@ -35,7 +34,6 @@ export const findByContent = createAsyncThunk(
     'questions/findByContent',
     async (content) => {
         const res = await customAxios.get('questions/content/' + content, axiosConfig);
-        console.log(res.data)
         return res.data
     }
 )

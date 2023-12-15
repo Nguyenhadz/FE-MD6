@@ -1,11 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {findAllTypeQuestion} from "../../service/TypeQuestionService";
+import {findAllTypeQuestion} from "../service/TypeQuestionService";
 
 const initialState = {
     typeQuestions: []
 }
 
-const typeQuestionSlide = createSlice({
+const typeQuestionSlice = createSlice({
     name: 'typeQuestionSlide',
     initialState,
     extraReducers: builder => {
@@ -15,4 +15,4 @@ const typeQuestionSlide = createSlice({
     }
 })
 
-export default typeQuestionSlide.reducer
+export default typeQuestionSlice.reducer

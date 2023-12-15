@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
-import {createCateQuestion} from "../../service/CateQuestionService";
+import {createCateQuestion} from "../../redux/service/CateQuestionService";
 import CustomQuills from "../catequiz/CustomQuills";
 import {Link} from "react-router-dom";
 import React from "react";

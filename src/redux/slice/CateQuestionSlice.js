@@ -6,7 +6,7 @@ import {
     findCateQuestionById,
     showAllCateQuestion,
     updateCateQuestion
-} from "../../service/CateQuestionService";
+} from "../service/CateQuestionService";
 
 const initialState = {
     cateQuestions: [],

@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {getStudentById, updateUser} from "../../service/UserService";
+import {getStudentById, updateUser} from "../../redux/service/UserService";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import {v4} from "uuid";
