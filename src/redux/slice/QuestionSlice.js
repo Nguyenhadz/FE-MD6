@@ -9,7 +9,7 @@ import {
     findByContent,
     findById,
     findQuestionsByCategory
-} from "../../service/QuestionService";
+} from "../service/QuestionService";
 import {toast} from "react-toastify";
 
 
@@ -19,7 +19,7 @@ const initialState = {
     createdQuestion: {},
 }
 
-const questionSlide = createSlice({
+const questionSlice = createSlice({
     name: 'questionSlide',
     initialState,
     extraReducers: builder => {
@@ -54,4 +54,4 @@ const questionSlide = createSlice({
     }
 })
 
-export default questionSlide.reducer
+export default questionSlice.reducer

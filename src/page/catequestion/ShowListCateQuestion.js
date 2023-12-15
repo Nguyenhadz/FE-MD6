@@ -2,9 +2,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import React, {useEffect} from "react";
 import Box from "@mui/material/Box";
-import {DataGrid} from "@mui/x-data-grid";
+import {DataGrid, GridToolbarContainer} from "@mui/x-data-grid";
 import {toast} from "react-toastify";
-import {deleteCateQuestion, findCateQuestionById, showAllCateQuestion} from "../../service/CateQuestionService";
+import {deleteCateQuestion, findCateQuestionById, showAllCateQuestion} from "../../redux/service/CateQuestionService";
+import {Button} from "react-bootstrap";
+import AddIcon from '@mui/icons-material/Add';
 
 export default function ShowListCateQuestion() {
     const dispatch = useDispatch();
@@ -16,6 +18,18 @@ export default function ShowListCateQuestion() {
     const categories = useSelector(state => {
         return state.cateQuestions.cateQuestions
     })
+
+    function EditToolbar(props) {
+        return (
+            <GridToolbarContainer>
+                <Link to={"/home/createCateQuestion"}>
+                    <Button color="primary" startIcon={<AddIcon/>}>
+                        Add record
+                    </Button>
+                </Link>
+            </GridToolbarContainer>
+        );
+    }
 
     const handleDelete = (id) => {
         dispatch(deleteCateQuestion(id))
@@ -112,22 +126,18 @@ export default function ShowListCateQuestion() {
     }
 
     return (
-        <div className="col-span-8 w-full h-full items-center"
+        <div className=" w-full h-full items-center"
              style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
-            <div className={"flex items-center justify-center mt-5 mb-5"}>
-                <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-2 ml-96 flex justify-center"}>Danh
-                    sách danh mục câu hỏi
+            <div className={"flex items-center justify-center mb-5"}>
+                <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-2 ml-96 flex justify-center"}>
+                    Danh sách danh mục câu hỏi
                 </div>
-                <Link to={"/home/createCateQuestion"}>
-                    <button className={"w-44 h-10 rounded-lg ml-56 bg-orange-400 hover:bg-red-500 text-white"}>Thêm mới
-                        danh mục
-                    </button>
-                </Link>
+
             </div>
 
             <Box sx={{
                 height: '630px',
-                width: '50%',
+                width: '80%',
                 textAlign: 'center',
                 margin: 'auto',
                 backgroundColor: 'white',
@@ -136,7 +146,7 @@ export default function ShowListCateQuestion() {
                     border: 'none',
                     color: 'black',
                     fontSize: '16px',
-                    padding: '20px',
+                    padding: '10px',
                 },
                 boxShadow: '30px 30px 30px 30px rgba(0, 0, 0, 0.2)'
             }}>
@@ -149,6 +159,9 @@ export default function ShowListCateQuestion() {
                                 pageSize: 10,
                             },
                         },
+                    }}
+                    slots={{
+                        toolbar: EditToolbar,
                     }}
                     disableRowSelectionOnClick
                     className={"text-7xl"}

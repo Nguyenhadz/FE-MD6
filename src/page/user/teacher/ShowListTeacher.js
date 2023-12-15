@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import React, {useEffect} from "react";
-import {getTeacher} from "../../service/UserService";
+import {getTeacher} from "../../../redux/service/UserService";
 import {DataGrid} from "@mui/x-data-grid";
 import Box from '@mui/material/Box';
 
@@ -79,9 +79,9 @@ export default function ShowListTeacher() {
     }
 
     return (
-        <div className="col-span-8 w-full h-full items-center"
+        <div className="col-span-8 w-full h-full items-center mt-0"
              style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
-            <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-5 mb-5 flex justify-center"}>
+            <div className={"text-5xl font-extrabold font-sans text-orange-500 mb-5 flex justify-center"}>
                 Danh sách giáo viên
             </div>
 

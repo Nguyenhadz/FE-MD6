@@ -1,22 +1,12 @@
 import './style/tailwindNavbar.css';
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {logout} from "../service/UserService";
-import {toast} from "react-toastify";
+import {useSelector} from "react-redux";
 
 export default function NavbarAdmin() {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-
     const user = useSelector(state => {
         return state.users.currentUser;
     })
-    const handleLogout = () => {
-        dispatch(logout());
-        toast.success('\n' +
-            'Logout successfully\n', {});
-        navigate('/')
-    };
     return user && (
         <div className={"w-full h-fit"}>
             <div>

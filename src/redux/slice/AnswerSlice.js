@@ -4,7 +4,7 @@ import {
     deleteAnswersByQuestionId,
     findAllAnswer,
     findAnswersByQuestionId
-} from "../../service/AnswerService";
+} from "../service/AnswerService";
 
 const initialState = {
     answers: [],

@@ -2,17 +2,17 @@ import './App.css';
 import React from 'react';
 import {ToastContainer} from 'react-toastify';
 import {Route, Routes} from "react-router-dom";
-import ShowListStudent from "./page/user/ShowListStudent";
+import ShowListStudent from "./page/user/student/ShowListStudent";
 import Login from "./page/Login";
 import Home from "./page/Home";
 import MenuLogin from "./page/MenuLogin";
 import LoginWithGmailForm from "./page/LoginWithGmailForm";
 import UserDetail from "./page/user/UserDetail";
 import UserProfile from "./page/user/UserProfile";
-import ShowListTeacherPending from "./page/user/ShowListTeacherPending";
-import DetailTeacherPending from "./page/user/DetailTeacherPending";
-import ShowListTeacher from "./page/user/ShowListTeacher";
-import TeacherDetail from "./page/user/TeacherDetail";
+import ShowListTeacherPending from "./page/user/teacher/ShowListTeacherPending";
+import DetailTeacherPending from "./page/user/teacher/DetailTeacherPending";
+import ShowListTeacher from "./page/user/teacher/ShowListTeacher";
+import TeacherDetail from "./page/user/teacher/TeacherDetail";
 import RegisterForm from "./page/RegisterForm";
 import ForgotForm from "./page/ForgotForm";
 import CreateCateQuiz from "./page/catequiz/CreateCateQuiz";
@@ -28,6 +28,7 @@ import ShowListCateQuestion from "./page/catequestion/ShowListCateQuestion";
 import UpdateCateQuestion from "./page/catequestion/UpdateCateQuestion";
 import {useSelector} from "react-redux";
 import ChangePassword from "./page/user/UserPassword";
+import SideBar from "./component/SideBar";
 
 
 function App() {

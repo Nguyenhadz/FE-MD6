@@ -1,11 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {findAllLevelQuestion} from "../../service/LevelQuestionService";
+import {findAllLevelQuestion} from "../service/LevelQuestionService";
 
 const initialState = {
     levelQuestions: []
 }
 
-const levelQuestionSlide = createSlice({
+const levelQuestionSlice = createSlice({
     name: 'levelQuestionSlide',
     initialState,
     extraReducers: builder => {
@@ -15,4 +15,4 @@ const levelQuestionSlide = createSlice({
     }
 })
 
-export default levelQuestionSlide.reducer
+export default levelQuestionSlice.reducer

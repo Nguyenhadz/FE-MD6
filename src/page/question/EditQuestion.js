@@ -1,13 +1,13 @@
 import CustomQuill from "../../react-quill/CustomQuill";
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from "react-redux";
-import {createQuestion} from "../../service/QuestionService";
-import {createAnswer, deleteAnswerIsEmpty, deleteAnswersByQuestionId} from "../../service/AnswerService";
+import {createQuestion} from "../../redux/service/QuestionService";
+import {createAnswer, deleteAnswerIsEmpty, deleteAnswersByQuestionId} from "../../redux/service/AnswerService";
 import {useNavigate} from "react-router-dom";
 import React, {useEffect} from "react";
-import {showAllCateQuestion} from "../../service/CateQuestionService";
-import {findAllTypeQuestion} from "../../service/TypeQuestionService";
-import {findAllLevelQuestion} from "../../service/LevelQuestionService";
+import {showAllCateQuestion} from "../../redux/service/CateQuestionService";
+import {findAllTypeQuestion} from "../../redux/service/TypeQuestionService";
+import {findAllLevelQuestion} from "../../redux/service/LevelQuestionService";
 
 export default function EditQuestion() {
     const navigate = useNavigate();

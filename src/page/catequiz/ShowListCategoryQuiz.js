@@ -3,7 +3,7 @@ import {Link, useNavigate} from "react-router-dom";
 import React, {useEffect} from "react";
 import Box from "@mui/material/Box";
 import {DataGrid} from "@mui/x-data-grid";
-import {deleteCateQuiz, findCateQuizById, showAllCategoryQuiz} from "../../service/CateQuizService";
+import {deleteCateQuiz, findCateQuizById, showAllCategoryQuiz} from "../../redux/service/CateQuizService";
 import {toast} from "react-toastify";
 
 export default function ShowListCategoryQuiz() {
@@ -112,9 +112,9 @@ export default function ShowListCategoryQuiz() {
     }
 
     return (
-        <div className="col-span-8 w-full h-full items-center"
+        <div className="w-full h-full items-center"
              style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
-            <div className={"flex items-center justify-center mt-5 mb-5"}>
+            <div className={"flex items-center justify-center mb-5"}>
                 <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-2 ml-96 flex justify-center"}>
                     Danh sách danh mục bài thi
                 </div>
@@ -127,7 +127,7 @@ export default function ShowListCategoryQuiz() {
 
             <Box sx={{
                 height: '630px',
-                width: '50%',
+                width: '80%',
                 textAlign: 'center',
                 margin: 'auto',
                 backgroundColor: 'white',

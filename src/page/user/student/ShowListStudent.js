@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import React, {useEffect} from "react";
-import {getStudent} from "../../service/UserService";
+import {getStudent} from "../../../redux/service/UserService";
 import Box from "@mui/material/Box";
 import {DataGrid} from "@mui/x-data-grid";
 
@@ -81,13 +81,13 @@ export default function ShowListStudent() {
     return (
         <div className="col-span-8 w-full h-full items-center"
              style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
-            <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-5 mb-5 flex justify-center"}>Danh sách
-                học sinh
+            <div className={"text-5xl font-extrabold font-sans text-orange-500 mb-5 flex justify-center"}>
+                Danh sách học sinh
             </div>
 
             <Box sx={{
-                height: '630px',
-                width: '70%',
+                height: '600px',
+                width: '80%',
                 textAlign: 'center',
                 margin: 'auto',
                 backgroundColor: 'white',
