@@ -49,7 +49,7 @@ export default function CreateQuestionOneAnswer() {
                 content: "",
                 status: 1,
                 typeQuestion: {
-                    id: 2,
+                    id: 1,
                 },
                 categoryQuestion: {
                     id: 1
@@ -59,22 +59,26 @@ export default function CreateQuestionOneAnswer() {
                     id: 1
                 },
                 user: {
-                    id: 1
+                    id: currentUser.id
                 },
                 answers: []
             },
             answers: [
                 {
-                    content: ""
+                    content: "",
+                    status: 0
                 },
                 {
-                    content: ""
+                    content: "",
+                    status: 0
                 },
                 {
-                    content: ""
+                    content: "",
+                    status: 0
                 },
                 {
-                    content: ""
+                    content: "",
+                    status: 0
                 }
             ]
         },
@@ -83,7 +87,6 @@ export default function CreateQuestionOneAnswer() {
         onSubmit: async (values) => {
             // await dispatch(deleteAnswerIsEmpty())
             console.log(values)
-            // const {question} = values;
             await dispatch(createQuestion(values))
         },
     });
@@ -135,13 +138,12 @@ export default function CreateQuestionOneAnswer() {
                                         aria-labelledby={`demo-radio-buttons-group-label-${index}`}
                                         name={`radio-buttons-group-${index}`}
                                         value={
-                                            formik.values.answers[index] && formik.values.answers[index].status === 1
-                                                ? formik.values.answers[index]
+                                            formik.values.answers[index].status === "1"
+                                                ? `answer${index}`
                                                 : "other"
                                         }
                                         onChange={(event) => {
-                                            formik.setFieldValue(`${index}.status`, 1); // Cập nhật trạng thái của câu trả lời được chọn
-                                            console.log(index)
+                                            formik.setFieldValue(`answers[${index}].status`, "1"); // Cập nhật trạng thái của câu trả lời được chọn
                                         }}
                                     >
                                         <FormControl>
@@ -153,7 +155,7 @@ export default function CreateQuestionOneAnswer() {
                                                     <FormControlLabel
                                                         value={`answer${index}`}
                                                         onClick={() => {
-                                                            formik.setFieldValue(`answers[${index-1}].status`, 1);
+                                                            formik.setFieldValue(`answers[${index - 1}].status`, 1);
                                                         }}
                                                         sx={{
                                                             width: 28,
@@ -197,16 +199,20 @@ export default function CreateQuestionOneAnswer() {
                                                     height: "100%",
                                                     overflow: "auto"
                                                 }}>
-                                                    <CustomQuill field={{
-                                                        name: `answers[${index}].content`,
-                                                        value: formik.values[formik.values.answers[index - 1]] ? formik.values[formik.values.answers[index - 1]].content : ''
-                                                    }} form={formik} index={index - 1}
-                                                                 style={{ // thêm thuộc tính style
-                                                                     height: '250px', // thay đổi giá trị height
-                                                                     outline: 'none',
-                                                                     padding: '12px 15px',
-                                                                     '-moz-tab-size': 4,
-                                                                 }}
+                                                    <CustomQuill
+                                                        field={{
+                                                            name: `answers[${index}].content`,
+                                                            value: formik.values.answers[index].content
+                                                        }}
+                                                        form={formik}
+                                                        onChange={(content) => formik.setFieldValue(`answers[${index}].content`, content)}
+                                                        index={index}
+                                                        style={{
+                                                            height: '250px',
+                                                            outline: 'none',
+                                                            padding: '12px 15px',
+                                                            '-moz-tab-size': 4
+                                                        }}
                                                     />
                                                 </Box>
                                             </div>

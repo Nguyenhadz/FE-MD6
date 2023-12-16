@@ -30,6 +30,7 @@ import RegisterForm from "./page/login/RegisterForm";
 import ForgotForm from "./page/login/ForgotForm";
 import Home from "./component/Home";
 import CreateQuiz from "./page/quizz/CreateQuiz";
+import Login from "./page/login/Login";
 
 
 function App() {
@@ -40,7 +41,7 @@ function App() {
         <div>
             <ToastContainer/>
             <Routes>
-                <Route path={'/'} element={<Home/>}>
+                <Route path={'/'} element={<Login/>}>
                     <Route path={'/'} element={<MenuLogin/>}></Route>
                     <Route path={'/loginWithEmail'} element={<LoginWithGmailForm/>}></Route>
                     <Route path={'/register'} element={<RegisterForm/>}></Route>
