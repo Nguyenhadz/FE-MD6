@@ -118,11 +118,6 @@ function ResponsiveAppBar() {
             dispatch(findStudentByMail(searchTermRef.current))
             navigate('/home/showListStudent')
         }
-        // else if (selectedField === 2) {
-        //     console.log('2' + searchTermRef.current)
-        //     dispatch(find(searchTermRef.current))
-        //     navigate('/home/showListStudent')
-        // }
     };
     const renderMenuItems = () => {
         switch (showSelect) {
@@ -137,8 +132,7 @@ function ResponsiveAppBar() {
                 return [
                     <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
                     <MenuItem value={3} valueText="Tìm kiếm giáo viên theo tên">Tìm kiếm giáo viên theo tên</MenuItem>,
-                    <MenuItem value={4} valueText="Tìm kiếm giáo viên theo email">Tìm kiếm giáo viên theo
-                        email</MenuItem>,
+                    <MenuItem value={4} valueText="Tìm kiếm giáo viên theo email">Tìm kiếm giáo viên theo email</MenuItem>,
                 ];
             case '/home/showTeacherPending':
                 return [

@@ -19,7 +19,7 @@ import {Pagination, Stack} from "@mui/material";
 import Box from "@mui/material/Box";
 
 
-export default function ListQuestion() {
+export default function TotalQuestion() {
     useEffect(() => {
         dispatch(findAll())
         dispatch(findAllAnswer())
@@ -41,9 +41,7 @@ export default function ListQuestion() {
         return store.answersStore.answers
     })
     const currentUserQuestions = questions
-        ? Object.values(questions).filter(
-            (question) => question.user?.id === user?.id
-        )
+        ? Object.values(questions)
         : [];
 
     const handleSearch = () => {
@@ -60,7 +58,7 @@ export default function ListQuestion() {
             question.content.toLowerCase().includes(searchTerm.toLowerCase())
         )
         : currentUserQuestions);
-    
+
     const indexOfLastQuestion = currentPage * questionsPerPage;
     const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
     const totalQuestions = filteredQuestions.length;
@@ -138,8 +136,10 @@ export default function ListQuestion() {
 
                                             <Typography className="font-mono" key={answer?.id}
                                                         style={{
-                                                            color: answer?.status === 1 ? "red" : "black",
-                                                            textAlign: "left"
+                                                            color: answer?.status === 1 ? "#1976d2" : "black",
+                                                            textAlign: "left",
+                                                            fontWeight: answer?.status === 1 ? 'bold' : "normal"
+
                                                         }}>
                                                 {currentLetter}.
                                                 {parser.parseFromString(answer?.content, "text/html").body.firstChild
@@ -150,27 +150,6 @@ export default function ListQuestion() {
                                         );
                                     })}
                                 <div className={"flex justify-center"}>
-                                    <Typography className={"mr-0"}>
-                                        {question &&
-                                            <Button className={"btn btn-outline-warning bg-amber-100 "}
-                                                    onClick={async () => {
-                                                        await dispatch(findById({id: question.id}))
-                                                        await dispatch(findAnswersByQuestionId({id: question.id}))
-                                                        navigate("/home/LayoutManagerQuestion/editQuestion/" + question.id)
-                                                    }}>
-                                                Sửa
-                                            </Button>
-                                        }
-                                    </Typography>
-                                    <Typography className={"mr-0"}>
-                                        {question &&
-                                            <Button className={"btn btn-outline-warning bg-amber-100 "}
-                                                    onClick={async () => {
-                                                        await dispatch(deleteAnswersByQuestionId(question.id))
-                                                        await dispatch(deleteQuestions(question.id))
-                                                    }}>Xóa
-                                            </Button>}
-                                    </Typography>
                                 </div>
                             </AccordionDetails>
                         </Accordion>

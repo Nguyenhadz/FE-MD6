@@ -4,7 +4,7 @@ import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import "./LoginWithGmailForm.css"
 import * as Yup from "yup";
-import customAxios from "../redux/service/Api";
+import customAxios from "../../redux/service/Api";
 import React from "react";
 
 export default function RegisterForm() {
