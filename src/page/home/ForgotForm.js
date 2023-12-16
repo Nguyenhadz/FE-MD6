@@ -1,4 +1,4 @@
-import customAxios from "../redux/service/Api";
+import customAxios from "../../redux/service/Api";
 import {toast} from "react-toastify";
 import {Button} from "react-bootstrap";
 import React from "react";

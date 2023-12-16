@@ -96,7 +96,7 @@ export default function NavbarAdmin() {
                                  src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'}
                                  alt={'...'}
                             />
-                            <p className={"ml-2 justify-center"}>Đăng ký giáo viên</p>
+                            <p className={"ml-1 justify-center"}>Đăng ký giáo viên</p>
                         </div>
                     </Link>}
 

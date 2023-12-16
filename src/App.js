@@ -3,21 +3,20 @@ import React from 'react';
 import {ToastContainer} from 'react-toastify';
 import {Route, Routes} from "react-router-dom";
 import ShowListStudent from "./page/user/student/ShowListStudent";
-import Login from "./page/Login";
-import Home from "./page/Home";
-import MenuLogin from "./page/MenuLogin";
-import LoginWithGmailForm from "./page/LoginWithGmailForm";
+import Login from "./page/home/Login";
+import Home from "./page/home/Home";
+import MenuLogin from "./page/home/MenuLogin";
+import LoginWithGmailForm from "./page/home/LoginWithGmailForm";
 import UserDetail from "./page/user/UserDetail";
 import UserProfile from "./page/user/UserProfile";
 import ShowListTeacherPending from "./page/user/teacher/ShowListTeacherPending";
 import DetailTeacherPending from "./page/user/teacher/DetailTeacherPending";
 import ShowListTeacher from "./page/user/teacher/ShowListTeacher";
 import TeacherDetail from "./page/user/teacher/TeacherDetail";
-import RegisterForm from "./page/RegisterForm";
-import ForgotForm from "./page/ForgotForm";
+import RegisterForm from "./page/home/RegisterForm";
+import ForgotForm from "./page/home/ForgotForm";
 import CreateCateQuiz from "./page/catequiz/CreateCateQuiz";
 import LayoutManagerQuestion from "./page/question/LayoutManagerQuestion";
-import CreateQuestion from "./page/question/CreateQuestion";
 
 import ListQuestion from "./page/question/ListQuestion";
 import ShowListCategoryQuiz from "./page/catequiz/ShowListCategoryQuiz";
@@ -28,7 +27,10 @@ import ShowListCateQuestion from "./page/catequestion/ShowListCateQuestion";
 import UpdateCateQuestion from "./page/catequestion/UpdateCateQuestion";
 import {useSelector} from "react-redux";
 import ChangePassword from "./page/user/UserPassword";
-import SideBar from "./component/SideBar";
+import CreateQuestion from "./page/question/CreateQuestion";
+import CreateQuestionOneAnswer from "./page/question/CreateQuestionOneAnswer";
+import CreateQuestionTrueFalse from "./page/question/CreateQuestionTrueFalse";
+import TotalQuestion from "./page/question/TotalQuestion";
 
 
 function App() {
@@ -48,6 +50,7 @@ function App() {
                 {user != null ?
                     <Route path={'/home'} element={<Home/>}>
                         <Route path={'/home/createCateQuiz'} element={<CreateCateQuiz/>}></Route>
+                        <Route path={'/home/totalQuestion'} element={<TotalQuestion/>}></Route>
                         <Route path={'/home/createCateQuestion'} element={<CreateCateQuestion/>}></Route>
                         <Route path={'/home/showListStudent'} element={<ShowListStudent/>}></Route>
                         <Route path={'/home/showListTeacher'} element={<ShowListTeacher/>}></Route>
@@ -56,10 +59,11 @@ function App() {
                         <Route path={'/home/findUserById/:id'} element={<UserProfile/>}></Route>
                         <Route path={'/home/changeUserPasswordById/:id'} element={<ChangePassword/>}></Route>
                         <Route path={'/home/showTeacherPending'} element={<ShowListTeacherPending/>}></Route>
-                        <Route path={'/home/detailTeacherPending/:id'} element={<DetailTeacherPending/>}></Route>z
+                        <Route path={'/home/detailTeacherPending/:id'} element={<DetailTeacherPending/>}></Route>
                         <Route path={'/home/layoutManagerQuestion'} element={<LayoutManagerQuestion/>}>
                             <Route path={'listQuestion'} element={<ListQuestion/>}></Route>
-                            <Route path={'createQuestion'} element={<CreateQuestion/>}></Route>
+                            <Route path={'OneAnswer'} element={<CreateQuestionOneAnswer/>}/>
+                            <Route path={'TrueFalse'} element={<CreateQuestionTrueFalse/>}/>
                             <Route path={'editQuestion/:id'} element={<EditQuestion/>}></Route>
                         </Route>
                         <Route path={'/home/showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>

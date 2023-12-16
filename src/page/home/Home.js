@@ -15,11 +15,9 @@ import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ResponsiveAppBar from "../component/Navbar";
+import ResponsiveAppBar from "../../component/Navbar";
 import {Outlet} from "react-router";
-import MainListItems, {secondaryListItems} from "../component/listItems";
-import {Image} from "@mui/icons-material";
-
+import MainListItems from "../../component/ListItems";
 
 
 function Copyright(props) {
@@ -132,9 +130,8 @@ export default function Dashboard() {
                     </Toolbar>
                     <Divider/>
                     <List component="nav">
-                        <MainListItems></MainListItems>
+                        <MainListItems sidebarOpen={open} />
                         <Divider sx={{my: 1}}/>
-                        {secondaryListItems}
                     </List>
                 </Drawer>
                 <Box

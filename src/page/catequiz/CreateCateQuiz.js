@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux";
 
 import {createCateQuiz} from "../../redux/service/CateQuizService";
 import {useFormik} from "formik";
-import CustomQuills from "./CustomQuills";
+import CustomQuills from "./Editor";
 import React from "react";
 
 

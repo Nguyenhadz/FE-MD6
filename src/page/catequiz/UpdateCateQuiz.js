@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 
 import {updateCateQuiz} from "../../redux/service/CateQuizService";
 import {useFormik} from "formik";
-import CustomQuills from "./CustomQuills";
+import CustomQuills from "./Editor";
 import React from "react";
 
 
@@ -60,7 +60,6 @@ export default function UpdateCateQuiz() {
                         </div>
                     </form>
                 </div>
-
             </div>
         </>
     )
