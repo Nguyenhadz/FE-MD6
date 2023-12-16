@@ -27,7 +27,7 @@ export default function CreateCateQuiz() {
         <>
             <div className={"bg-cover bg-center h-screen flex"}
                  style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
-                <Link to={"/home/showListCateQuiz"}>
+                <Link to={"/login/showListCateQuiz"}>
                     <button className={"w-20 h-10 rounded-lg ml-6 mt-5 bg-orange-400 hover:bg-red-500 text-white"}>Trở
                         về
                     </button>

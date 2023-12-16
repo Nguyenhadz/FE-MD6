@@ -13,6 +13,7 @@ import {Checkbox, FormControl, FormControlLabel} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import CustomQuill from "../../react-quill/CustomQuill";
+import {CheckBoxOutlineBlankSharp, CheckBoxSharp} from "@mui/icons-material";
 
 export default function CreateQuestionMultilAnswer() {
     const currentUser = useSelector((store) => {
@@ -85,7 +86,7 @@ export default function CreateQuestionMultilAnswer() {
 
     return (
         <>
-            <div>
+            <div className={"w-full h-full"}>
                 <div className={"custom-quill-container flex"}>
                     <QuillToolbar></QuillToolbar>
                 </div>
@@ -110,8 +111,15 @@ export default function CreateQuestionMultilAnswer() {
                         </div>
 
                         <div className={"answer-question flex flex-wrap justify-between"}>
-                            {answerCount.map((index,colorIndex) => (
-                                <div key={index} style={{width: '25%', minWidth: '200px', marginBottom: '10px', display:"flex", justifyContent:"center" ,padding:"auto"}}>
+                            {answerCount.map((index, colorIndex) => (
+                                <div key={index} style={{
+                                    width: '25%',
+                                    minWidth: '200px',
+                                    marginBottom: '10px',
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    padding: "auto"
+                                }}>
                                     <FormControl>
                                         <div className={"w-64 h-72 rounded-[1rem] bg-amber-50 flex flex-column m-auto"}
                                              style={{backgroundColor: colors[colorIndex % colors.length]}}
@@ -119,6 +127,24 @@ export default function CreateQuestionMultilAnswer() {
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
+                                                        icon={<CheckBoxOutlineBlankSharp
+                                                            sx={{
+                                                                width: 32,
+                                                                height: 32,
+                                                                // bgcolor: "initial",
+                                                                marginTop: 2,
+                                                                marginLeft: 1
+                                                            }}
+                                                        />}
+                                                        checkedIcon={<CheckBoxSharp
+                                                            sx={{
+                                                                width: 32,
+                                                                height: 32,
+                                                                bgcolor: "#00C985",
+                                                                marginTop: 2,
+                                                                marginLeft: 1
+                                                            }}
+                                                        />}
                                                         checked={formik.values[`answer${index}`].status === 1}
                                                         onChange={(event) => {
                                                             const isChecked = event.target.checked;
@@ -128,11 +154,11 @@ export default function CreateQuestionMultilAnswer() {
                                                 }
                                                 label=""
                                                 sx={{
-                                                    width: 28,
-                                                    height: 28,
-                                                    borderRadius: "50%",
-                                                    marginTop: 1,
-                                                    marginLeft: 0
+                                                    width: 32,
+                                                    height: 32,
+                                                    marginTop: 0,
+                                                    marginLeft: -1
+
                                                 }}
                                             />
 

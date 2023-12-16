@@ -15,9 +15,9 @@ import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ResponsiveAppBar from "../../component/Navbar";
+import ResponsiveAppBar from "./Navbar";
 import {Outlet} from "react-router";
-import MainListItems from "../../component/ListItems";
+import MainListItems from "./ListItems";
 
 
 function Copyright(props) {
@@ -83,7 +83,7 @@ const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})
 const defaultTheme = createTheme();
 
 
-export default function Dashboard() {
+export default function Home() {
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
         setOpen(!open);

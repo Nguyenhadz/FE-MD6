@@ -42,9 +42,9 @@ function ResponsiveAppBar() {
         return state.users.currentUser;
     })
     const settings = [
-        {name: 'Profile', href: '/home/findUserById/' + user.id},
-        {name: 'Account', href: '/home/changeUserPasswordById/' + user.id},
-        {name: 'Dashboard', href: '/home/layoutManagerQuestion/listQuestion'},
+        {name: 'Profile', href: '/login/findUserById/' + user.id},
+        {name: 'Account', href: '/login/changeUserPasswordById/' + user.id},
+        {name: 'Dashboard', href: '/login/layoutManagerQuestion/listQuestion'},
         {name: 'Logout'},
     ];
 
@@ -121,56 +121,61 @@ function ResponsiveAppBar() {
     };
     const renderMenuItems = () => {
         switch (showSelect) {
-            case '/home/showListStudent':
+            case '/login/showListStudent':
                 return [
-                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
-                    <MenuItem value={1} valueText="Tìm kiếm học sinh theo tên">Tìm kiếm học sinh theo tên</MenuItem>,
-                    <MenuItem value={2} valueText="Tìm kiếm học sinh theo email">Tìm kiếm học sinh theo
-                        email</MenuItem>,
+                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm học sinh theo</MenuItem>,
+                    <MenuItem value={1} valueText="Theo tên">Tên</MenuItem>,
+                    <MenuItem value={2} valueText="Theo email">Email</MenuItem>,
                 ];
-            case '/home/showListTeacher':
+            case '/login/showListTeacher':
                 return [
-                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
-                    <MenuItem value={3} valueText="Tìm kiếm giáo viên theo tên">Tìm kiếm giáo viên theo tên</MenuItem>,
-                    <MenuItem value={4} valueText="Tìm kiếm giáo viên theo email">Tìm kiếm giáo viên theo email</MenuItem>,
+                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm danh mục theo</MenuItem>,
+                    <MenuItem value={3} valueText="Theo tên">Tên</MenuItem>,
+                    <MenuItem value={4} valueText="Theo email">Email</MenuItem>,
                 ];
-            case '/home/showTeacherPending':
+            case '/login/showTeacherPending':
                 return [
-                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
-                    <MenuItem value={3} valueText="Tìm kiếm giáo viên theo tên">Tìm kiếm giáo viên theo tên</MenuItem>,
-                    <MenuItem value={4} valueText="Tìm kiếm giáo viên theo email">Tìm kiếm giáo viên theo
-                        email</MenuItem>,
+                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm giáo viên theo</MenuItem>,
+                    <MenuItem value={3} valueText="Theo tên">Tên</MenuItem>,
+                    <MenuItem value={4} valueText="Theo email">Email</MenuItem>,
                 ];
-            case '/home/showListCateQuestion':
+            case '/login/showListCateQuestion':
                 return [
-                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
-                    <MenuItem value={5}>Tìm kiếm danh mục câu hỏi theo tên</MenuItem>,
-                    <MenuItem value={6}>Tìm kiếm danh mục câu hỏi theo nội dung</MenuItem>,
+                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm danh mục câu hỏi theo</MenuItem>,
+                    <MenuItem value={5}>Tên</MenuItem>,
+                    <MenuItem value={6}>Nội dung</MenuItem>,
                 ];
-            case '/home/showListCateQuiz':
+            case '/login/showListCateQuiz':
+                return [
+                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm danh mục bài thi theo</MenuItem>,
+                    <MenuItem value={7}>Tên</MenuItem>,
+                    <MenuItem value={8}>Nội dung</MenuItem>,
+                ];
+            case '/login/totalQuestion':
                 return [
                     <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
-                    <MenuItem value={7}>Tìm kiếm danh mục quiz theo tên</MenuItem>,
-                    <MenuItem value={8}>Tìm kiếm danh mục quiz theo nội dung</MenuItem>,
+                    <MenuItem value={7}>Theo tên</MenuItem>,
+                    <MenuItem value={8}>Theo nội dung</MenuItem>,
                 ];
             default:
                 return [
-                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
-                    <MenuItem value={1}>Tìm kiếm theo tên</MenuItem>,
-                    <MenuItem value={2}>Tìm kiếm theo email</MenuItem>,
-                    <MenuItem value={3}>Tìm kiếm giáo viên theo tên</MenuItem>,
-                    <MenuItem value={4}>Tìm kiếm giáo viên theo email</MenuItem>,
+                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm câu hỏi theo</MenuItem>,
+                    <MenuItem value={1}>Theo tên</MenuItem>,
+                    <MenuItem value={2}>Theo email</MenuItem>,
+                    <MenuItem value={3}>Theo tên</MenuItem>,
+                    <MenuItem value={4}>Theo email</MenuItem>,
                 ];
         }
     };
 
     return (
-            <Container maxWidth="xxl">
-                <Toolbar disableGutters>
-                    <AdbIcon
-                        sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}
-                    />
-                    <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
+        <Container maxWidth="xxl">
+            <Toolbar disableGutters>
+                <AdbIcon
+                    sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}
+                />
+                <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
+                {showSelect !== '/home' && (
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         <Search>
                             <SearchIconWrapper>
@@ -180,11 +185,12 @@ function ResponsiveAppBar() {
                                 placeholder="Nội dung…"
                                 onChange={(event) => (searchTermRef.current = event.target.value)}
                             />
-
                         </Search>
                         <Button onClick={handleSearch}>Tìm kiếm</Button>
-
                     </Box>
+                )}
+                {showSelect !== '/home' && (
+
                     <Box sx={{flexGrow: 6, display: {xs: 'none', md: 'flex'}}}>
                         <div>
                             <FormControl sx={{m: 1, minWidth: 80}}>
@@ -200,48 +206,49 @@ function ResponsiveAppBar() {
                             </FormControl>
                         </div>
                     </Box>
-                    <Box sx={{flexGrow: 0, display: 'flex', alignItems: 'center'}}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                <Avatar
-                                    alt="Hình đại diện"
-                                    src={`${user.image}`}
-                                    sx={{width: 48, height: 48}}
-                                />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{mt: '45px'}}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting.name} onClick={() => {
-                                    if (setting.name === 'Logout') {
-                                        handleLogout();
-                                    } else {
-                                        handleCloseUserMenu();
-                                    }
-                                }}>
-                                    <Link underline="none" textAlign="center" href={setting.href}>{setting.name}</Link>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                        <Typography sx={{ml: '40px'}}>{user.name}</Typography>
-                    </Box>
-                </Toolbar>
-            </Container>
+                )}
+                <Box sx={{flexGrow: 0, display: 'flex', alignItems: 'center', justifyContent: "center"}}>
+                    <Tooltip title="Open settings">
+                        <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                            <Avatar
+                                alt="Hình đại diện"
+                                src={`${user.image}`}
+                                sx={{width: 48, height: 48}}
+                            />
+                        </IconButton>
+                    </Tooltip>
+                    <Menu
+                        sx={{mt: '45px'}}
+                        id="menu-appbar"
+                        anchorEl={anchorElUser}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        open={Boolean(anchorElUser)}
+                        onClose={handleCloseUserMenu}
+                    >
+                        {settings.map((setting) => (
+                            <MenuItem key={setting.name} onClick={() => {
+                                if (setting.name === 'Logout') {
+                                    handleLogout();
+                                } else {
+                                    handleCloseUserMenu();
+                                }
+                            }}>
+                                <Link underline="none" textAlign="center" href={setting.href}>{setting.name}</Link>
+                            </MenuItem>
+                        ))}
+                    </Menu>
+                    <Typography sx={{ml: '40px'}}>{user.name}</Typography>
+                </Box>
+            </Toolbar>
+        </Container>
     );
 }
 

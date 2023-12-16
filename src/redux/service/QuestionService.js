@@ -25,8 +25,10 @@ export const findById = createAsyncThunk(
 )
 export const createQuestion = createAsyncThunk(
     'questions/createQuestion',
-    async ({question}) => {
+    async (question) => {
+        console.log(question)
         const res = await customAxios.post('questions', question, axiosConfig);
+        console.log(res.data)
         return res.data
     }
 )

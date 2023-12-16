@@ -13,6 +13,7 @@ import {FormControl, FormControlLabel, Radio, RadioGroup} from "@mui/material";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import CustomQuill from "../../react-quill/CustomQuill";
 import Typography from "@mui/material/Typography";
+import {RadioButtonUncheckedRounded} from "@mui/icons-material";
 
 export default function CreateQuestionTrueFalse() {
 
@@ -124,10 +125,10 @@ export default function CreateQuestionTrueFalse() {
                                                 : "other"
                                         } onChange={(event) => {
                                         const answerIndex = parseInt(event.target.value.slice(-1)); // Lấy index từ value
-
+                                        console.log(event.target.value)
                                         // Cập nhật trạng thái của đáp án được chọn
                                         formik.setFieldValue(`answer${answerIndex}.status`, 1);
-
+                                        console.log(index)
                                         // Cập nhật trạng thái của các đáp án khác thành 0
                                         for (let i = 1; i <= answerCount.length; i++) {
                                             if (i !== answerIndex) {
@@ -148,13 +149,13 @@ export default function CreateQuestionTrueFalse() {
                                                         value={`answer${index}`}
                                                         control={
                                                             <Radio
-                                                                icon={<CheckRoundedIcon
+                                                                icon={<RadioButtonUncheckedRounded
                                                                     sx={{
                                                                         width: 28,
                                                                         height: 28,
-                                                                        borderRadius: "50%",
-                                                                        border: "1px solid #ddd",
-                                                                        bgcolor: "initial",
+                                                                        // borderRadius: "50%",
+                                                                        // border: "1px solid #ddd",
+                                                                        // bgcolor: "initial",
                                                                         marginTop: 2,
                                                                         marginLeft: 2
                                                                     }}
@@ -164,7 +165,7 @@ export default function CreateQuestionTrueFalse() {
                                                                         width: 28,
                                                                         height: 28,
                                                                         borderRadius: "50%",
-                                                                        border: "1px solid #ddd",
+                                                                        // border: "1px solid #ddd",
                                                                         bgcolor: "#00C985",
                                                                         marginTop: 2,
                                                                         marginLeft: 2
@@ -176,7 +177,7 @@ export default function CreateQuestionTrueFalse() {
                                                         sx={{
                                                             width: 28,
                                                             height: 28,
-                                                            borderRadius: "50%",
+                                                            // borderRadius: "50%",
                                                         }}
                                                         onClick={() => {
                                                             formik.setFieldValue(`answer${index}.status`, 1);
