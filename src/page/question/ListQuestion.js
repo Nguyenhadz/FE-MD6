@@ -99,10 +99,11 @@ export default function ListQuestion() {
                                 <div className={"flex justify-content-lg-start rounded w-full h-full"}>
                                     <div>
                                         <Typography className={"font-sans font-bold hover:font-serif"}>
-                                            Câu {questionNumber}: &nbsp;{parser.parseFromString(question.content, 'text/html').body.firstChild?.textContent}
+                                            <Typography>{"Câu " + questionNumber}
+                                                <span dangerouslySetInnerHTML={{__html: question.content}}/>
+                                            </Typography>
                                         </Typography>
                                     </div>
-
                                 </div>
                             </AccordionSummary>
                             <AccordionDetails className={"bg-neutral-200"}>
@@ -115,8 +116,9 @@ export default function ListQuestion() {
 
                                             <Typography className="font-mono" key={answer?.id}
                                                         style={{
-                                                            color: answer?.status === 1 ? "red" : "black",
-                                                            textAlign: "left"
+                                                            color: answer?.status === 1 ? "darkblue" : "black",
+                                                            textAlign: "left",
+                                                            fontWeight: answer?.status === 1 ? "bold" : "normal",
                                                         }}>
                                                 {currentLetter}.
                                                 {parser.parseFromString(answer?.content, "text/html").body.firstChild

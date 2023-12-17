@@ -1,8 +1,9 @@
 import React from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import "./CustomQuill.css";
-import {formats, modules} from "./QuillToolbar";
+import "quill/dist/quill.snow.css";
+import "./Editor.css";
+import {formats, modules, QuillToolbar} from "./QuillToolbar";
 
 export const Editor = ({field, form, ...props}) => {
     const handleChange = (value) => {
@@ -10,7 +11,9 @@ export const Editor = ({field, form, ...props}) => {
     };
     return (
         <div className="text-editor">
+            {/*<QuillToolbar></QuillToolbar>*/}
             <ReactQuill
+                theme="snow"
                 sx={{border: "none"}}
                 placeholder={"Write something awesome..."}
                 modules={modules}

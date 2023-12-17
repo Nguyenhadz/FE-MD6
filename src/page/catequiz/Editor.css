@@ -7,7 +7,7 @@
 .ql-toolbar .ql-list,
 .ql-toolbar .ql-link,
 .ql-toolbar .ql-code {
-    display: none;
+    /*display: none;*/
 }
 
 .ql-container.ql-snow {
@@ -27,7 +27,6 @@
 }
 
 .ql-toolbar.ql-snow {
-    display: none;
     border: none;
     box-sizing: border-box;
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
@@ -52,7 +51,9 @@
 .ql-toolbar.ql-snow + .ql-container.ql-snow {
     border: none;
 }
-
+.ql-container.ql-snow {
+    border: none;
+}
 /* Ẩn thanh công cụ khi không được focus */
 .ql-container.ql-snow:not(.ql-focus) .ql-toolbar {
     display: none;

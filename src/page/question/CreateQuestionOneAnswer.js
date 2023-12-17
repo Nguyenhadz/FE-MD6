@@ -5,7 +5,6 @@ import {findAllTypeQuestion} from "../../redux/service/TypeQuestionService";
 import {findAllLevelQuestion} from "../../redux/service/LevelQuestionService";
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {QuillToolbar} from "../catequiz/QuillToolbar";
 import Editor from "../catequiz/Editor";
 import {useNavigate} from "react-router-dom";
 import {FormControl, FormControlLabel, Radio, RadioGroup} from "@mui/material";
@@ -14,6 +13,7 @@ import CustomQuill from "../../react-quill/CustomQuill";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import {RadioButtonUncheckedRounded} from "@mui/icons-material";
+import {QuillToolbar} from "../catequiz/QuillToolbar";
 
 export default function CreateQuestionOneAnswer() {
     const currentUser = useSelector((store) => {
@@ -49,7 +49,7 @@ export default function CreateQuestionOneAnswer() {
                 content: "",
                 status: 1,
                 typeQuestion: {
-                    id: 1,
+                    id: 2,
                 },
                 categoryQuestion: {
                     id: 1
@@ -83,25 +83,18 @@ export default function CreateQuestionOneAnswer() {
             ]
         },
 
-
         onSubmit: async (values) => {
-            // await dispatch(deleteAnswerIsEmpty())
-            console.log(values)
             await dispatch(createQuestion(values))
         },
     });
 
-
-    // const answerCount = [1, 2, 3, 4];
-
     const colors = ["rgb(45 112 174)", "rgb(45 157 166)", "rgb(239 169 41)", "rgb(213 84 109)"]; // Mảng chứa các màu
-
-// Trong LayoutManagerQuestion
 
 
     return (
         <>
             <div className={"w-full h-full"}>
+
                 <div className={"custom-quill-container flex"}>
                     <QuillToolbar></QuillToolbar>
                 </div>
@@ -110,10 +103,8 @@ export default function CreateQuestionOneAnswer() {
                     <form onSubmit={formik.handleSubmit}>
                         <div
                             className={"content-question w-full h-48  rounded-[0.5rem] p-2  focus: border-purple-400 border-opacity-50 border-2"}
-                            // gán hàm xử lý sự kiện onFocus và onBlur cho div
                             onFocus={handleFocus}
                             onBlur={handleBlur}
-                            // thiết lập màu nền cho div theo state hook
                             style={{backgroundColor: backgroundColor}}>
                             <span>Câu hỏi:</span>
                             <Editor field={{
@@ -124,16 +115,9 @@ export default function CreateQuestionOneAnswer() {
                             </Editor>
                         </div>
 
-                        <div className={"answer-question flex flex-wrap justify-around"}>
+                        <div className={"answer-question flex justify-around w-full"}>
                             {formik.values.answers.map((item, index, colorIndex) => (
-                                <div key={index} style={{
-                                    width: '25%',
-                                    minWidth: '200px',
-                                    marginBottom: '10px',
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    padding: "auto"
-                                }}>
+                                <div key={index} className={"w-1/4"}>
                                     <RadioGroup
                                         aria-labelledby={`demo-radio-buttons-group-label-${index}`}
                                         name={`radio-buttons-group-${index}`}
@@ -143,19 +127,33 @@ export default function CreateQuestionOneAnswer() {
                                                 : "other"
                                         }
                                         onChange={(event) => {
-                                            formik.setFieldValue(`answers[${index}].status`, "1"); // Cập nhật trạng thái của câu trả lời được chọn
+                                            // Sử dụng hàm map để duyệt qua mảng answers
+                                            formik.setFieldValue(
+                                                `answers`,
+                                                formik.values.answers.map((answer, i) => {
+                                                    // console.log(formik.values.answers[i].status)
+                                                    console.log("i" + i)
+                                                    console.log("index" + index)
+                                                    // Sử dụng toán tử ba ngôi để kiểm tra điều kiện và trả về giá trị tương ứng
+                                                    return i === index
+                                                        ? {...answer, status: "1"} // Nếu i bằng index thì cập nhật status thành 1
+                                                        : {...answer, status: "0"}; // Nếu không thì cập nhật status thành 0
+                                                })
+                                            );
                                         }}
+                                        style={{width: "95%"}}
                                     >
-                                        <FormControl>
-                                            <div className={"w-64 h-72 m-2 rounded-[1rem] bg-amber-50 flex flex-column"}
-                                                 style={{backgroundColor: colors[colorIndex % colors.length]}}
+                                        <FormControl className={"w-full"}>
+                                            <div
+                                                className={"w-full h-72 m-2 rounded-[1rem] bg-amber-50 flex flex-column"}
+                                                style={{backgroundColor: colors[index % colors.length]}}
                                             >
                                                 <div className="custom-quill-container flex flex-column">
 
                                                     <FormControlLabel
                                                         value={`answer${index}`}
                                                         onClick={() => {
-                                                            formik.setFieldValue(`answers[${index - 1}].status`, 1);
+                                                            formik.setFieldValue(`answers[${index}].status`, 1);
                                                         }}
                                                         sx={{
                                                             width: 28,
@@ -181,7 +179,6 @@ export default function CreateQuestionOneAnswer() {
                                                                         width: 28,
                                                                         height: 28,
                                                                         borderRadius: "50%",
-                                                                        // border: "1px solid #ddd",
                                                                         bgcolor: "#00C985",
                                                                         marginTop: 2,
                                                                         marginLeft: 1
@@ -211,7 +208,8 @@ export default function CreateQuestionOneAnswer() {
                                                             height: '250px',
                                                             outline: 'none',
                                                             padding: '12px 15px',
-                                                            '-moz-tab-size': 4
+                                                            '-moz-tab-size': 4,
+                                                            '--ql-toolbar-display': 'none' // Ẩn toolbar
                                                         }}
                                                     />
                                                 </Box>

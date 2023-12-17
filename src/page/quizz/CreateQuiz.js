@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useEffect} from 'react';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
@@ -9,6 +10,19 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import {useDispatch, useSelector} from "react-redux";
+import {findAll} from "../../redux/service/QuestionService";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import SearchIcon from "@mui/icons-material/Search";
+import {Search} from "@mui/icons-material";
+import {FormControl, InputBase, InputLabel, Select, styled} from "@mui/material";
+import {
+    findStudentByMail,
+    findStudentByName,
+    findTeacherByMail,
+    findTeacherByName
+} from "../../redux/service/UserService";
 
 function not(a, b) {
     return a.filter((value) => b.indexOf(value) === -1);
@@ -23,13 +37,35 @@ function union(a, b) {
 }
 
 export default function CreateQuiz() {
+    const questions = useSelector((store) => {
+        return store.questionStore.questions
+    })
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(findAll());
+
+    }, [dispatch]);
+    console.log(questions)
     const [checked, setChecked] = React.useState([]);
-    const [left, setLeft] = React.useState([0, 1, 2, 3]);
-    const [right, setRight] = React.useState([4, 5, 6, 7]);
+    const [left, setLeft] = React.useState([]);
+    const [right, setRight] = React.useState([]);
+    const searchTermRef = React.useState('');
+    const [selectedField, setSelectedField] = React.useState('0');
 
     const leftChecked = intersection(checked, left);
     const rightChecked = intersection(checked, right);
-
+    useEffect(() => {
+        if (questions && questions.length > 0) {
+            const updatedLeft = questions.map((question) => ({
+                id: question.id,
+                content: question.content,
+                answerId: question.answers.map((answer) => answer.id),
+                answerContent: question.answers.map((answer) => answer.content),
+                answerStatus: question.answers.map((answer) => answer.status),
+            }));
+            setLeft(updatedLeft);
+        }
+    }, [questions]);
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
@@ -64,11 +100,58 @@ export default function CreateQuiz() {
         setRight(not(right, rightChecked));
         setChecked(not(checked, rightChecked));
     };
-
+    const SearchIconWrapper = styled('div')(({theme}) => ({
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }));
+    const StyledInputBase = styled(InputBase)(({theme}) => ({
+        color: 'inherit',
+        width: '100%',
+        '& .MuiInputBase-input': {
+            padding: theme.spacing(1, 1, 1, 0),
+            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+            transition: theme.transitions.create('width'),
+            [theme.breakpoints.up('sm')]: {
+                width: '30ch'
+            },
+        },
+    }));
+    const handleChange = (event) => {
+        setSelectedField(event.target.value);
+    };
+    const handleSearch = () => {
+        if (selectedField === 3) {
+            dispatch(findTeacherByName(searchTermRef.current))
+        } else if (selectedField === 4) {
+            dispatch(findTeacherByMail(searchTermRef.current))
+        } else if (selectedField === 1) {
+            dispatch(findStudentByName(searchTermRef.current))
+        } else if (selectedField === 2) {
+            dispatch(findStudentByMail(searchTermRef.current))
+        }
+    };
     const customList = (title, items) => (
-        <Card>
+        <Card className={"w-fit h-full"}>
+            <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
+                <Search>
+                    <SearchIconWrapper>
+                        <SearchIcon/>
+                    </SearchIconWrapper>
+                    <StyledInputBase
+                        placeholder="Nội dung…"
+                        onChange={(event) => (searchTermRef.current = event.target.value)}
+                    />
+                </Search>
+                <Button onClick={handleSearch}>Tìm kiếm</Button>
+            </Box>
+
             <CardHeader
-                sx={{ px: 2, py: 1 }}
+                sx={{px: 4, py: 1}}
                 avatar={
                     <Checkbox
                         onClick={handleToggleAll(items)}
@@ -82,10 +165,10 @@ export default function CreateQuiz() {
                         }}
                     />
                 }
-                title={title}
+                title={title.id}
                 subheader={`${numberOfChecked(items)}/${items.length} selected`}
             />
-            <Divider />
+            <Divider/>
             <List
                 sx={{
                     width: 200,
@@ -115,9 +198,23 @@ export default function CreateQuiz() {
                                     inputProps={{
                                         'aria-labelledby': labelId,
                                     }}
+                                    value={value.id}
                                 />
                             </ListItemIcon>
-                            <ListItemText id={labelId} primary={`List item ${value + 1}`} />
+                            <ListItemText
+                                id={labelId}
+                                primary={
+                                    <Typography dangerouslySetInnerHTML={{__html: value.content}}>
+
+                                    </Typography>}
+                            />
+                            <ListItemText
+                                id={labelId}
+                                primary={
+                                    <Typography>
+                                        A. {value.answerContent}
+                                    </Typography>}
+                            />
                         </ListItem>
                     );
                 })}
@@ -126,12 +223,14 @@ export default function CreateQuiz() {
     );
 
     return (
-        <Grid container spacing={2} justifyContent="center" alignItems="center">
+        <Grid container spacing={1} justifyContent="center" alignItems="center">
             <Grid item>{customList('Choices', left)}</Grid>
+
             <Grid item>
                 <Grid container direction="column" alignItems="center">
+
                     <Button
-                        sx={{ my: 0.5 }}
+                        sx={{my: 0.5}}
                         variant="outlined"
                         size="small"
                         onClick={handleCheckedRight}
@@ -141,7 +240,7 @@ export default function CreateQuiz() {
                         &gt;
                     </Button>
                     <Button
-                        sx={{ my: 0.5 }}
+                        sx={{my: 0.5}}
                         variant="outlined"
                         size="small"
                         onClick={handleCheckedLeft}

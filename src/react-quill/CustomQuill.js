@@ -9,26 +9,26 @@ function CustomQuill({field, form, ...props}) {
         form.setFieldValue(field.name, value);
     };
 
-    const modules = {
-        toolbar: {
-            container: [
-                ["link", "image", "video"],
-                ["code-block"],
-                ["clean"],
-            ],
-        },
-        clipboard: {
-            matchVisual: false,
-        },
-    };
-
-    const formats = ["header", "bold", "italic", "underline", "clean"];
+    // const modules = {
+    //     toolbar: {
+    //         container: [
+    //             ["link", "image", "video"],
+    //             ["code-block"],
+    //             ["clean"],
+    //         ],
+    //     },
+    //     clipboard: {
+    //         matchVisual: false,
+    //     },
+    // };
+    //
+    // const formats = ["header", "bold", "italic", "underline", "clean"];
 
     return (
         <ReactQuill
             theme="snow"
-            modules={modules}
-            formats={formats}
+            // modules={modules}
+            // formats={formats}
             value={field.value || ""}
             onChange={handleChange}
             {...props}

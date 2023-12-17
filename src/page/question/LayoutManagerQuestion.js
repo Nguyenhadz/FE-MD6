@@ -56,7 +56,7 @@ export default function FullWidthTabs() {
     };
 
     return (
-        <Box sx={{bgcolor: 'background.paper', width: "full", height: "full"}}>
+        <Box sx={{bgcolor: 'background.paper', width: "screen", height: "full"}}>
             <AppBar position="static">
                 <Tabs
                     value={value}
@@ -75,7 +75,7 @@ export default function FullWidthTabs() {
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                 index={value}
                 onChangeIndex={handleChangeIndex}
-                sx={{width: "full", height: "full"}}
+                sx={{width: "fit", height: "full"}}
             >
 
                 <TabPanel value={value} index={0} dir={theme.direction}
@@ -83,7 +83,7 @@ export default function FullWidthTabs() {
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
-                              width: "full",
+                              width: "fit",
                               height: "full",
                           }}>
                     <ListQuestion
@@ -95,14 +95,21 @@ export default function FullWidthTabs() {
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
-                              width: "full",
+                              width: "fit",
                               height: "full",
                           }}>
                     <CreateQuestion
-                        sx={{width: "full", height: "full"}}
+                        sx={{width: "fit", height: "full"}}
                     />
                 </TabPanel>
-                <TabPanel value={value} index={2} dir={theme.direction}>
+                <TabPanel value={value} index={2} dir={theme.direction}
+                          sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              width: "fit",
+                              height: "full",
+                          }}>
                     Item Three
                 </TabPanel>
             </SwipeableViews>

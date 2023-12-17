@@ -31,6 +31,8 @@ import ForgotForm from "./page/login/ForgotForm";
 import Home from "./component/Home";
 import CreateQuiz from "./page/quizz/CreateQuiz";
 import Login from "./page/login/Login";
+import SidebarQuiz from "./page/quizz/SidebarQuiz";
+import CreateNewQuiz from "./page/quizz/CreateNewQuiz";
 
 
 function App() {
@@ -50,7 +52,7 @@ function App() {
                 {/*{user != null ?*/}
                     <Route path={'/home'} element={<Home/>}>
                         <Route path={'/home/createCateQuiz'} element={<CreateCateQuiz/>}></Route>
-                        <Route path={'/home/createQuiz'} element={<CreateQuiz/>}></Route>
+                        <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
                         <Route path={'/home/totalQuestion'} element={<TotalQuestion/>}></Route>
                         <Route path={'/home/createCateQuestion'} element={<CreateCateQuestion/>}></Route>
                         <Route path={'/home/showListStudent'} element={<ShowListStudent/>}></Route>

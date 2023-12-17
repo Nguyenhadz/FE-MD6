@@ -12,6 +12,7 @@
 
 .ql-editor .ql-blank {
 border: none;
+    height: 230px;
 }
 .ql-container .ql-snow {
     border: none;
@@ -21,12 +22,15 @@ border: none;
 }
 
 .ql-toolbar.ql-snow {
-    display: none;
     border: none;
     box-sizing: border-box;
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     padding: 8px;
     height: 100%;
+}
+
+.ql-toolbar.ql-snow {
+    display: var(--ql-toolbar-display);
 }
 
 .ql-editor {
