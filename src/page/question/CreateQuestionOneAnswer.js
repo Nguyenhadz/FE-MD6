@@ -53,7 +53,6 @@ export default function CreateQuestionOneAnswer() {
                 },
                 categoryQuestion: {
                     id: 1
-
                 },
                 levelQuestion: {
                     id: 1

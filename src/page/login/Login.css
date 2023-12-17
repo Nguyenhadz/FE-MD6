@@ -16,7 +16,7 @@
 
 .header {
     background-color: rgb(70 26 66);
-    width: 1920px;
+    width: 100%;
     height: 56px;
     padding: 12px;
     box-shadow: rgba(0, 0, 0, 0.55) 0 15px 15px;
@@ -73,7 +73,7 @@
 .main {
     position: absolute;
     top: 83px;
-    width: 1920px;
+    width: 100%;
     padding: 0;
     height: 850px;
     background-color: rgb(70 26 66);

@@ -9,14 +9,17 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import {useDispatch, useSelector} from "react-redux";
-import {createQuestion, findAll} from "../../redux/service/QuestionService";
+import {findAll, findByContent} from "../../redux/service/QuestionService";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import QuestionDetail from "./QuestionDetail";
 import Button from "@mui/material/Button";
 import {useFormik} from "formik";
-import {TextField} from "@mui/material";
+import {alpha, FormControl, InputBase, InputLabel, Select, TextField} from "@mui/material";
 import {createQuiz} from "../../redux/service/QuizService";
+import SearchIcon from "@mui/icons-material/Search";
+import {styled} from "@mui/system";
+import MenuItem from "@mui/material/MenuItem";
 
 const drawerWidth = 360;
 
@@ -30,22 +33,37 @@ export default function CreateNewQuiz() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(findAll());
-
     }, [dispatch]);
     const [selectedQuestionContent, setSelectedQuestionContent] = React.useState([]);
-
     const handleAddQuestion = (question) => {
         setSelectedQuestionContent((prevContent) => [...prevContent, question]);
-        const questionIds = selectedQuestionContent.map((q) => ({ id: q.id })); // Lấy danh sách các id
-        formik.setFieldValue('questions', questionIds); // Cập nhật trường questions trong formik
+    };
+    React.useEffect(() => {
+        const questionIds = selectedQuestionContent.map((q) => ({id: q.id}));
+        formik.setFieldValue('questions', questionIds);
+    }, [selectedQuestionContent]);
+    const [open, setOpen] = React.useState(false);
+    const searchTermRef = React.useRef('');
+    const [selectedField, setSelectedField] = React.useState('1');
+
+    const handleChange = (event) => {
+        setSelectedField(event.target.value);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleOpen = () => {
+        setOpen(true);
     };
     const formik = useFormik({
         initialValues: {
-            title: "abcdd123ádfqqưqweqđfa",
-            time: 1000,
-            timeCreate: "2023-12-17T18:20:48",
-            description: "a",
-            passScore: 50.0,
+            title: "",
+            time: "",
+            timeCreate: new Date(),
+            description: "",
+            passScore: "",
             status: 1,
             categoryQuiz: {
                 id: 2
@@ -54,15 +72,66 @@ export default function CreateNewQuiz() {
                 id: 1
             },
             user: {
-                id: 1
+                id: currentUser.id
             },
-            questions: [],
+            questions: [selectedQuestionContent],
         },
         onSubmit: async (values) => {
-            console.log(values)
+
             await dispatch(createQuiz(values))
+            formik.resetForm()
         },
     });
+    const Search = styled('div')(({theme}) => ({
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: alpha(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: alpha(theme.palette.common.white, 0.25),
+        },
+        marginRight: theme.spacing(2),
+        marginLeft: 0,
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.spacing(3),
+            width: 'auto',
+        },
+    }));
+
+    const SearchIconWrapper = styled('div')(({theme}) => ({
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }));
+
+    const StyledInputBase = styled(InputBase)(({theme}) => ({
+        color: 'inherit',
+        '& .MuiInputBase-input': {
+            padding: theme.spacing(1, 1, 1, 0),
+            // vertical padding + font size from searchIcon
+            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+            transition: theme.transitions.create('width'),
+            width: '100%',
+            [theme.breakpoints.up('md')]: {
+                width: '18ch'
+            },
+        },
+    }));
+    const updatedQuestions = useSelector((store) => store.questionStore.questions);
+
+    const handleSearch = () => {
+        if (selectedField === 1) {
+            dispatch(findByContent(searchTermRef.current))
+        }
+        // else if (selectedField === 2) {
+        //     dispatch(findC(searchTermRef.current))
+        // }
+    };
+
     return (
         <Box sx={{display: 'flex'}}>
             <CssBaseline/>
@@ -77,7 +146,28 @@ export default function CreateNewQuiz() {
                 </Toolbar>
             </AppBar>
 
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit} className={"flex flex-col "}>
+                <Box
+                    component="form"
+                    sx={{
+                        '& > :not(style)': {m: 1, width: '25ch'},
+                    }}
+                >
+
+                    <TextField
+                        id="standard-basic"
+                        label="Tên bài thi"
+                        variant="standard"
+                        name={"title"}
+                        value={formik.values.title} // Bỏ comment out dòng này
+                        onChange={(e) => formik.setFieldValue('title', e.target.value)} // Thêm dòng này
+                    />
+                    <TextField
+                        name={"time"}
+                        hidden={true}
+                        value={formik.values.time}
+                    />
+                </Box>
                 <Box
                     component="form"
                     sx={{
@@ -86,33 +176,34 @@ export default function CreateNewQuiz() {
                     noValidate
                     autoComplete="off"
                 >
-
                     <TextField
-                        name={"title"}
-                        value={formik.values.title}
-                    />
-                    <TextField
-                        name={"time"}
-                        value={formik.values.time}
-                    />
-                    <TextField
-                        name={"description"}
-                        value={formik.values.description}
-                    />
-                    <TextField
+                        id="standard-basic"
+                        label="Điểm bài thi"
+                        variant="standard"
                         name={"passScore"}
-                        value={formik.values.passScore}
+                        value={formik.values.passScore} // Bỏ comment out dòng này
+                        onChange={(e) => formik.setFieldValue('passScore', e.target.value)} // Thêm dòng này
                     />
                 </Box>
-                <Button type="submit"
-                        className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
-                    Tạo bài thi
-                </Button>
-
+                <Box
+                    component="form"
+                    sx={{
+                        '& > :not(style)': {m: 1, width: '25ch'},
+                    }}
+                    noValidate
+                    autoComplete="off"
+                >
+                    <TextField
+                        name={"description"}
+                        id="standard-basic" label="Mô tả" variant="standard"
+                        value={formik.values.description}
+                        onChange={(e) => formik.setFieldValue('description', e.target.value)} // Thêm dòng này
+                    />
+                </Box>
                 <Box
                     component="main"
-                    sx={{flexGrow: 1, bgcolor: 'background.default', p: 3}}
-                >
+                    sx={{flexGrow: 1, bgcolor: 'background.default', p: 3}}>
+
                     <Toolbar/>
                     {selectedQuestionContent.map((question, index) => (
                         <Typography key={index} paragraph>
@@ -128,6 +219,10 @@ export default function CreateNewQuiz() {
                         </Typography>
                     ))}
                 </Box>
+                <Button type="submit"
+                        className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
+                    Tạo bài thi
+                </Button>
             </form>
             <Drawer
                 sx={{
@@ -139,21 +234,55 @@ export default function CreateNewQuiz() {
                     },
                 }}
                 variant="permanent"
-                anchor="right"
-            >
+                anchor="right">
                 <Toolbar/>
                 <Divider/>
-
                 <List>
+                    <Box className={"flex flex-col justify-center"}>
+
+                        <FormControl sx={{m: 1, minWidth: 180}}>
+                            <InputLabel id="demo-controlled-open-select-label">Tìm câu hỏi theo</InputLabel>
+                            <Select
+                                labelId="demo-controlled-open-select-label"
+                                id="demo-controlled-open-select"
+                                open={open}
+                                onClose={handleClose}
+                                onOpen={handleOpen}
+                                value={selectedField}
+                                autoWidth
+                                label="Tìm câu hỏi theo"
+                                onChange={handleChange}
+                            >
+                                <MenuItem value={1}>Tên</MenuItem>
+                                <MenuItem value={2}>Thể loại</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <Box className={"flex"}>
+                            <Search>
+                                <SearchIconWrapper>
+                                    <SearchIcon/>
+                                </SearchIconWrapper>
+                                <StyledInputBase
+                                    placeholder="Nội dung tìm kiếm…"
+                                    inputProps={{'aria-label': 'search'}}
+                                    onChange={(event) => (searchTermRef.current = event.target.value)}
+
+                                />
+                            </Search>
+                            <Button onClick={handleSearch}>Tìm kiếm</Button>
+                        </Box>
+
+                    </Box>
                     {questions.map((question) => (
                         <ListItem key={question.id}>
                             <ListItemText>
-                                <QuestionDetail question={question} handleAddQuestion={handleAddQuestion}/>
+                                <QuestionDetail question={question}/>
                                 {/*<span dangerouslySetInnerHTML={{__html: question.content}} />*/}
                             </ListItemText>
-                            <Button onClick={() => handleAddQuestion(question)}>thêm</Button>
+                            <Button onClick={() => handleAddQuestion(question)}
+                                    onChange={(e) => formik.setFieldValue('questions', e.target.value)} // Thêm dòng này
+                            >thêm</Button>
                         </ListItem>
-
                     ))}
                 </List>
             </Drawer>

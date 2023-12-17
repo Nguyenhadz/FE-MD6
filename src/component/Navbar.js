@@ -34,9 +34,7 @@ function ResponsiveAppBar() {
     const searchTermRef = React.useState('');
     const {pathname} = useLocation();
     const showSelect = pathname;
-    console.log(showSelect)
     useEffect(() => {
-        console.log(selectedField)
     }, [selectedField]);
     const user = useSelector(state => {
         return state.users.currentUser;
@@ -104,11 +102,9 @@ function ResponsiveAppBar() {
     const handleSearch = () => {
         if (selectedField === 3) {
             dispatch(findTeacherByName(searchTermRef.current))
-            console.log(searchTermRef.current)
             navigate('/home/showListTeacher')
         } else if (selectedField === 4) {
             dispatch(findTeacherByMail(searchTermRef.current))
-            console.log(searchTermRef.current)
             navigate('/home/showListTeacher')
         } else if (selectedField === 1) {
             dispatch(findStudentByName(searchTermRef.current))
