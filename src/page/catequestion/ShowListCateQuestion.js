@@ -22,7 +22,7 @@ export default function ShowListCateQuestion() {
     function EditToolbar(props) {
         return (
             <GridToolbarContainer>
-                <Link to={"/home/createCateQuestion"}>
+                <Link to={"/login/createCateQuestion"}>
                     <Button color="primary" startIcon={<AddIcon/>}>
                         Add record
                     </Button>

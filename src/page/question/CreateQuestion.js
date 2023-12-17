@@ -11,21 +11,23 @@ import CreateQuestionMultilAnswer from "./CreateQuestionMultilAnswer";
 
 export default function CreateQuestion() {
     return (
-        <Tabs defaultValue={0} orientation="vertical"  sx={{width: "90%", height: "full"}}>
+        <Tabs defaultValue={0} orientation="vertical"  sx={{width: "100%", height: "full"}}>
             <TabsList>
                 <Tab>One</Tab>
                 <Tab>Two</Tab>
                 <Tab>Three</Tab>
             </TabsList>
-            <TabPanel value={0}  sx={{width: "screen", height: "full"}}>
-                <CreateQuestionOneAnswer
-                    sx={{width: "full", height: "full"}}
-                />
+            <TabPanel value={0}
+                      sx={{width: "screen", height: "full"}}>
+                <CreateQuestionOneAnswer/>
             </TabPanel>
-            <TabPanel value={1}>
+            <TabPanel value={1}
+                      sx={{width: "screen", height: "full"}}>
+
                 <CreateQuestionTrueFalse/>
             </TabPanel>
-            <TabPanel value={2}>
+            <TabPanel value={2}
+                      sx={{width: "screen", height: "full"}}>
                 <CreateQuestionMultilAnswer/>
             </TabPanel>
         </Tabs>
@@ -98,7 +100,7 @@ const Tab = styled(BaseTab)`
 `;
 
 const TabPanel = styled(BaseTabPanel)`
-    width: 100%;
+    width: 95%;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 0.875rem;
 `;

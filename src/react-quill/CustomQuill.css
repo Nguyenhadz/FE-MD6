@@ -12,6 +12,7 @@
 
 .ql-editor .ql-blank {
 border: none;
+    height: 230px;
 }
 .ql-container .ql-snow {
     border: none;
@@ -21,7 +22,6 @@ border: none;
 }
 
 .ql-toolbar.ql-snow {
-    display: none;
     border: none;
     box-sizing: border-box;
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
@@ -29,18 +29,13 @@ border: none;
     height: 100%;
 }
 
+.ql-toolbar.ql-snow {
+    display: var(--ql-toolbar-display);
+}
+
 .ql-editor {
-    box-sizing: border-box;
     line-height: 1.42;
-    height: 151px;
-    outline: none;
-    overflow-y: auto;
-    padding: 12px 15px;
-    tab-size: 4;
-    -moz-tab-size: 4;
-    text-align: left;
-    white-space: pre-wrap;
-    word-wrap: break-word;
+    height: 150px;
     border: none;
 }
 

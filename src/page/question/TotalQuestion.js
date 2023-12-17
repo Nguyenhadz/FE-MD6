@@ -6,15 +6,8 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {useDispatch, useSelector} from "react-redux";
-import {
-    deleteAnswerIsEmpty,
-    deleteAnswersByQuestionId,
-    findAllAnswer,
-    findAnswersByQuestionId
-} from "../../redux/service/AnswerService";
-import {deleteQuestions, findAll, findByContent, findById} from "../../redux/service/QuestionService";
-import {Button} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
+import {deleteAnswerIsEmpty, findAllAnswer} from "../../redux/service/AnswerService";
+import {findAll} from "../../redux/service/QuestionService";
 import {Pagination, Stack} from "@mui/material";
 import Box from "@mui/material/Box";
 
@@ -22,35 +15,23 @@ import Box from "@mui/material/Box";
 export default function TotalQuestion() {
     useEffect(() => {
         dispatch(findAll())
-        dispatch(findAllAnswer())
-        dispatch(deleteAnswerIsEmpty())
     }, [])
     const parser = new DOMParser();
-    const navigate = useNavigate();
     const dispatch = useDispatch()
     const [currentPage, setCurrentPage] = useState(1);
     const questionsPerPage = 5;
     const [searchTerm, setSearchTerm] = useState('');
-    const user = useSelector((store) => {
-        return store.users.currentUser
-    })
     const questions = useSelector((store) => {
         return store.questionStore.questions
     });
     const answers = useSelector((store) => {
         return store.answersStore.answers
     })
+    console.log(questions)
+
     const currentUserQuestions = questions
         ? Object.values(questions)
         : [];
-
-    const handleSearch = () => {
-        if (searchTerm.trim() === '') {
-            dispatch(findAll()); // Hiển thị lại danh sách câu hỏi ban đầu khi ô tìm kiếm trống
-        } else {
-            dispatch(findByContent(searchTerm));
-        }
-    };
 
 
     const filteredQuestions = Array.from(searchTerm
@@ -95,17 +76,7 @@ export default function TotalQuestion() {
         }}>
             <div className={"w-11/12 mt-0 justify-content-lg-end shadow-md from-blue-800"}
                  style={{marginTop: "0 !important"}}>
-                <form className="form-inline my-5 my-lg-0 ">
-                    <input className="form-control mr-sm-2 my-2" type="search" placeholder="Search" aria-label="Search"
-                           onChange={(e) => setSearchTerm(e.target.value)}/>
-                    <Button className="btn btn-info bg-indigo-500 my-2 my-sm-0 " type="submit" onClick={handleSearch}>
-                        Tìm kiếm
-                    </Button>
-                </form>
                 {currentQuestions.map((question, index) => {
-                    if (question.user?.id !== user?.id) {
-                        return null; // Nếu user.id không khớp, bỏ qua câu hỏi này
-                    }
                     let letterIndex = 0; // Reset index for each question
                     const questionNumber = getQuestionNumber(index);
 
@@ -127,8 +98,7 @@ export default function TotalQuestion() {
                                 </div>
                             </AccordionSummary>
                             <AccordionDetails className={"bg-neutral-200"}>
-                                {answers
-                                    .filter((answer, index) => answer.question?.id === question?.id)
+                                {question.answers
                                     .map((answer, index) => {
                                         const currentLetter = String.fromCharCode(65 + (letterIndex % 26));
                                         letterIndex++;
@@ -145,8 +115,6 @@ export default function TotalQuestion() {
                                                 {parser.parseFromString(answer?.content, "text/html").body.firstChild
                                                     ?.textContent}
                                             </Typography>
-
-
                                         );
                                     })}
                                 <div className={"flex justify-center"}>

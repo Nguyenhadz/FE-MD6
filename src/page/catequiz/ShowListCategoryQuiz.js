@@ -14,7 +14,6 @@ export default function ShowListCategoryQuiz() {
         dispatch(showAllCategoryQuiz())
     }, [])
     const categories = useSelector(state => {
-        console.log(state)
         return state.cateQuiz.cateQuizzes
     })
 
@@ -46,7 +45,7 @@ export default function ShowListCategoryQuiz() {
             align: 'center',
             renderCell: (params) => (
                 <div>
-                    {/*<Link to={`/home/updateCateQuiz/${params.row.hiddenColumn}`}>*/}
+                    {/*<Link to={`/login/updateCateQuiz/${params.row.hiddenColumn}`}>*/}
                     <button onClick={() => {
                         dispatch(findCateQuizById(params.row.hiddenColumn)).then((res) => {
                             navigate(`/home/updateCateQuiz/${params.row.hiddenColumn}`)
@@ -118,7 +117,7 @@ export default function ShowListCategoryQuiz() {
                 <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-2 ml-96 flex justify-center"}>
                     Danh sách danh mục bài thi
                 </div>
-                <Link to={"/home/createCateQuiz"}>
+                <Link to={"/login/createCateQuiz"}>
                     <button className={"w-44 h-10 rounded-lg ml-56 bg-orange-400 hover:bg-red-500 text-white"}>
                         Thêm mới danh mục
                     </button>

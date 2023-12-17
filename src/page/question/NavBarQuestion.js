@@ -15,7 +15,7 @@ export default function NavBarQuestion() {
                 <img className={"w-28 h-10 ml-3"} src={'https://cf.quizizz.com/img/qfw/Logo.png'} alt={'...'}/>
             </div>
 
-            <Link to={"/home/layoutManagerQuestion/listQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
+            <Link to={"/login/layoutManagerQuestion/listQuestion"} style={{color: 'inherit', textDecoration: 'none'}}>
                 <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
                     <img className={"ml-3 w-3 h-3 mr-1"}
                          src={'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2Fchecklist_5063946.png?alt=media&token=c9a73284-de36-4317-9c67-5f18a063d5f1'}
@@ -26,7 +26,7 @@ export default function NavBarQuestion() {
                 </div>
             </Link>
 
-            <Link to={"/home/LayoutManagerQuestion/CreateQuestionOneAnswer"} style={{color: 'inherit', textDecoration: 'none'}}>
+            <Link to={"/login/LayoutManagerQuestion/CreateQuestionOneAnswer"} style={{color: 'inherit', textDecoration: 'none'}}>
                 <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
                 <img className={"ml-3 w-3 h-3 mr-1"}
                          src={'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2Fpencil_800844.png?alt=media&token=b246d5ec-c628-4d3a-ab86-0e76fb45e8c1'}
@@ -35,7 +35,7 @@ export default function NavBarQuestion() {
                     <p className={"ml-2 justify-center"}>Tạo câu hỏi mới</p>
                 </div>
             </Link>
-            <Link to={"/home/LayoutManagerQuestion/CreateQuestionOneAnswer"} style={{color: 'inherit', textDecoration: 'none'}}>
+            <Link to={"/login/LayoutManagerQuestion/CreateQuestionOneAnswer"} style={{color: 'inherit', textDecoration: 'none'}}>
                 <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
                     <img className={"ml-3 w-3 h-3 mr-1"}
                          src={'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2Fchecklist_5063946.png?alt=media&token=c9a73284-de36-4317-9c67-5f18a063d5f1'}
@@ -44,7 +44,7 @@ export default function NavBarQuestion() {
                     <p className={"ml-2 justify-center"}>Danh sách bài thi</p>
                 </div>
             </Link>
-            <Link to={"/home/LayoutManagerQuestion/CreateQuestionOneAnswer"} style={{color: 'inherit', textDecoration: 'none'}}>
+            <Link to={"/login/LayoutManagerQuestion/CreateQuestionOneAnswer"} style={{color: 'inherit', textDecoration: 'none'}}>
                 <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
                     <img className={"ml-3 w-3 h-3 mr-1"}
                          src={'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2Fchecklist_5063946.png?alt=media&token=c9a73284-de36-4317-9c67-5f18a063d5f1'}
@@ -53,7 +53,7 @@ export default function NavBarQuestion() {
                     <p className={"ml-2 justify-center"}>Danh sách danh mục</p>
                 </div>
             </Link>
-            <Link to={"/home/LayoutManagerQuestion/CreateQuestionOneAnswer"} style={{color: 'inherit', textDecoration: 'none'}}>
+            <Link to={"/login/LayoutManagerQuestion/CreateQuestionOneAnswer"} style={{color: 'inherit', textDecoration: 'none'}}>
                 <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
                     <img className={"ml-3 w-3 h-3 mr-1"}
                          src={'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2Fchecklist_5063946.png?alt=media&token=c9a73284-de36-4317-9c67-5f18a063d5f1'}
