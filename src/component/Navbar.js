@@ -46,7 +46,7 @@ function ResponsiveAppBar() {
         {name: 'Profile', href: '/home/findUserById/' + user.id},
         {name: 'Account', href: '/home/changeUserPasswordById/' + user.id},
         {name: 'Dashboard', href: '/home/layoutManagerQuestion/listQuestion'},
-        {name: 'Logout', href: '/logout'},
+        {name: 'Logout'},
     ];
 
     const handleChange = (event) => {

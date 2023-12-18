@@ -81,7 +81,7 @@ export default function ShowListTeacher() {
     return (
         <div className="col-span-8 w-full h-full items-center"
              style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
-            <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-5 mb-5 flex justify-center"}>
+            <div className={"text-5xl font-extrabold font-sans text-orange-500 mb-5 flex justify-center"}>
                 Danh sách giáo viên
             </div>
 
