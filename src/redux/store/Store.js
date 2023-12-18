@@ -23,10 +23,10 @@ export const store = configureStore({
         cateQuestions: cateQuestionReducer,
         typeQuestionStore: typeQuestionSlide,
         levelQuestionStore: levelQuestionSlide,
-        quizStore: questionSlide,
-        levelQuizStore: levelQuizSlice,
         quizzes: quizSlice,
-        results: resultSlice
+        resultStore: resultSlice,
+        quizStore: questionSlide,
+        levelQuizStore: levelQuizSlice
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(middleware),
