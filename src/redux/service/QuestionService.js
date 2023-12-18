@@ -26,9 +26,7 @@ export const findById = createAsyncThunk(
 export const createQuestion = createAsyncThunk(
     'questions/createQuestion',
     async (question) => {
-        console.log(question)
         const res = await customAxios.post('questions', question, axiosConfig);
-        console.log(res.data)
         return res.data
     }
 )
@@ -49,7 +47,7 @@ export const findQuestionsByCategory = createAsyncThunk(
 export const editQuestions = createAsyncThunk(
     'questions/editQuestions',
     async (data) => {
-        const res = await customAxios.put('questions/' + data.id, data, axiosConfig);
+        const res = await customAxios.put('questions/' + data.question.id, data, axiosConfig);
         return res.data
     }
 )

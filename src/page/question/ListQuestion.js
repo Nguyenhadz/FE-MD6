@@ -6,8 +6,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {useDispatch, useSelector} from "react-redux";
-import {deleteAnswersByQuestionId, findAnswersByQuestionId} from "../../redux/service/AnswerService";
-import {deleteQuestions, findAll, findById} from "../../redux/service/QuestionService";
+import {deleteQuestions, findAll} from "../../redux/service/QuestionService";
 import {Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import {Pagination, Stack} from "@mui/material";
@@ -31,7 +30,6 @@ export default function ListQuestion() {
     const questions = useSelector((store) => {
         return store.questionStore.questions
     });
-    console.log(questions)
 
     const currentUserQuestions = questions
         ? Object.values(questions).filter(
@@ -130,19 +128,18 @@ export default function ListQuestion() {
                                         );
                                     })}
                                 <div className={"flex justify-center"}>
-                                    <Typography className={"mr-0"}>
+                                    <Typography className={"mr-0 h-1"}>
                                         {question &&
-                                            <Button className={"btn btn-outline-warning bg-amber-100 "}>
+                                            <Button className={"btn btn-outline-warning bg-amber-100 h-10"}>
                                                 <MyQuestionDetail question={question}/>
                                             </Button>
                                         }
                                     </Typography>
                                     <Typography className={"mr-0"}>
                                         {question &&
-                                            <Button className={"btn btn-outline-warning bg-amber-100 "}
-                                                    onClick={async () => {
-                                                        await dispatch(deleteAnswersByQuestionId(question.id))
-                                                        await dispatch(deleteQuestions(question.id))
+                                            <Button className={"btn btn-outline-warning bg-amber-100 h-10"}
+                                                    onClick={() => {
+                                                        dispatch(deleteQuestions(question.id))
                                                     }}>Xóa
                                             </Button>}
                                     </Typography>

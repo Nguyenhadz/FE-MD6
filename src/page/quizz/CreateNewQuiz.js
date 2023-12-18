@@ -54,7 +54,6 @@ export default function CreateNewQuiz() {
             setFilteredQuestions(filtered);
 
         }
-        console.log(filteredQuestions)
     }, [selectedField]);
     const handleAddQuestion = (question) => {
         setSelectedQuestionContent((prevContent) => [...prevContent, question]);

@@ -48,6 +48,9 @@ const questionSlice = createSlice({
             toast.success("Xóa câu hỏi thành công!", {})
             state.questions = action.payload
         })
+        builder.addCase(deleteQuestions.rejected, (state, action) => {
+            toast.error("Không thể xóa câu hỏi này!", {})
+        })
         builder.addCase(findAllQuestionByUser.fulfilled, (state, action) => {
             state.questions = action.payload
         })
