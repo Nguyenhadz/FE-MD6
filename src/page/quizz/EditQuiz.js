@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,7 +15,7 @@ import QuestionDetail from "./QuestionDetail";
 import Button from "@mui/material/Button";
 import {useFormik} from "formik";
 import {alpha, FormControl, InputBase, InputLabel, Select, TextField} from "@mui/material";
-import {createQuiz} from "../../redux/service/QuizService";
+import {createQuiz, findQuizById} from "../../redux/service/QuizService";
 import SearchIcon from "@mui/icons-material/Search";
 import {styled} from "@mui/system";
 import MenuItem from "@mui/material/MenuItem";
@@ -25,10 +25,24 @@ import Paper from "@mui/material/Paper";
 import {toast} from "react-toastify";
 import {showAllCategoryQuiz} from "../../redux/service/CateQuizService";
 import {findAllLevelQuiz} from "../../redux/service/LevelQuizService";
+import DetailQuiz from "./DetailQuiz";
+import {findResultByQuiz} from "../../redux/service/ResultService";
+import {store} from "../../redux/store/Store";
 
 const drawerWidth = 360;
 
-export default function EditQuiz({quiz}) {
+const EditQuiz = ({quizId}) => {
+    console.log("321", quizId)
+    const [quiz, setQuiz] = useState(null);
+    console.log("123", quiz)
+    useEffect(() => {
+        const fetchData = async () => {
+            await dispatch(findQuizById(1));
+            setQuiz(store.getState().quizzes.quiz);
+        };
+        fetchData();
+    }, [])
+
     const questions = useSelector((store) => {
         return store.questionStore.questions
     })
@@ -54,8 +68,8 @@ export default function EditQuiz({quiz}) {
 
     useEffect(() => {
         dispatch(showAllCateQuestion());
-        dispatch(showAllCategoryQuiz())
-        dispatch(findAllLevelQuiz())
+        dispatch(showAllCategoryQuiz());
+        dispatch(findAllLevelQuiz());
     }, []);
     console.log(levelQuizzes)
     useEffect(() => {
@@ -94,22 +108,22 @@ export default function EditQuiz({quiz}) {
 
     const formik = useFormik({
         initialValues: {
-            title: quiz.title,
-            time: quiz.time,
-            timeCreate: quiz.time,
-            description: quiz.description,
-            passScore: quiz.passScore,
-            status: quiz.status,
+            title: quiz?.title,
+            time: quiz?.time,
+            timeCreate: quiz?.time,
+            description: quiz?.description,
+            passScore: quiz?.passScore,
+            status: quiz?.status,
             categoryQuiz: {
-                id: quiz.categoryQuiz.id
+                id: quiz?.categoryQuiz.id
             },
             levelQuiz: {
-                id: quiz.levelQuiz.id
+                id: quiz?.levelQuiz.id
             },
             user: {
-                id: quiz.user.id
+                id: quiz?.user.id
             },
-            questions: quiz.questions,
+            questions: quiz?.questions,
         },
         onSubmit: async (values) => {
 
@@ -489,3 +503,4 @@ export default function EditQuiz({quiz}) {
         </Box>
     );
 }
+export default EditQuiz;
