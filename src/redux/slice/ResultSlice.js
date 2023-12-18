@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {createResult, findAllResult, findResultById} from "../service/ResultService";
+import {findResultByQuiz} from "../service/ResultService";
 
 
 const initialState = {
@@ -19,6 +20,9 @@ const ResultSlice = createSlice({
         })
         builder.addCase(findResultById.fulfilled, (state, action) => {
             state.currentResult = action.payload
+        })
+        builder.addCase(findResultByQuiz.fulfilled, (state, action) => {
+            state.results = action.payload
         })
     }
 })

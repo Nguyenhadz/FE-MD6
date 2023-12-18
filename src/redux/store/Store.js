@@ -23,8 +23,8 @@ export const store = configureStore({
         cateQuestions: cateQuestionReducer,
         typeQuestionStore: typeQuestionSlide,
         levelQuestionStore: levelQuestionSlide,
-        quizStore: quizSlice,
-        resultStore: resultSlice
+        quizzes: quizSlice,
+        resultStore: resultSlice,
         quizStore: questionSlide,
         levelQuizStore: levelQuizSlice
     },

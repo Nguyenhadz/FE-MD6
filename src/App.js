@@ -33,6 +33,7 @@ import Login from "./page/login/Login";
 import CreateNewQuiz from "./page/quizz/CreateNewQuiz";
 import DoingQuiz from "./page/quizz/DoingQuiz";
 import ResultAfterTest from "./page/result/ResultAfterTest";
+import ShowListQuizByUser from "./page/quizz/ShowListQuizByUser";
 
 
 function App() {
