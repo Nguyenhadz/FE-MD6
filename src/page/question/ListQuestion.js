@@ -12,6 +12,7 @@ import {Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import {Pagination, Stack} from "@mui/material";
 import Box from "@mui/material/Box";
+import MyQuestionDetail from "./MyQuestionDetail";
 
 
 export default function ListQuestion() {
@@ -131,13 +132,8 @@ export default function ListQuestion() {
                                 <div className={"flex justify-center"}>
                                     <Typography className={"mr-0"}>
                                         {question &&
-                                            <Button className={"btn btn-outline-warning bg-amber-100 "}
-                                                    onClick={async () => {
-                                                        await dispatch(findById({id: question.id}))
-                                                        await dispatch(findAnswersByQuestionId({id: question.id}))
-                                                        navigate("/home/LayoutManagerQuestion/editQuestion/" + question.id)
-                                                    }}>
-                                                Sửa
+                                            <Button className={"btn btn-outline-warning bg-amber-100 "}>
+                                                <MyQuestionDetail question={question}/>
                                             </Button>
                                         }
                                     </Typography>

@@ -37,16 +37,25 @@ export default function CreateNewQuiz() {
     const [open, setOpen] = React.useState(false);
     const searchTermRef = React.useRef('');
     const [selectedField, setSelectedField] = React.useState(1);
+    const [selectedQuestionContent, setSelectedQuestionContent] = React.useState([]);
     const dispatch = useDispatch();
+    const [filteredQuestions, setFilteredQuestions] = React.useState([]);
+
     useEffect(() => {
-        dispatch(findAll());
         dispatch(showAllCateQuestion());
-        dispatch(findQuestionsByCategory({id: selectedField}))
     }, []);
     useEffect(() => {
-        dispatch(findQuestionsByCategory({id: selectedField}))
+        if (selectedField === 0) {
+            setFilteredQuestions(questions); // Nếu selectedField là 0, hiển thị tất cả câu hỏi
+        } else {
+            dispatch(findQuestionsByCategory({id: selectedField}))
+            console.log(questions)
+            const filtered = questions.filter(question => question.categoryQuestion.id === selectedField); // Lọc câu hỏi theo selectedField
+            setFilteredQuestions(filtered);
+
+        }
+        console.log(filteredQuestions)
     }, [selectedField]);
-    const [selectedQuestionContent, setSelectedQuestionContent] = React.useState([]);
     const handleAddQuestion = (question) => {
         setSelectedQuestionContent((prevContent) => [...prevContent, question]);
     };
@@ -121,10 +130,10 @@ export default function CreateNewQuiz() {
             },
         },
     }));
-    const updatedQuestions = useSelector((store) => store.questionStore.questions);
 
-    const handleSearch = () => {
-        dispatch(findByContent(searchTermRef.current))
+    const handleSearch = async () => {
+        await dispatch(findByContent(searchTermRef.current, filteredQuestions));
+
     };
     const handleChange = (event) => {
         setSelectedField(event.target.value);
@@ -164,7 +173,7 @@ export default function CreateNewQuiz() {
                         label="Tên bài thi"
                         variant="standard"
                         name={"title"}
-                        value={formik.values.title} // Bỏ comment out dòng này
+                        value={formik.values.title}
                         onChange={(e) => formik.setFieldValue('title', e.target.value)} // Thêm dòng này
                     />
                     <TextField
@@ -186,7 +195,7 @@ export default function CreateNewQuiz() {
                         label="Điểm bài thi"
                         variant="standard"
                         name={"passScore"}
-                        value={formik.values.passScore} // Bỏ comment out dòng này
+                        value={formik.values.passScore}
                         onChange={(e) => formik.setFieldValue('passScore', e.target.value)} // Thêm dòng này
                     />
                 </Box>
@@ -202,7 +211,7 @@ export default function CreateNewQuiz() {
                         name={"description"}
                         id="standard-basic" label="Mô tả" variant="standard"
                         value={formik.values.description}
-                        onChange={(e) => formik.setFieldValue('description', e.target.value)} // Thêm dòng này
+                        onChange={(e) => formik.setFieldValue('description', e.target.value)}
                     />
                 </Box>
                 <Box
@@ -257,6 +266,7 @@ export default function CreateNewQuiz() {
                                 label="Tìm câu hỏi theo"
                                 onChange={handleChange}
                             >
+                                <MenuItem key={0} value={0}>Tất cả</MenuItem>
                                 {categoryQuestions.map((category, index) => (
                                     <MenuItem key={index} value={category.id}>{category.name}</MenuItem>
                                 ))}
@@ -281,8 +291,13 @@ export default function CreateNewQuiz() {
                     {questions.map((question) => (
                         <ListItem key={question.id}>
                             <ListItemText>
-                                <QuestionDetail question={question}/>
-                                <span dangerouslySetInnerHTML={{__html: question.content}} />
+                                <QuestionDetail question={question} buttonLabel={
+                                    <Typography className={"flex "}>
+                                        Câu : {question.id}
+                                        <span dangerouslySetInnerHTML={{__html: question.content}}/>
+                                    </Typography>
+                                }/>
+
                             </ListItemText>
                             <Button onClick={() => handleAddQuestion(question)}
                                     onChange={(e) => formik.setFieldValue('questions', e.target.value)}
