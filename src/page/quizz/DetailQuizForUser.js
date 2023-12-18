@@ -13,8 +13,10 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import {findResultByQuiz} from "../../redux/service/ResultService";
 import {toast} from "react-toastify";
 import {store} from "../../redux/store/Store";
+import {useNavigate} from "react-router-dom";
 
 const DetailQuizForUser = ({quizId}) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [results, setResults] = useState(null);
     useEffect(() => {
@@ -59,7 +61,12 @@ const DetailQuizForUser = ({quizId}) => {
                 <div className="flex items-center">
                     <div className="ml-auto">
                         <button type="submit"
-                                className={"h-6 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:hover:bg-blue-50"}>
+                                className={"h-6 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:hover:bg-blue-50"}
+                                onClick={ async () => {
+                                    await dispatch(findQuizById(quiz.id))
+                                    await navigate("/home/doQuiz/" + quiz.id)
+                                }}
+                        >
                             Làm bài thi
                         </button>
                     </div>
