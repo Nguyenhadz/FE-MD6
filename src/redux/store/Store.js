@@ -8,6 +8,8 @@ import answerReducer from "../slice/AnswerSlice";
 import cateQuestionReducer from "../slice/CateQuestionSlice";
 import typeQuestionSlide from "../slice/TypeQuestionSlice";
 import levelQuestionSlide from "../slice/LevelQuestionSlice";
+import quizSlice from "../slice/QuizSlice";
+import resultSlice from "../slice/ResultSlice";
 
 const middleware = [LocalStorageMiddleware, RemoveFromLocalStorageMiddleware];
 
@@ -20,7 +22,9 @@ export const store = configureStore({
         cateQuestions: cateQuestionReducer,
         typeQuestionStore: typeQuestionSlide,
         levelQuestionStore: levelQuestionSlide,
-        quizStore: questionSlide
+        quizStore: questionSlide,
+        quizzes: quizSlice,
+        results: resultSlice
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(middleware),

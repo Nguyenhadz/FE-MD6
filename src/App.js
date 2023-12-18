@@ -31,6 +31,7 @@ import ForgotForm from "./page/login/ForgotForm";
 import Home from "./component/Home";
 import Login from "./page/login/Login";
 import CreateNewQuiz from "./page/quizz/CreateNewQuiz";
+import ShowListQuizByUser from "./page/quizz/ShowListQuizByUser";
 
 
 function App() {
@@ -62,15 +63,17 @@ function App() {
                     <Route path={'/home/showTeacherPending'} element={<ShowListTeacherPending/>}></Route>
                     <Route path={'/home/detailTeacherPending/:id'} element={<DetailTeacherPending/>}></Route>
                     <Route path={'/home/layoutManagerQuestion'} element={<LayoutManagerQuestion/>}>
-                        <Route path={'listQuestion'} element={<ListQuestion/>}></Route>
+                        {/*<Route path={'listQuestion'} element={<ListQuestion/>}></Route>*/}
                         <Route path={'OneAnswer'} element={<CreateQuestionOneAnswer/>}/>
                         <Route path={'TrueFalse'} element={<CreateQuestionTrueFalse/>}/>
                         <Route path={'editQuestion/:id'} element={<EditQuestion/>}></Route>
+                        <Route path={'showListLinhTinh'} element={<ShowListQuizByUser/>}></Route>
                     </Route>
                     <Route path={'/home/showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>
                     <Route path={'/home/updateCateQuiz/:id'} element={<UpdateCateQuiz/>}></Route>
                     <Route path={'/home/showListCateQuestion'} element={<ShowListCateQuestion/>}></Route>
                     <Route path={'/home/updateCateQuestion/:id'} element={<UpdateCateQuestion/>}></Route>
+
                 </Route>
                 {/*:*/}
                 {/*<Route path={'*'} element={<home/>}>*/}
