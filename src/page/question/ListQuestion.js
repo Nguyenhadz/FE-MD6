@@ -107,10 +107,9 @@ export default function ListQuestion() {
                             >
                                 <div className={"flex justify-content-lg-start rounded w-full h-full"}>
                                     <div>
-                                        <Typography className={"font-sans font-bold hover:font-serif"}>
-                                            <Typography>{"Câu " + questionNumber}
-                                                <span dangerouslySetInnerHTML={{__html: question.content}}/>
-                                            </Typography>
+                                        <Typography className={"font-sans font-bold hover:font-serif flex items-center"}>
+                                            <span className={'text-3xl'}>{"Câu " + questionNumber}:</span>
+                                            <span className={'text-3xl ml-2'} dangerouslySetInnerHTML={{__html: question.content}}/>
                                         </Typography>
                                     </div>
                                 </div>
@@ -126,7 +125,10 @@ export default function ListQuestion() {
                                                         style={{
                                                             backgroundColor: answer.status === 1 ? "green" : "inherit"
                                                         }}
-                                                    >{`Đáp án ${index + 1}`}</Item>
+                                                    >
+                                                        {/*<span>{`Đáp án ${index + 1}: `}</span>*/}
+                                                        <h2 className={'text-2xl font-sans'} dangerouslySetInnerHTML={{__html: answer.content}}></h2>
+                                                        </Item>
                                                 </Grid>
                                                 {(index + 1) % 2 === 0 && (
                                                     <Grid item xs={12}>
