@@ -27,8 +27,6 @@ function CustomQuill({field, form, ...props}) {
     return (
         <ReactQuill
             theme="snow"
-            // modules={modules}
-            // formats={formats}
             value={field.value || ""}
             onChange={handleChange}
             {...props}
