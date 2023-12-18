@@ -40,9 +40,9 @@ function ResponsiveAppBar() {
         return state.users.currentUser;
     })
     const settings = [
-        {name: 'Profile', href: '/login/findUserById/' + user.id},
-        {name: 'Account', href: '/login/changeUserPasswordById/' + user.id},
-        {name: 'Dashboard', href: '/login/layoutManagerQuestion/listQuestion'},
+        {name: 'Profile', href: '/home/findUserById/' + user.id},
+        {name: 'Account', href: '/home/changeUserPasswordById/' + user.id},
+        {name: 'Dashboard', href: '/home/layoutManagerQuestion/listQuestion'},
         {name: 'Logout'},
     ];
 

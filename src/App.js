@@ -61,12 +61,8 @@ function App() {
                     <Route path={'/home/changeUserPasswordById/:id'} element={<ChangePassword/>}></Route>
                     <Route path={'/home/showTeacherPending'} element={<ShowListTeacherPending/>}></Route>
                     <Route path={'/home/detailTeacherPending/:id'} element={<DetailTeacherPending/>}></Route>
-                    <Route path={'/home/layoutManagerQuestion'} element={<LayoutManagerQuestion/>}>
-                        <Route path={'listQuestion'} element={<ListQuestion/>}></Route>
-                        <Route path={'OneAnswer'} element={<CreateQuestionOneAnswer/>}/>
-                        <Route path={'TrueFalse'} element={<CreateQuestionTrueFalse/>}/>
-                        <Route path={'editQuestion/:id'} element={<EditQuestion/>}></Route>
-                    </Route>
+                    <Route path={'/home/layoutManagerQuestion'} element={<LayoutManagerQuestion/>}></Route>
+                    <Route path={'/home/editQuestion'} element={<EditQuestion/>}></Route>
                     <Route path={'/home/showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>
                     <Route path={'/home/updateCateQuiz/:id'} element={<UpdateCateQuiz/>}></Route>
                     <Route path={'/home/showListCateQuestion'} element={<ShowListCateQuestion/>}></Route>
