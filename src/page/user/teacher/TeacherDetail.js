@@ -1,12 +1,11 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteUser, getStudentById} from "../../redux/service/UserService";
+import {deleteUser, getStudentById} from "../../../redux/service/UserService";
 import {useEffect} from "react";
-import ConfirmDeleteComponent from "../../component/ConfirmDeleteComponent";
+import ConfirmDeleteComponent from "../../../component/ConfirmDeleteComponent";
 
-export default function UserDetail() {
+export default function TeacherDetail() {
     const {id} = useParams();
-    console.log(id)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     useEffect(() => {
@@ -15,11 +14,9 @@ export default function UserDetail() {
     const user = useSelector(state => {
         return state.users.user;
     })
-
-    console.log()
     const handleDelete = () => {
         dispatch(deleteUser(id))
-        navigate('/home/showListStudent')
+        navigate('/home/showListTeacher')
     };
     const timeCreate = new Date(user.timeCreate);
     const dayCreate = timeCreate.getDate();
@@ -72,7 +69,7 @@ export default function UserDetail() {
                                     </div>
                                     <div className="col-sm-6">
                                         <div onClick={() => {
-                                            navigate('/home/showListStudent')
+                                            navigate('/home/showListTeacher')
                                         }}>
                                             <button type="button"
                                                     className={"w-20 h-10 bg-amber-600 rounded text-white"}>Trở Lại

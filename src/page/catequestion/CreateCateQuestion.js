@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
-import {createCateQuestion} from "../../service/CateQuestionService";
-import CustomQuills from "../catequiz/CustomQuills";
+import {createCateQuestion} from "../../redux/service/CateQuestionService";
+import CustomQuills from "../catequiz/Editor";
 import {Link} from "react-router-dom";
 import React from "react";
 
@@ -29,7 +29,7 @@ export default function CreateCateQuestion() {
         <>
             <div className={"bg-cover bg-center h-screen flex"}
                  style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
-                <Link to={"/home/showListCateQuestion"}>
+                <Link to={"/login/showListCateQuestion"}>
                     <button className={"w-20 h-10 rounded-lg ml-6 mt-5 bg-orange-400 hover:bg-red-500 text-white"}>Trở
                         về
                     </button>

@@ -1,12 +1,11 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteUser, getStudentById} from "../../redux/service/UserService";
+import {approveTeacherPending, getStudentById} from "../../../redux/service/UserService";
 import {useEffect} from "react";
-import ConfirmDeleteComponent from "../../component/ConfirmDeleteComponent";
+import {toast} from "react-toastify";
 
-export default function UserDetail() {
+export default function DetailTeacherPending() {
     const {id} = useParams();
-    console.log(id)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     useEffect(() => {
@@ -15,15 +14,16 @@ export default function UserDetail() {
     const user = useSelector(state => {
         return state.users.user;
     })
-
-    console.log()
-    const handleDelete = () => {
-        dispatch(deleteUser(id))
-        navigate('/home/showListStudent')
+    const handleApprove = (idPending) => {
+        dispatch(approveTeacherPending(idPending)).then(() => {
+            toast.success('\n' +
+                'Approve successfully\n', {});
+            navigate('/home/showTeacherPending')
+        });
     };
     const timeCreate = new Date(user.timeCreate);
     const dayCreate = timeCreate.getDate();
-    const monthCreate = timeCreate.getMonth() + 1;
+    const monthCreate = timeCreate.getMonth() + 1; // Tháng trong JavaScript bắt đầu từ 0
     const yearCreate = timeCreate.getFullYear();
     const lastTimeVisit = new Date(user.lastTimeVisit);
     const dayLast = lastTimeVisit.getDate();
@@ -72,19 +72,19 @@ export default function UserDetail() {
                                     </div>
                                     <div className="col-sm-6">
                                         <div onClick={() => {
-                                            navigate('/home/showListStudent')
+                                            navigate('/home/showTeacherPending')
                                         }}>
                                             <button type="button"
                                                     className={"w-20 h-10 bg-amber-600 rounded text-white"}>Trở Lại
                                             </button>
                                         </div>
                                     </div>
-                                    <div className="col-sm-6">
-                                        <ConfirmDeleteComponent
-                                            onDelete={handleDelete}
-                                            id={id}
-                                        />
-                                    </div>
+                                    <button type="button" className={"w-20 h-10 bg-amber-600 rounded text-white"}
+                                            onClick={() =>
+                                                handleApprove(id)
+                                            }>
+                                        Duyệt
+                                    </button>
                                 </div>
                             </div>
                         </div>
