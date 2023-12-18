@@ -28,7 +28,7 @@ import {findAllLevelQuiz} from "../../redux/service/LevelQuizService";
 
 const drawerWidth = 360;
 
-export default function CreateNewQuiz() {
+export default function EditQuiz({quiz}) {
     const questions = useSelector((store) => {
         return store.questionStore.questions
     })
@@ -39,6 +39,7 @@ export default function CreateNewQuiz() {
         return store.cateQuestions.cateQuestions
     })
     const categoryQuizzes = useSelector((store) => {
+        console.log(store.cateQuiz)
         return store.cateQuiz.cateQuizzes
     })
     const levelQuizzes = useSelector((store) => {
@@ -56,9 +57,10 @@ export default function CreateNewQuiz() {
         dispatch(showAllCategoryQuiz())
         dispatch(findAllLevelQuiz())
     }, []);
+    console.log(levelQuizzes)
     useEffect(() => {
         if (selectedField === 0) {
-            setFilteredQuestions(questions);
+            setFilteredQuestions(questions); // Nếu selectedField là 0, hiển thị tất cả câu hỏi
         } else {
             dispatch(findQuestionsByCategory({id: selectedField}))
             const filtered = questions.filter(question => question.categoryQuestion.id === selectedField); // Lọc câu hỏi theo selectedField
@@ -77,6 +79,7 @@ export default function CreateNewQuiz() {
     const handleDeleteQuestion = (questionId) => {
         const index = selectedQuestionContent.findIndex((question) => question.id === questionId);
         if (index !== -1) {
+            // Sử dụng `slice` để tạo mảng mới loại bỏ phần tử ở index
             const newContent = [...selectedQuestionContent.slice(0, index), ...selectedQuestionContent.slice(index + 1)];
             setSelectedQuestionContent(newContent);
         } else {
@@ -91,24 +94,25 @@ export default function CreateNewQuiz() {
 
     const formik = useFormik({
         initialValues: {
-            title: "",
-            time: "",
-            timeCreate: new Date(),
-            description: "",
-            passScore: "",
-            status: 1,
+            title: quiz.title,
+            time: quiz.time,
+            timeCreate: quiz.time,
+            description: quiz.description,
+            passScore: quiz.passScore,
+            status: quiz.status,
             categoryQuiz: {
-                id: 2
+                id: quiz.categoryQuiz.id
             },
             levelQuiz: {
-                id: 1
+                id: quiz.levelQuiz.id
             },
             user: {
-                id: currentUser.id
+                id: quiz.user.id
             },
-            questions: [selectedQuestionContent],
+            questions: quiz.questions,
         },
         onSubmit: async (values) => {
+
             await dispatch(createQuiz(values))
             await formik.resetForm()
         },
@@ -179,6 +183,15 @@ export default function CreateNewQuiz() {
         secondary: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
         accent: "linear-gradient(45deg, #4CAF50 30%, #8BC34A 90%)",
         background: "linear-gradient(45deg, #9E9E9E 30%, #616161 90%)",
+    };
+
+    const theme = {
+        palette: {
+            primary: gradientColors.primary,
+            secondary: gradientColors.secondary,
+            accent: gradientColors.accent,
+            background: gradientColors.background,
+        },
     };
 
     return (

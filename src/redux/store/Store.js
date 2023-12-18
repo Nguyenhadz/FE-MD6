@@ -8,6 +8,7 @@ import answerReducer from "../slice/AnswerSlice";
 import cateQuestionReducer from "../slice/CateQuestionSlice";
 import typeQuestionSlide from "../slice/TypeQuestionSlice";
 import levelQuestionSlide from "../slice/LevelQuestionSlice";
+import levelQuizSlice from "../slice/LevelQuizSlice";
 import quizSlice from "../slice/QuizSlice";
 import resultSlice from "../slice/ResultSlice";
 
@@ -23,6 +24,7 @@ export const store = configureStore({
         typeQuestionStore: typeQuestionSlide,
         levelQuestionStore: levelQuestionSlide,
         quizStore: questionSlide,
+        levelQuizStore: levelQuizSlice,
         quizzes: quizSlice,
         results: resultSlice
     },

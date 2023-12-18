@@ -12,26 +12,12 @@ import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ResponsiveAppBar from "./Navbar";
 import {Outlet} from "react-router";
 import MainListItems from "./ListItems";
 
-
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 const drawerWidth = 240;
 
@@ -93,7 +79,7 @@ export default function Home() {
         <ThemeProvider theme={defaultTheme}>
             <Box sx={{display: 'flex'}}>
                 <CssBaseline/>
-                <AppBar position="absolute" open={open}>
+                <AppBar position="fixed" open={open}>
                     <Toolbar
                         sx={{
                             pr: '24px', // keep right padding when drawer closed
@@ -111,15 +97,15 @@ export default function Home() {
                         >
                             <MenuIcon/>
                         </IconButton>
-                        <ResponsiveAppBar></ResponsiveAppBar>
+                        <ResponsiveAppBar ></ResponsiveAppBar>
                     </Toolbar>
                 </AppBar>
-                <Drawer variant="permanent" open={open}>
-                    <img className={"w-36 h-18 "} src={'https://cf.quizizz.com/img/qfw/Logo.png'} alt={'...'}/>
+                <Drawer   variant="permanent" open={open} position="fixed">
+                    <img className={"w-56 h-16"} src={'https://cf.quizizz.com/img/qfw/Logo.png'} alt={'...'}/>
                     <Toolbar
                         sx={{
                             display: 'flex',
-                            alignItems: 'center',
+                            alignItems: 'center', // add this line
                             justifyContent: 'flex-end',
                             px: [1],
                         }}
@@ -129,11 +115,12 @@ export default function Home() {
                         </IconButton>
                     </Toolbar>
                     <Divider/>
-                    <List component="nav">
-                        <MainListItems sidebarOpen={open} />
+                    <List  component="nav">
+                        <MainListItems sidebarOpen={open}/>
                         <Divider sx={{my: 1}}/>
                     </List>
                 </Drawer>
+
                 <Box
                     component="main"
                     sx={{
@@ -142,20 +129,30 @@ export default function Home() {
                                 ? theme.palette.grey[100]
                                 : theme.palette.grey[900],
                         flexGrow: 1,
-                        height: '100vh',
+                        minHeight: '100vh',
                         overflow: 'auto',
                     }}
                 >
                     <Toolbar/>
                     <Container maxWidth="xl" sx={{mt: 2, mb: 2}}>
-                        <Grid container spacing={1}>
+                        <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <Paper sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
+                                <Paper
+                                    sx={{
+                                    p: 2,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    minHeight: 'calc(100vh - 144px)'
+                                }}>
                                     <Outlet/>
                                 </Paper>
                             </Grid>
                         </Grid>
-                        <Copyright sx={{pt: 4}}/>
+                        <Box sx={{pt: 4}}>
+                            <Typography variant="body2" color="text.secondary" align="center">
+                                {new Date().getFullYear()} Your Website
+                            </Typography>
+                        </Box>
                     </Container>
                 </Box>
             </Box>
