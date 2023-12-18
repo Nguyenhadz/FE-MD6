@@ -21,7 +21,7 @@ const DetailQuiz = ({quizId}) => {
         const fetchData = async () => {
             await dispatch(findQuizById(quizId));
             await dispatch(findResultByQuiz(quizId));
-            setResults(store.getState().results.results);
+            setResults(store.getState().resultStore.results);
         };
         fetchData();
     }, [])
