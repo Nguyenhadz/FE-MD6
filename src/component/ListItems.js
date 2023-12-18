@@ -120,10 +120,8 @@ const MainListItems = ({sidebarOpen}) => {
             </React.Fragment>)}
         {isStudent && ( // nếu là teacher hoặc student thì hiển thị các ListItemButton sau
             <React.Fragment>
-                <ListItemButton onClick={async () => {
-                    await dispatch(findQuizById(7))
-                    navigate("/home/doQuiz/7")
-                }} component={Link}>
+                <ListItemButton
+                                component={Link} to="/home/showAllQuiz">
                     <ListItemIcon>
                         <PiExam/>
                     </ListItemIcon>
