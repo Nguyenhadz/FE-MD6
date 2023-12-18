@@ -8,11 +8,10 @@ import {useDispatch, useSelector} from "react-redux";
 import Editor from "../catequiz/Editor";
 import {useNavigate} from "react-router-dom";
 import {FormControl, FormControlLabel, Radio, RadioGroup} from "@mui/material";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import CustomQuill from "../../react-quill/CustomQuill";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import {RadioButtonUncheckedRounded} from "@mui/icons-material";
+import {RadioButtonChecked, RadioButtonUncheckedRounded} from "@mui/icons-material";
 import {QuillToolbar} from "../catequiz/QuillToolbar";
 
 export default function EditQuestion({question}) {
@@ -103,22 +102,17 @@ export default function EditQuestion({question}) {
                                     <RadioGroup
                                         aria-labelledby={`demo-radio-buttons-group-label-${index}`}
                                         name={`radio-buttons-group-${index}`}
-                                        value={
-                                            formik.values.answers[index].status === "1"
-                                                ? `answer${index}`
-                                                : "other"
-                                        }
-                                        onChange={(event) => {
-                                            // Sử dụng hàm map để duyệt qua mảng answers
-                                            const updatedAnswers = formik.values.answers.map((answer, i) => {
-                                                return i === index
-                                                    ? {...answer, status: "1"}
-                                                    : {...answer, status: "0"};
-                                            });
+                                        value={formik.values.answers[index].id} // Sử dụng ID thực tế của đáp án
 
+                                        onChange={(event) => {
+                                            const answerId = event.target.value;
+                                            const updatedAnswers = formik.values.answers.map((answer, i) => ({
+                                                ...answer,
+                                                status: answer.id === answerId ? "1" : "0",
+                                            }));
                                             formik.setFieldValue(`answers`, updatedAnswers);
                                         }}
-                                        style={{width: "95%"}}
+                                        style={{width: "100%"}}
                                     >
                                         <FormControl className={"w-full"}>
                                             <div
@@ -149,7 +143,7 @@ export default function EditQuestion({question}) {
                                                                         marginLeft: 1
                                                                     }}
                                                                 />}
-                                                                checkedIcon={<CheckRoundedIcon
+                                                                checkedIcon={<RadioButtonChecked
                                                                     sx={{
                                                                         width: 28,
                                                                         height: 28,
@@ -162,7 +156,6 @@ export default function EditQuestion({question}) {
                                                             />
                                                         }
                                                         label={""}
-
                                                     />
                                                 </div>
                                                 <Box sx={{

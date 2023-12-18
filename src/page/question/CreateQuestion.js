@@ -11,23 +11,23 @@ import CreateQuestionMultilAnswer from "./CreateQuestionMultilAnswer";
 
 export default function CreateQuestion() {
     return (
-        <Tabs defaultValue={0} orientation="vertical"  sx={{width: "100%", height: "full"}}>
+        <Tabs orientation="vertical"  sx={{width: "100%", height: "full"}}>
             <TabsList>
-                <Tab>One</Tab>
-                <Tab>Two</Tab>
-                <Tab>Three</Tab>
+                <Tab>Một đáp án</Tab>
+                <Tab>Chọn đúng sai</Tab>
+                <Tab>Nhiều đáp án</Tab>
             </TabsList>
             <TabPanel value={0}
-                      sx={{width: "screen", height: "full"}}>
+                      sx={{width: "92.42%", height: "full"}}>
                 <CreateQuestionOneAnswer/>
             </TabPanel>
             <TabPanel value={1}
-                      sx={{width: "screen", height: "full"}}>
+                      sx={{width: "100%", height: "full"}}>
 
                 <CreateQuestionTrueFalse/>
             </TabPanel>
             <TabPanel value={2}
-                      sx={{width: "screen", height: "full"}}>
+                      sx={{width: "92.42%", height: "full"}}>
                 <CreateQuestionMultilAnswer/>
             </TabPanel>
         </Tabs>
@@ -68,9 +68,9 @@ const Tab = styled(BaseTab)`
     font-weight: bold;
     background-color: transparent;
     width: 100%;
-    padding: 12px;
+    padding: 4px;
     border: none;
-    border-radius: 7px;
+    border-radius: 4px;
     display: flex;
     justify-content: center;
 
@@ -80,7 +80,7 @@ const Tab = styled(BaseTab)`
 
     &:focus {
         color: #fff;
-        outline: 3px solid ${blue[200]};
+        outline: ${blue[200]};
     }
 
     &.${buttonClasses.focusVisible} {
@@ -100,26 +100,26 @@ const Tab = styled(BaseTab)`
 `;
 
 const TabPanel = styled(BaseTabPanel)`
-    width: 95%;
+    width: 100%;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 0.875rem;
 `;
 
 const Tabs = styled(BaseTabs)`
     display: flex;
-    gap: 16px;
-    width: 200px;
+    gap: 4px;
+    width: 0px;
 `;
 
 const TabsList = styled(BaseTabsList)(
     ({theme}) => `
-  min-width: 80px;
+  min-width: 100px;
   background-color: ${blue[500]};
   border-radius: 12px;
   margin-bottom: 16px;
   display: flex;
-  padding: 6px;
-  gap: 12px;
+  padding: 4px;
+  gap: 8px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
