@@ -20,18 +20,6 @@ import {Outlet} from "react-router";
 import MainListItems from "./ListItems";
 
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 const drawerWidth = 240;
 
@@ -142,20 +130,24 @@ export default function Home() {
                                 ? theme.palette.grey[100]
                                 : theme.palette.grey[900],
                         flexGrow: 1,
-                        height: '100vh',
+                        minHeight: '100vh', // Thêm thuộc tính này
                         overflow: 'auto',
                     }}
                 >
-                    <Toolbar/>
-                    <Container maxWidth="xl" sx={{mt: 2, mb: 2}}>
-                        <Grid container spacing={1}>
+                    <Toolbar />
+                    <Container maxWidth="xl" sx={{ mt: 2, mb: 2 }}>
+                        <Grid container spacing={2}> {/* Thay đổi spacing từ 1 thành 2 */}
                             <Grid item xs={12}>
-                                <Paper sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
-                                    <Outlet/>
+                                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 144px)' }}> {/* Tính toán chiều cao tối thiểu */}
+                                    <Outlet />
                                 </Paper>
                             </Grid>
                         </Grid>
-                        <Copyright sx={{pt: 4}}/>
+                        <Box sx={{ pt: 4 }}>
+                            <Typography variant="body2" color="text.secondary" align="center">
+                                {new Date().getFullYear()} Your Website
+                            </Typography>
+                        </Box>
                     </Container>
                 </Box>
             </Box>
