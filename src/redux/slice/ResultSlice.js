@@ -1,19 +1,27 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {createResult, findAllResult, findResultById} from "../service/ResultService";
 import {findResultByQuiz} from "../service/ResultService";
 
 
 const initialState = {
     results: [],
-    result: {}
+    result: {},
+    currentResult: {}
 }
 const ResultSlice = createSlice({
-    name: 'quiz',
+    name: 'result',
     initialState,
     extraReducers: builder => {
-        builder.addCase(findResultByQuiz.fulfilled, (state, action) => {
+        builder.addCase(createResult.fulfilled, (state, action) => {
+            state.result = action.payload
+        })
+        builder.addCase(findAllResult.fulfilled, (state, action) => {
             state.results = action.payload
         })
-        builder.addCase(findResultByQuiz.rejected, (state, action) => {
+        builder.addCase(findResultById.fulfilled, (state, action) => {
+            state.currentResult = action.payload
+        })
+        builder.addCase(findResultByQuiz.fulfilled, (state, action) => {
             state.results = action.payload
         })
     }

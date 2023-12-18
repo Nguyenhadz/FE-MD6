@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {toast} from "react-toastify";
-import {createQuiz, findQuizById, findQuizByUser} from "../service/QuizService";
+import {createQuiz, findQuizById, updateQuiz} from "../service/QuizService";
+import {findQuizByUser} from "../service/QuizService";
 
 
 const initialState = {
@@ -15,11 +16,16 @@ const QuizSlice = createSlice({
             state.quizzes = action.payload
             toast.success("Tạo quiz thành công", {})
         })
-        builder.addCase(findQuizByUser.fulfilled, (state, action) => {
-            state.quizzes = action.payload
+        builder.addCase(updateQuiz.fulfilled, (state, action) => {
+            state.quiz = action.payload
+            toast.success("Sửa quiz thành công", {})
         })
         builder.addCase(findQuizById.fulfilled, (state, action) => {
             state.quiz = action.payload
+        })
+
+        builder.addCase(findQuizByUser.fulfilled, (state, action) => {
+            state.quizzes = action.payload
         })
     }
 })
