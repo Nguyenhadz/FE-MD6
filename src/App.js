@@ -78,7 +78,6 @@ function App() {
                         <Route path={'/home/result'} element={<ResultAfterTest/>}></Route>
                      </Route>
                  )
-                 }
              </Routes>
         </div>
     );
