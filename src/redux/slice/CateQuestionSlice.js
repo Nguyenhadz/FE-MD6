@@ -5,7 +5,8 @@ import {
     deleteCateQuestion,
     findCateQuestionById,
     showAllCateQuestion,
-    updateCateQuestion
+    updateCateQuestion,
+    findCateQuestionByTeacher,
 } from "../service/CateQuestionService";
 
 const initialState = {
@@ -42,6 +43,9 @@ const CateQuestionSlice = createSlice({
         })
         builder.addCase(updateCateQuestion.rejected, (state, action) => {
             toast.error("Trùng tên danh mục cũ", {})
+        })
+        builder.addCase(findCateQuestionByTeacher.fulfilled, (state, action) =>{
+            state.cateQuestions = action.payload
         })
     }
 })
