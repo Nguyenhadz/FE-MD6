@@ -3,9 +3,9 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "quill/dist/quill.snow.css";
 import "./Editor.css";
-import {formats, modules, QuillToolbar} from "./QuillToolbar";
+import {formats, modules} from "./QuillToolbar";
 
-export const Editor = ({field, form, ...props}) => {
+function Editor({field, form, ...props}) {
     const handleChange = (value) => {
         form.setFieldValue(field.name, value);
     };
@@ -15,15 +15,16 @@ export const Editor = ({field, form, ...props}) => {
             <ReactQuill
                 theme="snow"
                 sx={{border: "none"}}
+                style={{color: "white"}}
                 placeholder={"Write something awesome..."}
                 modules={modules}
                 formats={formats}
                 value={field.value || ""}
                 onChange={handleChange}
                 {...props}
-                />
+            />
         </div>
-);
+    );
 };
 
 export default Editor;

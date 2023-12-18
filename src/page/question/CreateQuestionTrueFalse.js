@@ -85,7 +85,7 @@ export default function CreateQuestionOneAnswer() {
 
     return (
         <>
-            <div className={"w-full h-full"}>
+            <div className={"w-11/12/12 h-full"}>
                 <div className={"custom-quill-container flex"}>
                     <QuillToolbar></QuillToolbar>
                 </div>

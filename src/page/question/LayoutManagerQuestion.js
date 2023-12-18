@@ -75,7 +75,7 @@ export default function FullWidthTabs() {
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                 index={value}
                 onChangeIndex={handleChangeIndex}
-                sx={{width: "fit", height: "full"}}
+                sx={{width: "full", height: "full"}}
             >
 
                 <TabPanel value={value} index={0} dir={theme.direction}
@@ -83,7 +83,7 @@ export default function FullWidthTabs() {
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
-                              width: "fit",
+                              width: "full",
                               height: "full",
                           }}>
                     <ListQuestion
@@ -95,11 +95,11 @@ export default function FullWidthTabs() {
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
-                              width: "fit",
+                              width: "100%",
                               height: "full",
                           }}>
                     <CreateQuestion
-                        sx={{width: "fit", height: "full"}}
+                        sx={{width: "100%", height: "full"}}
                     />
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}

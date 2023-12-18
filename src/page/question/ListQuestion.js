@@ -6,13 +6,16 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {useDispatch, useSelector} from "react-redux";
-import {deleteAnswersByQuestionId, findAnswersByQuestionId} from "../../redux/service/AnswerService";
-import {deleteQuestions, findAll, findById} from "../../redux/service/QuestionService";
+import {deleteQuestions, findAll} from "../../redux/service/QuestionService";
 import {Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import {Pagination, Stack} from "@mui/material";
 import Box from "@mui/material/Box";
 import MyQuestionDetail from "./MyQuestionDetail";
+import Grid from "@mui/material/Grid";
+import {styled} from "@mui/system";
+import Paper from "@mui/material/Paper";
+import Divider from "@mui/material/Divider";
 
 
 export default function ListQuestion() {
@@ -31,7 +34,6 @@ export default function ListQuestion() {
     const questions = useSelector((store) => {
         return store.questionStore.questions
     });
-    console.log(questions)
 
     const currentUserQuestions = questions
         ? Object.values(questions).filter(
@@ -63,7 +65,13 @@ export default function ListQuestion() {
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-
+    const Item = styled(Paper)(({ theme }) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        ...theme.typography.body2,
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    }));
     return (
         <Box sx={{
             height: '100%',
@@ -99,54 +107,61 @@ export default function ListQuestion() {
                             >
                                 <div className={"flex justify-content-lg-start rounded w-full h-full"}>
                                     <div>
-                                        <Typography className={"font-sans font-bold hover:font-serif"}>
-                                            <Typography>{"Câu " + questionNumber}
-                                                <span dangerouslySetInnerHTML={{__html: question.content}}/>
-                                            </Typography>
+                                        <Typography className={"font-sans font-bold hover:font-serif flex items-center"}>
+                                            <span className={'text-3xl'}>{"Câu " + questionNumber}:</span>
+                                            <span className={'text-3xl ml-2'} dangerouslySetInnerHTML={{__html: question.content}}/>
                                         </Typography>
                                     </div>
                                 </div>
                             </AccordionSummary>
                             <AccordionDetails className={"bg-neutral-200"}>
-                                {question.answers
-                                    .map((answer, index) => {
-                                        console.log(answer)
-                                        const currentLetter = String.fromCharCode(65 + (letterIndex % 26));
-                                        letterIndex++;
-                                        return (
-
-                                            <Typography className="font-mono" key={answer?.id}
+                                <Box sx={{ width: "100%"}}>
+                                    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                        {question.answers.map((answer, index) => (
+                                            <React.Fragment key={index} className={"flex justify-around"}>
+                                                <Grid item xs={4} className={"m-auto"}
+                                                >
+                                                    <Item
                                                         style={{
-                                                            color: answer?.status === 1 ? "darkblue" : "black",
-                                                            textAlign: "left",
-                                                            fontWeight: answer?.status === 1 ? "bold" : "normal",
-                                                        }}>
-                                                {currentLetter}.
-                                                {parser.parseFromString(answer?.content, "text/html").body.firstChild
-                                                    ?.textContent}
-                                            </Typography>
-
-
-                                        );
-                                    })}
-                                <div className={"flex justify-center"}>
-                                    <Typography className={"mr-0"}>
-                                        {question &&
-                                            <Button className={"btn btn-outline-warning bg-amber-100 "}>
-                                                <MyQuestionDetail question={question}/>
-                                            </Button>
-                                        }
-                                    </Typography>
-                                    <Typography className={"mr-0"}>
-                                        {question &&
-                                            <Button className={"btn btn-outline-warning bg-amber-100 "}
-                                                    onClick={async () => {
-                                                        await dispatch(deleteAnswersByQuestionId(question.id))
-                                                        await dispatch(deleteQuestions(question.id))
-                                                    }}>Xóa
-                                            </Button>}
-                                    </Typography>
-                                </div>
+                                                            backgroundColor: answer.status === 1 ? "green" : "inherit"
+                                                        }}
+                                                    >
+                                                        {/*<span>{`Đáp án ${index + 1}: `}</span>*/}
+                                                        <h2 className={'text-2xl font-sans'} dangerouslySetInnerHTML={{__html: answer.content}}></h2>
+                                                        </Item>
+                                                </Grid>
+                                                {(index + 1) % 2 === 0 && (
+                                                    <Grid item xs={12}>
+                                                        <Divider />
+                                                    </Grid>
+                                                )}
+                                            </React.Fragment>
+                                        ))}
+                                        <Grid item xs={12}>
+                                            <div className={"flex justify-center"}>
+                                                <Typography className={"mr-0 h-1"}>
+                                                    {question && (
+                                                        <Button className={"btn btn-outline-warning bg-amber-100 h-10"}>
+                                                            <MyQuestionDetail question={question} />
+                                                        </Button>
+                                                    )}
+                                                </Typography>
+                                                <Typography className={"mr-0"}>
+                                                    {question && (
+                                                        <Button
+                                                            className={"btn btn-outline-warning bg-amber-100 h-10"}
+                                                            onClick={() => {
+                                                                dispatch(deleteQuestions(question.id));
+                                                            }}
+                                                        >
+                                                            Xóa
+                                                        </Button>
+                                                    )}
+                                                </Typography>
+                                            </div>
+                                        </Grid>
+                                    </Grid>
+                                </Box>
                             </AccordionDetails>
                         </Accordion>
                     );

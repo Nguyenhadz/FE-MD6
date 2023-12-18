@@ -18,26 +18,16 @@ const style = {
     p: 4,
 };
 
-export default function MyQuestionDetail({question, handleAddQuestion }) {
+export default function MyQuestionDetail({question}) {
     const [open, setOpen] = React.useState(false);
-    const handleOpen = (question) => {
+    const handleOpen = () => {
         setOpen(true);
     };
     const handleClose = () => setOpen(false);
-    const answersContent = question.answers.map((answer, index) => {
-        const answerLetter = String.fromCharCode(65 + index);
-        return (
-            <Typography key={index} id={`modal-modal-description-${index}`} sx={{mt: 2, display: "flex"}}>
-                <span>{answerLetter}. </span>&nbsp;
-                <span dangerouslySetInnerHTML={{__html: answer.content}}/>
-            </Typography>
-        );
-    });
+
     return (
-        <div>
-            <Button onClick={handleOpen}>
-             Câu {question.id}: &nbsp;   <span dangerouslySetInnerHTML={{__html: question.content}} />
-            </Button>
+        <div className={"flex"}>
+            <Button className={"justify-center"} onClick={handleOpen}> Chi tiết </Button>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -46,12 +36,13 @@ export default function MyQuestionDetail({question, handleAddQuestion }) {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        <EditQuestion question={question} handleAddQuestion={handleAddQuestion}/>
+                        <EditQuestion question={question} handleClose={handleClose}/>
                     </Typography>
-                    {/*<Button onClick={() => handleAddQuestion()}>thêm</Button>*/}
                 </Box>
 
             </Modal>
+
+
         </div>
     );
 }

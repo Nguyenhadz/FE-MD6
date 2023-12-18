@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {createQuestion} from "../../redux/service/QuestionService";
+import {editQuestions, findAllQuestionByUser} from "../../redux/service/QuestionService";
 import {showAllCateQuestion} from "../../redux/service/CateQuestionService";
 import {findAllTypeQuestion} from "../../redux/service/TypeQuestionService";
 import {findAllLevelQuestion} from "../../redux/service/LevelQuestionService";
@@ -8,25 +8,22 @@ import {useDispatch, useSelector} from "react-redux";
 import Editor from "../catequiz/Editor";
 import {useNavigate} from "react-router-dom";
 import {FormControl, FormControlLabel, Radio, RadioGroup} from "@mui/material";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import CustomQuill from "../../react-quill/CustomQuill";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import {RadioButtonUncheckedRounded} from "@mui/icons-material";
+import {RadioButtonChecked, RadioButtonUncheckedRounded} from "@mui/icons-material";
 import {QuillToolbar} from "../catequiz/QuillToolbar";
 
-export default function CreateQuestionOneAnswer({question, handleAddQuestion}) {
+export default function EditQuestion({question}) {
     const currentUser = useSelector((store) => {
         return store.users.currentUser
     })
-    console.log(currentUser.id)
     const categoryQuestions = useSelector((store) => {
         return store.cateQuestions.cateQuestions
     })
     const levelQuestions = useSelector((store) => {
         return store.levelQuestionStore.levelQuestions
     })
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
     useEffect(() => {
@@ -35,6 +32,7 @@ export default function CreateQuestionOneAnswer({question, handleAddQuestion}) {
         dispatch(findAllLevelQuestion());
     }, [dispatch]);
     const [backgroundColor, setBackgroundColor] = useState("#461A42");
+
     const handleFocus = () => {
         setBackgroundColor("#281226");
     };
@@ -46,47 +44,30 @@ export default function CreateQuestionOneAnswer({question, handleAddQuestion}) {
     const formik = useFormik({
         initialValues: {
             question: {
-                content: "",
-                status: 1,
+                id: question.id,
+                content: question.content,
+                status: question.status,
                 typeQuestion: {
-                    id: 2,
+                    id: question.typeQuestion.id,
                 },
                 categoryQuestion: {
-                    id: 1
+                    id: question.categoryQuestion.id
                 },
                 levelQuestion: {
-                    id: 1
+                    id: question.levelQuestion.id
                 },
                 user: {
-                    id: currentUser.id
-                },
-                answers: []
-            },
-            answers: [
-                {
-                    content: "",
-                    status: 0
-                },
-                {
-                    content: "",
-                    status: 0
-                },
-                {
-                    content: "",
-                    status: 0
-                },
-                {
-                    content: "",
-                    status: 0
+                    id: question.user.id
                 }
-            ]
+            },
+            answers: question.answers
         },
 
         onSubmit: async (values) => {
-            await dispatch(createQuestion(values))
-        },
+            await dispatch(editQuestions(values))
+            await dispatch(findAllQuestionByUser(currentUser.id))
+        }
     });
-
     const colors = ["rgb(45 112 174)", "rgb(45 157 166)", "rgb(239 169 41)", "rgb(213 84 109)"]; // Mảng chứa các màu
 
 
@@ -108,39 +89,30 @@ export default function CreateQuestionOneAnswer({question, handleAddQuestion}) {
                             <span>Câu hỏi:</span>
                             <Editor field={{
                                 name: 'question.content',
-                                value: formik.values.question.content
+                                value: question.content
                             }}
-                                    form={formik}>
+                                    form={formik}
+                                    onTextChange={(content) => formik.setFieldValue(`question.content`, content)}>
                             </Editor>
                         </div>
 
-                        <div className={"answer-question flex justify-around w-full"}>
+                        <div className={"answers-question flex justify-around w-full"}>
                             {formik.values.answers.map((item, index, colorIndex) => (
                                 <div key={index} className={"w-1/4"}>
                                     <RadioGroup
                                         aria-labelledby={`demo-radio-buttons-group-label-${index}`}
                                         name={`radio-buttons-group-${index}`}
-                                        value={
-                                            formik.values.answers[index].status === "1"
-                                                ? `answer${index}`
-                                                : "other"
-                                        }
+                                        value={formik.values.answers[index].id} // Sử dụng ID thực tế của đáp án
+
                                         onChange={(event) => {
-                                            // Sử dụng hàm map để duyệt qua mảng answers
-                                            formik.setFieldValue(
-                                                `answers`,
-                                                formik.values.answers.map((answer, i) => {
-                                                    // console.log(formik.values.answers[i].status)
-                                                    console.log("i" + i)
-                                                    console.log("index" + index)
-                                                    // Sử dụng toán tử ba ngôi để kiểm tra điều kiện và trả về giá trị tương ứng
-                                                    return i === index
-                                                        ? {...answer, status: "1"} // Nếu i bằng index thì cập nhật status thành 1
-                                                        : {...answer, status: "0"}; // Nếu không thì cập nhật status thành 0
-                                                })
-                                            );
+                                            const answerId = event.target.value;
+                                            const updatedAnswers = formik.values.answers.map((answer, i) => ({
+                                                ...answer,
+                                                status: answer.id === answerId ? "1" : "0",
+                                            }));
+                                            formik.setFieldValue(`answers`, updatedAnswers);
                                         }}
-                                        style={{width: "95%"}}
+                                        style={{width: "100%"}}
                                     >
                                         <FormControl className={"w-full"}>
                                             <div
@@ -150,7 +122,7 @@ export default function CreateQuestionOneAnswer({question, handleAddQuestion}) {
                                                 <div className="custom-quill-container flex flex-column">
 
                                                     <FormControlLabel
-                                                        value={`answer${index}`}
+                                                        value={`answers${index}`}
                                                         onClick={() => {
                                                             formik.setFieldValue(`answers[${index}].status`, 1);
                                                         }}
@@ -167,13 +139,11 @@ export default function CreateQuestionOneAnswer({question, handleAddQuestion}) {
                                                                         width: 28,
                                                                         height: 28,
                                                                         borderRadius: "50%",
-                                                                        // border: "1px solid #ddd",
-                                                                        // bgcolor: "initial",
                                                                         marginTop: 2,
                                                                         marginLeft: 1
                                                                     }}
                                                                 />}
-                                                                checkedIcon={<CheckRoundedIcon
+                                                                checkedIcon={<RadioButtonChecked
                                                                     sx={{
                                                                         width: 28,
                                                                         height: 28,
@@ -186,7 +156,6 @@ export default function CreateQuestionOneAnswer({question, handleAddQuestion}) {
                                                             />
                                                         }
                                                         label={""}
-
                                                     />
                                                 </div>
                                                 <Box sx={{
@@ -221,7 +190,7 @@ export default function CreateQuestionOneAnswer({question, handleAddQuestion}) {
                         <div className={"flex h-10 justify-around items-center mt-2 rounded-[1rem] bg-amber-200"}>
                             <select
                                 name="question.categoryQuestion.id"
-                                value={formik.values.question.categoryQuestion.id}
+                                // value={question.answers.question.categoryQuestion.id}
                                 onChange={formik.handleChange}
                                 className={"rounded-[1rem] h-6 w-1/5 text-center"}
                             >
@@ -233,12 +202,11 @@ export default function CreateQuestionOneAnswer({question, handleAddQuestion}) {
                             </select>
                             <select
                                 name="question.levelQuestion.id"
-                                value={formik.values.question.levelQuestion.id}
+                                value={question.levelQuestion.id}
                                 onChange={formik.handleChange}
                                 className={"rounded-[1rem] h-6 w-1/5 text-center"}
 
                             >
-                                {/*<option value={0}>-Level question-</option>*/}
                                 {levelQuestions.map((level) => (
                                     <option key={level.id} value={level.id}>{level.name}</option>
                                 ))}
@@ -247,11 +215,7 @@ export default function CreateQuestionOneAnswer({question, handleAddQuestion}) {
                         <div className={"flex justify-center"}>
                             <button type="submit"
                                     className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
-                                Sửa
-                            </button>
-                            <button type="button" onClick={() => handleAddQuestion}
-                                    className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
-                                Quay lại
+                                Cập nhật
                             </button>
                         </div>
                     </form>
