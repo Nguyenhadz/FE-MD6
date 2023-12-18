@@ -31,6 +31,8 @@ import ForgotForm from "./page/login/ForgotForm";
 import Home from "./component/Home";
 import Login from "./page/login/Login";
 import CreateNewQuiz from "./page/quizz/CreateNewQuiz";
+import DoingQuiz from "./page/quizz/DoingQuiz";
+import ResultAfterTest from "./page/result/ResultAfterTest";
 
 
 function App() {
@@ -67,6 +69,8 @@ function App() {
                     <Route path={'/home/updateCateQuiz/:id'} element={<UpdateCateQuiz/>}></Route>
                     <Route path={'/home/showListCateQuestion'} element={<ShowListCateQuestion/>}></Route>
                     <Route path={'/home/updateCateQuestion/:id'} element={<UpdateCateQuestion/>}></Route>
+                    <Route path={'/home/doQuiz/:idQuiz'} element={<DoingQuiz/>}></Route>
+                    <Route path={'/home/result'} element={<ResultAfterTest/>}></Route>
                 </Route>
                 {/*:*/}
                 {/*<Route path={'*'} element={<home/>}>*/}

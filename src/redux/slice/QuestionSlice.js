@@ -4,7 +4,7 @@ import {
     createQuestion,
     deleteQuestions,
     editQuestions,
-    findAll,
+    findAll, findAllQuestionByQuiz,
     findAllQuestionByUser,
     findByContent,
     findById,
@@ -49,6 +49,9 @@ const questionSlice = createSlice({
             state.questions = action.payload
         })
         builder.addCase(findAllQuestionByUser.fulfilled, (state, action) => {
+            state.questions = action.payload
+        })
+        builder.addCase(findAllQuestionByQuiz.fulfilled, (state, action) => {
             state.questions = action.payload
         })
     }

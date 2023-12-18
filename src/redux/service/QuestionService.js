@@ -68,3 +68,10 @@ export const findAllQuestionByUser = createAsyncThunk(
         return res.data
     }
 )
+export const findAllQuestionByQuiz = createAsyncThunk(
+    'questions/findAllQuestionByQuiz',
+    async (id) => {
+        const res = await customAxios.get('questions/quiz/' + id, axiosConfig);
+        return res.data
+    }
+)

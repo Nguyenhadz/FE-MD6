@@ -146,6 +146,7 @@ export default function CreateNewQuiz() {
     const handleOpen = () => {
         setOpen(true);
     };
+
     return (
         <Box sx={{display: 'flex'}}>
             <CssBaseline/>
