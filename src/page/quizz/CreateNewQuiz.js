@@ -9,7 +9,7 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import {useDispatch, useSelector} from "react-redux";
-import {findAll, findByContent, findQuestionsByCategory} from "../../redux/service/QuestionService";
+import {findByContent, findQuestionsByCategory} from "../../redux/service/QuestionService";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import QuestionDetail from "./QuestionDetail";
@@ -21,6 +21,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import {styled} from "@mui/system";
 import MenuItem from "@mui/material/MenuItem";
 import {showAllCateQuestion} from "../../redux/service/CateQuestionService";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 
 const drawerWidth = 360;
 
@@ -62,7 +64,6 @@ export default function CreateNewQuiz() {
         const questionIds = selectedQuestionContent.map((q) => ({id: q.id}));
         formik.setFieldValue('questions', questionIds);
     }, [selectedQuestionContent]);
-
 
 
     const formik = useFormik({
@@ -115,7 +116,6 @@ export default function CreateNewQuiz() {
         alignItems: 'center',
         justifyContent: 'center',
     }));
-    console.log(selectedField)
     const StyledInputBase = styled(InputBase)(({theme}) => ({
         color: 'inherit',
         '& .MuiInputBase-input': {
@@ -145,8 +145,27 @@ export default function CreateNewQuiz() {
     const handleOpen = () => {
         setOpen(true);
     };
+    const Item = styled(Paper)(({theme}) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        ...theme.typography.body2,
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    }));
     return (
-        <Box sx={{display: 'flex'}}>
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: "1000px",
+                minHeight: '100vh',
+                maxHeight: '100vh', // Thêm thuộc tính này
+                flexDirection: 'column',
+                overflow: 'scroll', // Thay đổi giá trị này
+                padding: '0 16px',
+            }}
+        >
             <CssBaseline/>
             <AppBar
                 position="fixed"
@@ -215,21 +234,45 @@ export default function CreateNewQuiz() {
                 </Box>
                 <Box
                     component="main"
-                    sx={{flexGrow: 1, bgcolor: 'background.default', p: 3}}>
+                    sx={{
+                        flexGrow: 1,
+                        bgcolor: 'background.default',
+                        p: 3,
+                        overflow: 'auto', // thêm dòng này
+                    }}
+                >
 
                     <Toolbar/>
                     {selectedQuestionContent.map((question, index) => (
-                        <Typography key={index} paragraph>
-                            <Typography className={"flex flex-wrap"}>
-                                Câu {question.id}:<span dangerouslySetInnerHTML={{__html: question.content}}/>
-                            </Typography>
-                            {question.answers.map((answer, aIndex) => (
-                                <Typography key={aIndex} paragraph className={"flex flex-wrap"}>
-                                    {String.fromCharCode(65 + aIndex)}:
-                                    <span dangerouslySetInnerHTML={{__html: answer.content}}/>
-                                </Typography>
-                            ))}
-                        </Typography>
+                        <Box sx={{width: "100%"}}>
+                            <Grid container
+                                  direction="row"
+                                  justifyContent="space-around"
+                                  alignItems="stretch"
+                                  spacing={8}
+                                  rowSpacing={3}
+                                  columnSpacing={{xs: 1, sm: 2, md: 3}
+                                  }>
+                                <Grid item xs={12}>
+                                    <Item style={{border:"solid 1px blue", background:"yellow"}}
+                                          dangerouslySetInnerHTML={{__html: question.content}}></Item>
+                                </Grid>
+                                {question.answers.map((answer, index) => (
+                                    <React.Fragment key={index}>
+                                        <Grid item xs={6}>
+                                            <Item
+                                                style={{backgroundColor: answer.status === 1 ? 'green' : 'inherit'}}>{`Đáp án ${index + 1}`}</Item>
+                                        </Grid>
+                                        {/* Kiểm tra nếu index là số chẵn (2n) thì tạo một hàng mới */}
+                                        {(index + 1) % 2 === 0 && (
+                                            <Grid item xs={12}>
+                                                <Divider/>
+                                            </Grid>
+                                        )}
+                                    </React.Fragment>
+                                ))}
+                            </Grid>
+                        </Box>
                     ))}
                 </Box>
                 <Button type="submit"
@@ -300,7 +343,7 @@ export default function CreateNewQuiz() {
                             </ListItemText>
                             <Button onClick={() => handleAddQuestion(question)}
                                     onChange={(e) => formik.setFieldValue('questions', e.target.value)}
-                            >thêm</Button>
+                            >Thêm</Button>
                         </ListItem>
                     ))}
                 </List>
