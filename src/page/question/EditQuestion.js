@@ -19,7 +19,6 @@ export default function EditQuestion({question}) {
     const currentUser = useSelector((store) => {
         return store.users.currentUser
     })
-    console.log(currentUser.id)
     const categoryQuestions = useSelector((store) => {
         return store.cateQuestions.cateQuestions
     })
