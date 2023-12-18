@@ -31,6 +31,8 @@ import ForgotForm from "./page/login/ForgotForm";
 import Home from "./component/Home";
 import Login from "./page/login/Login";
 import CreateNewQuiz from "./page/quizz/CreateNewQuiz";
+import DoingQuiz from "./page/quizz/DoingQuiz";
+import ResultAfterTest from "./page/result/ResultAfterTest";
 
 
 function App() {
@@ -47,34 +49,36 @@ function App() {
                     <Route path={'/register'} element={<RegisterForm/>}></Route>
                     <Route path={'/forgot'} element={<ForgotForm/>}></Route>
                 </Route>
-                {Object.keys(user).length === 0 ?
+                 Object.keys(user).length === 0 ?
                     <Route path={'*'} element={<Navigate to="/"/>}>
 
                     </Route>
                 : user && (
                     <Route path={'/home'} element={<Home/>}>
-                        <Route path={'createCateQuiz'} element={<CreateCateQuiz/>}></Route>
-                        <Route path={'createQuiz'} element={<CreateNewQuiz/>}></Route>
-                        <Route path={'totalQuestion'} element={<TotalQuestion/>}></Route>
-                        <Route path={'createCateQuestion'} element={<CreateCateQuestion/>}></Route>
-                        <Route path={'showListStudent'} element={<ShowListStudent/>}></Route>
-                        <Route path={'showListTeacher'} element={<ShowListTeacher/>}></Route>
-                        <Route path={'userDetail/:id'} element={<UserDetail/>}></Route>
-                        <Route path={'teacherDetail/:id'} element={<TeacherDetail/>}></Route>
-                        <Route path={'findUserById/:id'} element={<UserProfile/>}></Route>
-                        <Route path={'changeUserPasswordById/:id'} element={<ChangePassword/>}></Route>
-                        <Route path={'showTeacherPending'} element={<ShowListTeacherPending/>}></Route>
-                        <Route path={'detailTeacherPending/:id'} element={<DetailTeacherPending/>}></Route>
-                        <Route path={'layoutManagerQuestion'} element={<LayoutManagerQuestion/>}></Route>
-                        <Route path={'editQuestion'} element={<EditQuestion/>}></Route>
-                        <Route path={'showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>
-                        <Route path={'updateCateQuiz/:id'} element={<UpdateCateQuiz/>}></Route>
-                        <Route path={'showListCateQuestion'} element={<ShowListCateQuestion/>}></Route>
-                        <Route path={'updateCateQuestion/:id'} element={<UpdateCateQuestion/>}></Route>
-                    </Route>
-                )
-                }
-            </Routes>
+                        <Route path={'/home/createCateQuiz'} element={<CreateCateQuiz/>}></Route>
+                        <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
+                        <Route path={'/home/totalQuestion'} element={<TotalQuestion/>}></Route>
+                        <Route path={'/home/createCateQuestion'} element={<CreateCateQuestion/>}></Route>
+                        <Route path={'/home/showListStudent'} element={<ShowListStudent/>}></Route>
+                        <Route path={'/home/showListTeacher'} element={<ShowListTeacher/>}></Route>
+                        <Route path={'/home/userDetail/:id'} element={<UserDetail/>}></Route>
+                        <Route path={'/home/teacherDetail/:id'} element={<TeacherDetail/>}></Route>
+                        <Route path={'/home/findUserById/:id'} element={<UserProfile/>}></Route>
+                        <Route path={'/home/changeUserPasswordById/:id'} element={<ChangePassword/>}></Route>
+                        <Route path={'/home/showTeacherPending'} element={<ShowListTeacherPending/>}></Route>
+                        <Route path={'/home/detailTeacherPending/:id'} element={<DetailTeacherPending/>}></Route>
+                        <Route path={'/home/layoutManagerQuestion'} element={<LayoutManagerQuestion/>}></Route>
+                        <Route path={'/home/editQuestion'} element={<EditQuestion/>}></Route>
+                        <Route path={'/home/showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>
+                        <Route path={'/home/updateCateQuiz/:id'} element={<UpdateCateQuiz/>}></Route>
+                        <Route path={'/home/showListCateQuestion'} element={<ShowListCateQuestion/>}></Route>
+                        <Route path={'/home/updateCateQuestion/:id'} element={<UpdateCateQuestion/>}></Route>
+                        <Route path={'/home/doQuiz/:idQuiz'} element={<DoingQuiz/>}></Route>
+                        <Route path={'/home/result'} element={<ResultAfterTest/>}></Route>
+                     </Route>
+                 )
+                 }
+             </Routes>
         </div>
     );
 }

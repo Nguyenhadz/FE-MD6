@@ -229,8 +229,8 @@ function ResponsiveAppBar() {
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}
                     >
-                        {settings.map((setting) => (
-                            <MenuItem key={setting.name} onClick={() => {
+                        {settings.map((setting, index) => (
+                            <MenuItem key={index} onClick={() => {
                                 if (setting.name === 'Logout') {
                                     handleLogout();
                                 } else {

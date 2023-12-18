@@ -3,12 +3,15 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LayersIcon from '@mui/icons-material/Layers';
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import {Home} from "@mui/icons-material";
 import {PiExam} from "react-icons/pi";
+import {findQuizById} from "../redux/service/QuizService";
 
 const MainListItems = ({sidebarOpen}) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     console.log(sidebarOpen)
     const user = useSelector(state => state.users.currentUser);
 
@@ -117,7 +120,10 @@ const MainListItems = ({sidebarOpen}) => {
             </React.Fragment>)}
         {isStudent && ( // nếu là teacher hoặc student thì hiển thị các ListItemButton sau
             <React.Fragment>
-                <ListItemButton component={Link} to="Danh sách bài thi">
+                <ListItemButton onClick={async () => {
+                    await dispatch(findQuizById(7))
+                    navigate("/home/doQuiz/7")
+                }} component={Link}>
                     <ListItemIcon>
                         <PiExam/>
                     </ListItemIcon>
