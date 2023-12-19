@@ -11,7 +11,7 @@ import CreateQuestionMultilAnswer from "./CreateQuestionMultilAnswer";
 
 export default function CreateQuestion() {
     return (
-        <Tabs orientation="vertical"  sx={{width: "100%", height: "full"}}>
+        <Tabs value = {0} orientation="vertical"  sx={{width: "100%", height: "full"}}>
             <TabsList>
                 <Tab>Một đáp án</Tab>
                 <Tab>Chọn đúng sai</Tab>

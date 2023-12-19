@@ -48,7 +48,7 @@ export default function CreateQuestionOneAnswer() {
                 content: "",
                 status: 1,
                 typeQuestion: {
-                    id: 2,
+                    id: 3,
                 },
                 categoryQuestion: {
                     id: 1

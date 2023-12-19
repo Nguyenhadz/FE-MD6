@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {createResult} from "../../redux/service/ResultService";
-import {findQuizById} from "../../redux/service/QuizService";
 import {toast} from "react-toastify";
 
 const DoingQuiz = () => {
@@ -11,7 +10,6 @@ const DoingQuiz = () => {
     const idUser = useSelector((store) => store.users.currentUser.id);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const [answers, setAnswers] = useState(
         quiz.questions.reduce((acc, question) => {
             acc[question.id] = [];
@@ -53,15 +51,13 @@ const DoingQuiz = () => {
 
         return () => {
             clearInterval(interval);
-            // Component bị unmount, thực hiện submit ở đây
-            handleSubmit();
         };
     }, []);
 
     useEffect(() => {
         if (countdown === 0) {
             // Hết thời gian, thực hiện submit ở đây
-            handleSubmit();
+                handleSubmit().then(() => {});
         }
     }, [countdown]);
 
@@ -78,10 +74,9 @@ const DoingQuiz = () => {
         console.log(values);
         console.log("Nộp bài em ei")
         await dispatch(createResult(values))
-        await dispatch(findQuizById(idQuiz))
+        toast.success("Nộp bài thành công", {})
         await navigate("/home/result")
     };
-
     return (
         <div>
             <div className={"m-auto text-1xl text-red-600 font-bold"}>{`Thời gian còn lại: ${countdown} giây`}</div>
@@ -92,7 +87,7 @@ const DoingQuiz = () => {
                     {question.typeQuestion.id === 1 || question.typeQuestion.id === 2 ? (
                         question.answers.map((answer) => (
                             <div key={answer.id}>
-                                <label>
+                                <div className={"flex"}>
                                     <input
                                         type={(question.typeQuestion.id === 1 || question.typeQuestion.id === 2) ? 'radio' : 'checkbox'}
                                         name={`answers.${question.id}`}
@@ -105,13 +100,13 @@ const DoingQuiz = () => {
                                         }
                                     />
                                     <span dangerouslySetInnerHTML={{__html: answer.content}}></span>
-                                </label>
+                                </div>
                             </div>
                         ))
                     ) : (
                         question.answers.map((answer) => (
                             <div key={answer.id}>
-                                <label>
+                                <div className={"flex"}>
                                     <input
                                         type="checkbox"
                                         name={`answers.${question.id}[${answer.id}]`}
@@ -120,7 +115,7 @@ const DoingQuiz = () => {
                                         onChange={() => handleCheckboxChange(question.id, answer.id)}
                                     />
                                     <span dangerouslySetInnerHTML={{__html: answer.content}}></span>
-                                </label>
+                                </div>
                             </div>
                         ))
                     )}
