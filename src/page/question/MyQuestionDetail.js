@@ -4,18 +4,16 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import EditQuestion from "./EditQuestion";
+import {InfoTwoTone} from "@mui/icons-material";
 
 const style = {
     position: 'absolute',
-    top: '50%',
+    top: '28%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '80%',
-    height: '95%',
+    height: '60%',
     bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
 };
 
 export default function MyQuestionDetail({question}) {
@@ -27,7 +25,7 @@ export default function MyQuestionDetail({question}) {
 
     return (
         <div className={"flex"}>
-            <Button className={"justify-center"} onClick={handleOpen}> Chi tiết </Button>
+            <Button className={"justify-center"} onClick={handleOpen}> <InfoTwoTone/></Button>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -37,6 +35,7 @@ export default function MyQuestionDetail({question}) {
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                         <EditQuestion question={question} handleClose={handleClose}/>
+                        <Button className={"justify-center"} onClick={handleOpen}> <InfoTwoTone/></Button>
                     </Typography>
                 </Box>
 
