@@ -20,6 +20,8 @@ import EditQuestion from "./page/question/EditQuestion";
 import ShowListCateQuestion from "./page/catequestion/ShowListCateQuestion";
 import UpdateCateQuestion from "./page/catequestion/UpdateCateQuestion";
 import {useSelector} from "react-redux";
+import LoginWithGoogle from "./component/LoginWithGoogle";
+import UserWithGoogle from "./component/UserWithGoogle";
 import ChangePassword from "./page/user/UserPassword";
 import CreateQuestionOneAnswer from "./page/question/CreateQuestionOneAnswer";
 import CreateQuestionTrueFalse from "./page/question/CreateQuestionTrueFalse";
@@ -51,6 +53,8 @@ function App() {
                     <Route path={'/loginWithEmail'} element={<LoginWithGmailForm/>}></Route>
                     <Route path={'/register'} element={<RegisterForm/>}></Route>
                     <Route path={'/forgot'} element={<ForgotForm/>}></Route>
+                    <Route path={'/loginWithGoogle'} element={<LoginWithGoogle/>}></Route>
+                    <Route path={'/userWithGoogle'} element={<UserWithGoogle/>}></Route>
                 </Route>
                  Object.keys(user).length === 0 ?
                     <Route path={'*'} element={<Navigate to="/"/>}>

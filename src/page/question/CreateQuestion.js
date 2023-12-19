@@ -1,129 +1,339 @@
-import * as React from 'react';
-import {styled} from '@mui/system';
-import {Tabs as BaseTabs} from '@mui/base/Tabs';
-import {TabsList as BaseTabsList} from '@mui/base/TabsList';
-import {TabPanel as BaseTabPanel} from '@mui/base/TabPanel';
-import {buttonClasses} from '@mui/base/Button';
-import {Tab as BaseTab, tabClasses} from '@mui/base/Tab';
-import CreateQuestionOneAnswer from "./CreateQuestionOneAnswer";
-import CreateQuestionTrueFalse from "./CreateQuestionTrueFalse";
-import CreateQuestionMultilAnswer from "./CreateQuestionMultilAnswer";
+import React, {useEffect, useState} from "react";
+import {createQuestion} from "../../redux/service/QuestionService";
+import {showAllCateQuestion} from "../../redux/service/CateQuestionService";
+import {findAllTypeQuestion} from "../../redux/service/TypeQuestionService";
+import {findAllLevelQuestion} from "../../redux/service/LevelQuestionService";
+import {useFormik} from "formik";
+import {useDispatch, useSelector} from "react-redux";
+import Editor from "../catequiz/Editor";
+import {useNavigate} from "react-router-dom";
+import {Checkbox, FormControl, FormControlLabel, Radio, RadioGroup} from "@mui/material";
+import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
+import CustomQuill from "../../react-quill/CustomQuill";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import {CheckBoxOutlineBlankSharp, CheckBoxSharp, RadioButtonUncheckedRounded} from "@mui/icons-material";
+import {QuillToolbar} from "../catequiz/QuillToolbar";
 
-export default function CreateQuestion() {
+export default function CreateQuestionOneAnswer() {
+    const currentUser = useSelector((store) => {
+        return store.users.currentUser
+    })
+    const categoryQuestions = useSelector((store) => {
+        return store.cateQuestions.cateQuestions
+    })
+    const levelQuestions = useSelector((store) => {
+        return store.levelQuestionStore.levelQuestions
+    })
+    const typeQuestions = useSelector((store) => {
+        return store.typeQuestionStore.typeQuestions;
+    })
+    console.log()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [backgroundColor, setBackgroundColor] = useState("#461A42");
+    const [typeQuestion, setTypeQuestion] = useState(1);
+    useEffect(() => {
+        dispatch(showAllCateQuestion());
+        dispatch(findAllTypeQuestion());
+        dispatch(findAllLevelQuestion());
+        dispatch(findAllTypeQuestion())
+    }, [dispatch]);
+
+    const handleFocus = () => {
+        setBackgroundColor("#281226");
+    };
+
+    const handleBlur = () => {
+        setBackgroundColor("#461A42");
+    };
+
+    const formik = useFormik({
+        initialValues: {
+            question: {
+                content: "",
+                status: 1,
+                typeQuestion: {
+                    id: 1,
+                },
+                categoryQuestion: {
+                    id: 1
+                },
+                levelQuestion: {
+                    id: 1
+                },
+                user: {
+                    id: currentUser.id
+                },
+            },
+            answers: []
+        },
+
+        onSubmit: async (values) => {
+            console.log(values)
+            await dispatch(createQuestion(values))
+        },
+    });
+    useEffect(() => {
+        let newAnswers = [];
+        if (typeQuestion === 1) {
+            newAnswers = [{content: "", status: "0"}, {content: "", status: "0"}];
+        }
+        formik.setFieldValue("answers", newAnswers);
+    }, [])
+    const colors = ["rgb(45 112 174)", "rgb(45 157 166)", "rgb(239 169 41)", "rgb(213 84 109)"]; // Mảng chứa các màu
+    const handleSelectCategoryQuestion = (event) => {
+        formik.setFieldValue(`question.categoryQuestion.id`, parseInt(event.target.value));
+    };
+    const handleSelectTypeQuestion = (event) => {
+        formik.setFieldValue(`question.typeQuestion.id`, parseInt(event.target.value));
+
+        let newAnswers = [];
+        setTypeQuestion(parseInt(event.target.value))
+        const typeQuestionId = parseInt(event.target.value)
+        if (typeQuestionId === 1) {
+            newAnswers = [{content: "", status: "0"}, {content: "", status: "0"}];
+        } else if (typeQuestionId === 2 || typeQuestionId === 3) {
+            newAnswers = [
+                {content: "", status: "0"},
+                {content: "", status: "0"},
+                {content: "", status: "0"},
+                {content: "", status: "0"},
+            ];
+        }
+
+        formik.setFieldValue("answers", newAnswers);
+    };
+
+
+    function handleSelectlevelQuestion(event) {
+        formik.setFieldValue(`question.levelQuestion.id`, parseInt(event.target.value));
+    }
+
     return (
-        <Tabs value = {0} orientation="vertical"  sx={{width: "100%", height: "full"}}>
-            <TabsList>
-                <Tab>Một đáp án</Tab>
-                <Tab>Chọn đúng sai</Tab>
-                <Tab>Nhiều đáp án</Tab>
-            </TabsList>
-            <TabPanel value={0}
-                      sx={{width: "92.42%", height: "full"}}>
-                <CreateQuestionOneAnswer/>
-            </TabPanel>
-            <TabPanel value={1}
-                      sx={{width: "100%", height: "full"}}>
+        <>
+            <div className={"w-full h-full"}>
 
-                <CreateQuestionTrueFalse/>
-            </TabPanel>
-            <TabPanel value={2}
-                      sx={{width: "92.42%", height: "full"}}>
-                <CreateQuestionMultilAnswer/>
-            </TabPanel>
-        </Tabs>
+                <div className={"custom-quill-container flex"}>
+                    <QuillToolbar></QuillToolbar>
+                </div>
+                <div className={"rounded-[1rem] w-full bg-fuchsia-700 p-2 justify-center font-bold text-1xl h-max"}
+                     style={{boxShadow: '30px 30px 30px 30px rgba(0, 0, 0, 0.2)'}}>
+                    <form onSubmit={formik.handleSubmit}>
+                        <div
+                            className={"content-question w-full h-48  rounded-[0.5rem] p-2  focus: border-purple-400 border-opacity-50 border-2"}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
+                            style={{backgroundColor: backgroundColor}}>
+                            <span>Câu hỏi:</span>
+                            <Editor field={{
+                                name: 'question.content',
+                                value: formik.values.question.content
+                            }}
+                                    form={formik}>
+                            </Editor>
+                        </div>
+
+                        <div className={"answer-question flex justify-around w-full"}>
+                            {formik.values.answers.map((item, index) => (
+                                <div key={index} className={"w-1/4"}>
+                                    <RadioGroup
+                                        aria-labelledby={`demo-radio-buttons-group-label-${index}`}
+                                        name={`radio-buttons-group-${index}`}
+                                        value={
+                                            formik.values.answers[index].status === "1"
+                                                ? `answer${index}`
+                                                : "other"
+                                        }
+                                        onChange={() => {
+                                            formik.setFieldValue(
+                                                `answers`,
+                                                formik.values.answers.map((answer, i) => {
+
+                                                    return i === index
+                                                        ? {...answer, status: "1"} // Nếu i bằng index thì cập nhật status thành 1
+                                                        : {...answer, status: "0"}; // Nếu không thì cập nhật status thành 0
+                                                })
+                                            );
+                                        }}
+                                        style={{width: "95%"}}
+                                    >
+                                        <FormControl className={"w-full"}>
+                                            <div
+                                                className={"w-full h-72 m-2 rounded-[1rem] bg-amber-50 flex flex-column"}
+                                                style={{backgroundColor: colors[index % colors.length]}}
+                                            >
+                                                {
+                                                    typeQuestion === 1 || typeQuestion === 2 ? (
+                                                        <div className="custom-quill-container flex flex-column">
+                                                            <FormControlLabel
+                                                                value={`answer${index}`}
+                                                                sx={{
+                                                                    width: 28,
+                                                                    height: 28,
+                                                                    borderRadius: "50%",
+                                                                    display: "flex",
+                                                                }}
+                                                                control={
+                                                                    <Radio
+                                                                        checked={formik.values.answers[index].status === "1"}
+                                                                        onChange={(event) => {
+                                                                            const isChecked = event.target.checked;
+                                                                            const updatedAnswers = formik.values.answers.map((answer, i) =>
+                                                                                i === index ? {
+                                                                                    ...answer,
+                                                                                    status: isChecked ? "1" : "0"
+                                                                                } : answer
+                                                                            );
+                                                                            formik.setFieldValue(`answers`, updatedAnswers);
+                                                                        }}
+                                                                        icon={<RadioButtonUncheckedRounded
+                                                                            sx={{
+                                                                                width: 28,
+                                                                                height: 28,
+                                                                                borderRadius: "50%",
+                                                                                marginTop: 2,
+                                                                                marginLeft: 1
+                                                                            }}
+                                                                        />}
+                                                                        checkedIcon={<CheckRoundedIcon
+                                                                            sx={{
+                                                                                width: 28,
+                                                                                height: 28,
+                                                                                borderRadius: "50%",
+                                                                                bgcolor: "#00C985",
+                                                                                marginTop: 2,
+                                                                                marginLeft: 1
+                                                                            }}
+                                                                        />}
+                                                                    />
+                                                                }
+                                                                label={""}
+                                                            />
+                                                        </div>
+                                                    ) : (
+                                                        <div className="custom-quill-container flex flex-column">
+                                                            <FormControlLabel
+                                                                value={`answer${index}`}
+                                                                sx={{
+                                                                    width: 28,
+                                                                    height: 28,
+                                                                    borderRadius: "50%",
+                                                                    display: "flex",
+                                                                }}
+                                                                control={
+                                                                    <Checkbox
+                                                                        checked={formik.values.answers[index].status === "1"}
+                                                                        onChange={(event) => {
+                                                                            const isChecked = event.target.checked;
+                                                                            const updatedAnswers = formik.values.answers.map((answer, i) =>
+                                                                                i === index ? {
+                                                                                    ...answer,
+                                                                                    status: isChecked ? "1" : "0"
+                                                                                } : answer
+                                                                            );
+                                                                            formik.setFieldValue(`answers`, updatedAnswers);
+                                                                        }}
+                                                                        icon={<CheckBoxOutlineBlankSharp
+                                                                            sx={{
+                                                                                width: 28,
+                                                                                height: 28,
+                                                                                marginTop: 2,
+                                                                                marginLeft: 1
+                                                                            }}
+                                                                        />}
+                                                                        checkedIcon={<CheckBoxSharp
+                                                                            sx={{
+                                                                                width: 28,
+                                                                                height: 28,
+                                                                                marginTop: 2,
+                                                                                marginLeft: 1
+                                                                            }}
+                                                                        />}
+                                                                    />
+                                                                }
+                                                                label={""}
+                                                            />
+                                                        </div>
+                                                    )
+                                                } <Box sx={{
+                                                width: 500,
+                                                maxWidth: "100%",
+                                                height: "100%",
+                                                overflow: "auto"
+                                            }}>
+                                                <CustomQuill
+                                                    field={{
+                                                        name: `answers[${index}].content`,
+                                                        value: formik.values.answers[index].content
+                                                    }}
+                                                    form={formik}
+                                                    onChange={(content) => formik.setFieldValue(`answers[${index}].content`, content)}
+                                                    index={index}
+                                                    style={{
+                                                        height: '250px',
+                                                        outline: 'none',
+                                                        padding: '12px 15px',
+                                                        '-moz-tab-size': 4,
+                                                        '--ql-toolbar-display': 'none' // Ẩn toolbar
+                                                    }}
+                                                />
+                                            </Box>
+                                            </div>
+                                        </FormControl>
+                                    </RadioGroup>
+                                </div>
+                            ))}
+                        </div>
+                        <div className={"flex h-10 justify-around items-center mt-2 rounded-[1rem] bg-amber-200"}>
+                            <select
+                                name="question.categoryQuestion.id"
+                                value={formik.values.question.categoryQuestion.id}
+                                onChange={handleSelectCategoryQuestion}
+                                className={"rounded-[1rem] h-6 w-1/5 text-center"}
+                            >
+                                {categoryQuestions && categoryQuestions.length > 0 && categoryQuestions.map((category) => (
+                                    <option key={category.id} value={category.id}>
+                                        <Typography dangerouslySetInnerHTML={{__html: category.name}}/>
+                                    </option>
+                                ))}
+                            </select>
+                            <select
+                                name="question.typeQuestion.id"
+                                value={formik.values.question.typeQuestion.id}
+                                onChange={handleSelectTypeQuestion}
+                                className={"rounded-[1rem] h-6 w-1/5 text-center"}
+                            >
+                                {typeQuestions.map((type) => (
+                                    <option key={type.id} value={type.id}>
+                                        <Typography dangerouslySetInnerHTML={{__html: type.name}}/>
+                                    </option>
+                                ))}
+                            </select>
+                            <select
+                                name="question.levelQuestion.id"
+                                value={formik.values.question.levelQuestion.id}
+                                onChange={handleSelectlevelQuestion}
+                                className={"rounded-[1rem] h-6 w-1/5 text-center"}
+                            >
+                                {levelQuestions.map((level) => (
+                                    <option key={level.id} value={level.id}>{level.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className={"flex justify-center"}>
+                            <button type="submit"
+                                    className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
+                                Tạo câu hỏi
+                            </button>
+                            <button type="button" onClick={() => navigate("/home/layoutManagerQuestion/listQuestion")}
+                                    className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
+                                Quay lại
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </>
     );
 }
-
-const blue = {
-    50: '#F0F7FF',
-    100: '#C2E0FF',
-    200: '#80BFFF',
-    300: '#66B2FF',
-    400: '#3399FF',
-    500: '#007FFF',
-    600: '#0072E5',
-    700: '#0059B2',
-    800: '#004C99',
-    900: '#003A75',
-};
-
-const grey = {
-    50: '#F3F6F9',
-    100: '#E5EAF2',
-    200: '#DAE2ED',
-    300: '#C7D0DD',
-    400: '#B0B8C4',
-    500: '#9DA8B7',
-    600: '#6B7A90',
-    700: '#434D5B',
-    800: '#303740',
-    900: '#1C2025',
-};
-
-const Tab = styled(BaseTab)`
-    font-family: 'IBM Plex Sans', sans-serif;
-    color: white;
-    cursor: pointer;
-    font-size: 0.875rem;
-    font-weight: bold;
-    background-color: transparent;
-    width: 100%;
-    padding: 4px;
-    border: none;
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-
-    &:hover {
-        background-color: ${blue[400]};
-    }
-
-    &:focus {
-        color: #fff;
-        outline: ${blue[200]};
-    }
-
-    &.${buttonClasses.focusVisible} {
-        background-color: #fff;
-        color: ${blue[600]};
-    }
-
-    &.${tabClasses.disabled} {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    &.${tabClasses.selected} {
-        background-color: #fff;
-        color: ${blue[600]};
-    }
-`;
-
-const TabPanel = styled(BaseTabPanel)`
-    width: 100%;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 0.875rem;
-`;
-
-const Tabs = styled(BaseTabs)`
-    display: flex;
-    gap: 4px;
-    width: 0px;
-`;
-
-const TabsList = styled(BaseTabsList)(
-    ({theme}) => `
-  min-width: 100px;
-  background-color: ${blue[500]};
-  border-radius: 12px;
-  margin-bottom: 16px;
-  display: flex;
-  padding: 4px;
-  gap: 8px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  align-content: space-between;
-  box-shadow: 0px 4px 8px ${theme.palette.mode === 'dark' ? grey[900] : grey[200]};
-  `,
-);
