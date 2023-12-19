@@ -11,6 +11,7 @@ import ListQuestion from "./ListQuestion";
 import CreateQuestion from "./CreateQuestion";
 import ShowListQuizByUser from "../quizz/ShowListQuizByUser";
 import EditQuestion from "./EditQuestion";
+import CreateNewQuiz from "../quizz/CreateNewQuiz";
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -71,6 +72,7 @@ export default function FullWidthTabs() {
                     <Tab label="Danh sách câu hỏi" {...a11yProps(0)} />
                     <Tab label="Tạo mới câu hỏi" {...a11yProps(1)} />
                     <Tab label="Danh sách bài thi" {...a11yProps(2)} />
+                    <Tab label="Tạo mới bài thi" {...a11yProps(3)} />
                 </Tabs>
             </AppBar>
             <SwipeableViews
@@ -113,6 +115,18 @@ export default function FullWidthTabs() {
                               height: "full",
                           }}>
                     <ShowListQuizByUser
+                        sx={{width: "fit", height: "full"}}
+                    />
+                </TabPanel>
+                <TabPanel value={value} index={3} dir={theme.direction}
+                          sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              width: "fit",
+                              height: "full",
+                          }}>
+                    <CreateNewQuiz
                         sx={{width: "fit", height: "full"}}
                     />
                 </TabPanel>

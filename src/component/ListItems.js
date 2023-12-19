@@ -87,11 +87,19 @@ const MainListItems = ({sidebarOpen}) => {
             </React.Fragment>)}
         {isTeacher && ( // nếu là teacher hoặc student thì hiển thị các ListItemButton sau
             <React.Fragment>
-                <ListItemButton component={Link} to="Danh sách câu hỏi">
+                <ListItemButton component={Link} to="/home/showAllQuiz">
                     <ListItemIcon>
                         <PiExam/>
                     </ListItemIcon>
                     <ListItemText primary="Danh sách bài thi"
+                        // primaryTypographyProps={primaryTypographyProps}
+                    />
+                </ListItemButton>
+                <ListItemButton component={Link} to="/home/createQuiz">
+                    <ListItemIcon>
+                        <PiExam/>
+                    </ListItemIcon>
+                    <ListItemText primary="Tạo mới bài thi"
                         // primaryTypographyProps={primaryTypographyProps}
                     />
                 </ListItemButton>

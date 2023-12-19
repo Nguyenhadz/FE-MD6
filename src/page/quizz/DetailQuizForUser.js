@@ -16,6 +16,10 @@ import {store} from "../../redux/store/Store";
 
 const DetailQuizForUser = ({quizId}) => {
     const dispatch = useDispatch();
+    const currentUser = useSelector((store) => {
+        return store.users.currentUser
+    })
+    console.log(currentUser.roles[0])
     const [results, setResults] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
@@ -74,6 +78,36 @@ const DetailQuizForUser = ({quizId}) => {
             <div className={"mb-3"}>Mức độ: &nbsp; {quiz.levelQuiz?.name}</div>
             <div className={"mb-3"}>Điểm đạt: &nbsp; {quiz.passScore}</div>
             <div className={"mb-3"}>Thời gian thi: &nbsp; {minute} &nbsp;phút, {second} &nbsp;giây</div>
+            {((currentUser.roles[0].authority === "TEACHER") || (currentUser.roles[0].name === "TEACHER")) &&
+                (<div>
+                    <div className={"mb-3"}>Câu hỏi:</div>
+                    {quiz.questions?.map((question, index) => (
+                        <Accordion key={index}>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon/>}
+                                aria-controls={`panel${index + 1}-content`}
+                                id={`panel${index + 1}-header`}
+                            >
+                                <Typography>Câu hỏi {index + 1}: &nbsp;<span
+                                    dangerouslySetInnerHTML={{__html: question.content}}></span></Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Typography>
+                                    <Box sx={{width: "100%"}}>
+                                        <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
+                                            {question.answers.map((answer, answerIndex) => (
+                                                <Grid item xs={6} key={answerIndex}>
+                                                    <Item><span dangerouslySetInnerHTML={{__html: answer.content}}
+                                                                style={{color: answer.status === 1 ? 'blue' : 'black'}}></span></Item>
+                                                </Grid>
+                                            ))}
+                                        </Grid>
+                                    </Box>
+                                </Typography>
+                            </AccordionDetails>
+                        </Accordion>
+                    ))}
+                </div>)}
         </div>
     );
 };
