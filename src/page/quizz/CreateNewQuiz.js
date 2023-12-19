@@ -287,7 +287,7 @@ export default function CreateNewQuiz() {
                                             >
                                                 {categoryQuizzes.map((cateQuiz, index) =>
                                                     (
-                                                        <MenuItem value={index}>{cateQuiz.name}</MenuItem>
+                                                        <MenuItem value={index}><span dangerouslySetInnerHTML={{__html: cateQuiz.name}}></span></MenuItem>
                                                     )
                                                 )}
                                             </Select>
