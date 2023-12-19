@@ -27,6 +27,8 @@ import EditQuestion from "./page/question/EditQuestion";
 import ShowListCateQuestion from "./page/catequestion/ShowListCateQuestion";
 import UpdateCateQuestion from "./page/catequestion/UpdateCateQuestion";
 import {useSelector} from "react-redux";
+import LoginWithGoogle from "./component/LoginWithGoogle";
+import UserWithGoogle from "./component/UserWithGoogle";
 
 
 function App() {
@@ -42,6 +44,8 @@ function App() {
                     <Route path={'/loginWithEmail'} element={<LoginWithGmailForm/>}></Route>
                     <Route path={'/register'} element={<RegisterForm/>}></Route>
                     <Route path={'/forgot'} element={<ForgotForm/>}></Route>
+                    <Route path={'/loginWithGoogle'} element={<LoginWithGoogle/>}></Route>
+                    <Route path={'/userWithGoogle'} element={<UserWithGoogle/>}></Route>
                 </Route>
                 {user != null ?
                     <Route path={'/home'} element={<Home/>}>
