@@ -114,7 +114,7 @@ export default function CreateQuestionOneAnswer() {
         <>
             <div className={"w-full h-full"}>
 
-                <div className={"custom-quill-container flex"}>
+                <div className={"custom-quill-container flex flex-auto"}>
                     <QuillToolbar></QuillToolbar>
                 </div>
                 <div className={"rounded-[1rem] w-full bg-fuchsia-700 p-2 justify-center font-bold text-1xl h-max"}
@@ -125,7 +125,6 @@ export default function CreateQuestionOneAnswer() {
                             onFocus={handleFocus}
                             onBlur={handleBlur}
                             style={{backgroundColor: backgroundColor}}>
-                            <span>Câu hỏi:</span>
                             <Editor field={{
                                 name: 'question.content',
                                 value: formik.values.question.content

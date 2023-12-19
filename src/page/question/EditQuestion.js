@@ -7,14 +7,20 @@ import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import Editor from "../catequiz/Editor";
 import {useNavigate} from "react-router-dom";
-import {FormControl, FormControlLabel, Radio, RadioGroup} from "@mui/material";
+import {Checkbox, FormControl, FormControlLabel, Radio, RadioGroup} from "@mui/material";
 import CustomQuill from "../../react-quill/CustomQuill";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import {RadioButtonChecked, RadioButtonUncheckedRounded} from "@mui/icons-material";
+import {
+    CheckBoxOutlineBlankSharp,
+    CheckBoxSharp, CheckCircleOutline, RadioButtonCheckedOutlined,
+    RadioButtonCheckedRounded, RadioButtonCheckedSharp, RadioButtonUncheckedOutlined,
+    RadioButtonUncheckedRounded
+} from "@mui/icons-material";
 import {QuillToolbar} from "../catequiz/QuillToolbar";
+import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 
-export default function EditQuestion({question}) {
+export default function EditQuestion({question, handleClose}) {
     const currentUser = useSelector((store) => {
         return store.users.currentUser
     })
@@ -24,14 +30,19 @@ export default function EditQuestion({question}) {
     const levelQuestions = useSelector((store) => {
         return store.levelQuestionStore.levelQuestions
     })
+    const typeQuestions = useSelector((store) => {
+        return store.typeQuestionStore.typeQuestions;
+    })
+    console.log(question.answers[1].status)
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [backgroundColor, setBackgroundColor] = useState("#461A42");
     useEffect(() => {
         dispatch(showAllCateQuestion());
         dispatch(findAllTypeQuestion());
         dispatch(findAllLevelQuestion());
+        dispatch(findAllTypeQuestion())
     }, [dispatch]);
-    const [backgroundColor, setBackgroundColor] = useState("#461A42");
 
     const handleFocus = () => {
         setBackgroundColor("#281226");
@@ -40,6 +51,7 @@ export default function EditQuestion({question}) {
     const handleBlur = () => {
         setBackgroundColor("#461A42");
     };
+
 
     const formik = useFormik({
         initialValues: {
@@ -68,8 +80,20 @@ export default function EditQuestion({question}) {
             await dispatch(findAllQuestionByUser(currentUser.id))
         }
     });
-    const colors = ["rgb(45 112 174)", "rgb(45 157 166)", "rgb(239 169 41)", "rgb(213 84 109)"]; // Mảng chứa các màu
 
+    const colors = ["rgb(45 112 174)", "rgb(45 157 166)", "rgb(239 169 41)", "rgb(213 84 109)"]; // Mảng chứa các màu
+    const handleSelectCategoryQuestion = (event) => {
+        formik.setFieldValue(`question.categoryQuestion.id`, parseInt(event.target.value));
+    };
+    const handleSelectTypeQuestion = (event) => {
+
+        formik.setFieldValue("answers", event.target.value);
+    };
+
+
+    function handleSelectlevelQuestion(event) {
+        formik.setFieldValue(`question.levelQuestion.id`, parseInt(event.target.value));
+    }
 
     return (
         <>
@@ -89,75 +113,134 @@ export default function EditQuestion({question}) {
                             <span>Câu hỏi:</span>
                             <Editor field={{
                                 name: 'question.content',
-                                value: question.content
+                                value: formik.values.question.content
                             }}
-                                    form={formik}
-                                    onTextChange={(content) => formik.setFieldValue(`question.content`, content)}>
+                                    form={formik}>
                             </Editor>
                         </div>
 
-                        <div className={"answers-question flex justify-around w-full"}>
-                            {formik.values.answers.map((item, index, colorIndex) => (
+                        <div className={"answer-question flex justify-around w-full"}>
+                            {formik.values.answers.map((item, index) => (
                                 <div key={index} className={"w-1/4"}>
                                     <RadioGroup
                                         aria-labelledby={`demo-radio-buttons-group-label-${index}`}
                                         name={`radio-buttons-group-${index}`}
-                                        value={formik.values.answers[index].id} // Sử dụng ID thực tế của đáp án
+                                        defaultValue={`answer${1}checkbox`}
+                                        value={
+                                            formik.values.answers[index].status === "1"
+                                                ? `answer${index}`
+                                                : "other"
+                                        }
+                                        onChange={() => {
+                                            formik.setFieldValue(
+                                                `answers`,
+                                                formik.values.answers.map((answer, i) => {
 
-                                        onChange={(event) => {
-                                            const answerId = event.target.value;
-                                            const updatedAnswers = formik.values.answers.map((answer, i) => ({
-                                                ...answer,
-                                                status: answer.id === answerId ? "1" : "0",
-                                            }));
-                                            formik.setFieldValue(`answers`, updatedAnswers);
+                                                    return i === index
+                                                        ? {...answer, status: "1"} // Nếu i bằng index thì cập nhật status thành 1
+                                                        : {...answer, status: "0"}; // Nếu không thì cập nhật status thành 0
+                                                })
+                                            );
                                         }}
-                                        style={{width: "100%"}}
+                                        style={{width: "95%"}}
                                     >
                                         <FormControl className={"w-full"}>
                                             <div
                                                 className={"w-full h-72 m-2 rounded-[1rem] bg-amber-50 flex flex-column"}
                                                 style={{backgroundColor: colors[index % colors.length]}}
                                             >
-                                                <div className="custom-quill-container flex flex-column">
-
-                                                    <FormControlLabel
-                                                        value={`answers${index}`}
-                                                        onClick={() => {
-                                                            formik.setFieldValue(`answers[${index}].status`, 1);
-                                                        }}
-                                                        sx={{
-                                                            width: 28,
-                                                            height: 28,
-                                                            borderRadius: "50%",
-                                                            display: "flex",
-                                                        }}
-                                                        control={
-                                                            <Radio
-                                                                icon={<RadioButtonUncheckedRounded
-                                                                    sx={{
-                                                                        width: 28,
-                                                                        height: 28,
-                                                                        borderRadius: "50%",
-                                                                        marginTop: 2,
-                                                                        marginLeft: 1
-                                                                    }}
-                                                                />}
-                                                                checkedIcon={<RadioButtonChecked
-                                                                    sx={{
-                                                                        width: 28,
-                                                                        height: 28,
-                                                                        borderRadius: "50%",
-                                                                        bgcolor: "#00C985",
-                                                                        marginTop: 2,
-                                                                        marginLeft: 1
-                                                                    }}
-                                                                />}
+                                                {
+                                                    question.typeQuestion.id === 1 || question.typeQuestion.id === 2 ? (
+                                                        <div className="custom-quill-container flex flex-column">
+                                                            <FormControlLabel
+                                                                value={`answer${index}`}
+                                                                sx={{
+                                                                    width: 28,
+                                                                    height: 28,
+                                                                    borderRadius: "50%",
+                                                                    display: "flex",
+                                                                }}
+                                                                control={
+                                                                    <Radio
+                                                                        defaultChecked={question.answers[index].status === 1}
+                                                                        onChange={(event) => {
+                                                                            console.log(index)
+                                                                            console.log(question.answers[index].status)
+                                                                            const isChecked = event.target.checked;
+                                                                            const updatedAnswers = formik.values.answers.map((answer, i) =>
+                                                                                i === index ? {
+                                                                                    ...answer,
+                                                                                    status: isChecked ? "1" : "0"
+                                                                                } : answer
+                                                                            );
+                                                                            formik.setFieldValue(`answers`, updatedAnswers);
+                                                                        }}
+                                                                        icon={<RadioButtonUncheckedOutlined
+                                                                            sx={{
+                                                                                width: 28,
+                                                                                height: 28,
+                                                                                marginTop: 2,
+                                                                                marginLeft: 1
+                                                                            }}
+                                                                        />}
+                                                                        checkedIcon={<CheckCircleOutline
+                                                                            sx={{
+                                                                                width: 28,
+                                                                                height: 28,
+                                                                                marginTop: 2,
+                                                                                marginLeft: 1
+                                                                            }}
+                                                                        />}
+                                                                    />
+                                                                }
+                                                                label={""}
                                                             />
-                                                        }
-                                                        label={""}
-                                                    />
-                                                </div>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="custom-quill-container flex flex-column">
+                                                            <FormControlLabel
+                                                                value={`answer${index}`}
+                                                                sx={{
+                                                                    width: 28,
+                                                                    height: 28,
+                                                                    borderRadius: "50%",
+                                                                    display: "flex",
+                                                                }}
+                                                                control={
+                                                                    <Checkbox
+                                                                        defaultChecked={question.answers[index].status === 1}
+                                                                        onChange={(event) => {
+                                                                            const isChecked = event.target.checked;
+                                                                            const updatedAnswers = formik.values.answers.map((answer, i) =>
+                                                                                i === index ? {
+                                                                                    ...answer,
+                                                                                    status: isChecked ? "1" : "0"
+                                                                                } : answer
+                                                                            );
+                                                                            formik.setFieldValue(`answers`, updatedAnswers);
+                                                                        }}
+                                                                        icon={<CheckBoxOutlineBlankSharp
+                                                                            sx={{
+                                                                                width: 28,
+                                                                                height: 28,
+                                                                                marginTop: 2,
+                                                                                marginLeft: 1
+                                                                            }}
+                                                                        />}
+                                                                        checkedIcon={<CheckBoxSharp
+                                                                            sx={{
+                                                                                width: 28,
+                                                                                height: 28,
+                                                                                marginTop: 2,
+                                                                                marginLeft: 1
+                                                                            }}
+                                                                        />}
+                                                                    />
+                                                                }
+                                                                label={""}
+                                                            />
+                                                        </div>
+                                                    )}
                                                 <Box sx={{
                                                     width: 500,
                                                     maxWidth: "100%",
@@ -190,8 +273,8 @@ export default function EditQuestion({question}) {
                         <div className={"flex h-10 justify-around items-center mt-2 rounded-[1rem] bg-amber-200"}>
                             <select
                                 name="question.categoryQuestion.id"
-                                // value={question.answers.question.categoryQuestion.id}
-                                onChange={formik.handleChange}
+                                value={formik.values.question.categoryQuestion.id}
+                                onChange={handleSelectCategoryQuestion}
                                 className={"rounded-[1rem] h-6 w-1/5 text-center"}
                             >
                                 {categoryQuestions && categoryQuestions.length > 0 && categoryQuestions.map((category) => (
@@ -201,11 +284,23 @@ export default function EditQuestion({question}) {
                                 ))}
                             </select>
                             <select
-                                name="question.levelQuestion.id"
-                                value={question.levelQuestion.id}
-                                onChange={formik.handleChange}
+                                name="question.typeQuestion.id"
+                                value={formik.values.question.typeQuestion.id}
+                                onChange={handleSelectTypeQuestion}
                                 className={"rounded-[1rem] h-6 w-1/5 text-center"}
-
+                                disabled={true}
+                            >
+                                {typeQuestions.map((type) => (
+                                    <option key={type.id} value={type.id}>
+                                        <Typography dangerouslySetInnerHTML={{__html: type.name}}/>
+                                    </option>
+                                ))}
+                            </select>
+                            <select
+                                name="question.levelQuestion.id"
+                                value={formik.values.question.levelQuestion.id}
+                                onChange={handleSelectlevelQuestion}
+                                className={"rounded-[1rem] h-6 w-1/5 text-center"}
                             >
                                 {levelQuestions.map((level) => (
                                     <option key={level.id} value={level.id}>{level.name}</option>
@@ -215,12 +310,17 @@ export default function EditQuestion({question}) {
                         <div className={"flex justify-center"}>
                             <button type="submit"
                                     className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
-                                Cập nhật
+                                Tạo câu hỏi
+                            </button>
+                            <button type="button" onClick={() => handleClose()}
+                                    className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
+                                Quay lại
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
         </>
-    );
+    )
+        ;
 }
