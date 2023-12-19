@@ -2,8 +2,8 @@ import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
 import React from "react";
-import CustomQuills from "../catequiz/CustomQuills";
-import {updateCateQuestion} from "../../service/CateQuestionService";
+import CustomQuills from "../catequiz/Editor";
+import {updateCateQuestion} from "../../redux/service/CateQuestionService";
 
 
 export default function UpdateCateQuestion() {
@@ -33,7 +33,7 @@ export default function UpdateCateQuestion() {
         <>
             <div className={"bg-cover bg-center h-screen flex"}
                  style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
-                <Link to={"/home/showListCateQuestion"}>
+                <Link to={"/login/showListCateQuestion"}>
                     <button className={"w-20 h-10 rounded-lg ml-6 mt-5 bg-orange-400 hover:bg-red-500 text-white"}>Trở
                         về
                     </button>

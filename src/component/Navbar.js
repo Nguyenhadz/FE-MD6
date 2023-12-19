@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {useEffect} from 'react';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -21,7 +20,7 @@ import {
     findTeacherByMail,
     findTeacherByName,
     logout
-} from "../service/UserService";
+} from "../redux/service/UserService";
 import {toast} from "react-toastify";
 import {useLocation, useNavigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
@@ -35,18 +34,16 @@ function ResponsiveAppBar() {
     const searchTermRef = React.useState('');
     const {pathname} = useLocation();
     const showSelect = pathname;
-    console.log(showSelect)
     useEffect(() => {
-        console.log(selectedField)
     }, [selectedField]);
     const user = useSelector(state => {
         return state.users.currentUser;
     })
     const settings = [
         {name: 'Profile', href: '/home/findUserById/' + user.id},
-        {name: 'Account', href: '/account'},
+        {name: 'Account', href: '/home/changeUserPasswordById/' + user.id},
         {name: 'Dashboard', href: '/home/layoutManagerQuestion/listQuestion'},
-        {name: 'Logout', href: '/logout'},
+        {name: 'Logout'},
     ];
 
     const handleChange = (event) => {
@@ -105,11 +102,9 @@ function ResponsiveAppBar() {
     const handleSearch = () => {
         if (selectedField === 3) {
             dispatch(findTeacherByName(searchTermRef.current))
-            console.log(searchTermRef.current)
             navigate('/home/showListTeacher')
         } else if (selectedField === 4) {
             dispatch(findTeacherByMail(searchTermRef.current))
-            console.log(searchTermRef.current)
             navigate('/home/showListTeacher')
         } else if (selectedField === 1) {
             dispatch(findStudentByName(searchTermRef.current))
@@ -122,56 +117,76 @@ function ResponsiveAppBar() {
     };
     const renderMenuItems = () => {
         switch (showSelect) {
-            case '/home/showListStudent':
+            case '/login/showListStudent':
+                return [
+                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm học sinh theo</MenuItem>,
+                    <MenuItem value={1} valueText="Theo tên">Tên</MenuItem>,
+                    <MenuItem value={2} valueText="Theo email">Email</MenuItem>,
+                ];
+            case '/login/showListTeacher':
+                return [
+                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm danh mục theo</MenuItem>,
+                    <MenuItem value={3} valueText="Theo tên">Tên</MenuItem>,
+                    <MenuItem value={4} valueText="Theo email">Email</MenuItem>,
+                ];
+            case '/login/showTeacherPending':
+                return [
+                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm giáo viên theo</MenuItem>,
+                    <MenuItem value={3} valueText="Theo tên">Tên</MenuItem>,
+                    <MenuItem value={4} valueText="Theo email">Email</MenuItem>,
+                ];
+            case '/login/showListCateQuestion':
+                return [
+                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm danh mục câu hỏi theo</MenuItem>,
+                    <MenuItem value={5}>Tên</MenuItem>,
+                    <MenuItem value={6}>Nội dung</MenuItem>,
+                ];
+            case '/login/showListCateQuiz':
+                return [
+                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm danh mục bài thi theo</MenuItem>,
+                    <MenuItem value={7}>Tên</MenuItem>,
+                    <MenuItem value={8}>Nội dung</MenuItem>,
+                ];
+            case '/login/totalQuestion':
                 return [
                     <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
-                    <MenuItem value={1} valueText="Tìm kiếm học sinh theo tên">Tìm kiếm học sinh theo tên</MenuItem>,
-                    <MenuItem value={2} valueText="Tìm kiếm học sinh theo email">Tìm kiếm học sinh theo email</MenuItem>,
+                    <MenuItem value={7}>Theo tên</MenuItem>,
+                    <MenuItem value={8}>Theo nội dung</MenuItem>,
                 ];
-                break;
-            case '/home/showListTeacher':
-                return [
-                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
-                    <MenuItem value={3} valueText="Tìm kiếm giáo viên theo tên">Tìm kiếm giáo viên theo tên</MenuItem>,
-                    <MenuItem value={4} valueText="Tìm kiếm giáo viên theo email">Tìm kiếm giáo viên theo
-                        email</MenuItem>,
-                ];
-                break;
             default:
                 return [
-                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
-                    <MenuItem value={1} valueText="Tìm kiếm theo tên">Tìm kiếm theo tên</MenuItem>,
-                    <MenuItem value={2} valueText="Tìm kiếm theo email">Tìm kiếm theo email</MenuItem>,
-                    <MenuItem value={3} valueText="Tìm kiếm giáo viên theo tên">Tìm kiếm giáo viên theo tên</MenuItem>,
-                    <MenuItem value={4} valueText="Tìm kiếm giáo viên theo email">Tìm kiếm giáo viên theo
-                        email</MenuItem>,
+                    <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm câu hỏi theo</MenuItem>,
+                    <MenuItem value={1}>Theo tên</MenuItem>,
+                    <MenuItem value={2}>Theo email</MenuItem>,
+                    <MenuItem value={3}>Theo tên</MenuItem>,
+                    <MenuItem value={4}>Theo email</MenuItem>,
                 ];
         }
     };
 
     return (
-        <AppBar position="static">
-            <Container maxWidth="xl">
-                <Toolbar disableGutters>
-                    <AdbIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
-
-
-                    <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
-
+        <Container maxWidth="xxl">
+            <Toolbar disableGutters>
+                <AdbIcon
+                    sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}
+                />
+                <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
+                {showSelect !== '/home' && (
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         <Search>
                             <SearchIconWrapper>
                                 <SearchIcon/>
                             </SearchIconWrapper>
                             <StyledInputBase
-                                placeholder="Search…"
+                                placeholder="Nội dung…"
                                 onChange={(event) => (searchTermRef.current = event.target.value)}
                             />
-
                         </Search>
-                        <Button onClick={handleSearch}>Search</Button>
-
+                        <Button onClick={handleSearch}>Tìm kiếm</Button>
                     </Box>
+                )}
+                {showSelect !== '/home' && (
+
                     <Box sx={{flexGrow: 6, display: {xs: 'none', md: 'flex'}}}>
                         <div>
                             <FormControl sx={{m: 1, minWidth: 80}}>
@@ -181,56 +196,55 @@ function ResponsiveAppBar() {
                                     id="demo-simple-select-autowidth"
                                     value={selectedField}
                                     onChange={handleChange}
-                                    autoWidth
-                                >
+                                    autoWidth>
                                     {renderMenuItems()}
                                 </Select>
                             </FormControl>
                         </div>
                     </Box>
-                    <Box sx={{flexGrow: 0, display: 'flex', alignItems: 'center'}}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                <Avatar
-                                    alt="Hình đại diện"
-                                    src={`${user.image}`}
-                                    sx={{width: 48, height: 48}}
-                                />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{mt: '45px'}}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting.name} onClick={() => {
-                                    if (setting.name === 'Logout') {
-                                        handleLogout();
-                                    } else {
-                                        handleCloseUserMenu();
-                                    }
-                                }}>
-                                    <Link underline="none" textAlign="center" href={setting.href}>{setting.name}</Link>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                        <Typography sx={{ml: '40px'}}>{user.name}</Typography>
-                    </Box>
-                </Toolbar>
-            </Container>
-        </AppBar>
+                )}
+                <Box sx={{flexGrow: 0, display: 'flex', alignItems: 'center', justifyContent: "center"}}>
+                    <Tooltip title="Open settings">
+                        <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                            <Avatar
+                                alt="Hình đại diện"
+                                src={`${user.image}`}
+                                sx={{width: 48, height: 48}}
+                            />
+                        </IconButton>
+                    </Tooltip>
+                    <Menu
+                        sx={{mt: '45px'}}
+                        id="menu-appbar"
+                        anchorEl={anchorElUser}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        open={Boolean(anchorElUser)}
+                        onClose={handleCloseUserMenu}
+                    >
+                        {settings.map((setting, index) => (
+                            <MenuItem key={index} onClick={() => {
+                                if (setting.name === 'Logout') {
+                                    handleLogout();
+                                } else {
+                                    handleCloseUserMenu();
+                                }
+                            }}>
+                                <Link underline="none" textAlign="center" href={setting.href}>{setting.name}</Link>
+                            </MenuItem>
+                        ))}
+                    </Menu>
+                    <Typography sx={{ml: '40px'}}>{user.name}</Typography>
+                </Box>
+            </Toolbar>
+        </Container>
     );
 }
 

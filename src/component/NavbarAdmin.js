@@ -78,37 +78,39 @@ export default function NavbarAdmin() {
                         </div>
                     </Link>}
 
-                {(user.roles[0].authority === 'ADMIN') &&
-                    <Link to={"/home/showListStudent"} style={{color: 'inherit', textDecoration: 'none'}}>
-                        <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
-                            <img className={"ml-3 w-4 h-4"}
-                                 src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'}
-                                 alt={'...'}
-                            />
-                            <p className={"ml-2 justify-center"}>Danh sách học viên</p>
-                        </div>
-                    </Link>}
-                {(user.roles[0].authority === 'ADMIN') &&
-                    <Link to={"/home/showListTeacher"} style={{color: 'inherit', textDecoration: 'none'}}>
-                        <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
-                            <img className={"ml-3 w-4 h-4"}
-                                 src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'}
-                                 alt={'...'}
-                            />
-                            <p className={"ml-2 justify-center"}>Danh sách giáo viên</p>
-                        </div>
-                    </Link>}
+            {((user.roles[0].authority === 'ADMIN') || (user.roles[0].name === 'ADMIN')) &&
+                <Link to={"/home/showListStudent"} style={{color: 'inherit', textDecoration: 'none'}}>
+                    <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
+                        <img className={"ml-3 w-4 h-4"}
+                             src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'}
+                             alt={'...'}
+                        />
+                        <p className={"ml-2 justify-center"}>Danh sách học viên</p>
+                    </div>
+                </Link>}
 
-                {(user.roles[0].authority === 'ADMIN') &&
-                    <Link to={"/home/showTeacherPending"} style={{color: 'inherit', textDecoration: 'none'}}>
-                        <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
-                            <img className={"ml-3 w-4 h-4"}
-                                 src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'}
-                                 alt={'...'}
-                            />
-                            <p className={"ml-2 justify-center"}>Đăng ký giáo viên</p>
-                        </div>
-                    </Link>}
+
+            {((user.roles[0].authority === 'ADMIN') || (user.roles[0].name === 'ADMIN')) &&
+                <Link to={"/home/showListTeacher"} style={{color: 'inherit', textDecoration: 'none'}}>
+                    <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
+                        <img className={"ml-3 w-4 h-4"}
+                             src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'}
+                             alt={'...'}
+                        />
+                        <p className={"ml-2 justify-center"}>Danh sách giáo viên</p>
+                    </div>
+                </Link>}
+
+            {((user.roles[0].authority === 'ADMIN') || (user.roles[0].name === 'ADMIN')) &&
+                <Link to={"/home/showTeacherPending"} style={{color: 'inherit', textDecoration: 'none'}}>
+                    <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
+                        <img className={"ml-3 w-4 h-4"}
+                             src={'https://firebasestorage.googleapis.com/v0/b/test1-80dfc.appspot.com/o/images%2Ficons8-list-view-80.png?alt=media&token=db66eda9-6f3a-49b2-bcb3-fe4bda7939ac'}
+                             alt={'...'}
+                        />
+                        <p className={"ml-2 justify-center"}>Đăng ký giáo viên</p>
+                    </div>
+                </Link>}
 
                 <div className={"w-full h-10 flex items-center hover:bg-blue-100"}>
                     <img className={"ml-3 w-4 h-4"}
