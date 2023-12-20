@@ -11,8 +11,6 @@ import ShowListTeacher from "./page/user/teacher/ShowListTeacher";
 import TeacherDetail from "./page/user/teacher/TeacherDetail";
 import CreateCateQuiz from "./page/catequiz/CreateCateQuiz";
 import LayoutManagerQuestion from "./page/question/LayoutManagerQuestion";
-
-import ListQuestion from "./page/question/ListQuestion";
 import ShowListCategoryQuiz from "./page/catequiz/ShowListCategoryQuiz";
 import CreateCateQuestion from "./page/catequestion/CreateCateQuestion";
 import UpdateCateQuiz from "./page/catequiz/UpdateCateQuiz";
@@ -21,8 +19,6 @@ import ShowListCateQuestion from "./page/catequestion/ShowListCateQuestion";
 import UpdateCateQuestion from "./page/catequestion/UpdateCateQuestion";
 import {useSelector} from "react-redux";
 import ChangePassword from "./page/user/UserPassword";
-import CreateQuestionOneAnswer from "./page/question/CreateQuestionOneAnswer";
-import CreateQuestionTrueFalse from "./page/question/CreateQuestionTrueFalse";
 import TotalQuestion from "./page/question/TotalQuestion";
 import MenuLogin from "./page/login/MenuLogin";
 import LoginWithGmailForm from "./page/login/LoginWithGmailForm";
@@ -31,6 +27,7 @@ import ForgotForm from "./page/login/ForgotForm";
 import Home from "./component/Home";
 import Login from "./page/login/Login";
 import CreateNewQuiz from "./page/quizz/CreateNewQuiz";
+import ListQuizCard from "./component/ListQuizCard";
 
 
 function App() {
@@ -51,7 +48,7 @@ function App() {
                     <Route path={'*'} element={<Navigate to="/"/>}>
 
                     </Route>
-                : user && (
+                    : user && (
                     <Route path={'/home'} element={<Home/>}>
                         <Route path={'createCateQuiz'} element={<CreateCateQuiz/>}></Route>
                         <Route path={'createQuiz'} element={<CreateNewQuiz/>}></Route>
@@ -71,6 +68,8 @@ function App() {
                         <Route path={'updateCateQuiz/:id'} element={<UpdateCateQuiz/>}></Route>
                         <Route path={'showListCateQuestion'} element={<ShowListCateQuestion/>}></Route>
                         <Route path={'updateCateQuestion/:id'} element={<UpdateCateQuestion/>}></Route>
+                        <Route path={'listQuiz'} element={<ListQuizCard/>}></Route>
+
                     </Route>
                 )
                 }

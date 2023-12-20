@@ -125,11 +125,10 @@ export default function EditQuestion({question, handleClose}) {
                                     <RadioGroup
                                         aria-labelledby={`demo-radio-buttons-group-label-${index}`}
                                         name={`radio-buttons-group-${index}`}
-                                        defaultValue={`answer${1}checkbox`}
+                                        // defaultValue={`true${index}`}
                                         value={
-                                            formik.values.answers[index].status === "1"
-                                                ? `answer${index}`
-                                                : "other"
+                                            question.answers[index].status === 1
+                                                ? `true${index}` : `other`
                                         }
                                         onChange={() => {
                                             formik.setFieldValue(
@@ -153,7 +152,8 @@ export default function EditQuestion({question, handleClose}) {
                                                     question.typeQuestion.id === 1 || question.typeQuestion.id === 2 ? (
                                                         <div className="custom-quill-container flex flex-column">
                                                             <FormControlLabel
-                                                                value={`answer${index}`}
+                                                                // value={`answer${index}`}
+                                                                value={question.answers[index].status === 1 ? `true${index}` : `false${index}`}
                                                                 sx={{
                                                                     width: 28,
                                                                     height: 28,
@@ -162,7 +162,6 @@ export default function EditQuestion({question, handleClose}) {
                                                                 }}
                                                                 control={
                                                                     <Radio
-                                                                        defaultChecked={question.answers[index].status === 1}
                                                                         onChange={(event) => {
                                                                             console.log(index)
                                                                             console.log(question.answers[index].status)

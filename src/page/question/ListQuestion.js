@@ -122,10 +122,9 @@ export default function ListQuestion() {
                                     <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
                                         {question.answers.map((answer, index) => (
                                             <React.Fragment key={index} className={"flex justify-around"}>
-                                                <Grid item xs={5} className={"m-auto"}
+                                                <Grid item xs={3} className={"m-auto"}
                                                 >
                                                     <Item
-
                                                     >
                                                         <h2
                                                             style={{
