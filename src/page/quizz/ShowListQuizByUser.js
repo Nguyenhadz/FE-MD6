@@ -41,8 +41,10 @@ export default function ShowListQuizByUser() {
 
     const [currentPage, setCurrentPage] = React.useState(1);
     const itemsPerPage = 5;
+
     const handleChangePage = (event, newValue) => {
         setCurrentPage(newValue);
+        setValue(0);
     };
     const startIndex = (currentPage - 1) * itemsPerPage;
     const visibleQuizzes = quizzes?.slice(startIndex, startIndex + itemsPerPage);
@@ -59,7 +61,7 @@ export default function ShowListQuizByUser() {
                 <TabsList>
                     {visibleQuizzes?.map((quiz, index) => (
                         <Tab value={index} sx={{display: 'block'}}>
-                            <div style={{ wordWrap: 'break-word', textAlign: 'left' }}>Bài thi: {index + 1}</div>
+                            <div style={{ wordWrap: 'break-word', textAlign: 'left' }}>Bài thi: {index + 1 + (currentPage-1)*itemsPerPage}</div>
                             <div style={{ wordWrap: 'break-word', textAlign: 'left' }}>{quiz.title}</div>
                         </Tab>
                     ))}

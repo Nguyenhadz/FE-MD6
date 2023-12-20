@@ -32,12 +32,10 @@ import {store} from "../../redux/store/Store";
 const drawerWidth = 360;
 
 const EditQuiz = ({quizId}) => {
-    console.log("321", quizId)
     const [quiz, setQuiz] = useState(null);
-    console.log("123", quiz)
     useEffect(() => {
         const fetchData = async () => {
-            await dispatch(findQuizById(1));
+            await dispatch(findQuizById(quizId));
             setQuiz(store.getState().quizzes.quiz);
         };
         fetchData();
@@ -53,7 +51,6 @@ const EditQuiz = ({quizId}) => {
         return store.cateQuestions.cateQuestions
     })
     const categoryQuizzes = useSelector((store) => {
-        console.log(store.cateQuiz)
         return store.cateQuiz.cateQuizzes
     })
     const levelQuizzes = useSelector((store) => {
@@ -71,7 +68,6 @@ const EditQuiz = ({quizId}) => {
         dispatch(showAllCategoryQuiz());
         dispatch(findAllLevelQuiz());
     }, []);
-    console.log(levelQuizzes)
     useEffect(() => {
         if (selectedField === 0) {
             setFilteredQuestions(questions); // Nếu selectedField là 0, hiển thị tất cả câu hỏi
@@ -106,31 +102,6 @@ const EditQuiz = ({quizId}) => {
     }, [selectedQuestionContent]);
 
 
-    const formik = useFormik({
-        initialValues: {
-            title: quiz?.title,
-            time: quiz?.time,
-            timeCreate: quiz?.time,
-            description: quiz?.description,
-            passScore: quiz?.passScore,
-            status: quiz?.status,
-            categoryQuiz: {
-                id: quiz?.categoryQuiz.id
-            },
-            levelQuiz: {
-                id: quiz?.levelQuiz.id
-            },
-            user: {
-                id: quiz?.user.id
-            },
-            questions: quiz?.questions,
-        },
-        onSubmit: async (values) => {
-
-            await dispatch(createQuiz(values))
-            await formik.resetForm()
-        },
-    });
     const Search = styled('div')(({theme}) => ({
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -208,9 +179,38 @@ const EditQuiz = ({quizId}) => {
         },
     };
 
+    const formik = useFormik({
+        initialValues: {
+            title: quiz?.title,
+            time: quiz?.time,
+            timeCreate: quiz?.time,
+            description: quiz?.description,
+            passScore: quiz?.passScore,
+            status: quiz?.status,
+            categoryQuiz: {
+                id: quiz?.categoryQuiz.id
+            },
+            levelQuiz: {
+                id: quiz?.levelQuiz.id
+            },
+            user: {
+                id: quiz?.user.id
+            },
+            questions: quiz?.questions,
+        },
+        enableReinitialize: true,
+        onSubmit: async (values) => {
+
+            await dispatch(createQuiz(values))
+            await formik.resetForm()
+        },
+    });
+    const handleUpdateQuiz = (data) => {
+        console.log('123', data)
+    }
+
     return (
         <Box
-
             sx={{
                 display: 'flex',
                 justifyContent: 'left',
@@ -218,288 +218,283 @@ const EditQuiz = ({quizId}) => {
                 flexDirection: 'column',
                 overflow: 'scroll',
                 padding: '0 16px',
-                maxWidth: '100vw',
-            }}>
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'left',
-                    alignItems: 'left',
-                    flexDirection: 'column',
-                    overflow: 'scroll',
-                    padding: '0 16px',
-                }}
-            >
-                <CssBaseline/>
-                <Grid
-                    xs={10}>
-                    <form onSubmit={formik.handleSubmit}
-                          sx={{
-                              marginLeft: 'auto',
-                              marginRight: 'auto',
-                              width: "full"
-                          }}>
-                        <Box
-                            className='bg-fuchsia-100'
-                            sx={{
-                                display: "grid",
-                                gridTemplateColumns: "repeat(auto-fit, minmax(25ch, 1fr))",
-                                gap: 1,
-                                padding: 1,
-                                overflow: "auto",
-                                height: "100%",
-                                // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-                                border: 'rounded'
-                            }}
-                        >
-                            <Grid item xs={12} sx={{justifyContent: 'center'}}>
-                                <Box>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            fullWidth={true}
-                                            id="standard-basic"
-                                            label="Tên bài thi"
-                                            variant="standard"
-                                            name={"title"}
-                                            value={formik.values.title}
-                                            onChange={(e) => formik.setFieldValue('title', e.target.value)}
-                                        />
-                                    </Grid>
-                                </Box>
-                                <Box>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            name={"time"}
-                                            hidden={true}
-                                            value={formik.values.time}
-                                        />
-                                    </Grid>
-                                </Box>
-                                <Box>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            fullWidth={true}
-                                            id="standard-basic"
-                                            label="Điểm bài thi"
-                                            variant="standard"
-                                            name={"passScore"}
-                                            value={formik.values.passScore}
-                                            onChange={(e) => formik.setFieldValue('passScore', e.target.value)} // Thêm dòng này
-                                        />
-                                    </Grid>
-                                </Box>
-                                <Box>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            fullWidth={true}
-                                            id="standard-basic"
-                                            label="Mô tả"
-                                            variant="standard"
-                                            name={"description"}
-                                            value={formik.values.description}
-                                            onChange={(e) => formik.setFieldValue('description', e.target.value)} // Thêm dòng này
-                                        />
-                                    </Grid>
-                                </Box>
-                                <Box className='flex justify-center'>
-                                    <Grid item xs={4}>
-                                        <FormControl sx={{m: 1, minWidth: 160}}>
-                                            <InputLabel id="demo-simple-select-autowidth-label">Thể loại</InputLabel>
-                                            <Select
-                                                labelId="demo-simple-select-autowidth-label"
-                                                id="demo-simple-select-autowidth"
-                                                onChange={handleChange}
-                                                autoWidth
-                                                label="Thể loại"
-                                            >
-                                                {categoryQuizzes.map((cateQuiz, index) =>
-                                                    (
-                                                        <MenuItem value={index}>{cateQuiz.name}</MenuItem>
-                                                    )
-                                                )}
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <FormControl sx={{m: 1, minWidth: 160}}>
-                                            <InputLabel id="demo-simple-select-autowidth-label">Mức độ</InputLabel>
-                                            <Select
-                                                labelId="demo-simple-select-autowidth-label"
-                                                id="demo-simple-select-autowidth"
-                                                onChange={handleChange}
-                                                autoWidth
-                                                label="Mức độ"
-                                            >
-                                                {levelQuizzes.map((levelQuiz, index) =>
-                                                    (
-                                                        <MenuItem value={index}>{levelQuiz.name}</MenuItem>
-                                                    )
-                                                )}
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                </Box>
-                            </Grid>
-                        </Box>
-
-                        <Box
-                            component="main"
-                            className='bg-fuchsia-100'
-                            sx={{
-                                flexGrow: 1,
-                                p: 3,
-                                overflow: 'auto',
-                            }}
-                        >
-
-                            <Toolbar/>
-                            {selectedQuestionContent.map((question, index) => (
-                                <Box
-                                    className={"m-14"}>
-                                    <Grid
-                                        bgcolor='linear-gradient(45deg, #9E9E9E 30%, #616161 90%)"'
-                                        container
-                                        direction="row"
-                                        justifyContent="space-around"
-                                        alignItems="stretch"
-                                        border="solid 1px round 50%"
-                                        spacing={8}
-                                        rowSpacing={3}
-                                        columnSpacing={{xs: 1, sm: 2, md: 3}
-
-                                        }>
-                                        <Grid className={"flex flex-col"} item xs={12}>
-                                            <Grid item xs={10}>
-
-                                                <Item
-                                                    style={{
-                                                        border: "solid 1px " + gradientColors.primary,
-                                                        textAlign: "left",
-                                                        display: 'flex'
-                                                    }}>
-                                                    <span>Câu {index}: </span>
-                                                    <span dangerouslySetInnerHTML={{__html: question.content}}></span>
-                                                </Item>
-                                            </Grid>
-                                            <Grid item xs={2}>
-                                                <Button
-                                                    style={{
-                                                        border: "solid 1px " + gradientColors.primary,
-                                                    }}
-                                                    onClick={() => handleDeleteQuestion(question.id)}>
-                                                    X
-                                                </Button>
-                                            </Grid>
-                                        </Grid>
-                                        {question.answers.map((answer, index) => (
-                                            <React.Fragment key={index}>
-                                                <Grid item xs={6}>
-                                                    <Item
-                                                        style={{backgroundColor: answer.status === 1 ? gradientColors.accent : gradientColors.background}}>{`Đáp án ${index + 1}`}</Item>
-                                                </Grid>
-                                                {(index + 1) % 2 === 0 && (
-                                                    <Grid item xs={12}>
-                                                        <Divider/>
-                                                    </Grid>
-                                                )}
-                                            </React.Fragment>
-                                        ))}
-                                    </Grid>
-                                </Box>
-                            ))}
-                            <Grid sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} xs={12}>
-                                <Box sx={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    border: "solid 1px",
-                                    width: '15%',
-                                    height: '70%'
-                                }}>
-                                    <Button
-                                        type="submit"
-                                        sx={{background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)"}}
-                                        className={"h-10 w-40 mt-2 border-"  + " rounded-full hover:text-white hover:bg-" + " justify-center"}>
-                                        Tạo bài thi
-                                    </Button>
-                                </Box>
-                            </Grid>
-                        </Box>
-                    </form>
-                </Grid>
-                <Grid xs={3}>
-                    <Drawer
+            }}
+        >
+            <CssBaseline/>
+            <Grid
+                xs={10}>
+                <form onSubmit={formik.handleSubmit}
+                      sx={{
+                          marginLeft: 'auto',
+                          marginRight: 'auto',
+                          width: "full"
+                      }}>
+                    <Box
+                        className='bg-fuchsia-100'
                         sx={{
-                            width: drawerWidth,
-                            flexShrink: 0,
-                            '& .MuiDrawer-paper': {
-                                width: drawerWidth,
-                                boxSizing: 'border-box',
-                            },
+                            display: "grid",
+                            gridTemplateColumns: "repeat(auto-fit, minmax(25ch, 1fr))",
+                            gap: 1,
+                            padding: 1,
+                            overflow: "auto",
+                            height: "100%",
+                            // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+                            border: 'rounded'
                         }}
-                        variant="permanent"
-                        anchor="right">
-                        <Toolbar/>
-                        <Divider/>
-                        <List>
-                            <Box className={"flex flex-col justify-center"}>
-
-                                <FormControl sx={{m: 1, minWidth: 180}}>
-                                    <InputLabel id="demo-controlled-open-select-label">Tìm câu hỏi theo</InputLabel>
-                                    <Select
-                                        labelId="demo-controlled-open-select-label"
-                                        id="demo-controlled-open-select"
-                                        open={open}
-                                        onClose={handleClose}
-                                        onOpen={handleOpen}
-                                        value={selectedField}
-                                        label="Tìm câu hỏi theo"
-                                        onChange={handleChange}
-                                    >
-                                        <MenuItem key={0} value={0}>Tất cả</MenuItem>
-                                        {categoryQuestions.map((category, index) => (
-                                            <MenuItem key={index} value={category.id}>{category.name}</MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-
-                                <Box className={"flex"}>
-                                    <Search>
-                                        <SearchIconWrapper>
-                                            <SearchIcon/>
-                                        </SearchIconWrapper>
-                                        <StyledInputBase
-                                            placeholder="Nội dung tìm kiếm…"
-                                            inputProps={{'aria-label': 'search'}}
-                                            onChange={(event) => (searchTermRef.current = event.target.value)}
-
-                                        />
-                                    </Search>
-                                    <Button onClick={handleSearch}>Tìm kiếm</Button>
-                                </Box>
-
+                    >
+                        <Grid item xs={12} sx={{justifyContent: 'center'}}>
+                            <Box>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        fullWidth={true}
+                                        id="standard-basic"
+                                        label="Tên bài thi"
+                                        variant="standard"
+                                        name={"title"}
+                                        value={formik.values.title}
+                                        onChange={(e) => formik.setFieldValue('title', e.target.value)}
+                                    />
+                                </Grid>
                             </Box>
-                            {questions.map((question) => (
-                                <ListItem key={question.id}>
-                                    <ListItemText>
-                                        <QuestionDetail question={question} buttonLabel={
-                                            <Typography className={"flex "}>
-                                                Câu : {question.id}
-                                                <span dangerouslySetInnerHTML={{__html: question.content}}/>
-                                            </Typography>
-                                        }/>
+                            <Box>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        fullWidth={true}
+                                        id="standard-basic"
+                                        label="Điểm đạt yêu cầu"
+                                        variant="standard"
+                                        name={"passScore"}
+                                        value={formik.values.passScore}
+                                        onChange={(e) => formik.setFieldValue('passScore', e.target.value)} // Thêm dòng này
+                                    />
+                                </Grid>
+                            </Box>
+                            <Box>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        fullWidth={true}
+                                        id="standard-basic"
+                                        label="Thời gian thi"
+                                        variant="standard"
+                                        name={"description"}
+                                        value={formik.values.time}
+                                        onChange={(e) => formik.setFieldValue('time', e.target.value)} // Thêm dòng này
+                                    />
+                                </Grid>
+                            </Box>
+                            <Box>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        fullWidth={true}
+                                        id="standard-basic"
+                                        label="Mô tả"
+                                        variant="standard"
+                                        name={"description"}
+                                        value={formik.values.description}
+                                        onChange={(e) => formik.setFieldValue('description', e.target.value)} // Thêm dòng này
+                                    />
+                                </Grid>
+                            </Box>
+                            <Box className='flex justify-center'>
+                                <Grid item xs={4}>
+                                    <FormControl sx={{m: 1, minWidth: 160}}>
+                                        <InputLabel id="demo-simple-select-autowidth-label">Thể loại</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-autowidth-label"
+                                            id="demo-simple-select-autowidth"
+                                            onChange={handleChange}
+                                            autoWidth
+                                            label="Thể loại"
+                                        >
+                                            {categoryQuizzes.map((cateQuiz, index) =>
+                                                (
+                                                    <MenuItem value={index}>{cateQuiz.name}</MenuItem>
+                                                )
+                                            )}
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <FormControl sx={{m: 1, minWidth: 160}}>
+                                        <InputLabel id="demo-simple-select-autowidth-label">Mức độ</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-autowidth-label"
+                                            id="demo-simple-select-autowidth"
+                                            onChange={handleChange}
+                                            autoWidth
+                                            label="Mức độ"
+                                        >
+                                            {levelQuizzes.map((levelQuiz, index) =>
+                                                (
+                                                    <MenuItem value={index}>{levelQuiz.name}</MenuItem>
+                                                )
+                                            )}
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                            </Box>
+                        </Grid>
+                    </Box>
 
-                                    </ListItemText>
-                                    <Button onClick={() => handleAddQuestion(question)}
-                                            onChange={(e) => formik.setFieldValue('questions', e.target.value)}>
-                                        Thêm
-                                    </Button>
-                                </ListItem>
-                            ))}
-                        </List>
-                    </Drawer>
-                </Grid>
-            </Box>
+                    <Box
+                        component="main"
+                        className='bg-fuchsia-100'
+                        sx={{
+                            flexGrow: 1,
+                            p: 3,
+                            overflow: 'auto',
+                        }}
+                    >
+
+                        <Toolbar/>
+                        {selectedQuestionContent.map((question, index) => (
+                            <Box
+                                className={"m-14"}>
+                                <Grid
+                                    bgcolor='linear-gradient(45deg, #9E9E9E 30%, #616161 90%)"'
+                                    container
+                                    direction="row"
+                                    justifyContent="space-around"
+                                    alignItems="stretch"
+                                    border="solid 1px round 50%"
+                                    spacing={8}
+                                    rowSpacing={3}
+                                    columnSpacing={{xs: 1, sm: 2, md: 3}
+
+                                    }>
+                                    <Grid className={"flex flex-col"} item xs={12}>
+                                        <Grid item xs={10}>
+
+                                            <Item
+                                                style={{
+                                                    border: "solid 1px " + gradientColors.primary,
+                                                    textAlign: "left",
+                                                    display: 'flex'
+                                                }}>
+                                                <span>Câu {index}: </span>
+                                                <span dangerouslySetInnerHTML={{__html: question.content}}></span>
+                                            </Item>
+                                        </Grid>
+                                        <Grid item xs={2}>
+                                            <Button
+                                                style={{
+                                                    border: "solid 1px " + gradientColors.primary,
+                                                }}
+                                                onClick={() => handleDeleteQuestion(question.id)}>
+                                                X
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                    {question.answers.map((answer, index) => (
+                                        <React.Fragment key={index}>
+                                            <Grid item xs={6}>
+                                                <Item
+                                                    style={{backgroundColor: answer.status === 1 ? gradientColors.accent : gradientColors.background}}>{`Đáp án ${index + 1}`}</Item>
+                                            </Grid>
+                                            {(index + 1) % 2 === 0 && (
+                                                <Grid item xs={12}>
+                                                    <Divider/>
+                                                </Grid>
+                                            )}
+                                        </React.Fragment>
+                                    ))}
+                                </Grid>
+                            </Box>
+                        ))}
+                        <Grid sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} xs={12}>
+                            <Box sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                border: "solid 1px",
+                                width: '15%',
+                                height: '70%'
+                            }}>
+                                <Button
+                                    type="submit"
+                                    sx={{background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)"}}
+                                    className={"h-10 w-40 mt-2 border- rounded-full hover:text-white hover:bg- justify-center"}
+
+                                onClick={handleUpdateQuiz(formik.values)}>
+                                    Cập nhật
+                                </Button>
+                            </Box>
+                        </Grid>
+                    </Box>
+                </form>
+            </Grid>
+            <Grid xs={3}>
+                <Drawer
+                    sx={{
+                        width: drawerWidth,
+                        flexShrink: 0,
+                        '& .MuiDrawer-paper': {
+                            width: drawerWidth,
+                            boxSizing: 'border-box',
+                        },
+                    }}
+                    variant="permanent"
+                    anchor="right">
+                    <Toolbar/>
+                    <Divider/>
+                    <List>
+                        <Box className={"flex flex-col justify-center"}>
+
+                            <FormControl sx={{m: 1, minWidth: 180}}>
+                                <InputLabel id="demo-controlled-open-select-label">Tìm câu hỏi theo</InputLabel>
+                                <Select
+                                    labelId="demo-controlled-open-select-label"
+                                    id="demo-controlled-open-select"
+                                    open={open}
+                                    onClose={handleClose}
+                                    onOpen={handleOpen}
+                                    value={selectedField}
+                                    label="Tìm câu hỏi theo"
+                                    onChange={handleChange}
+                                >
+                                    <MenuItem key={0} value={0}>Tất cả</MenuItem>
+                                    {categoryQuestions.map((category, index) => (
+                                        <MenuItem key={index} value={category.id}>{category.name}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+
+                            <Box className={"flex"}>
+                                <Search>
+                                    <SearchIconWrapper>
+                                        <SearchIcon/>
+                                    </SearchIconWrapper>
+                                    <StyledInputBase
+                                        placeholder="Nội dung tìm kiếm…"
+                                        inputProps={{'aria-label': 'search'}}
+                                        onChange={(event) => (searchTermRef.current = event.target.value)}
+
+                                    />
+                                </Search>
+                                <Button onClick={handleSearch}>Tìm kiếm</Button>
+                            </Box>
+
+                        </Box>
+                        {questions.map((question) => (
+                            <ListItem key={question.id}>
+                                <ListItemText>
+                                    <QuestionDetail question={question} buttonLabel={
+                                        <Typography className={"flex "}>
+                                            Câu : {question.id}
+                                            <span dangerouslySetInnerHTML={{__html: question.content}}/>
+                                        </Typography>
+                                    }/>
+
+                                </ListItemText>
+                                <Button onClick={() => handleAddQuestion(question)}
+                                        onChange={(e) => formik.setFieldValue('questions', e.target.value)}>
+                                    Thêm
+                                </Button>
+                            </ListItem>
+                        ))}
+                    </List>
+                </Drawer>
+            </Grid>
         </Box>
     );
 }

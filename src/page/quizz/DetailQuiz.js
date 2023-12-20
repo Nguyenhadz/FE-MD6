@@ -13,6 +13,11 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import {findResultByQuiz} from "../../redux/service/ResultService";
 import {toast} from "react-toastify";
 import {store} from "../../redux/store/Store";
+import Modal from "@mui/material/Modal";
+import {InfoTwoTone} from "@mui/icons-material";
+import Button from "@mui/material/Button";
+import MyQuestionDetail from "../question/MyQuestionDetail";
+import EditQuiz from "./EditQuiz";
 
 const DetailQuiz = ({quizId}) => {
     const dispatch = useDispatch();
@@ -24,7 +29,7 @@ const DetailQuiz = ({quizId}) => {
             setResults(store.getState().resultStore.results);
         };
         fetchData();
-    }, [])
+    }, [quizId])
     const quiz = useSelector((store) => {
         return store.quizzes.quiz
     });
@@ -44,12 +49,44 @@ const DetailQuiz = ({quizId}) => {
             console.log(results)
             toast.success("Không thể sửa bài thi đã có người thi", {})
         } else {
-            console.log("ok")
+            handleOpen()
         }
+    };
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 800,
+        height: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 0,
     };
 
     return (
         <div className={"ml-8"}>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box id="modal-container" sx={{width: '1000px', height: '600px', position: 'absolute', top: '30%', left: '30%', backgroundColor: 'background.paper'}}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        <EditQuiz quizId={quizId}/>
+                    </Typography>
+                </Box>
+            </Modal>
             <div className="flex items-center justify-between mb-3">
                 <div>
                     <b>Tên bài thi: &nbsp;
