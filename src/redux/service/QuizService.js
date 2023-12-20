@@ -17,3 +17,32 @@ export const createQuiz = createAsyncThunk(
         return res.data
     }
 )
+export const updateQuiz = createAsyncThunk(
+    'quiz/update',
+    async (data) => {
+        console.log(data)
+        const res = await customAxios.put('quizzes', data, axiosConfig);
+        return res.data
+    }
+)
+export const findQuizById = createAsyncThunk(
+    'quiz/findQuizById',
+    async (id) => {
+        const res = await customAxios.get('quizzes/'+ id, axiosConfig);
+        return res.data
+    }
+)
+export const findQuizByUser = createAsyncThunk(
+    'quiz/findQuizByUser',
+    async (id) => {
+        const res = await customAxios.get('quizzes/fbu/'+ id, axiosConfig);
+        return res.data
+    }
+)
+export const findAllQuiz = createAsyncThunk(
+    'quiz/findAllQuiz',
+    async () => {
+        const res = await customAxios.get('quizzes', axiosConfig);
+        return res.data
+    }
+)

@@ -3,12 +3,15 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LayersIcon from '@mui/icons-material/Layers';
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import {Home} from "@mui/icons-material";
 import {PiExam} from "react-icons/pi";
+import {findQuizById} from "../redux/service/QuizService";
 
 const MainListItems = ({sidebarOpen}) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     console.log(sidebarOpen)
     const user = useSelector(state => state.users.currentUser);
 
@@ -84,11 +87,19 @@ const MainListItems = ({sidebarOpen}) => {
             </React.Fragment>)}
         {isTeacher && ( // nếu là teacher hoặc student thì hiển thị các ListItemButton sau
             <React.Fragment>
-                <ListItemButton component={Link} to="Danh sách câu hỏi">
+                <ListItemButton component={Link} to="/home/showAllQuiz">
                     <ListItemIcon>
                         <PiExam/>
                     </ListItemIcon>
                     <ListItemText primary="Danh sách bài thi"
+                        // primaryTypographyProps={primaryTypographyProps}
+                    />
+                </ListItemButton>
+                <ListItemButton component={Link} to="/home/createQuiz">
+                    <ListItemIcon>
+                        <PiExam/>
+                    </ListItemIcon>
+                    <ListItemText primary="Tạo mới bài thi"
                         // primaryTypographyProps={primaryTypographyProps}
                     />
                 </ListItemButton>
@@ -117,7 +128,8 @@ const MainListItems = ({sidebarOpen}) => {
             </React.Fragment>)}
         {isStudent && ( // nếu là teacher hoặc student thì hiển thị các ListItemButton sau
             <React.Fragment>
-                <ListItemButton component={Link} to="Danh sách bài thi">
+                <ListItemButton
+                                component={Link} to="/home/showAllQuiz">
                     <ListItemIcon>
                         <PiExam/>
                     </ListItemIcon>

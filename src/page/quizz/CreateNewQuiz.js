@@ -261,6 +261,7 @@ export default function CreateNewQuiz() {
                                         />
                                     </Grid>
                                 </Box>
+
                                 <Box>
                                     <Grid item xs={12}>
                                         <TextField
@@ -271,6 +272,19 @@ export default function CreateNewQuiz() {
                                             name={"description"}
                                             value={formik.values.description}
                                             onChange={(e) => formik.setFieldValue('description', e.target.value)} // Thêm dòng này
+                                        />
+                                    </Grid>
+                                </Box>
+                                <Box>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            fullWidth={true}
+                                            id="standard-basic"
+                                            label="Thời gian thi"
+                                            variant="standard"
+                                            name={"time"}
+                                            value={formik.values.time}
+                                            onChange={(e) => formik.setFieldValue('time', e.target.value)} // Thêm dòng này
                                         />
                                     </Grid>
                                 </Box>
@@ -287,7 +301,7 @@ export default function CreateNewQuiz() {
                                             >
                                                 {categoryQuizzes.map((cateQuiz, index) =>
                                                     (
-                                                        <MenuItem value={index}>{cateQuiz.name}</MenuItem>
+                                                        <MenuItem value={index}><span dangerouslySetInnerHTML={{__html: cateQuiz.name}}></span></MenuItem>
                                                     )
                                                 )}
                                             </Select>
@@ -368,7 +382,10 @@ export default function CreateNewQuiz() {
                                             <React.Fragment key={index}>
                                                 <Grid item xs={6}>
                                                     <Item
-                                                        style={{backgroundColor: answer.status === 1 ? gradientColors.accent : gradientColors.background}}>{`Đáp án ${index + 1}`}</Item>
+                                                        style={{backgroundColor: answer.status === 1 ? 'lightblue' : gradientColors.background}}>
+                                                        <span dangerouslySetInnerHTML={{__html: answer.content}}/>
+
+                                                    </Item>
                                                 </Grid>
                                                 {(index + 1) % 2 === 0 && (
                                                     <Grid item xs={12}>
