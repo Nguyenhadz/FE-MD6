@@ -57,7 +57,7 @@ const DoingQuiz = () => {
     useEffect(() => {
         if (countdown === 0) {
             // Hết thời gian, thực hiện submit ở đây
-                handleSubmit().then(() => {});
+            handleSubmit().then(() => {});
         }
     }, [countdown]);
 
