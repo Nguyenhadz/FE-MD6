@@ -7,11 +7,10 @@ import {buttonClasses} from '@mui/base/Button';
 import {Tab as BaseTab, tabClasses} from '@mui/base/Tab';
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {findQuizById, findQuizByUser} from "../../redux/service/QuizService";
+import {findQuizByUser} from "../../redux/service/QuizService";
 import Box from "@mui/material/Box";
 import DetailQuiz from "./DetailQuiz";
 import {Pagination} from "@mui/material";
-import {findResultByQuiz} from "../../redux/service/ResultService";
 import {store} from "../../redux/store/Store";
 export default function ShowListQuizByUser() {
     const currentUser = useSelector((store) => {
