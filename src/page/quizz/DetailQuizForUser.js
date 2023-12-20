@@ -68,7 +68,7 @@ const DetailQuizForUser = ({quizId}) => {
                                 className={"h-6 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:hover:bg-blue-50"}
                                 onClick={ async () => {
                                     await dispatch(findQuizById(quiz.id))
-                                    await navigate("/home/doQuiz/" + quiz.id)
+                                    await navigate("/home/doingQuiz/" + quiz.id)
                                 }}
                         >
                             Làm bài thi

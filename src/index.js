@@ -6,7 +6,6 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import {Provider} from "react-redux";
-import {store} from "./redux/Store";
 import {GoogleOAuthProvider} from "@react-oauth/google";
 import {store} from "./redux/store/Store";
 

@@ -34,6 +34,8 @@ import ResultAfterTest from "./page/result/ResultAfterTest";
 import ShowListQuizByUser from "./page/quizz/ShowListQuizByUser";
 import EditQuiz from "./page/quizz/EditQuiz";
 import ShowAllQuiz from "./page/quizz/ShowAllQuiz";
+import DoQuiz from "./page/quizz/StepList";
+import TextMobileStepper from "./page/quizz/TextMobileStepper";
 
 
 function App() {
@@ -79,7 +81,7 @@ function App() {
                         <Route path={'/home/doQuiz/:idQuiz'} element={<DoingQuiz/>}></Route>
                         <Route path={'/home/result'} element={<ResultAfterTest/>}></Route>
                         <Route path={'/home/showAllQuiz'} element={<ShowAllQuiz/>}></Route>
-
+                        <Route path={'/home/doingQuiz/:idQuiz'} element={<TextMobileStepper/>}/>
                         <Route path={'/home/editQuiz/:id'} element={<EditQuiz/>}></Route>
                         <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
 
