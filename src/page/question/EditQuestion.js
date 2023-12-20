@@ -13,12 +13,11 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import {
     CheckBoxOutlineBlankSharp,
-    CheckBoxSharp, CheckCircleOutline, RadioButtonCheckedOutlined,
-    RadioButtonCheckedRounded, RadioButtonCheckedSharp, RadioButtonUncheckedOutlined,
-    RadioButtonUncheckedRounded
+    CheckBoxSharp,
+    CheckCircleOutline,
+    RadioButtonUncheckedOutlined
 } from "@mui/icons-material";
 import {QuillToolbar} from "../catequiz/QuillToolbar";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 
 export default function EditQuestion({question, handleClose}) {
     const currentUser = useSelector((store) => {

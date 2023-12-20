@@ -1,19 +1,18 @@
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import {styled} from '@mui/system';
 import {Tabs as BaseTabs} from '@mui/base/Tabs';
 import {TabsList as BaseTabsList} from '@mui/base/TabsList';
 import {TabPanel as BaseTabPanel} from '@mui/base/TabPanel';
 import {buttonClasses} from '@mui/base/Button';
 import {Tab as BaseTab, tabClasses} from '@mui/base/Tab';
-import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {findAllQuiz, findQuizById, findQuizByUser} from "../../redux/service/QuizService";
+import {findAllQuiz} from "../../redux/service/QuizService";
 import Box from "@mui/material/Box";
-import DetailQuiz from "./DetailQuiz";
 import {Pagination} from "@mui/material";
-import {findResultByQuiz} from "../../redux/service/ResultService";
 import {store} from "../../redux/store/Store";
 import DetailQuizForUser from "./DetailQuizForUser";
+
 export default function ShowAllQuiz() {
     const currentUser = useSelector((store) => {
         return store.users.currentUser
@@ -44,26 +43,26 @@ export default function ShowAllQuiz() {
     const visibleQuizzes = quizzes?.slice(startIndex, startIndex + itemsPerPage);
     return (
         <>
-            <Tabs value={value} orientation="vertical"  sx={{width: "100%", height: "full"}}>
-                <Box sx={{ width: '100%', display: 'flex' }}>
+            <Tabs value={value} orientation="vertical" sx={{width: "100%", height: "full"}}>
+                <Box sx={{width: '100%', display: 'flex'}}>
                     <Tabs
                         value={value}
                         onChange={handleChange}
                         orientation="vertical"
-                        sx={{ borderRight: 1, borderColor: 'divider' }}
+                        sx={{borderRight: 1, borderColor: 'divider'}}
                     >
                         <TabsList>
                             {visibleQuizzes?.map((quiz, index) => (
                                 <Tab value={index} sx={{display: 'block'}}>
-                                    <div style={{ wordWrap: 'break-word', textAlign: 'left' }}>Bài thi: {index + 1}</div>
-                                    <div style={{ wordWrap: 'break-word', textAlign: 'left' }}>{quiz.title}</div>
+                                    <div style={{wordWrap: 'break-word', textAlign: 'left'}}>Bài thi: {index + 1}</div>
+                                    <div style={{wordWrap: 'break-word', textAlign: 'left'}}>{quiz.title}</div>
                                 </Tab>
                             ))}
                         </TabsList>
                     </Tabs>
 
                     {visibleQuizzes?.map((quiz, index) => (
-                        <TabPanel index={index} sx={{ width: '100%' }}>
+                        <TabPanel index={index} sx={{width: '100%'}}>
                             <DetailQuizForUser quizId={quiz.id}/>
                         </TabPanel>
                     ))}
@@ -74,7 +73,7 @@ export default function ShowAllQuiz() {
                 page={currentPage}
                 onChange={handleChangePage}
                 color="primary"
-                sx={{ marginTop: '16px' }}
+                sx={{marginTop: '16px'}}
             />
         </>
     );

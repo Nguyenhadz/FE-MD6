@@ -6,7 +6,6 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from "@mui/icons-material/Delete";
-import IconButton from "@mui/material/IconButton";
 import {useDispatch} from "react-redux";
 import {deleteQuestions} from "../../redux/service/QuestionService";
 

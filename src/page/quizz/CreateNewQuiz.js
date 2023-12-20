@@ -25,6 +25,7 @@ import Paper from "@mui/material/Paper";
 import {toast} from "react-toastify";
 import {showAllCategoryQuiz} from "../../redux/service/CateQuizService";
 import {findAllLevelQuiz} from "../../redux/service/LevelQuizService";
+import {Add, Clear} from "@mui/icons-material";
 
 const drawerWidth = 360;
 
@@ -50,6 +51,7 @@ export default function CreateNewQuiz() {
     const [selectedQuestionContent, setSelectedQuestionContent] = React.useState([]);
     const dispatch = useDispatch();
     const [filteredQuestions, setFilteredQuestions] = React.useState([]);
+
 
     useEffect(() => {
         dispatch(showAllCateQuestion());
@@ -98,10 +100,10 @@ export default function CreateNewQuiz() {
             passScore: "",
             status: 1,
             categoryQuiz: {
-                id: 2
+                id: ""
             },
             levelQuiz: {
-                id: 1
+                id: ""
             },
             user: {
                 id: currentUser.id
@@ -129,15 +131,6 @@ export default function CreateNewQuiz() {
         },
     }));
 
-    const SearchIconWrapper = styled('div')(({theme}) => ({
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }));
     const StyledInputBase = styled(InputBase)(({theme}) => ({
         color: 'inherit',
         '& .MuiInputBase-input': {
@@ -159,7 +152,12 @@ export default function CreateNewQuiz() {
     const handleChange = (event) => {
         setSelectedField(event.target.value);
     };
-
+    const handleChangeLevelQuiz = (event) => {
+        formik.setFieldValue(`levelQuiz.id`, event.target.value);
+    };
+    const handleSelectCateQuiz = (event) => {
+        formik.setFieldValue(`categoryQuiz.id`, event.target.value);
+    };
     const handleClose = () => {
         setOpen(false);
     };
@@ -180,6 +178,7 @@ export default function CreateNewQuiz() {
         accent: "linear-gradient(45deg, #4CAF50 30%, #8BC34A 90%)",
         background: "linear-gradient(45deg, #9E9E9E 30%, #616161 90%)",
     };
+
 
     return (
         <Box
@@ -213,7 +212,6 @@ export default function CreateNewQuiz() {
                               width: "full"
                           }}>
                         <Box
-                            className='bg-fuchsia-100'
                             sx={{
                                 display: "grid",
                                 gridTemplateColumns: "repeat(auto-fit, minmax(25ch, 1fr))",
@@ -295,13 +293,14 @@ export default function CreateNewQuiz() {
                                             <Select
                                                 labelId="demo-simple-select-autowidth-label"
                                                 id="demo-simple-select-autowidth"
-                                                onChange={handleChange}
+                                                onChange={handleSelectCateQuiz}
                                                 autoWidth
                                                 label="Thể loại"
                                             >
                                                 {categoryQuizzes.map((cateQuiz, index) =>
                                                     (
-                                                        <MenuItem value={index}><span dangerouslySetInnerHTML={{__html: cateQuiz.name}}></span></MenuItem>
+                                                        <MenuItem value={cateQuiz.id}><span
+                                                            dangerouslySetInnerHTML={{__html: cateQuiz.name}}></span></MenuItem>
                                                     )
                                                 )}
                                             </Select>
@@ -313,13 +312,13 @@ export default function CreateNewQuiz() {
                                             <Select
                                                 labelId="demo-simple-select-autowidth-label"
                                                 id="demo-simple-select-autowidth"
-                                                onChange={handleChange}
+                                                onChange={handleChangeLevelQuiz}
                                                 autoWidth
                                                 label="Mức độ"
                                             >
                                                 {levelQuizzes.map((levelQuiz, index) =>
                                                     (
-                                                        <MenuItem value={index}>{levelQuiz.name}</MenuItem>
+                                                        <MenuItem value={levelQuiz.id}>{levelQuiz.name}</MenuItem>
                                                     )
                                                 )}
                                             </Select>
@@ -331,7 +330,6 @@ export default function CreateNewQuiz() {
 
                         <Box
                             component="main"
-                            className='bg-fuchsia-100'
                             sx={{
                                 flexGrow: 1,
                                 p: 3,
@@ -374,7 +372,7 @@ export default function CreateNewQuiz() {
                                                         border: "solid 1px " + gradientColors.primary,
                                                     }}
                                                     onClick={() => handleDeleteQuestion(question.id)}>
-                                                    X
+                                                    <Clear/>
                                                 </Button>
                                             </Grid>
                                         </Grid>
@@ -388,7 +386,7 @@ export default function CreateNewQuiz() {
                                                     </Item>
                                                 </Grid>
                                                 {(index + 1) % 2 === 0 && (
-                                                    <Grid item xs={12}>
+                                                    <Grid item xs={10}>
                                                         <Divider/>
                                                     </Grid>
                                                 )}
@@ -397,19 +395,19 @@ export default function CreateNewQuiz() {
                                     </Grid>
                                 </Box>
                             ))}
-                            <Grid sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} xs={12}>
+                            <Grid sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} xs={10}>
                                 <Box sx={{
                                     display: 'flex',
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    border: "solid 1px",
+                                    border: "none",
                                     width: '15%',
-                                    height: '70%'
+                                    height: '60%'
                                 }}>
                                     <Button
                                         type="submit"
                                         sx={{background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)"}}
-                                        className={"h-10 w-40 mt-2 border-"  + " rounded-full hover:text-white hover:bg-" + " justify-center"}>
+                                        className={"h-10 w-40 mt-2 border- border-none rounded-full hover:text-white hover:bg- justify-center"}>
                                         Tạo bài thi
                                     </Button>
                                 </Box>
@@ -455,9 +453,6 @@ export default function CreateNewQuiz() {
 
                                 <Box className={"flex"}>
                                     <Search>
-                                        <SearchIconWrapper>
-                                            <SearchIcon/>
-                                        </SearchIconWrapper>
                                         <StyledInputBase
                                             placeholder="Nội dung tìm kiếm…"
                                             inputProps={{'aria-label': 'search'}}
@@ -465,7 +460,7 @@ export default function CreateNewQuiz() {
 
                                         />
                                     </Search>
-                                    <Button onClick={handleSearch}>Tìm kiếm</Button>
+                                    <Button onClick={handleSearch}><SearchIcon/></Button>
                                 </Box>
 
                             </Box>
@@ -482,7 +477,7 @@ export default function CreateNewQuiz() {
                                     </ListItemText>
                                     <Button onClick={() => handleAddQuestion(question)}
                                             onChange={(e) => formik.setFieldValue('questions', e.target.value)}>
-                                        Thêm
+                                        <Add/>
                                     </Button>
                                 </ListItem>
                             ))}
