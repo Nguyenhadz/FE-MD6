@@ -33,6 +33,8 @@ import ResultAfterTest from "./page/result/ResultAfterTest";
 import EditQuiz from "./page/quizz/EditQuiz";
 import ShowAllQuiz from "./page/quizz/ShowAllQuiz";
 import ListQuizCard from "./component/ListQuizCard";
+import DoQuiz from "./page/quizz/StepList";
+import TextMobileStepper from "./page/quizz/TextMobileStepper";
 
 
 function App() {
@@ -50,37 +52,37 @@ function App() {
                 </Route>
                 Object.keys(user).length === 0 ?
                 <Route path={'*'} element={<Navigate to="/"/>}>
-
-                </Route>
-                : user && (
-                <Route path={'/home'} element={<Home/>}>
-                    <Route path={'/home/createCateQuiz'} element={<CreateCateQuiz/>}></Route>
-                    <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
-                    <Route path={'/home/totalQuestion'} element={<TotalQuestion/>}></Route>
-                    <Route path={'/home/createCateQuestion'} element={<CreateCateQuestion/>}></Route>
-                    <Route path={'/home/showListStudent'} element={<ShowListStudent/>}></Route>
-                    <Route path={'/home/showListTeacher'} element={<ShowListTeacher/>}></Route>
-                    <Route path={'/home/userDetail/:id'} element={<UserDetail/>}></Route>
-                    <Route path={'/home/teacherDetail/:id'} element={<TeacherDetail/>}></Route>
-                    <Route path={'/home/findUserById/:id'} element={<UserProfile/>}></Route>
-                    <Route path={'/home/changeUserPasswordById/:id'} element={<ChangePassword/>}></Route>
-                    <Route path={'/home/showTeacherPending'} element={<ShowListTeacherPending/>}></Route>
-                    <Route path={'/home/detailTeacherPending/:id'} element={<DetailTeacherPending/>}></Route>
-                    <Route path={'/home/layoutManagerQuestion'} element={<LayoutManagerQuestion/>}></Route>
-                    <Route path={'/home/editQuestion'} element={<EditQuestion/>}></Route>
-                    <Route path={'/home/showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>
-                    <Route path={'/home/updateCateQuiz/:id'} element={<UpdateCateQuiz/>}></Route>
-                    <Route path={'/home/showListCateQuestion'} element={<ShowListCateQuestion/>}></Route>
-                    <Route path={'/home/updateCateQuestion/:id'} element={<UpdateCateQuestion/>}></Route>
-                    <Route path={'/home/doQuiz/:idQuiz'} element={<DoingQuiz/>}></Route>
-                    <Route path={'/home/result'} element={<ResultAfterTest/>}></Route>
-                    <Route path={'/home/showAllQuiz'} element={<ShowAllQuiz/>}></Route>
-                    <Route path={'/home/editQuiz/:id'} element={<EditQuiz/>}></Route>
-                    <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
+                    </Route>
+                    : user && (
+                    <Route path={'/home'} element={<Home/>}>
+                        <Route path={'/home/createCateQuiz'} element={<CreateCateQuiz/>}></Route>
+                        <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
+                        <Route path={'/home/totalQuestion'} element={<TotalQuestion/>}></Route>
+                        <Route path={'/home/createCateQuestion'} element={<CreateCateQuestion/>}></Route>
+                        <Route path={'/home/showListStudent'} element={<ShowListStudent/>}></Route>
+                        <Route path={'/home/showListTeacher'} element={<ShowListTeacher/>}></Route>
+                        <Route path={'/home/userDetail/:id'} element={<UserDetail/>}></Route>
+                        <Route path={'/home/teacherDetail/:id'} element={<TeacherDetail/>}></Route>
+                        <Route path={'/home/findUserById/:id'} element={<UserProfile/>}></Route>
+                        <Route path={'/home/changeUserPasswordById/:id'} element={<ChangePassword/>}></Route>
+                        <Route path={'/home/showTeacherPending'} element={<ShowListTeacherPending/>}></Route>
+                        <Route path={'/home/detailTeacherPending/:id'} element={<DetailTeacherPending/>}></Route>
+                        <Route path={'/home/layoutManagerQuestion'} element={<LayoutManagerQuestion/>}></Route>
+                        <Route path={'/home/editQuestion'} element={<EditQuestion/>}></Route>
+                        <Route path={'/home/showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>
+                        <Route path={'/home/updateCateQuiz/:id'} element={<UpdateCateQuiz/>}></Route>
+                        <Route path={'/home/showListCateQuestion'} element={<ShowListCateQuestion/>}></Route>
+                        <Route path={'/home/updateCateQuestion/:id'} element={<UpdateCateQuestion/>}></Route>
+                        <Route path={'/home/doQuiz/:idQuiz'} element={<DoingQuiz/>}></Route>
+                        <Route path={'/home/result'} element={<ResultAfterTest/>}></Route>
+                        <Route path={'/home/showAllQuiz'} element={<ShowAllQuiz/>}></Route>
+                        <Route path={'/home/doingQuiz/:idQuiz'} element={<TextMobileStepper/>}/>
+                        <Route path={'/home/editQuiz/:id'} element={<EditQuiz/>}></Route>
+                        <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
                     <Route path={'/home/listQuiz'} element={<ListQuizCard/>}></Route>
-                </Route>
-                )
-            </Routes>
+                     </Route>
+                 )
+             </Routes>
         </div>
     );
 }

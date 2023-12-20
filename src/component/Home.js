@@ -129,12 +129,12 @@ export default function Home() {
                                 ? theme.palette.grey[100]
                                 : theme.palette.grey[900],
                         flexGrow: 1,
-                        minHeight: '100vh',
+                        minHeight: 'calc(100vh - 64px)',
                         overflow: 'auto',
                     }}
                 >
                     <Toolbar/>
-                    <Container maxWidth="xl" sx={{mt: 2, mb: 2}}>
+                    <Container maxWidth="xl" sx={{height: '100vh', mt: 2, mb: 2}}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <Paper
@@ -142,8 +142,10 @@ export default function Home() {
                                     p: 2,
                                     display: 'flex',
                                     flexDirection: 'column',
-                                    minHeight: 'calc(100vh - 144px)'
-                                }}>
+                                    minHeight: '0', // Set minHeight to 100%
+                                    height: 'auto',
+                                    overflow: 'auto',
+                                    }}>
                                     <Outlet/>
                                 </Paper>
                             </Grid>
