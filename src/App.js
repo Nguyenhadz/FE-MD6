@@ -11,8 +11,6 @@ import ShowListTeacher from "./page/user/teacher/ShowListTeacher";
 import TeacherDetail from "./page/user/teacher/TeacherDetail";
 import CreateCateQuiz from "./page/catequiz/CreateCateQuiz";
 import LayoutManagerQuestion from "./page/question/LayoutManagerQuestion";
-
-import ListQuestion from "./page/question/ListQuestion";
 import ShowListCategoryQuiz from "./page/catequiz/ShowListCategoryQuiz";
 import CreateCateQuestion from "./page/catequestion/CreateCateQuestion";
 import UpdateCateQuiz from "./page/catequiz/UpdateCateQuiz";
@@ -23,8 +21,6 @@ import {useSelector} from "react-redux";
 import LoginWithGoogle from "./component/LoginWithGoogle";
 import UserWithGoogle from "./component/UserWithGoogle";
 import ChangePassword from "./page/user/UserPassword";
-import CreateQuestionOneAnswer from "./page/question/CreateQuestionOneAnswer";
-import CreateQuestionTrueFalse from "./page/question/CreateQuestionTrueFalse";
 import TotalQuestion from "./page/question/TotalQuestion";
 import MenuLogin from "./page/login/MenuLogin";
 import LoginWithGmailForm from "./page/login/LoginWithGmailForm";
@@ -60,7 +56,7 @@ function App() {
                     <Route path={'*'} element={<Navigate to="/"/>}>
 
                     </Route>
-                : user && (
+                    : user && (
                     <Route path={'/home'} element={<Home/>}>
                         <Route path={'/home/createCateQuiz'} element={<CreateCateQuiz/>}></Route>
                         <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
