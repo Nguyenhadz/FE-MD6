@@ -17,7 +17,6 @@ import UpdateCateQuiz from "./page/catequiz/UpdateCateQuiz";
 import EditQuestion from "./page/question/EditQuestion";
 import ShowListCateQuestion from "./page/catequestion/ShowListCateQuestion";
 import UpdateCateQuestion from "./page/catequestion/UpdateCateQuestion";
-import {useSelector} from "react-redux";
 import LoginWithGoogle from "./component/LoginWithGoogle";
 import UserWithGoogle from "./component/UserWithGoogle";
 import ChangePassword from "./page/user/UserPassword";
@@ -31,17 +30,14 @@ import Login from "./page/login/Login";
 import CreateNewQuiz from "./page/quizz/CreateNewQuiz";
 import DoingQuiz from "./page/quizz/DoingQuiz";
 import ResultAfterTest from "./page/result/ResultAfterTest";
-import ShowListQuizByUser from "./page/quizz/ShowListQuizByUser";
 import EditQuiz from "./page/quizz/EditQuiz";
 import ShowAllQuiz from "./page/quizz/ShowAllQuiz";
+import ListQuizCard from "./component/ListQuizCard";
 import DoQuiz from "./page/quizz/StepList";
 import TextMobileStepper from "./page/quizz/TextMobileStepper";
 
 
 function App() {
-    const user = useSelector(state => {
-        return state.users.currentUser;
-    })
     return (
         <div>
             <ToastContainer/>
@@ -54,9 +50,8 @@ function App() {
                     <Route path={'/loginWithGoogle'} element={<LoginWithGoogle/>}></Route>
                     <Route path={'/userWithGoogle'} element={<UserWithGoogle/>}></Route>
                 </Route>
-                 Object.keys(user).length === 0 ?
-                    <Route path={'*'} element={<Navigate to="/"/>}>
-
+                Object.keys(user).length === 0 ?
+                <Route path={'*'} element={<Navigate to="/"/>}>
                     </Route>
                     : user && (
                     <Route path={'/home'} element={<Home/>}>
@@ -84,7 +79,7 @@ function App() {
                         <Route path={'/home/doingQuiz/:idQuiz'} element={<TextMobileStepper/>}/>
                         <Route path={'/home/editQuiz/:id'} element={<EditQuiz/>}></Route>
                         <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
-
+                    <Route path={'/home/listQuiz'} element={<ListQuizCard/>}></Route>
                      </Route>
                  )
              </Routes>

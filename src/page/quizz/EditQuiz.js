@@ -25,8 +25,6 @@ import Paper from "@mui/material/Paper";
 import {toast} from "react-toastify";
 import {showAllCategoryQuiz} from "../../redux/service/CateQuizService";
 import {findAllLevelQuiz} from "../../redux/service/LevelQuizService";
-import DetailQuiz from "./DetailQuiz";
-import {findResultByQuiz} from "../../redux/service/ResultService";
 import {store} from "../../redux/store/Store";
 
 const drawerWidth = 360;
@@ -419,7 +417,7 @@ const EditQuiz = ({quizId}) => {
                                     <Button
                                         type="submit"
                                         sx={{background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)"}}
-                                        className={"h-10 w-40 mt-2 border-"  + " rounded-full hover:text-white hover:bg-" + " justify-center"}>
+                                        className={"h-10 w-40 mt-2 border-" + " rounded-full hover:text-white hover:bg-" + " justify-center"}>
                                         Tạo bài thi
                                     </Button>
                                 </Box>

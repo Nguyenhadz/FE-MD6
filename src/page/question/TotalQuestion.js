@@ -6,7 +6,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {useDispatch, useSelector} from "react-redux";
-import {deleteAnswerIsEmpty, findAllAnswer} from "../../redux/service/AnswerService";
 import {findAll} from "../../redux/service/QuestionService";
 import {Pagination, Stack} from "@mui/material";
 import Box from "@mui/material/Box";

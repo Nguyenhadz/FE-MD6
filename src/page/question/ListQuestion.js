@@ -124,8 +124,7 @@ export default function ListQuestion() {
                                             <React.Fragment key={index} className={"flex justify-around"}>
                                                 <Grid item xs={3} className={"m-auto"}
                                                 >
-                                                    <Item
-                                                    >
+                                                    <Item>
                                                         <h2
                                                             style={{
                                                                 color: answer.status === 1 ? "blue" : "inherit",

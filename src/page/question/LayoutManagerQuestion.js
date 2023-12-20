@@ -6,11 +6,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import SwipeableViews from "react-swipeable-views";
 import ListQuestion from "./ListQuestion";
 import CreateQuestion from "./CreateQuestion";
 import ShowListQuizByUser from "../quizz/ShowListQuizByUser";
-import EditQuestion from "./EditQuestion";
 import CreateNewQuiz from "../quizz/CreateNewQuiz";
 
 function TabPanel(props) {
@@ -53,10 +51,7 @@ export default function FullWidthTabs() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
-    const handleChangeIndex = (index) => {
-        setValue(index);
-    };
+    
 
     return (
         <Box sx={{bgcolor: 'background.paper', width: "screen", height: "full"}}>
@@ -75,62 +70,54 @@ export default function FullWidthTabs() {
                     <Tab label="Tạo mới bài thi" {...a11yProps(3)} />
                 </Tabs>
             </AppBar>
-            <SwipeableViews
-                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                index={value}
-                onChangeIndex={handleChangeIndex}
-                sx={{width: "full", height: "full"}}
-            >
-
-                <TabPanel value={value} index={0} dir={theme.direction}
-                          sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              width: "full",
-                              height: "full",
-                          }}>
-                    <ListQuestion
-                        sx={{width: "full", height: "full"}}
-                    />
-                </TabPanel>
-                <TabPanel value={value} index={1} dir={theme.direction}
-                          sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              width: "100%",
-                              height: "full",
-                          }}>
-                    <CreateQuestion
-                        sx={{width: "100%", height: "full"}}
-                    />
-                </TabPanel>
-                <TabPanel value={value} index={2} dir={theme.direction}
-                          sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              width: "fit",
-                              height: "full",
-                          }}>
-                    <ShowListQuizByUser
-                        sx={{width: "fit", height: "full"}}
-                    />
-                </TabPanel>
-                <TabPanel value={value} index={3} dir={theme.direction}
-                          sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              width: "fit",
-                              height: "full",
-                          }}>
-                    <CreateNewQuiz
-                        sx={{width: "fit", height: "full"}}
-                    />
-                </TabPanel>
-            </SwipeableViews>
+            <TabPanel value={value} index={0} dir={theme.direction}
+                      sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: "full",
+                          height: "full",
+                      }}>
+                <ListQuestion
+                    sx={{width: "full", height: "full"}}
+                />
+            </TabPanel>
+            <TabPanel value={value} index={1} dir={theme.direction}
+                      sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: "100%",
+                          height: "full",
+                      }}>
+                <CreateQuestion
+                    sx={{width: "100%", height: "full"}}
+                />
+            </TabPanel>
+            <TabPanel value={value} index={2} dir={theme.direction}
+                      sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: "fit",
+                          height: "full",
+                      }}>
+                <ShowListQuizByUser
+                    sx={{width: "fit", height: "full"}}
+                />
+            </TabPanel>
+            <TabPanel value={value} index={3} dir={theme.direction}
+                      sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: "fit",
+                          height: "full",
+                      }}>
+                <CreateNewQuiz
+                    sx={{width: "fit", height: "full"}}
+                />
+            </TabPanel>
         </Box>
     );
 }
