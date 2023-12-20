@@ -7,23 +7,21 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {useDispatch, useSelector} from "react-redux";
 import {deleteQuestions, findAll} from "../../redux/service/QuestionService";
-import {Button} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
 import {Pagination, Stack} from "@mui/material";
 import Box from "@mui/material/Box";
 import MyQuestionDetail from "./MyQuestionDetail";
 import Grid from "@mui/material/Grid";
 import {styled} from "@mui/system";
 import Paper from "@mui/material/Paper";
-import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Swal from 'sweetalert2'
 
 
 export default function ListQuestion() {
     useEffect(() => {
         dispatch(findAll())
     }, [])
-    const parser = new DOMParser();
-    const navigate = useNavigate();
     const dispatch = useDispatch()
     const [currentPage, setCurrentPage] = useState(1);
     const questionsPerPage = 5;
@@ -65,7 +63,7 @@ export default function ListQuestion() {
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-    const Item = styled(Paper)(({ theme }) => ({
+    const Item = styled(Paper)(({theme}) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         ...theme.typography.body2,
         padding: theme.spacing(1),
@@ -88,79 +86,100 @@ export default function ListQuestion() {
             },
             boxShadow: '30px 30px 30px 30px rgba(0, 0, 0, 0.2)'
         }}>
-            <div className={"w-11/12 mt-0 justify-content-lg-end shadow-md from-blue-800"}
+            <div className={"w-100% mt-0 justify-content-lg-end shadow-md from-blue-800 border-none"}
                  style={{marginTop: "0 !important"}}>
                 {currentQuestions.map((question, index) => {
                     if (question.user?.id !== user?.id) {
-                        return null; // Nếu user.id không khớp, bỏ qua câu hỏi này
+                        return null;
                     }
-                    let letterIndex = 0; // Reset index for each question
                     const questionNumber = getQuestionNumber(index);
 
                     return (
-                        <Accordion className={"bg-emerald-300"} key={question?.id}>
+                        <Accordion
+                            key={question?.id}>
                             <AccordionSummary
-                                className={"bg-green-300"}
                                 expandIcon={<ExpandMoreIcon/>}
                                 aria-controls={`panel${question?.id}-content`}
                                 id={`panel${question?.id}-header`}
                             >
                                 <div className={"flex justify-content-lg-start rounded w-full h-full"}>
                                     <div>
-                                        <Typography className={"font-sans font-bold hover:font-serif flex items-center"}>
-                                            <span className={'text-3xl'}>{"Câu " + questionNumber}:</span>
-                                            <span className={'text-3xl ml-2'} dangerouslySetInnerHTML={{__html: question.content}}/>
+                                        <Typography
+                                            className={"font-sans font-bold hover:font-serif flex items-center"}>
+                                            <span style={{
+                                                fontWeight: "bold"
+                                            }}
+                                                  className={'text-l'}>{"Câu " + questionNumber}:</span>
+                                            <span
+                                                className={'text-l ml-2'}
+                                                dangerouslySetInnerHTML={{__html: question.content}}/>
                                         </Typography>
                                     </div>
                                 </div>
                             </AccordionSummary>
-                            <AccordionDetails className={"bg-neutral-200"}>
-                                <Box sx={{ width: "100%"}}>
-                                    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                            <AccordionDetails>
+                                <Box sx={{width: "100%"}}>
+                                    <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
                                         {question.answers.map((answer, index) => (
                                             <React.Fragment key={index} className={"flex justify-around"}>
-                                                <Grid item xs={4} className={"m-auto"}
+                                                <Grid item xs={5} className={"m-auto"}
                                                 >
                                                     <Item
-                                                        style={{
-                                                            backgroundColor: answer.status === 1 ? "green" : "inherit"
-                                                        }}
+
                                                     >
-                                                        {/*<span>{`Đáp án ${index + 1}: `}</span>*/}
-                                                        <h2 className={'text-2xl font-sans'} dangerouslySetInnerHTML={{__html: answer.content}}></h2>
-                                                        </Item>
+                                                        <h2
+                                                            style={{
+                                                                color: answer.status === 1 ? "blue" : "inherit",
+                                                                fontWeight: answer.status === 1 ? "bolder" : "inherit"
+
+                                                            }}
+                                                            className={'text-l font-sans'}
+                                                            dangerouslySetInnerHTML={{__html: answer.content}}></h2>
+                                                    </Item>
                                                 </Grid>
-                                                {(index + 1) % 2 === 0 && (
-                                                    <Grid item xs={12}>
-                                                        <Divider />
-                                                    </Grid>
-                                                )}
                                             </React.Fragment>
                                         ))}
-                                        <Grid item xs={12}>
-                                            <div className={"flex justify-center"}>
-                                                <Typography className={"mr-0 h-1"}>
-                                                    {question && (
-                                                        <Button className={"btn btn-outline-warning bg-amber-100 h-10"}>
-                                                            <MyQuestionDetail question={question} />
-                                                        </Button>
-                                                    )}
-                                                </Typography>
-                                                <Typography className={"mr-0"}>
-                                                    {question && (
-                                                        <Button
-                                                            className={"btn btn-outline-warning bg-amber-100 h-10"}
-                                                            onClick={() => {
-                                                                dispatch(deleteQuestions(question.id));
-                                                            }}
-                                                        >
-                                                            Xóa
-                                                        </Button>
-                                                    )}
-                                                </Typography>
-                                            </div>
-                                        </Grid>
+
                                     </Grid>
+                                    <div className={"flex flex-auto justify-center"}>
+                                        <Grid xs={0}>
+                                            <Typography className={"mr-0"}>
+                                                {question && (
+                                                    <IconButton>
+                                                        <MyQuestionDetail question={question}/>
+                                                        <DeleteIcon onClick={() => {
+                                                            Swal.fire({
+                                                                title: 'Are you sure?',
+                                                                text: "You won't be able to revert this!",
+                                                                icon: 'warning',
+                                                                showCancelButton: true,
+                                                                confirmButtonColor: '#3085d6',
+                                                                cancelButtonColor: '#d33',
+                                                                confirmButtonText: 'Yes, delete it!'
+                                                            }).then((result) => {
+                                                                // Nếu người dùng nhấn nút xác nhận
+                                                                if (result.isConfirmed) {
+                                                                    // Xóa câu hỏi khỏi cơ sở dữ liệu
+                                                                    // Bạn cần viết mã để thực hiện việc này
+                                                                    dispatch(deleteQuestions(question.id))
+                                                                        .catch((error) => {
+                                                                            // Nếu xóa không thành công, hiển thị hộp thoại lỗi
+                                                                            Swal.fire({
+                                                                                title: 'Error!',
+                                                                                text: 'Something went wrong. Please try again later.',
+                                                                                icon: 'error'
+                                                                            });
+                                                                        });
+                                                                }
+                                                            });
+                                                        }}
+                                                        >
+                                                        </DeleteIcon>
+                                                    </IconButton>
+                                                )}
+                                            </Typography>
+                                        </Grid>
+                                    </div>
                                 </Box>
                             </AccordionDetails>
                         </Accordion>

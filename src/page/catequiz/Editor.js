@@ -16,7 +16,6 @@ function Editor({field, form, ...props}) {
                 theme="snow"
                 sx={{border: "none"}}
                 style={{color: "white"}}
-                placeholder={"Write something awesome..."}
                 modules={modules}
                 formats={formats}
                 value={field.value || ""}
