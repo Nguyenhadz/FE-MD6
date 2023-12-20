@@ -11,7 +11,6 @@ const DoingQuiz = () => {
     const idUser = useSelector((store) => store.users.currentUser.id);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const [answers, setAnswers] = useState(
         quiz.questions.reduce((acc, question) => {
             acc[question.id] = [];
