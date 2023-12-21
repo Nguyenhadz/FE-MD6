@@ -45,7 +45,6 @@ export default function UserProfile() {
     };
 
     function handleChange(e) {
-        console.log(e.target.files);
         setFile(URL.createObjectURL(e.target.files[0]));
         setImage(e.target.files[0]);
     }
