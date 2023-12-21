@@ -27,12 +27,9 @@ const questionSlice = createSlice({
             state.questions = action.payload
         })
         builder.addCase(findById.fulfilled, (state, action) => {
-            console.log(action.payload)
             state.currentQuestion = action.payload
         })
         builder.addCase(createQuestion.fulfilled, (state, action) => {
-            toast("Thành công!", {})
-            console.log(action.payload)
             state.createdQuestion = action.payload
         })
         builder.addCase(findByContent.fulfilled, (state, action) => {
@@ -45,11 +42,9 @@ const questionSlice = createSlice({
             state.currentQuestion = action.payload
         })
         builder.addCase(deleteQuestions.fulfilled, (state, action) => {
-            toast.success("Xóa câu hỏi thành công!", {})
             state.questions = action.payload
         })
         builder.addCase(deleteQuestions.rejected, (state, action) => {
-            toast.error("Không thể xóa câu hỏi này!", {})
         })
         builder.addCase(findAllQuestionByUser.fulfilled, (state, action) => {
             state.questions = action.payload

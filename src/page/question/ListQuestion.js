@@ -16,6 +16,7 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from 'sweetalert2'
+import {toast} from "react-toastify";
 
 
 export default function ListQuestion() {
@@ -147,26 +148,21 @@ export default function ListQuestion() {
                                                         <MyQuestionDetail question={question}/>
                                                         <DeleteIcon onClick={() => {
                                                             Swal.fire({
-                                                                title: 'Are you sure?',
-                                                                text: "You won't be able to revert this!",
+                                                                title: 'Bạn chắc chắn muốn xóa chứ?',
+                                                                text: "Bạn sẽ không thể lấy lại câu hỏi sau khi xóa!",
                                                                 icon: 'warning',
                                                                 showCancelButton: true,
                                                                 confirmButtonColor: '#3085d6',
                                                                 cancelButtonColor: '#d33',
-                                                                confirmButtonText: 'Yes, delete it!'
+                                                                confirmButtonText: 'Xóa!',
+                                                                cancelButtonText: 'Quay lại'
                                                             }).then((result) => {
-                                                                // Nếu người dùng nhấn nút xác nhận
                                                                 if (result.isConfirmed) {
-                                                                    // Xóa câu hỏi khỏi cơ sở dữ liệu
-                                                                    // Bạn cần viết mã để thực hiện việc này
-                                                                    dispatch(deleteQuestions(question.id))
+                                                                    dispatch(deleteQuestions(question.id)).then(
+                                                                        toast.success("Xóa câu hỏi thành công!", {})
+                                                                    )
                                                                         .catch((error) => {
-                                                                            // Nếu xóa không thành công, hiển thị hộp thoại lỗi
-                                                                            Swal.fire({
-                                                                                title: 'Error!',
-                                                                                text: 'Something went wrong. Please try again later.',
-                                                                                icon: 'error'
-                                                                            });
+                                                                            toast.error("Không thể xóa câu hỏi này!", {})
                                                                         });
                                                                 }
                                                             });

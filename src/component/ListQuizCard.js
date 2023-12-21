@@ -1,57 +1,45 @@
-import * as React from 'react';
-import {useEffect} from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import {CardActionArea, Chip, Stack} from '@mui/material';
-import {useDispatch, useSelector} from "react-redux";
-import {findAllQuiz} from "../redux/service/QuizService";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import {styled} from "@mui/system";
-import Paper from "@mui/material/Paper";
+import Carousel from 'react-bootstrap/Carousel';
 
-export default function ListQuizCard() {
-    const quizzes = useSelector((store) => store.quizzes.quizzes);
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(findAllQuiz());
-    }, [dispatch]);
-    const Item = styled(Paper)(({theme}) => ({
-        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-        ...theme.typography.body2,
-        padding: theme.spacing(1),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-    }));
-    const handleClick = () => {
-        console.info('You clicked the Chip.');
-    };
+function DarkVariantExample() {
     return (
-        <div>
-            <Box sx={{flexGrow: 2}}>
-                <Grid container spacing={2}>
-                    {quizzes.map((quiz, index) => (
-                        <Grid xs={1} sm={2} md={3} key={index}>
-                            <Card sx={{ maxWidth: 345 }}>
-                                        <CardMedia
-                                            component="img"
-                                            height="40"
-                                            image="https://cantho-school.fpt.edu.vn/wp-content/uploads/Screenshot-2023-07-19-at-10.35.03.png"
-                                            alt="green iguana"
-                                        />
-                                    <Stack direction="row" spacing={1}>
-                                        <Chip label={quiz.categoryQuiz.name} variant="outlined" onClick={handleClick} />
-                                    </Stack>
-                                            <Typography gutterBottom variant="h6" component="div">
-                                                {quiz.title}
-                                            </Typography>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Box>
-        </div>
+        <Carousel data-bs-theme="dark">
+            <Carousel.Item>
+                <img
+                    className="d-block w-100"
+                    src="https://dogkingdom.vn/wp-content/uploads/2023/03/cafe-meo-Sai-Gon-catfe-mat-mau-xanh-duong-khi-truong-thanh-712x400.jpg"
+                    alt="First slide"
+                />
+                <Carousel.Caption>
+                    <h5>First slide label</h5>
+                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+                <img
+                    className="d-block w-100"
+                    src="holder.js/800x400?text=Second slide&bg=eee"
+                    alt="Second slide"
+                />
+                <Carousel.Caption>
+                    <h5>Second slide label</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+                <img
+                    className="d-block w-100"
+                    src="holder.js/800x400?text=Third slide&bg=e5e5e5"
+                    alt="Third slide"
+                />
+                <Carousel.Caption>
+                    <h5>Third slide label</h5>
+                    <p>
+                        Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+                    </p>
+                </Carousel.Caption>
+            </Carousel.Item>
+        </Carousel>
     );
 }
+
+export default DarkVariantExample;
