@@ -10,9 +10,7 @@ import {PiExam} from "react-icons/pi";
 import {findQuizById} from "../redux/service/QuizService";
 
 const MainListItems = ({sidebarOpen}) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    console.log(sidebarOpen)
+
     const user = useSelector(state => state.users.currentUser);
 
     const isAdmin = user.roles[0].authority === 'ADMIN';
@@ -39,7 +37,7 @@ const MainListItems = ({sidebarOpen}) => {
                         <PiExam/>
                     </ListItemIcon>
                     <ListItemText primary="Danh sách bài thi"
-                                  // primaryTypographyProps={primaryTypographyProps}
+                        // primaryTypographyProps={primaryTypographyProps}
                     />
                 </ListItemButton>
                 <ListItemButton component={Link} to="/home/totalQuestion">
@@ -55,7 +53,7 @@ const MainListItems = ({sidebarOpen}) => {
                         <LayersIcon/>
                     </ListItemIcon>
                     <ListItemText primary={'Danh sách học sinh'}
-                                  // primaryTypographyProps={primaryTypographyProps}
+                        // primaryTypographyProps={primaryTypographyProps}
                     />
                 </ListItemButton>
                 <ListItemButton component={Link} to="/home/showListTeacher">
@@ -63,7 +61,7 @@ const MainListItems = ({sidebarOpen}) => {
                         <LayersIcon/>
                     </ListItemIcon>
                     <ListItemText primary={'Danh sách giáo viên'}
-                                  // primaryTypographyProps={primaryTypographyProps}
+                        // primaryTypographyProps={primaryTypographyProps}
                     />
                 </ListItemButton>
                 <ListItemButton
@@ -81,7 +79,7 @@ const MainListItems = ({sidebarOpen}) => {
                         <LayersIcon/>
                     </ListItemIcon>
                     <ListItemText primary={"Hồ sơ của tôi"}
-                                  // primaryTypographyProps={primaryTypographyProps}
+                        // primaryTypographyProps={primaryTypographyProps}
                     />
                 </ListItemButton>
             </React.Fragment>)}
@@ -122,14 +120,14 @@ const MainListItems = ({sidebarOpen}) => {
                         <LayersIcon/>
                     </ListItemIcon>
                     <ListItemText primary={"Hồ sơ của tôi"}
-                                  // primaryTypographyProps={primaryTypographyProps}
+                        // primaryTypographyProps={primaryTypographyProps}
                     />
                 </ListItemButton>
             </React.Fragment>)}
         {isStudent && ( // nếu là teacher hoặc student thì hiển thị các ListItemButton sau
             <React.Fragment>
                 <ListItemButton
-                                component={Link} to="/home/showAllQuiz">
+                    component={Link} to="/home/showAllQuiz">
                     <ListItemIcon>
                         <PiExam/>
                     </ListItemIcon>

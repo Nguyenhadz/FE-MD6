@@ -20,9 +20,6 @@ import {toast} from "react-toastify";
 
 
 export default function ListQuestion() {
-    useEffect(() => {
-        dispatch(findAll())
-    }, [])
     const dispatch = useDispatch()
     const [currentPage, setCurrentPage] = useState(1);
     const questionsPerPage = 5;
@@ -34,6 +31,9 @@ export default function ListQuestion() {
         return store.questionStore.questions
     });
 
+    useEffect(() => {
+        dispatch(findAll())
+    }, [])
     const currentUserQuestions = questions
         ? Object.values(questions).filter(
             (question) => question.user?.id === user?.id
@@ -87,21 +87,21 @@ export default function ListQuestion() {
             },
             boxShadow: '30px 30px 30px 30px rgba(0, 0, 0, 0.2)'
         }}>
-            <div className={"w-100% mt-0 justify-content-lg-end shadow-md from-blue-800 border-none"}
+            <div className={"w-full mt-0 justify-content-lg-end shadow-md from-blue-800 border-none"}
                  style={{marginTop: "0 !important"}}>
                 {currentQuestions.map((question, index) => {
-                    if (question.user?.id !== user?.id) {
+                    if (question.user.id !== user.id) {
                         return null;
                     }
                     const questionNumber = getQuestionNumber(index);
 
                     return (
                         <Accordion
-                            key={question?.id}>
+                            key={question.id}>
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon/>}
-                                aria-controls={`panel${question?.id}-content`}
-                                id={`panel${question?.id}-header`}
+                                aria-controls={`panel${question.id}-content`}
+                                id={`panel${question.id}-header`}
                             >
                                 <div className={"flex justify-content-lg-start rounded w-full h-full"}>
                                     <div>
@@ -140,44 +140,46 @@ export default function ListQuestion() {
                                         ))}
 
                                     </Grid>
-                                    <div className={"flex flex-auto justify-center"}>
-                                        <Grid xs={0}>
-                                            <Typography className={"mr-0"}>
+                                    <div className={"flex justify-around"}>
                                                 {question && (
-                                                    <IconButton>
-                                                        <MyQuestionDetail question={question}/>
-                                                        <DeleteIcon onClick={() => {
-                                                            Swal.fire({
-                                                                title: 'Bạn chắc chắn muốn xóa chứ?',
-                                                                text: "Bạn sẽ không thể lấy lại câu hỏi sau khi xóa!",
-                                                                icon: 'warning',
-                                                                showCancelButton: true,
-                                                                confirmButtonColor: '#3085d6',
-                                                                cancelButtonColor: '#d33',
-                                                                confirmButtonText: 'Xóa!',
-                                                                cancelButtonText: 'Quay lại'
-                                                            }).then((result) => {
-                                                                if (result.isConfirmed) {
-                                                                    dispatch(deleteQuestions(question.id)).then(
-                                                                        toast.success("Xóa câu hỏi thành công!", {})
-                                                                    )
-                                                                        .catch((error) => {
-                                                                            toast.error("Không thể xóa câu hỏi này!", {})
-                                                                        });
-                                                                }
-                                                            });
-                                                        }}
-                                                        >
-                                                        </DeleteIcon>
-                                                    </IconButton>
+                                                    <Grid className={"flex justify-around"} xs={1}>
+                                                        <Grid xs={1}>
+                                                            <MyQuestionDetail question={question}/>
+                                                        </Grid>
+                                                        <Grid xs={1} className={'mt-1'}>
+                                                            <DeleteIcon onClick={() => {
+                                                                Swal.fire({
+                                                                    title: 'Bạn chắc chắn muốn xóa chứ?',
+                                                                    text: "Bạn sẽ không thể lấy lại câu hỏi sau khi xóa!",
+                                                                    icon: 'warning',
+                                                                    showCancelButton: true,
+                                                                    confirmButtonColor: '#3085d6',
+                                                                    cancelButtonColor: '#d33',
+                                                                    confirmButtonText: 'Xóa!',
+                                                                    cancelButtonText: 'Quay lại'
+                                                                }).then((result) => {
+                                                                    if (result.isConfirmed) {
+                                                                        dispatch(deleteQuestions(question.id)).then(
+                                                                            toast.success("Xóa câu hỏi thành công!", {})
+                                                                        )
+                                                                            .catch((error) => {
+                                                                                toast.error("Không thể xóa câu hỏi này!", {})
+                                                                            });
+                                                                    }
+                                                                });
+                                                            }}
+                                                            >
+                                                            </DeleteIcon>
+                                                        </Grid>
+
+                                                    </Grid>
                                                 )}
-                                            </Typography>
-                                        </Grid>
                                     </div>
                                 </Box>
                             </AccordionDetails>
                         </Accordion>
-                    );
+                    )
+                        ;
                 })}
                 <Stack spacing={2} sx={{
                     '& .MuiPaginationItem-root': {
