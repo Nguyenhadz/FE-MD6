@@ -55,6 +55,7 @@ function App() {
                     </Route>
                     : user && (
                     <Route path={'/home'} element={<Home/>}>
+                        <Route path={'/home'} element={<ListQuizCard/>}></Route>
                         <Route path={'/home/createCateQuiz'} element={<CreateCateQuiz/>}></Route>
                         <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
                         <Route path={'/home/totalQuestion'} element={<TotalQuestion/>}></Route>

@@ -26,6 +26,11 @@ import {toast} from "react-toastify";
 import {showAllCategoryQuiz} from "../../redux/service/CateQuizService";
 import {findAllLevelQuiz} from "../../redux/service/LevelQuizService";
 import {Add, Clear} from "@mui/icons-material";
+import dayjs from 'dayjs';
+import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import {TimePicker} from "@mui/x-date-pickers";
 
 const drawerWidth = 360;
 
@@ -51,6 +56,7 @@ export default function CreateNewQuiz() {
     const [selectedQuestionContent, setSelectedQuestionContent] = React.useState([]);
     const dispatch = useDispatch();
     const [filteredQuestions, setFilteredQuestions] = React.useState([]);
+    const [value, setValue] = React.useState(dayjs('2022-04-17T00:30'));
 
 
     useEffect(() => {
@@ -65,9 +71,8 @@ export default function CreateNewQuiz() {
             dispatch(findQuestionsByCategory({id: selectedField}))
             const filtered = questions.filter(question => question.categoryQuestion.id === selectedField); // Lọc câu hỏi theo selectedField
             setFilteredQuestions(filtered);
-
         }
-    }, [selectedField]);
+    }, []);
     const handleAddQuestion = (question) => {
         const index = selectedQuestionContent.findIndex(q => q.id === question.id);
         if (index === -1) {
@@ -88,30 +93,22 @@ export default function CreateNewQuiz() {
     React.useEffect(() => {
         const questionIds = selectedQuestionContent.map((q) => ({id: q.id}));
         formik.setFieldValue('questions', questionIds);
-    }, [selectedQuestionContent]);
+    }, []);
 
 
     const formik = useFormik({
         initialValues: {
-            title: "",
-            time: "",
-            timeCreate: new Date(),
-            description: "",
-            passScore: "",
-            status: 1,
-            categoryQuiz: {
+            title: "", time: "", timeCreate: new Date(), description: "", passScore: "", status: 1, categoryQuiz: {
                 id: ""
-            },
-            levelQuiz: {
+            }, levelQuiz: {
                 id: ""
-            },
-            user: {
+            }, user: {
                 id: currentUser.id
-            },
-            questions: [selectedQuestionContent],
-        },
-        onSubmit: async (values) => {
-            await dispatch(createQuiz(values))
+            }, questions: [selectedQuestionContent],
+        }, onSubmit: async (values) => {
+            await dispatch(createQuiz(values)).then(
+                toast.success("Tạo quiz thành công", {})
+            )
             await formik.resetForm()
         },
     });
@@ -126,16 +123,13 @@ export default function CreateNewQuiz() {
         marginLeft: 0,
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
-            width: 'auto',
+            marginLeft: theme.spacing(3), width: 'auto',
         },
     }));
 
     const StyledInputBase = styled(InputBase)(({theme}) => ({
-        color: 'inherit',
-        '& .MuiInputBase-input': {
-            padding: theme.spacing(1, 1, 1, 0),
-            // vertical padding + font size from searchIcon
+        color: 'inherit', '& .MuiInputBase-input': {
+            padding: theme.spacing(1, 1, 1, 0), // vertical padding + font size from searchIcon
             paddingLeft: `calc(1em + ${theme.spacing(4)})`,
             transition: theme.transitions.create('width'),
             width: '100%',
@@ -166,8 +160,7 @@ export default function CreateNewQuiz() {
         setOpen(true);
     };
     const Item = styled(Paper)(({theme}) => ({
-        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-        ...theme.typography.body2,
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff', ...theme.typography.body2,
         padding: theme.spacing(1),
         textAlign: 'center',
         color: theme.palette.text.secondary,
@@ -180,8 +173,7 @@ export default function CreateNewQuiz() {
     };
 
 
-    return (
-        <Box
+    return (<Box
 
             sx={{
                 display: 'flex',
@@ -207,9 +199,7 @@ export default function CreateNewQuiz() {
                     xs={10}>
                     <form onSubmit={formik.handleSubmit}
                           sx={{
-                              marginLeft: 'auto',
-                              marginRight: 'auto',
-                              width: "full"
+                              marginLeft: 'auto', marginRight: 'auto', width: "full"
                           }}>
                         <Box
                             sx={{
@@ -218,14 +208,13 @@ export default function CreateNewQuiz() {
                                 gap: 1,
                                 padding: 1,
                                 overflow: "auto",
-                                height: "100%",
-                                // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+                                height: "100%", // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
                                 border: 'rounded'
                             }}
                         >
                             <Grid item xs={12} sx={{justifyContent: 'center'}}>
                                 <Box>
-                                    <Grid item xs={12}>
+                                    <Grid item xs={8}>
                                         <TextField
                                             fullWidth={true}
                                             id="standard-basic"
@@ -238,7 +227,7 @@ export default function CreateNewQuiz() {
                                     </Grid>
                                 </Box>
                                 <Box>
-                                    <Grid item xs={12}>
+                                    <Grid item xs={8}>
                                         <TextField
                                             name={"time"}
                                             hidden={true}
@@ -247,7 +236,7 @@ export default function CreateNewQuiz() {
                                     </Grid>
                                 </Box>
                                 <Box>
-                                    <Grid item xs={12}>
+                                    <Grid item xs={8}>
                                         <TextField
                                             fullWidth={true}
                                             id="standard-basic"
@@ -259,9 +248,8 @@ export default function CreateNewQuiz() {
                                         />
                                     </Grid>
                                 </Box>
-
                                 <Box>
-                                    <Grid item xs={12}>
+                                    <Grid item xs={8}>
                                         <TextField
                                             fullWidth={true}
                                             id="standard-basic"
@@ -273,22 +261,31 @@ export default function CreateNewQuiz() {
                                         />
                                     </Grid>
                                 </Box>
-                                <Box>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            fullWidth={true}
-                                            id="standard-basic"
-                                            label="Thời gian thi"
-                                            variant="standard"
-                                            name={"time"}
-                                            value={formik.values.time}
-                                            onChange={(e) => formik.setFieldValue('time', e.target.value)} // Thêm dòng này
-                                        />
-                                    </Grid>
-                                </Box>
-                                <Box className='flex justify-center'>
+
+                                <Box className='flex justify-center mt-10'>
                                     <Grid item xs={4}>
-                                        <FormControl sx={{m: 1, minWidth: 160}}>
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                            <DemoContainer components={['TimeField']}>
+                                                <TimePicker
+                                                    label="Thời gian thi: (Giờ:Phút)"
+                                                    value={value}
+                                                    onChange={(newValue) => {
+                                                        setValue(newValue)
+                                                        if (dayjs.isDayjs(newValue)) { // Kiểm tra xem newValue có phải là một đối tượng dayjs không
+                                                            const hours = newValue.hour(); // Lấy giờ
+                                                            const minutes = newValue.minute(); // Lấy phút
+                                                            const seconds = parseInt(hours * 3600 + minutes * 60)
+                                                            formik.setFieldValue('time', seconds);
+                                                        } else {
+                                                            console.error('Invalid value type:', typeof newValue);
+                                                        }
+                                                    }} ampm={false}
+                                                />
+                                            </DemoContainer>
+                                        </LocalizationProvider>
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        <FormControl sx={{m: 1, minWidth: 160, justifyItems: 'center'}}>
                                             <InputLabel id="demo-simple-select-autowidth-label">Thể loại</InputLabel>
                                             <Select
                                                 labelId="demo-simple-select-autowidth-label"
@@ -297,12 +294,9 @@ export default function CreateNewQuiz() {
                                                 autoWidth
                                                 label="Thể loại"
                                             >
-                                                {categoryQuizzes.map((cateQuiz, index) =>
-                                                    (
-                                                        <MenuItem value={cateQuiz.id}><span
-                                                            dangerouslySetInnerHTML={{__html: cateQuiz.name}}></span></MenuItem>
-                                                    )
-                                                )}
+                                                {categoryQuizzes.map((cateQuiz, index) => (
+                                                    <MenuItem value={cateQuiz.id}><span
+                                                        dangerouslySetInnerHTML={{__html: cateQuiz.name}}></span></MenuItem>))}
                                             </Select>
                                         </FormControl>
                                     </Grid>
@@ -316,11 +310,8 @@ export default function CreateNewQuiz() {
                                                 autoWidth
                                                 label="Mức độ"
                                             >
-                                                {levelQuizzes.map((levelQuiz, index) =>
-                                                    (
-                                                        <MenuItem value={levelQuiz.id}>{levelQuiz.name}</MenuItem>
-                                                    )
-                                                )}
+                                                {levelQuizzes.map((levelQuiz, index) => (
+                                                    <MenuItem value={levelQuiz.id}>{levelQuiz.name}</MenuItem>))}
                                             </Select>
                                         </FormControl>
                                     </Grid>
@@ -331,15 +322,12 @@ export default function CreateNewQuiz() {
                         <Box
                             component="main"
                             sx={{
-                                flexGrow: 1,
-                                p: 3,
-                                overflow: 'auto',
+                                flexGrow: 1, p: 3, overflow: 'auto',
                             }}
                         >
 
                             <Toolbar/>
-                            {selectedQuestionContent.map((question, index) => (
-                                <Box
+                            {selectedQuestionContent.map((question, index) => (<Box
                                     className={"m-14"}>
                                     <Grid
                                         bgcolor='linear-gradient(45deg, #9E9E9E 30%, #616161 90%)"'
@@ -376,8 +364,7 @@ export default function CreateNewQuiz() {
                                                 </Button>
                                             </Grid>
                                         </Grid>
-                                        {question.answers.map((answer, index) => (
-                                            <React.Fragment key={index}>
+                                        {question.answers.map((answer, index) => (<React.Fragment key={index}>
                                                 <Grid item xs={6}>
                                                     <Item
                                                         style={{backgroundColor: answer.status === 1 ? 'lightblue' : gradientColors.background}}>
@@ -385,16 +372,12 @@ export default function CreateNewQuiz() {
 
                                                     </Item>
                                                 </Grid>
-                                                {(index + 1) % 2 === 0 && (
-                                                    <Grid item xs={10}>
+                                                {(index + 1) % 2 === 0 && (<Grid item xs={10}>
                                                         <Divider/>
-                                                    </Grid>
-                                                )}
-                                            </React.Fragment>
-                                        ))}
+                                                    </Grid>)}
+                                            </React.Fragment>))}
                                     </Grid>
-                                </Box>
-                            ))}
+                                </Box>))}
                             <Grid sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} xs={10}>
                                 <Box sx={{
                                     display: 'flex',
@@ -418,11 +401,8 @@ export default function CreateNewQuiz() {
                 <Grid xs={3}>
                     <Drawer
                         sx={{
-                            width: drawerWidth,
-                            flexShrink: 0,
-                            '& .MuiDrawer-paper': {
-                                width: drawerWidth,
-                                boxSizing: 'border-box',
+                            width: drawerWidth, flexShrink: 0, '& .MuiDrawer-paper': {
+                                width: drawerWidth, boxSizing: 'border-box',
                             },
                         }}
                         variant="permanent"
@@ -446,8 +426,7 @@ export default function CreateNewQuiz() {
                                     >
                                         <MenuItem key={0} value={0}>Tất cả</MenuItem>
                                         {categoryQuestions.map((category, index) => (
-                                            <MenuItem key={index} value={category.id}>{category.name}</MenuItem>
-                                        ))}
+                                            <MenuItem key={index} value={category.id}>{category.name}</MenuItem>))}
                                     </Select>
                                 </FormControl>
 
@@ -464,27 +443,23 @@ export default function CreateNewQuiz() {
                                 </Box>
 
                             </Box>
-                            {questions.map((question) => (
-                                <ListItem key={question.id}>
+                            {questions.map((question) => (<ListItem key={question.id}>
                                     <ListItemText>
-                                        <QuestionDetail question={question} buttonLabel={
-                                            <Typography className={"flex "}>
-                                                Câu : {question.id}
-                                                <span dangerouslySetInnerHTML={{__html: question.content}}/>
-                                            </Typography>
-                                        }/>
+                                        <QuestionDetail question={question}
+                                                        buttonLabel={<Typography className={"flex "}>
+                                                            Câu : {question.id}
+                                                            <span dangerouslySetInnerHTML={{__html: question.content}}/>
+                                                        </Typography>}/>
 
                                     </ListItemText>
                                     <Button onClick={() => handleAddQuestion(question)}
                                             onChange={(e) => formik.setFieldValue('questions', e.target.value)}>
                                         <Add/>
                                     </Button>
-                                </ListItem>
-                            ))}
+                                </ListItem>))}
                         </List>
                     </Drawer>
                 </Grid>
             </Box>
-        </Box>
-    );
+        </Box>);
 }
