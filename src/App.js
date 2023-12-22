@@ -11,20 +11,15 @@ import ShowListTeacher from "./page/user/teacher/ShowListTeacher";
 import TeacherDetail from "./page/user/teacher/TeacherDetail";
 import CreateCateQuiz from "./page/catequiz/CreateCateQuiz";
 import LayoutManagerQuestion from "./page/question/LayoutManagerQuestion";
-
-import ListQuestion from "./page/question/ListQuestion";
 import ShowListCategoryQuiz from "./page/catequiz/ShowListCategoryQuiz";
 import CreateCateQuestion from "./page/catequestion/CreateCateQuestion";
 import UpdateCateQuiz from "./page/catequiz/UpdateCateQuiz";
 import EditQuestion from "./page/question/EditQuestion";
 import ShowListCateQuestion from "./page/catequestion/ShowListCateQuestion";
 import UpdateCateQuestion from "./page/catequestion/UpdateCateQuestion";
-import {useSelector} from "react-redux";
 import LoginWithGoogle from "./component/LoginWithGoogle";
 import UserWithGoogle from "./component/UserWithGoogle";
 import ChangePassword from "./page/user/UserPassword";
-import CreateQuestionOneAnswer from "./page/question/CreateQuestionOneAnswer";
-import CreateQuestionTrueFalse from "./page/question/CreateQuestionTrueFalse";
 import TotalQuestion from "./page/question/TotalQuestion";
 import MenuLogin from "./page/login/MenuLogin";
 import LoginWithGmailForm from "./page/login/LoginWithGmailForm";
@@ -35,15 +30,14 @@ import Login from "./page/login/Login";
 import CreateNewQuiz from "./page/quizz/CreateNewQuiz";
 import DoingQuiz from "./page/quizz/DoingQuiz";
 import ResultAfterTest from "./page/result/ResultAfterTest";
-import ShowListQuizByUser from "./page/quizz/ShowListQuizByUser";
 import EditQuiz from "./page/quizz/EditQuiz";
 import ShowAllQuiz from "./page/quizz/ShowAllQuiz";
+import ListQuizCard from "./component/ListQuizCard";
+import DoQuiz from "./page/quizz/StepList";
+import TextMobileStepper from "./page/quizz/TextMobileStepper";
 
 
 function App() {
-    const user = useSelector(state => {
-        return state.users.currentUser;
-    })
     return (
         <div>
             <ToastContainer/>
@@ -56,12 +50,12 @@ function App() {
                     <Route path={'/loginWithGoogle'} element={<LoginWithGoogle/>}></Route>
                     <Route path={'/userWithGoogle'} element={<UserWithGoogle/>}></Route>
                 </Route>
-                 Object.keys(user).length === 0 ?
-                    <Route path={'*'} element={<Navigate to="/"/>}>
-
+                Object.keys(user).length === 0 ?
+                <Route path={'*'} element={<Navigate to="/"/>}>
                     </Route>
-                : user && (
+                    : user && (
                     <Route path={'/home'} element={<Home/>}>
+                        <Route path={'/home'} element={<ListQuizCard/>}></Route>
                         <Route path={'/home/createCateQuiz'} element={<CreateCateQuiz/>}></Route>
                         <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
                         <Route path={'/home/totalQuestion'} element={<TotalQuestion/>}></Route>
@@ -83,10 +77,10 @@ function App() {
                         <Route path={'/home/doQuiz/:idQuiz'} element={<DoingQuiz/>}></Route>
                         <Route path={'/home/result'} element={<ResultAfterTest/>}></Route>
                         <Route path={'/home/showAllQuiz'} element={<ShowAllQuiz/>}></Route>
-
+                        <Route path={'/home/doingQuiz/:idQuiz'} element={<TextMobileStepper/>}/>
                         <Route path={'/home/editQuiz/:id'} element={<EditQuiz/>}></Route>
                         <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
-
+                    <Route path={'/home/listQuiz'} element={<ListQuizCard/>}></Route>
                      </Route>
                  )
              </Routes>

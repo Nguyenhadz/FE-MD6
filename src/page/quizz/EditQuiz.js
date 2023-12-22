@@ -15,7 +15,7 @@ import QuestionDetail from "./QuestionDetail";
 import Button from "@mui/material/Button";
 import {useFormik} from "formik";
 import {alpha, FormControl, InputBase, InputLabel, Select, TextField} from "@mui/material";
-import {createQuiz, findQuizById, updateQuiz} from "../../redux/service/QuizService";
+import {createQuiz, findQuizById} from "../../redux/service/QuizService";
 import SearchIcon from "@mui/icons-material/Search";
 import {styled} from "@mui/system";
 import MenuItem from "@mui/material/MenuItem";

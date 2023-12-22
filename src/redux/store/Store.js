@@ -25,7 +25,7 @@ export const store = configureStore({
         levelQuestionStore: levelQuestionSlide,
         quizzes: quizSlice,
         resultStore: resultSlice,
-        quizStore: questionSlide,
+        // quizStore: questionSlide,
         levelQuizStore: levelQuizSlice
     },
     middleware: (getDefaultMiddleware) =>

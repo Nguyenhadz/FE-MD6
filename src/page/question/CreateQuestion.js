@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import {CheckBoxOutlineBlankSharp, CheckBoxSharp, RadioButtonUncheckedRounded} from "@mui/icons-material";
 import {QuillToolbar} from "../catequiz/QuillToolbar";
+import {toast} from "react-toastify";
 
 export default function CreateQuestionOneAnswer() {
     const currentUser = useSelector((store) => {
@@ -28,7 +29,6 @@ export default function CreateQuestionOneAnswer() {
     const typeQuestions = useSelector((store) => {
         return store.typeQuestionStore.typeQuestions;
     })
-    console.log()
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [backgroundColor, setBackgroundColor] = useState("#461A42");
@@ -37,9 +37,14 @@ export default function CreateQuestionOneAnswer() {
         dispatch(showAllCateQuestion());
         dispatch(findAllTypeQuestion());
         dispatch(findAllLevelQuestion());
-        dispatch(findAllTypeQuestion())
-    }, [dispatch]);
-
+    }, []);
+    useEffect(() => {
+        let newAnswers = [];
+        if (typeQuestion === 1) {
+            newAnswers = [{content: "", status: "0"}, {content: "", status: "0"}];
+        }
+        formik.setFieldValue("answers", newAnswers);
+    }, [])
     const handleFocus = () => {
         setBackgroundColor("#281226");
     };
@@ -47,7 +52,6 @@ export default function CreateQuestionOneAnswer() {
     const handleBlur = () => {
         setBackgroundColor("#461A42");
     };
-
     const formik = useFormik({
         initialValues: {
             question: {
@@ -68,19 +72,29 @@ export default function CreateQuestionOneAnswer() {
             },
             answers: []
         },
-
         onSubmit: async (values) => {
-            console.log(values)
-            await dispatch(createQuestion(values))
-        },
-    });
-    useEffect(() => {
-        let newAnswers = [];
-        if (typeQuestion === 1) {
-            newAnswers = [{content: "", status: "0"}, {content: "", status: "0"}];
+            const seenAnswers = [];
+            let check = false;
+            values.answers.forEach((answer) => {
+                seenAnswers.push(answer.content);
+            });
+            seenAnswers.forEach((answer, index) => {
+                for (let i = 0; i < seenAnswers.length; i++) {
+                    if (i !== index && answer === seenAnswers[i]) {
+                        check = true;
+                        break;
+                    }
+                }
+            });
+            if (check) {
+                toast.error('Các câu trả lời không được trùng lặp. Vui lòng kiểm tra lại nội dung câu trả lời.');
+            } else (
+                dispatch(createQuestion(values)).then(
+                    toast("Thành công!", {})
+                )
+            )
         }
-        formik.setFieldValue("answers", newAnswers);
-    }, [])
+    });
     const colors = ["rgb(45 112 174)", "rgb(45 157 166)", "rgb(239 169 41)", "rgb(213 84 109)"]; // Mảng chứa các màu
     const handleSelectCategoryQuestion = (event) => {
         formik.setFieldValue(`question.categoryQuestion.id`, parseInt(event.target.value));

@@ -10,7 +10,6 @@ import React from "react";
 export default function RegisterForm() {
     const currentPath = window.location.pathname;
     const mainLeftBot = document.querySelector('.main-left-bot');
-    console.log(currentPath)
     if (currentPath === '/register') {
         mainLeftBot.style.display = 'none';
     } else {

@@ -16,12 +16,10 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from 'sweetalert2'
+import {toast} from "react-toastify";
 
 
 export default function ListQuestion() {
-    useEffect(() => {
-        dispatch(findAll())
-    }, [])
     const dispatch = useDispatch()
     const [currentPage, setCurrentPage] = useState(1);
     const questionsPerPage = 5;
@@ -33,6 +31,9 @@ export default function ListQuestion() {
         return store.questionStore.questions
     });
 
+    useEffect(() => {
+        dispatch(findAll())
+    }, [])
     const currentUserQuestions = questions
         ? Object.values(questions).filter(
             (question) => question.user?.id === user?.id
@@ -86,21 +87,21 @@ export default function ListQuestion() {
             },
             boxShadow: '30px 30px 30px 30px rgba(0, 0, 0, 0.2)'
         }}>
-            <div className={"w-100% mt-0 justify-content-lg-end shadow-md from-blue-800 border-none"}
+            <div className={"w-full mt-0 justify-content-lg-end shadow-md from-blue-800 border-none"}
                  style={{marginTop: "0 !important"}}>
                 {currentQuestions.map((question, index) => {
-                    if (question.user?.id !== user?.id) {
+                    if (question.user.id !== user.id) {
                         return null;
                     }
                     const questionNumber = getQuestionNumber(index);
 
                     return (
                         <Accordion
-                            key={question?.id}>
+                            key={question.id}>
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon/>}
-                                aria-controls={`panel${question?.id}-content`}
-                                id={`panel${question?.id}-header`}
+                                aria-controls={`panel${question.id}-content`}
+                                id={`panel${question.id}-header`}
                             >
                                 <div className={"flex justify-content-lg-start rounded w-full h-full"}>
                                     <div>
@@ -122,11 +123,9 @@ export default function ListQuestion() {
                                     <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
                                         {question.answers.map((answer, index) => (
                                             <React.Fragment key={index} className={"flex justify-around"}>
-                                                <Grid item xs={5} className={"m-auto"}
+                                                <Grid item xs={3} className={"m-auto"}
                                                 >
-                                                    <Item
-
-                                                    >
+                                                    <Item>
                                                         <h2
                                                             style={{
                                                                 color: answer.status === 1 ? "blue" : "inherit",
@@ -141,49 +140,46 @@ export default function ListQuestion() {
                                         ))}
 
                                     </Grid>
-                                    <div className={"flex flex-auto justify-center"}>
-                                        <Grid xs={0}>
-                                            <Typography className={"mr-0"}>
+                                    <div className={"flex justify-around"}>
                                                 {question && (
-                                                    <IconButton>
-                                                        <MyQuestionDetail question={question}/>
-                                                        <DeleteIcon onClick={() => {
-                                                            Swal.fire({
-                                                                title: 'Are you sure?',
-                                                                text: "You won't be able to revert this!",
-                                                                icon: 'warning',
-                                                                showCancelButton: true,
-                                                                confirmButtonColor: '#3085d6',
-                                                                cancelButtonColor: '#d33',
-                                                                confirmButtonText: 'Yes, delete it!'
-                                                            }).then((result) => {
-                                                                // Nếu người dùng nhấn nút xác nhận
-                                                                if (result.isConfirmed) {
-                                                                    // Xóa câu hỏi khỏi cơ sở dữ liệu
-                                                                    // Bạn cần viết mã để thực hiện việc này
-                                                                    dispatch(deleteQuestions(question.id))
-                                                                        .catch((error) => {
-                                                                            // Nếu xóa không thành công, hiển thị hộp thoại lỗi
-                                                                            Swal.fire({
-                                                                                title: 'Error!',
-                                                                                text: 'Something went wrong. Please try again later.',
-                                                                                icon: 'error'
+                                                    <Grid className={"flex justify-around"} xs={1}>
+                                                        <Grid xs={1}>
+                                                            <MyQuestionDetail question={question}/>
+                                                        </Grid>
+                                                        <Grid xs={1} className={'mt-1'}>
+                                                            <DeleteIcon onClick={() => {
+                                                                Swal.fire({
+                                                                    title: 'Bạn chắc chắn muốn xóa chứ?',
+                                                                    text: "Bạn sẽ không thể lấy lại câu hỏi sau khi xóa!",
+                                                                    icon: 'warning',
+                                                                    showCancelButton: true,
+                                                                    confirmButtonColor: '#3085d6',
+                                                                    cancelButtonColor: '#d33',
+                                                                    confirmButtonText: 'Xóa!',
+                                                                    cancelButtonText: 'Quay lại'
+                                                                }).then((result) => {
+                                                                    if (result.isConfirmed) {
+                                                                        dispatch(deleteQuestions(question.id)).then(
+                                                                            toast.success("Xóa câu hỏi thành công!", {})
+                                                                        )
+                                                                            .catch((error) => {
+                                                                                toast.error("Không thể xóa câu hỏi này!", {})
                                                                             });
-                                                                        });
-                                                                }
-                                                            });
-                                                        }}
-                                                        >
-                                                        </DeleteIcon>
-                                                    </IconButton>
+                                                                    }
+                                                                });
+                                                            }}
+                                                            >
+                                                            </DeleteIcon>
+                                                        </Grid>
+
+                                                    </Grid>
                                                 )}
-                                            </Typography>
-                                        </Grid>
                                     </div>
                                 </Box>
                             </AccordionDetails>
                         </Accordion>
-                    );
+                    )
+                        ;
                 })}
                 <Stack spacing={2} sx={{
                     '& .MuiPaginationItem-root': {
