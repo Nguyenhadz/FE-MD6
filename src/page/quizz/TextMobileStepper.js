@@ -141,7 +141,7 @@ export default function TextMobileStepper() {
     return (
         <div className={'flex justify-between mt-10'}>
 
-            <div className={'w-10/12 flex flex-column'}>
+            <div className={'w-9/12 flex flex-column'}>
                 <div className={'ml-40'}>
 
                     <span className={'text-2xl font-bold text-purple-600'}>Câu {activeStep + 1}:</span>
