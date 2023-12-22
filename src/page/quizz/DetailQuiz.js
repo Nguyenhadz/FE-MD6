@@ -18,9 +18,11 @@ import {InfoTwoTone} from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import MyQuestionDetail from "../question/MyQuestionDetail";
 import EditQuiz from "./EditQuiz";
+import {useNavigate} from "react-router-dom";
 
 const DetailQuiz = ({quizId}) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [results, setResults] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
@@ -43,13 +45,13 @@ const DetailQuiz = ({quizId}) => {
     const second = quiz.time % 60;
     const minute = Math.floor(quiz.time / 60);
 
-    const handleEdit = () => {
+    const handleEdit = (idQuiz) => {
 
         if (results?.length !== 0) {
             console.log(results)
             toast.success("Không thể sửa bài thi đã có người thi", {})
         } else {
-            handleOpen()
+            navigate(`/home/layoutManagerQuestion/editQuiz/${idQuiz}`)
         }
     };
     const [open, setOpen] = useState(false);
@@ -75,27 +77,27 @@ const DetailQuiz = ({quizId}) => {
 
     return (
         <div className={"ml-8"}>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box id="modal-container" sx={{
-                    width: '1200px',
-                    height: '800px',
-                    position: 'absolute',
-                    top: '0',
-                    left: '20%',
-                    backgroundColor: 'background.paper',
-                    display: 'flex',
-                    flexDirection: 'column'
-                }}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        <EditQuiz quizId={quizId}/>
-                    </Typography>
-                </Box>
-            </Modal>
+            {/*<Modal*/}
+            {/*    open={open}*/}
+            {/*    onClose={handleClose}*/}
+            {/*    aria-labelledby="modal-modal-title"*/}
+            {/*    aria-describedby="modal-modal-description"*/}
+            {/*>*/}
+            {/*    <Box id="modal-container" sx={{*/}
+            {/*        width: '1200px',*/}
+            {/*        height: '800px',*/}
+            {/*        position: 'absolute',*/}
+            {/*        top: '0',*/}
+            {/*        left: '20%',*/}
+            {/*        backgroundColor: 'background.paper',*/}
+            {/*        display: 'flex',*/}
+            {/*        flexDirection: 'column'*/}
+            {/*    }}>*/}
+            {/*        <Typography id="modal-modal-title" variant="h6" component="h2">*/}
+            {/*            <EditQuiz quiz={quiz}/>*/}
+            {/*        </Typography>*/}
+            {/*    </Box>*/}
+            {/*</Modal>*/}
             <div className="flex items-center justify-between mb-3">
                 <div>
                     <b>Tên bài thi: &nbsp;
@@ -110,7 +112,7 @@ const DetailQuiz = ({quizId}) => {
                         </button>
                     </div>
                     <div className="ml-4">
-                        <button type="submit" onClick={handleEdit}
+                        <button type="submit" onClick={() => {handleEdit(quizId)}}
                                 className={"h-6 w-32 bg-gray-50 mt-2 border-2 rounded-full hover:hover:bg-blue-50"}>
                             Sửa bài thi
                         </button>

@@ -10,6 +10,9 @@ import ListQuestion from "./ListQuestion";
 import CreateQuestion from "./CreateQuestion";
 import ShowListQuizByUser from "../quizz/ShowListQuizByUser";
 import CreateNewQuiz from "../quizz/CreateNewQuiz";
+import {Outlet} from "react-router";
+import {Link} from "react-router-dom";
+import Grid from "@mui/material/Grid";
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -51,73 +54,37 @@ export default function FullWidthTabs() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    
+
 
     return (
-        <Box sx={{bgcolor: 'background.paper', width: "screen", height: "full"}}>
-            <AppBar position="static">
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    indicatorColor="secondary"
-                    textColor="inherit"
-                    variant="fullWidth"
-                    aria-label="full width tabs example"
-                >
-                    <Tab label="Danh sách câu hỏi" {...a11yProps(0)} />
-                    <Tab label="Tạo mới câu hỏi" {...a11yProps(1)} />
-                    <Tab label="Danh sách bài thi" {...a11yProps(2)} />
-                    <Tab label="Tạo mới bài thi" {...a11yProps(3)} />
-                </Tabs>
+        <Box sx={{ bgcolor: 'background.paper', width: '100%', height: 'full' }}>
+            <AppBar position="static" className={"mb-4"}>
+                <Grid container spacing={1} justifyContent="center">
+                    <Grid item xs>
+                        <Link to="/home/layoutManagerQuestion/showListQuestion" style={{ textDecoration: 'none' }}>
+                            <Tab label="Danh sách câu hỏi" {...a11yProps(0)} />
+                        </Link>
+                    </Grid>
+                    <Grid item xs>
+                        <Link to="/home/layoutManagerQuestion/createQuestion" style={{ textDecoration: 'none' }}>
+                            <Tab label="Tạo mới câu hỏi" {...a11yProps(1)} />
+                        </Link>
+                    </Grid>
+                    <Grid item xs>
+                        <Link to="/home/layoutManagerQuestion" style={{ textDecoration: 'none' }}>
+                            <Tab label="Danh sách bài thi" {...a11yProps(2)} />
+                        </Link>
+                    </Grid>
+                    <Grid item xs>
+                        <Link to="/home/layoutManagerQuestion/createNewQuiz" style={{ textDecoration: 'none' }}>
+                            <Tab label="Tạo mới bài thi" {...a11yProps(3)} />
+                        </Link>
+                    </Grid>
+                </Grid>
             </AppBar>
-            <TabPanel value={value} index={0} dir={theme.direction}
-                      sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          width: "full",
-                          height: "full",
-                      }}>
-                <ListQuestion
-                    sx={{width: "full", height: "full"}}
-                />
-            </TabPanel>
-            <TabPanel value={value} index={1} dir={theme.direction}
-                      sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          width: "100%",
-                          height: "full",
-                      }}>
-                <CreateQuestion
-                    sx={{width: "100%", height: "full"}}
-                />
-            </TabPanel>
-            <TabPanel value={value} index={2} dir={theme.direction}
-                      sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          width: "fit",
-                          height: "full",
-                      }}>
-                <ShowListQuizByUser
-                    sx={{width: "fit", height: "full"}}
-                />
-            </TabPanel>
-            <TabPanel value={value} index={3} dir={theme.direction}
-                      sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          width: "fit",
-                          height: "full",
-                      }}>
-                <CreateNewQuiz
-                    sx={{width: "fit", height: "full"}}
-                />
-            </TabPanel>
+            <Outlet>
+                {/* Các component của bạn */}
+            </Outlet>
         </Box>
     );
 }
