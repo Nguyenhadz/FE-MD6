@@ -13,6 +13,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import {Outlet} from "react-router";
 import MainListItems from "./ListItems";
+import {minHeight} from "@mui/system";
 
 
 const drawerWidth = 240;
@@ -121,9 +122,9 @@ export default function Home() {
                     component="main"
                     sx={{
                         backgroundColor: (theme) =>
-                            theme.palette.mode === 'light'
-                                ? theme.palette.grey[100]
-                                : theme.palette.grey[900],
+                            theme.palette.mode === 'red'
+                                ? 'ghostwhite'  // Màu trắng
+                                : 'ghostwhite',
                         flexGrow: 1,
                         minHeight: 'calc(100vh - 64px)',
                         overflow: 'auto',
