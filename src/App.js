@@ -35,6 +35,7 @@ import ShowAllQuiz from "./page/quizz/ShowAllQuiz";
 import ListQuizCard from "./component/ListQuizCard";
 import DoQuiz from "./page/quizz/StepList";
 import TextMobileStepper from "./page/quizz/TextMobileStepper";
+import ColorTabs from "./page/user/TabProfile";
 
 
 function App() {
@@ -64,7 +65,7 @@ function App() {
                         <Route path={'/home/showListTeacher'} element={<ShowListTeacher/>}></Route>
                         <Route path={'/home/userDetail/:id'} element={<UserDetail/>}></Route>
                         <Route path={'/home/teacherDetail/:id'} element={<TeacherDetail/>}></Route>
-                        <Route path={'/home/findUserById/:id'} element={<UserProfile/>}></Route>
+                        <Route path={'/home/findUserById/:id'} element={<ColorTabs/>}></Route>
                         <Route path={'/home/changeUserPasswordById/:id'} element={<ChangePassword/>}></Route>
                         <Route path={'/home/showTeacherPending'} element={<ShowListTeacherPending/>}></Route>
                         <Route path={'/home/detailTeacherPending/:id'} element={<DetailTeacherPending/>}></Route>

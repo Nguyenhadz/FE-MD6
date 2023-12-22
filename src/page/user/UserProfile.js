@@ -64,8 +64,8 @@ export default function UserProfile() {
             <div className={"flex flex-col justify-center"}>
 
                 <div className={"flex flex-col justify-center"}>
-                    <p className={"justify-center flex mt-24 text-3xl font-bold"}>Cài đặt</p>
-                    <div className={"flex justify-center "}>
+                    <p className={"justify-center flex mt-16 text-3xl font-bold"}>Cài đặt</p>
+                    <div className={"flex justify-center mt-6"}>
                         {Object.keys(user).length > 0 &&
                             <div className={"h-3/5 w-5/12 mt-2  shadow-lg p-6 bg-white rounded-2xl"}>
                                 <div className={"mt-4"}>
