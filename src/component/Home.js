@@ -6,15 +6,11 @@ import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ResponsiveAppBar from "./Navbar";
+import ResponsiveAppBar from "./ResponsiveAppBar";
 import {Outlet} from "react-router";
 import MainListItems from "./ListItems";
 
@@ -97,15 +93,15 @@ export default function Home() {
                         >
                             <MenuIcon/>
                         </IconButton>
-                        <ResponsiveAppBar ></ResponsiveAppBar>
+                        <ResponsiveAppBar></ResponsiveAppBar>
                     </Toolbar>
                 </AppBar>
-                <Drawer   variant="permanent" open={open} position="fixed">
+                <Drawer variant="permanent" open={open}>
                     <img className={"w-56 h-16"} src={'https://cf.quizizz.com/img/qfw/Logo.png'} alt={'...'}/>
                     <Toolbar
                         sx={{
                             display: 'flex',
-                            alignItems: 'center', // add this line
+                            alignItems: 'center',
                             justifyContent: 'flex-end',
                             px: [1],
                         }}
@@ -115,7 +111,7 @@ export default function Home() {
                         </IconButton>
                     </Toolbar>
                     <Divider/>
-                    <List  component="nav">
+                    <List component="nav">
                         <MainListItems sidebarOpen={open}/>
                         <Divider sx={{my: 1}}/>
                     </List>
@@ -131,31 +127,10 @@ export default function Home() {
                         flexGrow: 1,
                         minHeight: 'calc(100vh - 64px)',
                         overflow: 'auto',
+                        marginTop: '74px'
                     }}
                 >
-                    <Toolbar/>
-                    <Container maxWidth="xl" sx={{height: '100vh', mt: 2, mb: 2}}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <Paper
-                                    sx={{
-                                    p: 2,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    minHeight: '0', // Set minHeight to 100%
-                                    height: 'auto',
-                                    overflow: 'auto',
-                                    }}>
-                                    <Outlet/>
-                                </Paper>
-                            </Grid>
-                        </Grid>
-                        <Box sx={{pt: 4}}>
-                            <Typography variant="body2" color="text.secondary" align="center">
-                                {new Date().getFullYear()} Your Website
-                            </Typography>
-                        </Box>
-                    </Container>
+                    <Outlet/>
                 </Box>
             </Box>
         </ThemeProvider>
