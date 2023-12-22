@@ -62,11 +62,11 @@ const DetailQuiz = ({quizId}) => {
     }
     const style = {
         position: 'absolute',
-        top: '50%',
+        top: '0',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 800,
-        height: 400,
+        width: 1200,
+        height: 800,
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
@@ -81,7 +81,16 @@ const DetailQuiz = ({quizId}) => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box id="modal-container" sx={{width: '1000px', height: '600px', position: 'absolute', top: '30%', left: '30%', backgroundColor: 'background.paper'}}>
+                <Box id="modal-container" sx={{
+                    width: '1200px',
+                    height: '800px',
+                    position: 'absolute',
+                    top: '0',
+                    left: '20%',
+                    backgroundColor: 'background.paper',
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                         <EditQuiz quizId={quizId}/>
                     </Typography>
