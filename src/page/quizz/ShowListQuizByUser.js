@@ -1,18 +1,17 @@
 import * as React from 'react';
-import {useEffect, useState} from 'react';
 import {styled} from '@mui/system';
 import {Tabs as BaseTabs} from '@mui/base/Tabs';
 import {TabsList as BaseTabsList} from '@mui/base/TabsList';
 import {TabPanel as BaseTabPanel} from '@mui/base/TabPanel';
 import {buttonClasses} from '@mui/base/Button';
 import {Tab as BaseTab, tabClasses} from '@mui/base/Tab';
+import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {findQuizByUser} from "../../redux/service/QuizService";
 import Box from "@mui/material/Box";
 import DetailQuiz from "./DetailQuiz";
 import {Pagination} from "@mui/material";
 import {store} from "../../redux/store/Store";
-
 export default function ShowListQuizByUser() {
     const currentUser = useSelector((store) => {
         return store.users.currentUser
@@ -42,45 +41,47 @@ export default function ShowListQuizByUser() {
 
     const [currentPage, setCurrentPage] = React.useState(1);
     const itemsPerPage = 5;
+
     const handleChangePage = (event, newValue) => {
         setCurrentPage(newValue);
+        setValue(0);
     };
     const startIndex = (currentPage - 1) * itemsPerPage;
     const visibleQuizzes = quizzes?.slice(startIndex, startIndex + itemsPerPage);
     return (
         <>
-            <Tabs value={value} orientation="vertical" sx={{width: "100%", height: "full"}}>
-                <Box sx={{width: '100%', display: 'flex'}}>
-                    <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        orientation="vertical"
-                        sx={{borderRight: 1, borderColor: 'divider'}}
-                    >
-                        <TabsList>
-                            {visibleQuizzes?.map((quiz, index) => (
-                                <Tab value={index} sx={{display: 'block'}}>
-                                    <div style={{wordWrap: 'break-word', textAlign: 'left'}}>Bài thi: {index + 1}</div>
-                                    <div style={{wordWrap: 'break-word', textAlign: 'left'}}>{quiz.title}</div>
-                                </Tab>
-                            ))}
-                        </TabsList>
-                    </Tabs>
-
+        <Tabs value={value} orientation="vertical"  sx={{width: "100%", height: "full"}}>
+        <Box sx={{ width: '100%', display: 'flex' }}>
+            <Tabs
+                value={value}
+                onChange={handleChange}
+                orientation="vertical"
+                sx={{ borderRight: 1, borderColor: 'divider' }}
+            >
+                <TabsList>
                     {visibleQuizzes?.map((quiz, index) => (
-                        <TabPanel index={index} sx={{width: '100%'}}>
-                            <DetailQuiz quizId={quiz.id}/>
-                        </TabPanel>
+                        <Tab value={index} sx={{display: 'block'}}>
+                            <div style={{ wordWrap: 'break-word', textAlign: 'left' }}>Bài thi: {index + 1 + (currentPage-1)*itemsPerPage}</div>
+                            <div style={{ wordWrap: 'break-word', textAlign: 'left' }}>{quiz.title}</div>
+                        </Tab>
                     ))}
-                </Box>
+                </TabsList>
             </Tabs>
-            <Pagination
-                count={Math.ceil(quizzes?.length / itemsPerPage)}
-                page={currentPage}
-                onChange={handleChangePage}
-                color="primary"
-                sx={{marginTop: '16px'}}
-            />
+
+            {visibleQuizzes?.map((quiz, index) => (
+                <TabPanel index={index} sx={{ width: '100%' }}>
+                    <DetailQuiz quizId={quiz.id}/>
+                </TabPanel>
+            ))}
+        </Box>
+        </Tabs>
+    <Pagination
+        count={Math.ceil(quizzes?.length / itemsPerPage)}
+        page={currentPage}
+        onChange={handleChangePage}
+        color="primary"
+        sx={{ marginTop: '16px' }}
+    />
         </>
     );
 }

@@ -12,9 +12,9 @@ const MainListItems = ({sidebarOpen}) => {
 
     const user = useSelector(state => state.users.currentUser);
 
-    const isAdmin = user.roles[0].authority === 'ADMIN';
-    const isTeacher = user.roles[0].authority === 'TEACHER';
-    const isStudent = user.roles[0].authority === 'STUDENT';
+    const isAdmin = user.roles[0].authority === 'ADMIN' || user.roles[0].name === 'ADMIN';
+    const isTeacher = user.roles[0].authority === 'TEACHER' || user.roles[0].name === 'TEACHER';
+    const isStudent = user.roles[0].authority === 'STUDENT' || user.roles[0].name === 'STUDENT';
     const primaryTypographyProps = sidebarOpen ? {
         style: {
             whiteSpace: 'pre-line',
