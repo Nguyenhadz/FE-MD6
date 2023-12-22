@@ -9,21 +9,22 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import {useDispatch, useSelector} from "react-redux";
 import {Checkbox, Radio} from "@mui/material";
-import {useEffect, useState} from "react";
+import {memo, useEffect, useState} from "react";
 import {createResult} from "../../redux/service/ResultService";
 import {findQuizById} from "../../redux/service/QuizService";
 import {useNavigate, useParams} from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import {styled} from "@mui/system";
 import StepList from "./StepList";
+import {toast} from "react-toastify";
 
 
 export default function TextMobileStepper() {
-    const steps = useSelector((store) => store.quizzes.quiz.questions)
+    const steps = useSelector((store) => store.quizzes.quiz)
     console.log(steps)
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
-    const maxSteps = steps.length;
+    const maxSteps = steps.questions.length;
     const idQuiz = useParams().idQuiz;
     const idUser = useSelector((store) => store.users.currentUser.id);
     const dispatch = useDispatch();
@@ -36,7 +37,7 @@ export default function TextMobileStepper() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
     const [answers, setAnswers] = useState(
-        steps.reduce((acc, question) => {
+        steps.questions.reduce((acc, question) => {
             acc[question.id] = [];
             return acc;
         }, {})
@@ -61,9 +62,32 @@ export default function TextMobileStepper() {
 
     const [selectedAnswers, setSelectedAnswers] = useState([]);
 
+    const [countdown, setCountdown] = useState(steps.time);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCountdown((prevCountdown) => prevCountdown - 1);
+        }, 60000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
+    const CountdownDisplay = memo(({ countdown }) => {
+        const remainingMinutes = Math.ceil(countdown / 60);
+
+        useEffect(() => {
+            if (countdown === 0) {
+                handleSubmit().then(() => {});
+            }
+        }, [countdown]);
+        return <div className="text-1xl text-red-600 font-bold mb-2">{`Thời gian còn lại: ${remainingMinutes} phút`}</div>;
+    });
+
     const updateSelectedAnswers = () => {
         const newSelectedAnswers = [];
-        steps.forEach((question) => {
+        steps.questions.forEach((question) => {
             newSelectedAnswers.push({
                 questionId: question.id,
                 selectedAnswers: answers[question.id] || [],
@@ -109,22 +133,26 @@ export default function TextMobileStepper() {
 
         await dispatch(createResult(values))
         await dispatch(findQuizById(idQuiz))
+        toast.success("Nộp bài thành công", {})
         await navigate("/home/result")
 
     };
+
     return (
         <div className={'flex justify-between mt-10'}>
+
             <div className={'w-10/12 flex flex-column'}>
                 <div className={'ml-40'}>
-                    <span className={'text-2xl font-bold text-red-600'}>Câu {activeStep + 1}:</span>
+
+                    <span className={'text-2xl font-bold text-purple-600'}>Câu {activeStep + 1}:</span>
                     <Typography
                         sx={{
                           marginTop: '10px'
                         }}
                     ><StyledContent
-                        dangerouslySetInnerHTML={{__html: steps[activeStep].content}}></StyledContent></Typography>
+                        dangerouslySetInnerHTML={{__html: steps.questions[activeStep].content}}></StyledContent></Typography>
                     <div>
-                        {(steps[activeStep].typeQuestion.id === 1 || steps[activeStep].typeQuestion.id === 2) ? (<span></span>):(<span>(Có thể chọn nhiều đáp án)</span>)}
+                        {(steps.questions[activeStep].typeQuestion.id === 1 || steps.questions[activeStep].typeQuestion.id === 2) ? (<span></span>):(<span>(Có thể chọn nhiều đáp án)</span>)}
 
                     </div>
 
@@ -158,14 +186,14 @@ export default function TextMobileStepper() {
                             marginTop: 5
                         }}>
                             <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
-                                {steps[activeStep].answers.map((item, index) => (
-                                    (steps[activeStep].typeQuestion.id === 1 || steps[activeStep].typeQuestion.id === 2) ?
+                                {steps.questions[activeStep].answers.map((item, index) => (
+                                    (steps.questions[activeStep].typeQuestion.id === 1 || steps.questions[activeStep].typeQuestion.id === 2) ?
                                         (
-                                            <Grid item xs={3} onClick={() => handleRadioChange(steps[activeStep].id, item.id)}>
+                                            <Grid item xs={3} onClick={() => handleRadioChange(steps.questions[activeStep].id, item.id)}>
                                                 <Item
                                                     sx={{
                                                         position: 'relative',
-                                                        backgroundColor: answers[steps[activeStep].id].includes(item.id) ? '#99FFFF' : 'linear-gradient(45deg, #66FF33, #FFCC33)',
+                                                        backgroundColor: answers[steps.questions[activeStep].id].includes(item.id) ? '#99FFFF' : 'linear-gradient(45deg, #66FF33, #FFCC33)',
                                                         transition: 'background-color 0.3s ease-in-out',
                                                         overflow: 'hidden',
                                                         cursor: 'pointer',
@@ -175,27 +203,16 @@ export default function TextMobileStepper() {
                                                         '&:active': {
                                                             backgroundColor: 'lightblue',
                                                         },
-                                                        '&:after': {
-                                                            content: '""',
-                                                            position: 'absolute',
-                                                            top: 0,
-                                                            left: 0,
-                                                            width: '100%',
-                                                            height: '100%',
-                                                            background: 'rgba(255, 255, 255, 0.2)', // Tạo hiệu ứng khi nút được nhấn
-                                                            pointerEvents: 'none', // Tránh xung đột với sự kiện click
-                                                            zIndex: 1,
-                                                        },
                                                         boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
                                                         height: '100%'
                                                     }}
                                                     >
                                                     <div key={index}>
                                                         <Radio
-                                                            name={`question_${steps[activeStep].id}`}
+                                                            name={`question_${steps.questions[activeStep].id}`}
                                                             // value={item.id}
-                                                            checked={answers[steps[activeStep].id].includes(item.id)}
-                                                            onChange={() => handleRadioChange(steps[activeStep].id, item.id)}
+                                                            checked={answers[steps.questions[activeStep].id].includes(item.id)}
+                                                            onChange={() => handleRadioChange(steps.questions[activeStep].id, item.id)}
                                                             sx={{
                                                                 display: 'none',
                                                             }}
@@ -209,11 +226,11 @@ export default function TextMobileStepper() {
                                         )
                                         :
                                         (
-                                            <Grid item xs={3} onClick={()=> handleCheckboxChange(steps[activeStep].id, item.id)}>
+                                            <Grid item xs={3} onClick={()=> handleCheckboxChange(steps.questions[activeStep].id, item.id)}>
                                                 <Item
                                                     sx={{
                                                         position: 'relative',
-                                                        backgroundColor: answers[steps[activeStep].id].includes(item.id) ? '#99FFFF' : 'linear-gradient(45deg, #66FF33, #FFCC33)',
+                                                        backgroundColor: answers[steps.questions[activeStep].id].includes(item.id) ? '#99FFFF' : 'linear-gradient(45deg, #66FF33, #FFCC33)',
                                                         transition: 'background-color 0.3s ease-in-out',
                                                         overflow: 'hidden',
                                                         cursor: 'pointer',
@@ -223,25 +240,14 @@ export default function TextMobileStepper() {
                                                         '&:active': {
                                                             backgroundColor: 'lightblue',
                                                         },
-                                                        '&:after': {
-                                                            content: '""',
-                                                            position: 'absolute',
-                                                            top: 0,
-                                                            left: 0,
-                                                            width: '100%',
-                                                            height: '100%',
-                                                            background: 'rgba(255, 255, 255, 0.2)', // Tạo hiệu ứng khi nút được nhấn
-                                                            pointerEvents: 'none', // Tránh xung đột với sự kiện click
-                                                            zIndex: 1,
-                                                        },
                                                         boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
                                                         height: '100%'
                                                     }}
                                                 >
                                                     <div key={index}>
                                                         <Checkbox
-                                                            checked={answers[steps[activeStep].id].includes(item.id)}
-                                                            onChange={() => handleCheckboxChange(steps[activeStep].id, item.id)}
+                                                            checked={answers[steps.questions[activeStep].id].includes(item.id)}
+                                                            onChange={() => handleCheckboxChange(steps.questions[activeStep].id, item.id)}
                                                             sx={{
                                                                 display: 'none'
                                                             }}
@@ -303,13 +309,11 @@ export default function TextMobileStepper() {
 
             </div>
             <div className={'w-2/12'}>
+                <CountdownDisplay countdown={countdown} />
                 <StepList stepsMax={maxSteps} activeStep={activeStep} handleStepChange={setActiveStep}
                           selectedAnswers={selectedAnswers}
                 />
             </div>
-
         </div>
-
-
     );
 }
