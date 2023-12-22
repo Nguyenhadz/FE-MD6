@@ -34,33 +34,25 @@ const MainListItems = ({sidebarOpen}) => {
                     <ListItemIcon>
                         <PiExam/>
                     </ListItemIcon>
-                    <ListItemText primary="Danh sách bài thi"
-                        // primaryTypographyProps={primaryTypographyProps}
-                    />
+                    <ListItemText primary="Danh sách bài thi"/>
                 </ListItemButton>
                 <ListItemButton component={Link} to="/home/totalQuestion">
                     <ListItemIcon>
                         <PiExam/>
                     </ListItemIcon>
-                    <ListItemText primary="Danh sách câu hỏi"
-                        // primaryTypographyProps={primaryTypographyProps}
-                    />
+                    <ListItemText primary="Danh sách câu hỏi"/>
                 </ListItemButton>
                 <ListItemButton component={Link} to="/home/showListStudent">
                     <ListItemIcon>
                         <LayersIcon/>
                     </ListItemIcon>
-                    <ListItemText primary={'Danh sách học sinh'}
-                        // primaryTypographyProps={primaryTypographyProps}
-                    />
+                    <ListItemText primary={'Danh sách học sinh'}/>
                 </ListItemButton>
                 <ListItemButton component={Link} to="/home/showListTeacher">
                     <ListItemIcon>
                         <LayersIcon/>
                     </ListItemIcon>
-                    <ListItemText primary={'Danh sách giáo viên'}
-                        // primaryTypographyProps={primaryTypographyProps}
-                    />
+                    <ListItemText primary={'Danh sách giáo viên'}/>
                 </ListItemButton>
                 <ListItemButton
                     component={Link} to="/home/showTeacherPending">
@@ -76,9 +68,7 @@ const MainListItems = ({sidebarOpen}) => {
                     <ListItemIcon>
                         <LayersIcon/>
                     </ListItemIcon>
-                    <ListItemText primary={"Hồ sơ của tôi"}
-                        // primaryTypographyProps={primaryTypographyProps}
-                    />
+                    <ListItemText primary={"Hồ sơ của tôi"}/>
                 </ListItemButton>
             </React.Fragment>)}
         {isTeacher && ( // nếu là teacher hoặc student thì hiển thị các ListItemButton sau
