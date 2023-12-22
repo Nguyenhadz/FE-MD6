@@ -13,6 +13,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import {Outlet} from "react-router";
 import MainListItems from "./ListItems";
+import Paper from "@mui/material/Paper";
 
 
 const drawerWidth = 240;
@@ -117,7 +118,7 @@ export default function Home() {
                     </List>
                 </Drawer>
 
-                <Box
+                <Paper
                     component="main"
                     sx={{
                         backgroundColor: (theme) =>
@@ -131,7 +132,7 @@ export default function Home() {
                     }}
                 >
                     <Outlet/>
-                </Box>
+                </Paper>
             </Box>
         </ThemeProvider>
     );
