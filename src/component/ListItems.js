@@ -7,15 +7,13 @@ import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {Home} from "@mui/icons-material";
 import {PiExam} from "react-icons/pi";
-import {findQuizById} from "../redux/service/QuizService";
-
 const MainListItems = ({sidebarOpen}) => {
 
     const user = useSelector(state => state.users.currentUser);
 
-    const isAdmin = user.roles[0].authority === 'ADMIN';
-    const isTeacher = user.roles[0].authority === 'TEACHER';
-    const isStudent = user.roles[0].authority === 'STUDENT';
+    const isAdmin = user.roles[0].authority === 'ADMIN' || user.roles[0].name === 'ADMIN';
+    const isTeacher = user.roles[0].authority === 'TEACHER' || user.roles[0].name === 'TEACHER';
+    const isStudent = user.roles[0].authority === 'STUDENT' || user.roles[0].name === 'STUDENT';
     const primaryTypographyProps = sidebarOpen ? {
         style: {
             whiteSpace: 'pre-line',
@@ -158,28 +156,3 @@ const MainListItems = ({sidebarOpen}) => {
 
 export default MainListItems;
 
-// export const secondaryListItems = (
-//     <React.Fragment>
-//         <ListSubheader component="div" inset>
-//             Saved reports
-//         </ListSubheader>
-//         <ListItemButton>
-//             <ListItemIcon>
-//                 <AssignmentIcon/>
-//             </ListItemIcon>
-//             <ListItemText primary="Current month"/>
-//         </ListItemButton>
-//         <ListItemButton>
-//             <ListItemIcon>
-//                 <AssignmentIcon/>
-//             </ListItemIcon>
-//             <ListItemText primary="Last quarter"/>
-//         </ListItemButton>
-//         <ListItemButton>
-//             <ListItemIcon>
-//                 <AssignmentIcon/>
-//             </ListItemIcon>
-//             <ListItemText primary="Year-end sale"/>
-//         </ListItemButton>
-//     </React.Fragment>
-// );
