@@ -19,9 +19,9 @@ export const createQuiz = createAsyncThunk(
 )
 export const updateQuiz = createAsyncThunk(
     'quiz/update',
-    async (data) => {
-        console.log(data)
-        const res = await customAxios.put('quizzes', data, axiosConfig);
+    async (quiz) => {
+        console.log('321', quiz)
+        const res = await customAxios.put('quizzes/' + quiz.id, quiz, axiosConfig);
         return res.data
     }
 )

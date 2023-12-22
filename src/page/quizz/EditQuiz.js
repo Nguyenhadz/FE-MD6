@@ -15,7 +15,7 @@ import QuestionDetail from "./QuestionDetail";
 import Button from "@mui/material/Button";
 import {useFormik} from "formik";
 import {alpha, FormControl, InputBase, InputLabel, Select, TextField} from "@mui/material";
-import {createQuiz, findQuizById} from "../../redux/service/QuizService";
+import {createQuiz, findQuizById, updateQuiz} from "../../redux/service/QuizService";
 import SearchIcon from "@mui/icons-material/Search";
 import {styled} from "@mui/system";
 import MenuItem from "@mui/material/MenuItem";
@@ -86,6 +86,7 @@ const EditQuiz = ({quizId}) => {
             toast.error("Đã có câu này");
         }
     };
+
     const handleDeleteQuestion = (questionId) => {
         const index = selectedQuestionContent.findIndex((question) => question.id === questionId);
         if (index !== -1) {
@@ -178,37 +179,85 @@ const EditQuiz = ({quizId}) => {
             background: gradientColors.background,
         },
     };
+    console.log('aaa', typeof(quiz?.time))
 
     const formik = useFormik({
         initialValues: {
+            id: quizId,
             title: quiz?.title,
-            time: quiz?.time,
-            timeCreate: quiz?.time,
-            description: quiz?.description,
-            passScore: quiz?.passScore,
-            status: quiz?.status,
+            time: 1000,
+            timeCreate: "2023-12-17T18:20:48",
+            description: "Bài quiz test",
+            passScore: 1,
+            status: 1,
             categoryQuiz: {
-                id: quiz?.categoryQuiz.id
+                id: 1
             },
             levelQuiz: {
-                id: quiz?.levelQuiz.id
+                id: 1
             },
             user: {
-                id: quiz?.user.id
+                id: 8
             },
-            questions: quiz?.questions,
+            questions: [
+                {
+                    id: 1
+                },
+                {
+                    id: 2
+                },
+                {
+                    id: 5
+                },
+                {
+                    id: 6
+                }
+            ]
         },
         enableReinitialize: true,
         onSubmit: async (values) => {
 
-            await dispatch(createQuiz(values))
+            await dispatch(updateQuiz(values))
             await formik.resetForm()
         },
     });
+
+    const newQuiz = {
+        id: 5,
+        title: "Bài thi mới nhất 2023",
+        time: 1000,
+        timeCreate: "2023-12-17T18:20:48",
+        description: "Bài quiz test",
+        passScore: 1,
+        status: 1,
+        categoryQuiz: {
+            id: 1
+        },
+        levelQuiz: {
+            id: 1
+        },
+        user: {
+            id: 1
+        },
+        questions: [
+            {
+                id: 1
+            },
+            {
+                id: 2
+            },
+            {
+                id: 5
+            },
+            {
+                id: 6
+            }
+        ]
+    };
+
     const handleUpdateQuiz = (data) => {
         console.log('123', data)
     }
-
     return (
         <Box
             sx={{
