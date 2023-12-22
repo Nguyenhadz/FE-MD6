@@ -36,6 +36,9 @@ import ListQuizCard from "./component/ListQuizCard";
 import DoQuiz from "./page/quizz/StepList";
 import TextMobileStepper from "./page/quizz/TextMobileStepper";
 import ColorTabs from "./page/user/TabProfile";
+import ShowListQuizByUser from "./page/quizz/ShowListQuizByUser";
+import ListQuestion from "./page/question/ListQuestion";
+import CreateQuestionOneAnswer from "./page/question/CreateQuestion";
 
 
 function App() {
@@ -69,7 +72,14 @@ function App() {
                         <Route path={'/home/changeUserPasswordById/:id'} element={<ChangePassword/>}></Route>
                         <Route path={'/home/showTeacherPending'} element={<ShowListTeacherPending/>}></Route>
                         <Route path={'/home/detailTeacherPending/:id'} element={<DetailTeacherPending/>}></Route>
-                        <Route path={'/home/layoutManagerQuestion'} element={<LayoutManagerQuestion/>}></Route>
+                        <Route path={'/home/layoutManagerQuestion'} element={<LayoutManagerQuestion/>}>
+                            <Route path={'/home/layoutManagerQuestion/editQuiz/:id'} element={<EditQuiz/>}></Route>
+                            <Route path={'/home/layoutManagerQuestion'} element={<ShowListQuizByUser/>}></Route>
+                            <Route path={'/home/layoutManagerQuestion/showListQuestion'} element={<ListQuestion/>}></Route>
+                            <Route path={'/home/layoutManagerQuestion/createQuestion'} element={<CreateQuestionOneAnswer/>}></Route>
+                            <Route path={'/home/layoutManagerQuestion/createQuestion'} element={<CreateQuestionOneAnswer/>}></Route>
+                            <Route path={'/home/layoutManagerQuestion/createNewQuiz'} element={<CreateNewQuiz/>}></Route>
+                        </Route>
                         <Route path={'/home/editQuestion'} element={<EditQuestion/>}></Route>
                         <Route path={'/home/showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>
                         <Route path={'/home/updateCateQuiz/:id'} element={<UpdateCateQuiz/>}></Route>
@@ -79,7 +89,6 @@ function App() {
                         <Route path={'/home/result'} element={<ResultAfterTest/>}></Route>
                         <Route path={'/home/showAllQuiz'} element={<ShowAllQuiz/>}></Route>
                         <Route path={'/home/doingQuiz/:idQuiz'} element={<TextMobileStepper/>}/>
-                        <Route path={'/home/editQuiz/:id'} element={<EditQuiz/>}></Route>
                         <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
                         <Route path={'/home/listQuiz'} element={<ListQuizCard/>}></Route>
                      </Route>
