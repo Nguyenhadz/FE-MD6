@@ -79,15 +79,9 @@ export default function ListQuestion() {
             margin: 'auto',
             backgroundColor: 'white',
             borderRadius: '30px',
-            "& .MuiDataGrid-root": {
-                border: 'none',
-                color: 'black',
-                fontSize: '16px',
-                padding: '20px',
-            },
-            boxShadow: '30px 30px 30px 30px rgba(0, 0, 0, 0.2)'
+            marginTop:'0px'
         }}>
-            <div className={"w-full mt-0 justify-content-lg-end shadow-md from-blue-800 border-none"}
+            <div className={"w-full mt-0 from-blue-800 border-none"}
                  style={{marginTop: "0 !important"}}>
                 {currentQuestions.map((question, index) => {
                     if (question.user.id !== user.id) {
@@ -97,6 +91,7 @@ export default function ListQuestion() {
 
                     return (
                         <Accordion
+                            className={'w-full'}
                             key={question.id}>
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon/>}
@@ -138,7 +133,6 @@ export default function ListQuestion() {
                                                 </Grid>
                                             </React.Fragment>
                                         ))}
-
                                     </Grid>
                                     <div className={"flex justify-around"}>
                                                 {question && (
