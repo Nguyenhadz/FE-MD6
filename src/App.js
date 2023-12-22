@@ -79,7 +79,7 @@ function App() {
                         <Route path={'/home/doingQuiz/:idQuiz'} element={<TextMobileStepper/>}/>
                         <Route path={'/home/editQuiz/:id'} element={<EditQuiz/>}></Route>
                         <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
-                    <Route path={'/home/listQuiz'} element={<ListQuizCard/>}></Route>
+                        <Route path={'/home/listQuiz'} element={<ListQuizCard/>}></Route>
                      </Route>
                  )
              </Routes>
