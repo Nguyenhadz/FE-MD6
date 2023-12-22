@@ -40,10 +40,10 @@ function ResponsiveAppBar() {
         return state.users.currentUser;
     })
     const settings = [
-        {name: 'Profile', href: '/home/findUserById/' + user.id},
-        {name: 'Account', href: '/home/changeUserPasswordById/' + user.id},
-        {name: 'Dashboard', href: '/home/layoutManagerQuestion/listQuestion'},
-        {name: 'Logout'},
+        {name: 'Cài Đặt', href: '/home/findUserById/' + user.id},
+        // {name: 'Account', href: '/home/changeUserPasswordById/' + user.id},
+        {name: 'Bảng Điều Khiển', href: '/home/totalQuestion'},
+        {name: 'Đăng Xuất'},
     ];
 
     const handleChange = (event) => {
@@ -231,7 +231,7 @@ function ResponsiveAppBar() {
                     >
                         {settings.map((setting, index) => (
                             <MenuItem key={index} onClick={() => {
-                                if (setting.name === 'Logout') {
+                                if (setting.name === 'Đăng Xuất') {
                                     handleLogout();
                                 } else {
                                     handleCloseUserMenu();
