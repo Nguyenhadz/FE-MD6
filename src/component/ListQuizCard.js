@@ -14,7 +14,7 @@ export default function ListQuizCard() {
     })
     useEffect(() => {
         dispatch(findAllQuiz());
-    }, [])
+    }, [dispatch])
     const categories = [...new Set(quizzes.map((quiz) => quiz.category))];
     const filterByCategory = (quizzes, category) => {
         return quizzes.filter((quiz) => quiz.category === category);
@@ -48,7 +48,6 @@ export default function ListQuizCard() {
                     ))}
                 </ImageListItem>
             ))}
-
         </ImageList>
     );
 }
