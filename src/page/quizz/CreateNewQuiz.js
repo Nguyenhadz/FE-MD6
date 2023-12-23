@@ -46,8 +46,9 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {storage} from "../../firebase/FireBase";
 import {v4} from "uuid";
+import MyQuestionDetail from "../question/MyQuestionDetail";
 
-const drawerWidth = 320;
+const drawerWidth = 360;
 
 export default function CreateNewQuiz() {
     const questions = useSelector((store) => {
@@ -292,7 +293,16 @@ export default function CreateNewQuiz() {
         whiteSpace: 'nowrap',
         width: 1,
     });
-
+    const truncateContent = (content, maxLength) => {
+        if (content.length > maxLength) {
+            return content.substring(0, maxLength) + "...";
+        }
+        return content;
+    };
+    const stripHtmlTags = (html) => {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent || "";
+    };
     return (<Box
         sx={{
             display: 'flex',
@@ -605,19 +615,24 @@ export default function CreateNewQuiz() {
 
                                         </Box>
                                         {filteredQuestions.map((question) => (<ListItem key={question.id}>
-                                            <ListItemText>
-                                                <QuestionDetail question={question}
-                                                                buttonLabel={<Typography className={"flex "}>
-                                                                    Câu : {question.id}
-                                                                    <span
-                                                                        dangerouslySetInnerHTML={{__html: question.content}}/>
-                                                                </Typography>}/>
+                                            <Grid container spacing={2} alignItems="center">
+                                                <Grid item xs={1}>
+                                                    <span className={'font-bold'}>{question.id}.</span>
+                                                </Grid>
+                                                <Grid item xs={8}>
+                                                    {truncateContent(stripHtmlTags(question.content), 20)}
+                                                </Grid>
+                                                <Grid item xs={2}>
+                                                    <MyQuestionDetail question={question}></MyQuestionDetail>
+                                                </Grid>
+                                                <Grid item xs={1}>
+                                                    <Button
+                                                        onClick={() => handleAddQuestion(question)}>
+                                                        <Add />
+                                                    </Button>
+                                                </Grid>
+                                            </Grid>
 
-                                            </ListItemText>
-                                            <Button onClick={() => handleAddQuestion(question)}
-                                                    onChange={(e) => formik.setFieldValue('questions', e.target.value)}>
-                                                <Add/>
-                                            </Button>
                                         </ListItem>))}
                                     </List>
                                 </Box>
