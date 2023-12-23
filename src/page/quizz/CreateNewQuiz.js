@@ -83,7 +83,7 @@ export default function CreateNewQuiz() {
     }, [dispatch]);
     const handleChangeCategorySearch = (event) => {
         setSelectedFieldSearch(event.target.value);
-        searchTermRef.current = ""; // Reset searchTermRef khi chọn danh mục mới
+        searchTermRef.current = "";
         dispatch(findQuestionsByCategory({id: event.target.value}));
     };
     useEffect(() => {
@@ -96,7 +96,6 @@ export default function CreateNewQuiz() {
     useEffect(() => {
         const filterQuestions = (questions, searchTerm, selectedFieldSearch) => {
             if (!searchTerm && selectedFieldSearch !== 0) {
-                // Nếu không có nội dung tìm kiếm nhưng có category được chọn
                 const filteredByCategory = questions.filter(question => {
                     const category = question.categoryQuestion?.id || null;
                     return category === selectedFieldSearch;
@@ -106,7 +105,6 @@ export default function CreateNewQuiz() {
             }
 
             if (!searchTerm) {
-                // Nếu cả nội dung tìm kiếm và category đều rỗng
                 setFilteredQuestions(questions);
                 return questions;
             }
@@ -134,33 +132,41 @@ export default function CreateNewQuiz() {
         });
         setFilteredQuestions(filtered);
     };
-    const handleAddQuestion = (question) => {
+    const handleDeleteQuestion = async (questionId) => {
+        const index = selectedQuestionContent.findIndex((question) => question.id === questionId);
+        if (index !== -1) {
+            const newContent = [...selectedQuestionContent.slice(0, index), ...selectedQuestionContent.slice(index + 1)];
+            await setSelectedQuestionContent(newContent);
+            await formik.setFieldValue('questions', newContent); // Update Formik with the newContent
+        } else {
+            toast.error("Câu hỏi không tồn tại");
+        }
+    };
+
+    const handleAddQuestion = async (question) => {
         const index = selectedQuestionContent.findIndex(q => q.id === question.id);
         if (index === -1) {
-            setSelectedQuestionContent((prevContent) => [...prevContent, question]);
-            toast.success("Thêm câu hỏi thành công")
-            formik.setFieldValue('questions', selectedQuestionContent)
+            const updatedContent = [...selectedQuestionContent, question];
+            await setSelectedQuestionContent(updatedContent);
+            await formik.setFieldValue('questions', updatedContent).then(() => {
+                toast.success("Thêm câu hỏi thành công", [200]);
+
+            })
         } else {
             toast.error("Đã có câu này");
         }
     };
     const uploadFile = async () => {
-        if (image === null) return;
+        if (file === null) {
+            // No image selected, use default image
+            return imageDefault[(formik.values.categoryQuiz.id) || 1];
+        }
         const imageRef = ref(storage, `kien/${image.name + v4()}`);
         try {
             const snapshot = await uploadBytes(imageRef, image);
             return await getDownloadURL(snapshot.ref);
         } catch (error) {
             toast.error("Upload ảnh bị lỗi");
-        }
-    };
-    const handleDeleteQuestion = (questionId) => {
-        const index = selectedQuestionContent.findIndex((question) => question.id === questionId);
-        if (index !== -1) {
-            const newContent = [...selectedQuestionContent.slice(0, index), ...selectedQuestionContent.slice(index + 1)];
-            setSelectedQuestionContent(newContent);
-        } else {
-            toast.error("Câu hỏi không tồn tại");
         }
     };
 
@@ -207,7 +213,7 @@ export default function CreateNewQuiz() {
     const formik = useFormik({
         initialValues: {
             title: "",
-            time: "",
+            time: "1800",
             timeCreate: new Date(),
             description: "",
             passScore: "",
@@ -223,9 +229,10 @@ export default function CreateNewQuiz() {
                 id: currentUser.id
             },
             questions: [selectedQuestionContent],
-        }, validationSchema: validationSchema, onSubmit: async (values) => {
+        },
+        validationSchema: validationSchema,
+        onSubmit: async (values) => {
             const url = await uploadFile();
-
             await dispatch(createQuiz({...values, image: url})).then(toast.success("Tạo quiz thành công", {}))
             formik.resetForm()
             navigate("/home/showAllQuiz");
@@ -422,6 +429,7 @@ export default function CreateNewQuiz() {
                                                 id="demo-simple-select-autowidth"
                                                 onChange={handleSelectCateQuiz}
                                                 autoWidth
+                                                fullWidth={true}
                                                 label="Thể loại  *"
                                             >
                                                 {categoryQuizzes.map((cateQuiz) => (

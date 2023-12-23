@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 import {Pagination} from "@mui/material";
 import {store} from "../../redux/store/Store";
 import DetailQuizForUser from "./DetailQuizForUser";
+import {blueGrey} from "@mui/material/colors";
 
 export default function ShowAllQuiz() {
     const currentUser = useSelector((store) => {
@@ -109,7 +110,7 @@ const Tab = styled(BaseTab)`
     font-family: 'IBM Plex Sans', sans-serif;
     color: white;
     cursor: pointer;
-    font-size: 0.875rem;
+    font-size: 18px;
     font-weight: bold;
     background-color: transparent;
     width: 100%;

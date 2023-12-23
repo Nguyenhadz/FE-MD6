@@ -3,11 +3,10 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LayersIcon from '@mui/icons-material/Layers';
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import {Home} from "@mui/icons-material";
 import {PiExam} from "react-icons/pi";
-
 const MainListItems = ({sidebarOpen}) => {
 
     const user = useSelector(state => state.users.currentUser);
@@ -147,28 +146,3 @@ const MainListItems = ({sidebarOpen}) => {
 
 export default MainListItems;
 
-// export const secondaryListItems = (
-//     <React.Fragment>
-//         <ListSubheader component="div" inset>
-//             Saved reports
-//         </ListSubheader>
-//         <ListItemButton>
-//             <ListItemIcon>
-//                 <AssignmentIcon/>
-//             </ListItemIcon>
-//             <ListItemText primary="Current month"/>
-//         </ListItemButton>
-//         <ListItemButton>
-//             <ListItemIcon>
-//                 <AssignmentIcon/>
-//             </ListItemIcon>
-//             <ListItemText primary="Last quarter"/>
-//         </ListItemButton>
-//         <ListItemButton>
-//             <ListItemIcon>
-//                 <AssignmentIcon/>
-//             </ListItemIcon>
-//             <ListItemText primary="Year-end sale"/>
-//         </ListItemButton>
-//     </React.Fragment>
-// );
