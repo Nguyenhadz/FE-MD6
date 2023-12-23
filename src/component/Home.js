@@ -124,8 +124,8 @@ export default function Home() {
                     sx={{
                         backgroundColor: (theme) =>
                             theme.palette.mode === 'red'
-                                ? 'ghostwhite'  // Màu trắng
-                                : 'ghostwhite',
+                                ? '#f9f9f9'  // Màu trắng
+                                : '#f9f9f9',
                         flexGrow: 1,
                         minHeight: 'calc(100vh - 64px)',
                         overflow: 'auto',

@@ -69,11 +69,12 @@ export default function TotalQuestion() {
                 border: 'none',
                 color: 'black',
                 fontSize: '16px',
-                padding: '20px',
+                padding: '20x',
             },
             boxShadow: '30px 30px 30px 30px rgba(0, 0, 0, 0.2)'
         }}>
-            <div className={"w-11/12 mt-0 justify-content-lg-end shadow-md from-blue-800"}
+            <div className={'text-3xl font-sans pt-10 pb-5'}>Danh Sách Câu Hỏi</div>
+            <div className={"w-full mt-0 justify-content-lg-end shadow-md from-blue-800"}
                  style={{marginTop: "0 !important"}}>
                 {currentQuestions.map((question, index) => {
                     let letterIndex = 0; // Reset index for each question
