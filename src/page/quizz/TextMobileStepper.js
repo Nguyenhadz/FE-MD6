@@ -139,7 +139,7 @@ export default function TextMobileStepper() {
     };
 
     return (
-        <div className={'flex justify-between mt-10'}>
+        <div className={'flex justify-between mt-10 '}>
 
             <div className={'w-9/12 flex flex-column'}>
                 <div className={'ml-40'}>
@@ -267,7 +267,11 @@ export default function TextMobileStepper() {
                         position="static"
                         activeStep={activeStep}
                         sx={{
-                            marginTop: 10
+                            marginTop: 10,
+                            position: 'fixed',
+                            bottom: 150,
+                            left: 480,
+                            right: 600
                         }}
                         nextButton={
                             <Button
@@ -301,14 +305,14 @@ export default function TextMobileStepper() {
                             </Button>
                         }
                     />
-                    <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-10"}
+                    <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-10 fixed bottom-24"}
                             type="button" onClick={handleSubmit}>
                         Nộp bài
                     </button>
                 </Box>
 
             </div>
-            <div className={'w-2/12'}>
+            <div className={'w-2/12 mr-4'}>
                 <CountdownDisplay countdown={countdown} />
                 <StepList stepsMax={maxSteps} activeStep={activeStep} handleStepChange={setActiveStep}
                           selectedAnswers={selectedAnswers}
