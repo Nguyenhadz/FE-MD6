@@ -55,67 +55,81 @@ const DetailQuizForUser = ({quizId}) => {
     };
 
     return (
-        <div className={"ml-8"}>
-            <div className="flex items-center justify-between mb-3">
-                <div>
-                    <b>Tên bài thi: &nbsp;
-                        <span dangerouslySetInnerHTML={{__html: quiz.title}}></span>
-                    </b>
-                </div>
-                <div className="flex items-center">
-                    <div className="ml-auto">
-                        <button type="submit"
-                                className={"h-6 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:hover:bg-blue-50"}
-                                onClick={ async () => {
-                                    await dispatch(findQuizById(quiz.id))
-                                    await navigate("/home/doingQuiz/" + quiz.id)
-                                }}
-                        >
-                            Làm bài thi
-                        </button>
+        <div className={'text-xl mt-10 flex flex-col justify-center'}>
+            <div className={"ml-7"}>
+                <div className={'flex justify-between'}>
+                    <div>
+                        <div className="flex items-center justify-between mb-3">
+                            <div>
+                                <b>Tên bài thi: &nbsp;
+                                    <span dangerouslySetInnerHTML={{__html: quiz.title}}></span>
+                                </b>
+                            </div>
+                        </div>
+                        <div className={"mb-3"}><span className={'font-bold'}> Mô tả: &nbsp;</span> <span dangerouslySetInnerHTML={{__html: quiz.description}}></span>
+                        </div>
+                        <div className={"mb-3"}><span className={'font-bold'}> Người tạo: &nbsp;</span> {quiz.user?.name}</div>
+                        <div className={"mb-3"}><span className={'font-bold'}> Số lượng câu hỏi: &nbsp;</span> {quiz.questions?.length}</div>
+
+                        <div className={"mb-3"}><span className={'font-bold'}> Mức độ: &nbsp;</span> {quiz.levelQuiz?.name}</div>
+                        <div className={"mb-3"}><span className={'font-bold'}> Điểm đạt: &nbsp;</span> {quiz.passScore}</div>
+                        <div className={"mb-3"}><span className={'font-bold'}> Thời gian thi: &nbsp;</span> {minute} &nbsp;phút, {second} &nbsp;giây</div>
                     </div>
+                    <div className={'mr-10'}>
+                        <img src={quiz.image} alt={"fault"} style={{ width: '400px', height: '300px' }}/>
+                        <div className={"flex mt-3 border-solid border-2 rounded border-orange-200"}><span className={'font-bold ml-3'}> Thể loại: &nbsp;</span> <span
+                            dangerouslySetInnerHTML={{__html: quiz.categoryQuiz?.name}}></span></div>
+                    </div>
+
+                </div>
+
+
+                {((currentUser.roles[0].authority === "TEACHER") || (currentUser.roles[0].name === "TEACHER")) &&
+                    (<div>
+                        <div className={"mb-3"}>Câu hỏi:</div>
+                        {quiz.questions?.map((question, index) => (
+                            <Accordion key={index}>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon/>}
+                                    aria-controls={`panel${index + 1}-content`}
+                                    id={`panel${index + 1}-header`}
+                                >
+                                    <Typography>Câu hỏi {index + 1}: &nbsp;<span
+                                        dangerouslySetInnerHTML={{__html: question.content}}></span></Typography>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <Typography>
+                                        <Box sx={{width: "100%"}}>
+                                            <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
+                                                {question.answers.map((answer, answerIndex) => (
+                                                    <Grid item xs={6} key={answerIndex}>
+                                                        <Item><span dangerouslySetInnerHTML={{__html: answer.content}}
+                                                                    style={{color: answer.status === 1 ? 'blue' : 'black'}}></span></Item>
+                                                    </Grid>
+                                                ))}
+                                            </Grid>
+                                        </Box>
+                                    </Typography>
+                                </AccordionDetails>
+                            </Accordion>
+                        ))}
+                    </div>)}
+            </div>
+            <div className="ml-96">
+                <div className="font-bold text-xl">
+                    <button type="submit"
+                            className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-10  mx-auto "}
+                            onClick={ async () => {
+                                await dispatch(findQuizById(quiz.id))
+                                await navigate("/home/doingQuiz/" + quiz.id)
+                            }}
+                    >
+                        Làm bài thi
+                    </button>
                 </div>
             </div>
-            <div className={"mb-3"}>Mô tả: &nbsp;<span dangerouslySetInnerHTML={{__html: quiz.description}}></span>
-            </div>
-            <div className={"mb-3"}>Người tạo: &nbsp; {quiz.user?.name}</div>
-            <div className={"mb-3"}>Số lượng câu hỏi: &nbsp; {quiz.questions?.length}</div>
-            <div className={"flex mb-3"}>Thể loại: &nbsp; <span
-                dangerouslySetInnerHTML={{__html: quiz.categoryQuiz?.name}}></span></div>
-            <div className={"mb-3"}>Mức độ: &nbsp; {quiz.levelQuiz?.name}</div>
-            <div className={"mb-3"}>Điểm đạt: &nbsp; {quiz.passScore}</div>
-            <div className={"mb-3"}>Thời gian thi: &nbsp; {minute} &nbsp;phút, {second} &nbsp;giây</div>
-            {((currentUser.roles[0].authority === "TEACHER") || (currentUser.roles[0].name === "TEACHER")) &&
-                (<div>
-                    <div className={"mb-3"}>Câu hỏi:</div>
-                    {quiz.questions?.map((question, index) => (
-                        <Accordion key={index}>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon/>}
-                                aria-controls={`panel${index + 1}-content`}
-                                id={`panel${index + 1}-header`}
-                            >
-                                <Typography>Câu hỏi {index + 1}: &nbsp;<span
-                                    dangerouslySetInnerHTML={{__html: question.content}}></span></Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Typography>
-                                    <Box sx={{width: "100%"}}>
-                                        <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
-                                            {question.answers.map((answer, answerIndex) => (
-                                                <Grid item xs={6} key={answerIndex}>
-                                                    <Item><span dangerouslySetInnerHTML={{__html: answer.content}}
-                                                                style={{color: answer.status === 1 ? 'blue' : 'black'}}></span></Item>
-                                                </Grid>
-                                            ))}
-                                        </Grid>
-                                    </Box>
-                                </Typography>
-                            </AccordionDetails>
-                        </Accordion>
-                    ))}
-                </div>)}
         </div>
+
     );
 };
 export default DetailQuizForUser;
