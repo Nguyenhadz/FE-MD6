@@ -44,38 +44,41 @@ export default function ShowAllQuiz() {
     const visibleQuizzes = quizzes?.slice(startIndex, startIndex + itemsPerPage);
     return (
         <>
-            <Tabs value={value} orientation="vertical" sx={{width: "100%", height: "full"}}>
-                <Box sx={{width: '100%', display: 'flex'}}>
-                    <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        orientation="vertical"
-                        sx={{borderRight: 1, borderColor: 'divider'}}
-                    >
-                        <TabsList>
-                            {visibleQuizzes?.map((quiz, index) => (
-                                <Tab value={index} sx={{display: 'block'}}>
-                                    <div style={{wordWrap: 'break-word', textAlign: 'left'}}>Bài thi: {index + 1}</div>
-                                    <div style={{wordWrap: 'break-word', textAlign: 'left'}}>{quiz.title}</div>
-                                </Tab>
-                            ))}
-                        </TabsList>
-                    </Tabs>
+            <div className={'mt-6'}>
+                <Tabs value={value} orientation="vertical" sx={{width: "100%", height: "full"}}>
+                    <Box sx={{width: '100%', display: 'flex'}}>
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
+                            orientation="vertical"
+                            sx={{borderRight: 1, borderColor: 'divider'}}
+                        >
+                            <TabsList>
+                                {visibleQuizzes?.map((quiz, index) => (
+                                    <Tab value={index} sx={{display: 'block'}}>
+                                        <div style={{wordWrap: 'break-word', textAlign: 'left'}}>Bài thi: {index + 1}</div>
+                                        <div style={{wordWrap: 'break-word', textAlign: 'left'}}>{quiz.title}</div>
+                                    </Tab>
+                                ))}
+                            </TabsList>
+                        </Tabs>
 
-                    {visibleQuizzes?.map((quiz, index) => (
-                        <TabPanel index={index} sx={{width: '100%'}}>
-                            <DetailQuizForUser quizId={quiz.id}/>
-                        </TabPanel>
-                    ))}
-                </Box>
-            </Tabs>
-            <Pagination
-                count={Math.ceil(quizzes?.length / itemsPerPage)}
-                page={currentPage}
-                onChange={handleChangePage}
-                color="primary"
-                sx={{marginTop: '16px'}}
-            />
+                        {visibleQuizzes?.map((quiz, index) => (
+                            <TabPanel index={index} sx={{width: '100%'}}>
+                                <DetailQuizForUser quizId={quiz.id}/>
+                            </TabPanel>
+                        ))}
+                    </Box>
+                </Tabs>
+                <Pagination
+                    count={Math.ceil(quizzes?.length / itemsPerPage)}
+                    page={currentPage}
+                    onChange={handleChangePage}
+                    color="primary"
+                    sx={{marginTop: '16px'}}
+                />
+            </div>
+
         </>
     );
 }
