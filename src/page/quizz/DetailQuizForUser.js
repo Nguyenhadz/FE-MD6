@@ -74,13 +74,13 @@ const DetailQuizForUser = ({quizId}) => {
                         <div className={"mb-3"}><span className={'font-bold'}> Mức độ: &nbsp;</span> {quiz.levelQuiz?.name}</div>
                         <div className={"mb-3"}><span className={'font-bold'}> Điểm đạt: &nbsp;</span> {quiz.passScore}</div>
                         <div className={"mb-3"}><span className={'font-bold'}> Thời gian thi: &nbsp;</span> {minute} &nbsp;phút, {second} &nbsp;giây</div>
+
                     </div>
                     <div className={'mr-10'}>
                         <img src={quiz.image} alt={"fault"} style={{ width: '400px', height: '300px' }}/>
                         <div className={"flex mt-3 border-solid border-2 rounded border-orange-200"}><span className={'font-bold ml-3'}> Thể loại: &nbsp;</span> <span
                             dangerouslySetInnerHTML={{__html: quiz.categoryQuiz?.name}}></span></div>
                     </div>
-
                 </div>
 
 
@@ -89,7 +89,6 @@ const DetailQuizForUser = ({quizId}) => {
                         {/*<div className={"mb-3"}>Câu hỏi:</div>*/}
                         {quiz.questions?.map((question, index) => (
                             <Accordion key={index}
-
                             >
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon/>}
@@ -102,6 +101,7 @@ const DetailQuizForUser = ({quizId}) => {
                                             fontWeight: 'medium',
                                         }}
                                     >Câu hỏi {index + 1}: &nbsp;<span
+
                                         dangerouslySetInnerHTML={{__html: question.content}}></span></Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>

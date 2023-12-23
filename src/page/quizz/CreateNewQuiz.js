@@ -371,18 +371,21 @@ export default function CreateNewQuiz() {
                                 </Box>
                                 <Grid xs={4} className={'flex flex-wrap justify-center'}>
                                     <Card sx={{width: 320, height: 240}}>
-                                        <CardActionArea className={'flex flex-col justify-center'}
-                                                        style={{
-                                                            height: "100%", width: "100%", objectFit: "fill"
-                                                        }}
+                                        <CardActionArea
+                                            style={{
+                                                height: "100%",
+                                                width: "100%",
+                                                objectFit: "fill",
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                            }}
                                         >
-                                            <CardMedia
-                                                component="img"
-                                                image={file ? file : imageDefault[(formik.values.categoryQuiz.id) || 1]}
+                                            <img
+                                                srcSet={file ? file : imageDefault[(formik.values.categoryQuiz.id) || 1]}
+                                                src={file ? file : imageDefault[(formik.values.categoryQuiz.id) || 1]}
                                                 alt="green iguana"
-                                                style={{
-                                                    objectFit: "fill", height: "100%", width: "100%"
-                                                }}
+                                                style={{objectFit: "cover", height: "100%", width: "100%"}}
                                             />
                                         </CardActionArea>
                                     </Card>
