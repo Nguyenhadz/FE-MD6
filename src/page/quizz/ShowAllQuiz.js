@@ -158,7 +158,9 @@ const TabPanel = styled(BaseTabPanel)`
 const Tabs = styled(BaseTabs)`
     display: flex;
     gap: 16px;
-    width: 30%;
+    width: 20%;
+    max-height: 570px;
+  
 `;
 
 const TabsList = styled(BaseTabsList)(
@@ -176,5 +178,6 @@ const TabsList = styled(BaseTabsList)(
   justify-content: center;
   align-content: space-between;
   box-shadow: 0px 4px 8px ${theme.palette.mode === 'dark' ? grey[900] : grey[200]};
+  
   `,
 );

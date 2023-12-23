@@ -85,16 +85,23 @@ const DetailQuizForUser = ({quizId}) => {
 
 
                 {((currentUser.roles[0].authority === "TEACHER") || (currentUser.roles[0].name === "TEACHER")) &&
-                    (<div>
-                        <div className={"mb-3"}>Câu hỏi:</div>
+                    (<div className={''}>
+                        {/*<div className={"mb-3"}>Câu hỏi:</div>*/}
                         {quiz.questions?.map((question, index) => (
-                            <Accordion key={index}>
+                            <Accordion key={index}
+
+                            >
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon/>}
                                     aria-controls={`panel${index + 1}-content`}
                                     id={`panel${index + 1}-header`}
                                 >
-                                    <Typography>Câu hỏi {index + 1}: &nbsp;<span
+                                    <Typography
+                                        sx={{
+                                            fontSize: '18px',
+                                            fontWeight: 'medium',
+                                        }}
+                                    >Câu hỏi {index + 1}: &nbsp;<span
                                         dangerouslySetInnerHTML={{__html: question.content}}></span></Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
@@ -102,9 +109,19 @@ const DetailQuizForUser = ({quizId}) => {
                                         <Box sx={{width: "100%"}}>
                                             <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
                                                 {question.answers.map((answer, answerIndex) => (
-                                                    <Grid item xs={6} key={answerIndex}>
-                                                        <Item><span dangerouslySetInnerHTML={{__html: answer.content}}
-                                                                    style={{color: answer.status === 1 ? 'blue' : 'black'}}></span></Item>
+                                                    <Grid item xs={6} key={answerIndex}
+                                                    >
+                                                        <Item
+                                                        sx={{
+                                                            height:'100%',
+                                                            backgroundColor: answer.status === 1 ? '#99FFFF' : 'white',
+                                                            fontWeight: answer.status === 1 ? 'bold' : '',
+                                                            textAlign: 'left',
+                                                            fontSize: '18px'
+                                                        }}
+                                                        >
+                                                            <span dangerouslySetInnerHTML={{__html: answer.content}}
+                                                                    ></span></Item>
                                                     </Grid>
                                                 ))}
                                             </Grid>
