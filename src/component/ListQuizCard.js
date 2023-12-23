@@ -2,9 +2,8 @@ import * as React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {findAllQuiz} from "../redux/service/QuizService";
-import {store} from "../redux/store/Store";
 import {useDispatch, useSelector} from "react-redux";
 
 export default function ListQuizCard() {
@@ -15,39 +14,43 @@ export default function ListQuizCard() {
     useEffect(() => {
         dispatch(findAllQuiz());
     }, [dispatch])
-    const categories = [...new Set(quizzes.map((quiz) => quiz.category))];
+
+    const categories = [...new Set(quizzes.map((quiz) => quiz.categoryQuiz.id))];
     const filterByCategory = (quizzes, category) => {
-        return quizzes.filter((quiz) => quiz.category === category);
+        return quizzes.filter((quiz) => quiz.categoryQuiz.id === category);
     };
     return (
-        <ImageList
-            sx={{
-                gridAutoFlow: "column",
-                gridTemplateColumns: "repeat(auto-fit, minmax(160px,1fr)) !important",
-                gridAutoColumns: "minmax(160px, 1fr)",
-                scrollbarWidth: 100
-            }}
-        >
+        <div>
             {categories.map((category) => (
-                <ImageListItem key={category}>
-                    <h3>{category}</h3>
+                <ImageList
+                    sx={{
+                        gridAutoFlow: "column",
+                        gridTemplateColumns: "repeat(auto-fit, 140px) !important", // Adjust width as needed
+                        gridAutoColumns: "minmax(160px, 1fr)",
+                    }}
+                    height="160"
+                >
+                    <h3>{quizzes[category].categoryQuiz.description}</h3>
                     {filterByCategory(quizzes, category).map((quiz) => (
-                        <div>
+                        <ImageListItem key={quiz.id}>
                             <img
                                 srcSet={quiz.image}
                                 src={quiz.image}
                                 alt={quiz.title}
                                 loading="lazy"
+                                width="140px" // Set fixed width
+                                height="140px" // Set fixed height
+                                style={{ objectFit: 'cover' }} // Ensure image covers the container
                             />
                             <ImageListItemBar
-                                title={quiz.title}
+                                title={quiz.categoryQuiz.description}
                                 subtitle={<span>by: {quiz.description}</span>}
                                 position="below"
                             />
-                        </div>
+                        </ImageListItem>
                     ))}
-                </ImageListItem>
+                </ImageList>
             ))}
-        </ImageList>
+        </div>
     );
 }
