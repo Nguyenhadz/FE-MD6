@@ -80,7 +80,6 @@ export default function EditQuestion({question, handleClose}) {
         },
 
         onSubmit: async (values) => {
-            console.log(values)
             await dispatch(editQuestions(values))
             await dispatch(findAllQuestionByUser(currentUser.id))
             await toast.success("Đã sửa thành công!");
@@ -159,26 +158,27 @@ export default function EditQuestion({question, handleClose}) {
                                                 sx={{
                                                     width: 28, height: 28, borderRadius: "50%", display: "flex",
                                                 }}
-                                                control={<Checkbox
-                                                    defaultChecked={answer.status === 1}
-                                                    onChange={(event) => {
-                                                        const isChecked = event.target.checked;
-                                                        const updatedAnswers = question.answers.map((answer, i) => i === index ? {
-                                                            ...answer, status: isChecked ? "1" : "0"
-                                                        } : answer);
-                                                        formik.setFieldValue(`answers`, updatedAnswers);
-                                                    }}
-                                                    icon={<CheckBoxOutlineBlankSharp
-                                                        sx={{
-                                                            width: 28, height: 28, marginTop: 2, marginLeft: 1
+                                                control={
+                                                    <Checkbox
+                                                        defaultChecked={answer.status === 1}
+                                                        onChange={(event) => {
+                                                            const isChecked = event.target.checked;
+                                                            const updatedAnswers = formik.values.answers.map((answer, i) => i === index ? {
+                                                                ...answer, status: isChecked ? "1" : "0"
+                                                            } : answer);
+                                                            formik.setFieldValue(`answers`, updatedAnswers);
                                                         }}
+                                                        icon={<CheckBoxOutlineBlankSharp
+                                                            sx={{
+                                                                width: 28, height: 28, marginTop: 2, marginLeft: 1
+                                                            }}
+                                                        />}
+                                                        checkedIcon={<CheckBoxSharp
+                                                            sx={{
+                                                                width: 28, height: 28, marginTop: 2, marginLeft: 1
+                                                            }}
+                                                        />}
                                                     />}
-                                                    checkedIcon={<CheckBoxSharp
-                                                        sx={{
-                                                            width: 28, height: 28, marginTop: 2, marginLeft: 1
-                                                        }}
-                                                    />}
-                                                />}
                                                 label={""}
                                             />
                                         </div>)}
