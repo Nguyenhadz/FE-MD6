@@ -422,7 +422,6 @@ export default function CreateNewQuiz() {
                                                 onChange={handleSelectCateQuiz}
                                                 autoWidth
                                                 fullWidth={ true}
-                                                mi
                                                 label="Thể loại  *"
                                             >
                                                 {categoryQuizzes.map((cateQuiz) => (
