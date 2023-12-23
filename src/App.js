@@ -73,7 +73,7 @@ function App() {
                         <Route path={'/home/showTeacherPending'} element={<ShowListTeacherPending/>}></Route>
                         <Route path={'/home/detailTeacherPending/:id'} element={<DetailTeacherPending/>}></Route>
                         <Route path={'/home/layoutManagerQuestion'} element={<LayoutManagerQuestion/>}>
-                            <Route path={'/home/layoutManagerQuestion/editQuiz/:id'} element={<EditQuiz/>}></Route>
+                            <Route path={'/home/layoutManagerQuestion/editQuiz/:idQuiz'} element={<EditQuiz/>}></Route>
                             <Route path={'/home/layoutManagerQuestion'} element={<ShowListQuizByUser/>}></Route>
                             <Route path={'/home/layoutManagerQuestion/showListQuestion'} element={<ListQuestion/>}></Route>
                             <Route path={'/home/layoutManagerQuestion/createQuestion'} element={<CreateQuestionOneAnswer/>}></Route>

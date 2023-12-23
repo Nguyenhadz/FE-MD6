@@ -139,6 +139,7 @@ export default function CreateNewQuiz() {
         if (index === -1) {
             setSelectedQuestionContent((prevContent) => [...prevContent, question]);
             toast.success("Thêm câu hỏi thành công")
+            formik.setFieldValue('questions', selectedQuestionContent)
         } else {
             toast.error("Đã có câu này");
         }
@@ -330,15 +331,6 @@ export default function CreateNewQuiz() {
                                                 onChange={(e) => formik.setFieldValue('title', e.target.value)}
                                                 error={formik.touched.title && formik.errors.title}
                                                 helperText={formik.touched.title && formik.errors.title}
-                                            />
-                                        </Grid>
-                                    </Box>
-                                    <Box>
-                                        <Grid item xs={8}>
-                                            <TextField
-                                                name={"time"}
-                                                hidden={true}
-                                                value={formik.values.time || ''}
                                             />
                                         </Grid>
                                     </Box>

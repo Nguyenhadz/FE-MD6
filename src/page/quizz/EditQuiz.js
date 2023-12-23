@@ -91,6 +91,14 @@ const EditQuiz = () => {
         'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2F%C4%90%E1%BB%8Ba.png?alt=media&token=bb47d11e-63d4-422b-8f30-c3e951d92523'
     ]
     useEffect(() => {
+        // Kiểm tra xem quiz có tồn tại và có thuộc tính question không
+        if (quiz && quiz.questions) {
+            setSelectedQuestionContent(quiz.questions);
+        }
+    }, [quiz]);
+    console.log("xyz", selectedQuestionContent)
+
+    useEffect(() => {
         dispatch(showAllCateQuestion());
         dispatch(showAllCategoryQuiz())
         dispatch(findAllLevelQuiz())
@@ -154,6 +162,8 @@ const EditQuiz = () => {
         if (index === -1) {
             setSelectedQuestionContent((prevContent) => [...prevContent, question]);
             toast.success("Thêm câu hỏi thành công")
+            formik.setFieldValue("questions", selectedQuestionContent)
+            console.log("abc", formik.values.questions)
         } else {
             toast.error("Đã có câu này");
         }
@@ -237,7 +247,8 @@ const EditQuiz = () => {
                 id: quiz.levelQuiz?.id
             }, user: {
                 id: currentUser.id
-            }, questions: [selectedQuestionContent],
+            },
+            questions: quiz.questions,
         },
         validationSchema: validationSchema,
         onSubmit: async (values) => {
@@ -247,7 +258,7 @@ const EditQuiz = () => {
                 toast.success("Cập nhật thành công", {})
             )
             formik.resetForm()
-            navigate("/home/showAllQuiz");
+            navigate("/home/layoutManagerQuestion");
         },
     });
     const Search = styled('div')(({theme}) => ({
@@ -401,7 +412,7 @@ const EditQuiz = () => {
                                             >
                                                 <CardMedia
                                                     component="img"
-                                                    image={file ? file : imageDefault[(formik.values.categoryQuiz.id) || 1]}
+                                                    image={file ? file : imageDefault[(formik.values.categoryQuiz?.id) || 1]}
                                                     alt="green iguana"
                                                     style={{
                                                         objectFit: "fill",
@@ -453,7 +464,7 @@ const EditQuiz = () => {
                                                     labelId="demo-simple-select-autowidth-label"
                                                     id="demo-simple-select-autowidth"
                                                     onChange={handleSelectCateQuiz}
-                                                    value={formik.values.categoryQuiz.id}
+                                                    value={formik.values.categoryQuiz?.id}
                                                     autoWidth
                                                     label="Thể loại  *"
                                                 >
@@ -471,7 +482,7 @@ const EditQuiz = () => {
                                                     labelId="demo-simple-select-autowidth-label"
                                                     id="demo-simple-select-autowidth"
                                                     onChange={handleChangeLevelQuiz}
-                                                    value={formik.values.levelQuiz.id}
+                                                    value={formik.values.levelQuiz?.id}
                                                     autoWidth
                                                     label="Mức độ  *"
                                                 >
@@ -515,6 +526,7 @@ const EditQuiz = () => {
                                         <Grid className={"flex flex-col"} item xs={12}>
                                             <Grid item xs={10}>
                                                 <Item
+                                                    value={formik.values.questions}
                                                     style={{
                                                         border: "solid 1px " + gradientColors.primary,
                                                         textAlign: "left",
@@ -635,7 +647,7 @@ const EditQuiz = () => {
 
                                                 </ListItemText>
                                                 <Button onClick={() => handleAddQuestion(question)}
-                                                        onChange={(e) => formik.setFieldValue('questions', e.target.value)}>
+                                                        >
                                                     <Add/>
                                                 </Button>
                                             </ListItem>))}
