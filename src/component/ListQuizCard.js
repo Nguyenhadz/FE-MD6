@@ -5,7 +5,13 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import {useEffect} from "react";
 import {findAllQuiz} from "../redux/service/QuizService";
 import {useDispatch, useSelector} from "react-redux";
-
+const sharp = require('sharp');
+const resizeImage = async (image, width, height) => {
+    const resizedImage = await sharp(image)
+        .resize(width, height)
+        .toBuffer();
+    return resizedImage;
+};
 export default function ListQuizCard() {
     const dispatch = useDispatch();
     const quizzes = useSelector(state => {
@@ -19,6 +25,7 @@ export default function ListQuizCard() {
     const filterByCategory = (quizzes, category) => {
         return quizzes.filter((quiz) => quiz.categoryQuiz.id === category);
     };
+
     return (
         <div>
             {categories.map((category) => (
@@ -31,16 +38,13 @@ export default function ListQuizCard() {
                     height="160"
                 >
                     <h3>{quizzes[category].categoryQuiz.description}</h3>
-                    {filterByCategory(quizzes, category).map((quiz) => (
+                    {filterByCategory(quizzes, category).map(async (quiz) => (
                         <ImageListItem key={quiz.id}>
                             <img
-                                srcSet={quiz.image}
-                                src={quiz.image}
+                                srcSet={await resizeImage(quiz.image, 160, 120)}
+                                src={await resizeImage(quiz.image, 160, 120)}
                                 alt={quiz.title}
                                 loading="lazy"
-                                width="140px" // Set fixed width
-                                height="140px" // Set fixed height
-                                style={{ objectFit: 'cover' }} // Ensure image covers the container
                             />
                             <ImageListItemBar
                                 title={quiz.categoryQuiz.description}
