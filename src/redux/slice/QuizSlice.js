@@ -17,7 +17,7 @@ const QuizSlice = createSlice({
         })
         builder.addCase(updateQuiz.fulfilled, (state, action) => {
             state.quiz = action.payload
-            toast.success("Sửa quiz thành công", {})
+            toast.success("Cập nhật thành công", {})
         })
         builder.addCase(findQuizById.fulfilled, (state, action) => {
             state.quiz = action.payload
