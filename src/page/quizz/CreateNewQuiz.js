@@ -83,7 +83,7 @@ export default function CreateNewQuiz() {
     }, [dispatch]);
     const handleChangeCategorySearch = (event) => {
         setSelectedFieldSearch(event.target.value);
-        searchTermRef.current = ""; // Reset searchTermRef khi chọn danh mục mới
+        searchTermRef.current = "";
         dispatch(findQuestionsByCategory({id: event.target.value}));
     };
     useEffect(() => {
@@ -96,7 +96,6 @@ export default function CreateNewQuiz() {
     useEffect(() => {
         const filterQuestions = (questions, searchTerm, selectedFieldSearch) => {
             if (!searchTerm && selectedFieldSearch !== 0) {
-                // Nếu không có nội dung tìm kiếm nhưng có category được chọn
                 const filteredByCategory = questions.filter(question => {
                     const category = question.categoryQuestion?.id || null;
                     return category === selectedFieldSearch;
@@ -106,7 +105,6 @@ export default function CreateNewQuiz() {
             }
 
             if (!searchTerm) {
-                // Nếu cả nội dung tìm kiếm và category đều rỗng
                 setFilteredQuestions(questions);
                 return questions;
             }
@@ -138,6 +136,7 @@ export default function CreateNewQuiz() {
         const index = selectedQuestionContent.findIndex(q => q.id === question.id);
         if (index === -1) {
             setSelectedQuestionContent((prevContent) => [...prevContent, question]);
+            formik.setFieldValue('questions', selectedQuestionContent)
             toast.success("Thêm câu hỏi thành công")
         } else {
             toast.error("Đã có câu này");
@@ -222,9 +221,10 @@ export default function CreateNewQuiz() {
                 id: currentUser.id
             },
             questions: [selectedQuestionContent],
-        }, validationSchema: validationSchema, onSubmit: async (values) => {
+        },
+        validationSchema: validationSchema,
+        onSubmit: async (values) => {
             const url = await uploadFile();
-
             await dispatch(createQuiz({...values, image: url})).then(toast.success("Tạo quiz thành công", {}))
             formik.resetForm()
             navigate("/home/showAllQuiz");
@@ -336,15 +336,6 @@ export default function CreateNewQuiz() {
                                     <Box>
                                         <Grid item xs={8}>
                                             <TextField
-                                                name={"time"}
-                                                hidden={true}
-                                                value={formik.values.time || ''}
-                                            />
-                                        </Grid>
-                                    </Box>
-                                    <Box>
-                                        <Grid item xs={8}>
-                                            <TextField
                                                 fullWidth={true}
                                                 id="standard-basic"
                                                 label="Điểm bài thi"
@@ -430,6 +421,7 @@ export default function CreateNewQuiz() {
                                                 id="demo-simple-select-autowidth"
                                                 onChange={handleSelectCateQuiz}
                                                 autoWidth
+                                                fullWidth={ true}
                                                 label="Thể loại  *"
                                             >
                                                 {categoryQuizzes.map((cateQuiz) => (
