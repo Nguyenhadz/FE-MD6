@@ -132,33 +132,41 @@ export default function CreateNewQuiz() {
         });
         setFilteredQuestions(filtered);
     };
-    const handleAddQuestion = (question) => {
+    const handleDeleteQuestion = async (questionId) => {
+        const index = selectedQuestionContent.findIndex((question) => question.id === questionId);
+        if (index !== -1) {
+            const newContent = [...selectedQuestionContent.slice(0, index), ...selectedQuestionContent.slice(index + 1)];
+            await setSelectedQuestionContent(newContent);
+            await formik.setFieldValue('questions', newContent); // Update Formik with the newContent
+        } else {
+            toast.error("Câu hỏi không tồn tại");
+        }
+    };
+
+    const handleAddQuestion = async (question) => {
         const index = selectedQuestionContent.findIndex(q => q.id === question.id);
         if (index === -1) {
-            setSelectedQuestionContent((prevContent) => [...prevContent, question]);
-            formik.setFieldValue('questions', selectedQuestionContent)
-            toast.success("Thêm câu hỏi thành công")
+            const updatedContent = [...selectedQuestionContent, question];
+            await setSelectedQuestionContent(updatedContent);
+            await formik.setFieldValue('questions', updatedContent).then(() => {
+                toast.success("Thêm câu hỏi thành công", [200]);
+
+            })
         } else {
             toast.error("Đã có câu này");
         }
     };
     const uploadFile = async () => {
-        if (image === null) return;
+        if (file === null) {
+            // No image selected, use default image
+            return imageDefault[(formik.values.categoryQuiz.id) || 1];
+        }
         const imageRef = ref(storage, `kien/${image.name + v4()}`);
         try {
             const snapshot = await uploadBytes(imageRef, image);
             return await getDownloadURL(snapshot.ref);
         } catch (error) {
             toast.error("Upload ảnh bị lỗi");
-        }
-    };
-    const handleDeleteQuestion = (questionId) => {
-        const index = selectedQuestionContent.findIndex((question) => question.id === questionId);
-        if (index !== -1) {
-            const newContent = [...selectedQuestionContent.slice(0, index), ...selectedQuestionContent.slice(index + 1)];
-            setSelectedQuestionContent(newContent);
-        } else {
-            toast.error("Câu hỏi không tồn tại");
         }
     };
 
@@ -205,7 +213,7 @@ export default function CreateNewQuiz() {
     const formik = useFormik({
         initialValues: {
             title: "",
-            time: "",
+            time: "1800",
             timeCreate: new Date(),
             description: "",
             passScore: "",
@@ -421,7 +429,7 @@ export default function CreateNewQuiz() {
                                                 id="demo-simple-select-autowidth"
                                                 onChange={handleSelectCateQuiz}
                                                 autoWidth
-                                                fullWidth={ true}
+                                                fullWidth={true}
                                                 label="Thể loại  *"
                                             >
                                                 {categoryQuizzes.map((cateQuiz) => (
