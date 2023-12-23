@@ -1,8 +1,8 @@
 import * as React from 'react';
+import {useEffect} from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import {useEffect} from "react";
 import {findAllQuiz} from "../redux/service/QuizService";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -19,6 +19,7 @@ export default function ListQuizCard() {
     const filterByCategory = (quizzes, category) => {
         return quizzes.filter((quiz) => quiz.categoryQuiz.id === category);
     };
+
     return (
         <div>
             {categories.map((category) => (
@@ -31,16 +32,13 @@ export default function ListQuizCard() {
                     height="160"
                 >
                     <h3>{quizzes[category].categoryQuiz.description}</h3>
-                    {filterByCategory(quizzes, category).map((quiz) => (
+                    {filterByCategory(quizzes, category).map( (quiz) => (
                         <ImageListItem key={quiz.id}>
                             <img
                                 srcSet={quiz.image}
                                 src={quiz.image}
                                 alt={quiz.title}
                                 loading="lazy"
-                                width="140px" // Set fixed width
-                                height="140px" // Set fixed height
-                                style={{ objectFit: 'cover' }} // Ensure image covers the container
                             />
                             <ImageListItemBar
                                 title={quiz.categoryQuiz.description}
