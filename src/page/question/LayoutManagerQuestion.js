@@ -60,26 +60,26 @@ export default function FullWidthTabs() {
         <Box sx={{ bgcolor: 'background.paper', width: '100%', height: 'full' }}>
             <AppBar position="static" className={"mb-4"}>
                 <Grid container spacing={1} justifyContent="center">
-                    <Grid item xs>
+                    <Grid item xs={2}>
                         <Link to="/home/layoutManagerQuestion/showListQuestion" style={{ textDecoration: 'none' }}>
                             <Tab label="Danh sách câu hỏi" {...a11yProps(0)} />
                         </Link>
                     </Grid>
-                    <Grid item xs>
-                        <Link to="/home/layoutManagerQuestion/createQuestion" style={{ textDecoration: 'none' }}>
-                            <Tab label="Tạo mới câu hỏi" {...a11yProps(1)} />
-                        </Link>
-                    </Grid>
-                    <Grid item xs>
+                    {/*<Grid item xs>*/}
+                    {/*    <Link to="/home/layoutManagerQuestion/createQuestion" style={{ textDecoration: 'none' }}>*/}
+                    {/*        <Tab label="Tạo mới câu hỏi" {...a11yProps(1)} />*/}
+                    {/*    </Link>*/}
+                    {/*</Grid>*/}
+                    <Grid item xs={2}>
                         <Link to="/home/layoutManagerQuestion" style={{ textDecoration: 'none' }}>
                             <Tab label="Danh sách bài thi" {...a11yProps(2)} />
                         </Link>
                     </Grid>
-                    <Grid item xs>
-                        <Link to="/home/layoutManagerQuestion/createNewQuiz" style={{ textDecoration: 'none' }}>
-                            <Tab label="Tạo mới bài thi" {...a11yProps(3)} />
-                        </Link>
-                    </Grid>
+                    {/*<Grid item xs>*/}
+                    {/*    <Link to="/home/layoutManagerQuestion/createNewQuiz" style={{ textDecoration: 'none' }}>*/}
+                    {/*        <Tab label="Tạo mới bài thi" {...a11yProps(3)} />*/}
+                    {/*    </Link>*/}
+                    {/*</Grid>*/}
                 </Grid>
             </AppBar>
             <Outlet>

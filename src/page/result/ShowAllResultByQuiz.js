@@ -32,8 +32,8 @@ export default function DataTable() {
         setRows(formattedResults);
     }, [results]);
 
-    const handleButtonClick = (id) => {
-        navigate(`/home/layoutManagerQuestion/resultDetails/${id}`);
+    const handleButtonClick = (idResult) => {
+        navigate(`/home/layoutManagerQuestion/resultDetails/${idResult}`);
     };
 
     const columns = [
