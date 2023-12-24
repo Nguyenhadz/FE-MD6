@@ -3,12 +3,12 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import EditQuestion from "./EditQuestion";
 import {InfoTwoTone} from "@mui/icons-material";
+import QuestionDetail from "./QuestionDetail";
 
 const style = {
     position: 'absolute',
-    top: '40%',
+    top: '28%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '80%',
@@ -16,7 +16,7 @@ const style = {
     bgcolor: 'background.paper',
 };
 
-export default function MyQuestionDetail({question}) {
+export default function QuestionModal({question}) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -34,14 +34,10 @@ export default function MyQuestionDetail({question}) {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        <EditQuestion question={question} handleClose={handleClose}/>
-                        <Button className={"justify-center"} onClick={handleOpen}> <InfoTwoTone/></Button>
+                        <QuestionDetail question={question} handleClose={handleClose}/>
                     </Typography>
                 </Box>
-
             </Modal>
-
-
         </div>
     );
 }

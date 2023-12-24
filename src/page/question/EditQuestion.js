@@ -138,7 +138,7 @@ export default function EditQuestion({question, handleClose}) {
                                                     checked={selectedValue === answer.id}
                                                     value={formik.values.answers[index].id}
                                                     name="radio-buttons"
-                                                    onChange={(event) => {
+                                                    onChange={() => {
                                                         handleChange(answer.id)
                                                     }}
                                                     icon={<RadioButtonUncheckedOutlined

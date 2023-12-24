@@ -41,7 +41,6 @@ function ResponsiveAppBar() {
     })
     const settings = [
         {name: 'Cài Đặt', href: '/home/findUserById/' + user.id},
-        // {name: 'Account', href: '/home/changeUserPasswordById/' + user.id},
         {name: 'Bảng Điều Khiển', href: '/home/totalQuestion'},
         {name: 'Đăng Xuất'},
     ];

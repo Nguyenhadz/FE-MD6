@@ -46,7 +46,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {storage} from "../../firebase/FireBase";
 import {v4} from "uuid";
-import MyQuestionDetail from "../question/MyQuestionDetail";
+import QuestionModal from "./QuestionModal";
 
 const drawerWidth = 360;
 
@@ -623,7 +623,7 @@ export default function CreateNewQuiz() {
                                                     {truncateContent(stripHtmlTags(question.content), 20)}
                                                 </Grid>
                                                 <Grid item xs={2}>
-                                                    <MyQuestionDetail question={question}></MyQuestionDetail>
+                                                    <QuestionModal question={question}></QuestionModal>
                                                 </Grid>
                                                 <Grid item xs={1}>
                                                     <Button
