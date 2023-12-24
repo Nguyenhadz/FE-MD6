@@ -19,15 +19,16 @@ export default function ShowAllQuiz() {
         return store.users.currentUser
     })
     const dispatch = useDispatch();
-
-    const [quizzes, setQuizzes] = useState(null);
+    const quizzes = useSelector((store) => {
+        return store.quizzes.quizzes
+    })
+    // const [quizzes, setQuizzes] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
             await dispatch(findAllQuiz());
-            setQuizzes(store.getState().quizzes.quizzes);
         };
         fetchData();
-    }, [])
+    }, [dispatch])
 
     const [value, setValue] = React.useState(0);
 
@@ -39,6 +40,7 @@ export default function ShowAllQuiz() {
     const itemsPerPage = 5;
     const handleChangePage = (event, newValue) => {
         setCurrentPage(newValue);
+        setValue(0);
     };
     const startIndex = (currentPage - 1) * itemsPerPage;
     const visibleQuizzes = quizzes?.slice(startIndex, startIndex + itemsPerPage);
@@ -56,7 +58,7 @@ export default function ShowAllQuiz() {
                             <TabsList>
                                 {visibleQuizzes?.map((quiz, index) => (
                                     <Tab value={index} sx={{display: 'block'}}>
-                                        <div style={{wordWrap: 'break-word', textAlign: 'left'}}>Bài thi: {index + 1}</div>
+                                        <div style={{wordWrap: 'break-word', textAlign: 'left'}}>Bài thi: {index + 1 + (currentPage-1)*itemsPerPage}</div>
                                         <div style={{wordWrap: 'break-word', textAlign: 'left'}}>{quiz.title}</div>
                                     </Tab>
                                 ))}
