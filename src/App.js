@@ -40,6 +40,7 @@ import ShowListQuizByUser from "./page/quizz/ShowListQuizByUser";
 import ListQuestion from "./page/question/ListQuestion";
 import CreateQuestionOneAnswer from "./page/question/CreateQuestion";
 import ShowAllResultByQuiz from "./page/result/ShowAllResultByQuiz";
+import DetailResult from "./page/result/DetailResult";
 
 
 function App() {
@@ -81,6 +82,7 @@ function App() {
                             <Route path={'/home/layoutManagerQuestion/createQuestion'} element={<CreateQuestionOneAnswer/>}></Route>
                             <Route path={'/home/layoutManagerQuestion/createNewQuiz'} element={<CreateNewQuiz/>}></Route>
                             <Route path={'/home/layoutManagerQuestion/showAllResultByQuiz/:idQuiz'} element={<ShowAllResultByQuiz/>}></Route>
+                            <Route path={'/home/layoutManagerQuestion/resultDetails/:idResult'} element={<DetailResult/>}></Route>
                         </Route>
                         <Route path={'/home/editQuestion'} element={<EditQuestion/>}></Route>
                         <Route path={'/home/showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>
