@@ -102,6 +102,14 @@ const MainListItems = ({sidebarOpen}) => {
                         // primaryTypographyProps={primaryTypographyProps}
                     />
                 </ListItemButton>
+                <ListItemButton component={Link} to="/home/createQuestion">
+                    <ListItemIcon>
+                        <PiExam/>
+                    </ListItemIcon>
+                    <ListItemText primary="Tạo mới câu hỏi"
+                        // primaryTypographyProps={primaryTypographyProps}
+                    />
+                </ListItemButton>
                 <ListItemButton component={Link} to="/home/totalQuestion">
                     <ListItemIcon>
                         <QuizIcon/>
