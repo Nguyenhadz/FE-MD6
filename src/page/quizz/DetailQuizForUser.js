@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {findQuizById} from "../../redux/service/QuizService";
+import {deleteQuiz, findAllQuiz, findQuizById} from "../../redux/service/QuizService";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import {styled} from "@mui/system";
@@ -30,10 +30,11 @@ const DetailQuizForUser = ({quizId}) => {
             setResults(store.getState().resultStore.results);
         };
         fetchData();
-    }, [])
+    }, [quizId, dispatch])
     const quiz = useSelector((store) => {
         return store.quizzes.quiz
     });
+
     const Item = styled(Paper)(({theme}) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         ...theme.typography.body2,
@@ -44,13 +45,15 @@ const DetailQuizForUser = ({quizId}) => {
     const second = quiz.time % 60;
     const minute = Math.floor(quiz.time / 60);
 
-    const handleEdit = () => {
+    const handleDelete = () => {
 
         if (results?.length !== 0) {
             console.log(results)
-            toast.success("Không thể sửa bài thi đã có người thi", {})
+            toast("Không thể xoá bài thi đã có người thi")
         } else {
-            console.log("ok")
+            dispatch(deleteQuiz(quizId))
+            toast("Xoá thành công")
+            navigate("/home/showAllQuiz")
         }
     };
 
@@ -132,8 +135,8 @@ const DetailQuizForUser = ({quizId}) => {
                         ))}
                     </div>)}
             </div>
-            <div className="ml-96">
-                <div className="font-bold text-xl">
+            <div className="ml-96 flex">
+                <div className="font-bold text-xl ml-8">
                     <button type="submit"
                             className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-10  mx-auto "}
                             onClick={ async () => {
@@ -142,6 +145,41 @@ const DetailQuizForUser = ({quizId}) => {
                             }}
                     >
                         Làm bài thi
+                    </button>
+                </div>
+                <div className="font-bold text-xl ml-8">
+                    <button type="submit"
+                            className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-10  mx-auto"}
+                            onClick={() => {
+                                const toast1Id = toast.warning(
+                                    <>
+                                        <div>
+                                            <p>Bạn có chắc chắn muốn xóa?</p>
+                                            <button className={"w-20 h-10 bg-amber-600 rounded text-white"} type="submit"
+                                                    style={{margin: '20px'}} onClick={() => {
+                                                handleDelete();
+                                                toast.dismiss(toast1Id);
+                                            }}>Xác nhận
+                                            </button>
+                                            <button className={"w-20 h-10 bg-amber-600 rounded text-white"} type="submit"
+                                                    style={{margin: '20px'}} onClick={() => toast.dismiss()}>Hủy bỏ
+                                            </button>
+                                        </div>
+                                    </>,
+                                    {
+                                        position: 'top-center',
+                                        autoClose: false,
+                                        hideProgressBar: false,
+                                        closeOnClick: false,
+                                        pauseOnHover: true,
+                                        draggable: true,
+                                        progress: undefined,
+                                        closeButton: false,
+                                    }
+                                );
+                            }}
+                    >
+                        Xoá bài thi
                     </button>
                 </div>
             </div>

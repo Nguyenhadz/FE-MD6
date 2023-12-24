@@ -46,3 +46,11 @@ export const findAllQuiz = createAsyncThunk(
         return res.data
     }
 )
+export const deleteQuiz = createAsyncThunk(
+    'quiz/deleteQuiz',
+    async (id) => {
+        await customAxios.delete('quizzes/' + id);
+        const res = await customAxios.get('quizzes', axiosConfig);
+        return res.data
+    }
+)
