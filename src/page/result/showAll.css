@@ -6,6 +6,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    /* font-weight: var(--unstable_DataGrid-headWeight); */
     font-weight: bold;
 }
 
