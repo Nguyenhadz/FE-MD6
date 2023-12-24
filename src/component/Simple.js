@@ -70,7 +70,7 @@ const Simple = ({deviceType}) => {
         transform: 'translate(-50%, -50%)',
         width: '80%',
         height: '60%',
-        bgcolor: 'white',
+        bgcolor: '#F5F5F5',
         borderRadius: '5%'
     };
     const ModalContent = () => (

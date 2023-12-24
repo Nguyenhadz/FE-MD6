@@ -165,11 +165,7 @@ function ResponsiveAppBar() {
 
     return (
         <Container maxWidth="xxl">
-            <Toolbar disableGutters>
-                <AdbIcon
-                    sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}
-                />
-                <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
+            <Toolbar disableGutters className={'justify-end'}>
                 {showSelect !== '/home' && (
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         <Search>
