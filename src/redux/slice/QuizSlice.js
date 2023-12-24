@@ -13,7 +13,7 @@ const QuizSlice = createSlice({
     initialState,
     extraReducers: builder => {
         builder.addCase(createQuiz.fulfilled, (state, action) => {
-            state.quizzes = action.payload
+            state.quiz = action.payload
         })
         builder.addCase(updateQuiz.fulfilled, (state, action) => {
             state.quiz = action.payload
