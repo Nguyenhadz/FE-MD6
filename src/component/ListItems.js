@@ -30,11 +30,17 @@ const MainListItems = ({sidebarOpen}) => {
         </ListItemButton>
         {isAdmin && ( // nếu là admin thì hiển thị các ListItemButton sau
             <React.Fragment>
-                <ListItemButton component={Link} to="Danh sách câu hỏi">
+                <ListItemButton component={Link} to="/home/showAllQuiz">
                     <ListItemIcon>
                         <PiExam/>
                     </ListItemIcon>
                     <ListItemText primary="Danh sách bài thi"/>
+                </ListItemButton>
+                <ListItemButton component={Link} to="/home/showListCateQuiz">
+                    <ListItemIcon>
+                        <PiExam/>
+                    </ListItemIcon>
+                    <ListItemText primary="Danh mục bài thi"/>
                 </ListItemButton>
                 <ListItemButton component={Link} to="/home/totalQuestion">
                     <ListItemIcon>
@@ -68,7 +74,7 @@ const MainListItems = ({sidebarOpen}) => {
                     <ListItemIcon>
                         <LayersIcon/>
                     </ListItemIcon>
-                    <ListItemText primary={"Hồ sơ của tôi"}/>
+                    <ListItemText primary={"Thư viện của tôi"}/>
                 </ListItemButton>
             </React.Fragment>)}
         {isTeacher && ( // nếu là teacher hoặc student thì hiển thị các ListItemButton sau
@@ -107,7 +113,7 @@ const MainListItems = ({sidebarOpen}) => {
                     <ListItemIcon>
                         <LayersIcon/>
                     </ListItemIcon>
-                    <ListItemText primary={"Hồ sơ của tôi"}
+                    <ListItemText primary={"Thư viện của tôi"}
                         // primaryTypographyProps={primaryTypographyProps}
                     />
                 </ListItemButton>
@@ -135,7 +141,7 @@ const MainListItems = ({sidebarOpen}) => {
                     <ListItemIcon>
                         <LayersIcon/>
                     </ListItemIcon>
-                    <ListItemText primary={"Hồ sơ của tôi"}
+                    <ListItemText primary={"Thể viện của tôi"}
                         // primaryTypographyProps={primaryTypographyProps}
                     />
                 </ListItemButton>

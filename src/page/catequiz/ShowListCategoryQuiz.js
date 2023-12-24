@@ -103,8 +103,8 @@ export default function ShowListCategoryQuiz() {
     for (let i = 0; i < categories.length; i++) {
         rows.push({
                 id: i + 1,
-                name: (parser.parseFromString(categories[i].name, 'text/html')).body.firstChild.textContent,
-                description: (parser.parseFromString(categories[i].description, 'text/html')).body.firstChild.textContent,
+                name: categories[i].name,
+                description: categories[i].description,
                 hiddenColumn: categories[i].id,
             }
         )
@@ -117,7 +117,7 @@ export default function ShowListCategoryQuiz() {
                 <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-2 ml-96 flex justify-center"}>
                     Danh sách danh mục bài thi
                 </div>
-                <Link to={"/login/createCateQuiz"}>
+                <Link to={"/home/createCateQuiz"}>
                     <button className={"w-44 h-10 rounded-lg ml-56 bg-orange-400 hover:bg-red-500 text-white"}>
                         Thêm mới danh mục
                     </button>
