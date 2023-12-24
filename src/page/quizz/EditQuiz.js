@@ -46,6 +46,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {storage} from "../../firebase/FireBase";
 import {v4} from "uuid";
+import QuestionModal from "./QuestionModal";
 
 const drawerWidth = 320;
 
@@ -78,7 +79,7 @@ const EditQuiz = () => {
     const [selectedQuestionContent, setSelectedQuestionContent] = React.useState(quiz.questions);
     const dispatch = useDispatch();
     const [filteredQuestions, setFilteredQuestions] = useState([]);
-    const [value, setValue] = React.useState(dayjs().set('hour', Math.floor(quiz.time/3600)).set('minute', Math.floor((quiz.time%3600)/60) ));
+    const [value, setValue] = React.useState(dayjs().set('hour', Math.floor(quiz.time / 3600)).set('minute', Math.floor((quiz.time % 3600) / 60)));
     const [image, setImage] = useState(quiz.image);
     const [file, setFile] = useState(null);
     const imageDefault = ['https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2FMath.jpg?alt=media&token=125c1da6-8ab0-4489-8f72-f05cb8a5c9eb', 'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2FMath.jpg?alt=media&token=125c1da6-8ab0-4489-8f72-f05cb8a5c9eb', 'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2FL%C3%BD.jpg?alt=media&token=9f4edfc5-50cc-4ff5-84d5-0cdca1345db9', 'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2FH%C3%B3a.jpg?alt=media&token=a90e24fc-03d4-4d3a-89a1-dae588ea65cb', 'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2FSinh.jpg?alt=media&token=a475f9de-d34b-4ebe-bb44-dce48d58a7c0', 'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2FV%C4%83n.jpg?alt=media&token=46462c3a-ace0-4ecc-b02e-08fbf5730c83', 'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2FS%E1%BB%AD.jpg?alt=media&token=41a3ef25-0e01-4835-96e7-9bb10fe9206b', 'https://firebasestorage.googleapis.com/v0/b/kien-b06e6.appspot.com/o/icon%2F%C4%90%E1%BB%8Ba.png?alt=media&token=bb47d11e-63d4-422b-8f30-c3e951d92523']
@@ -306,7 +307,16 @@ const EditQuiz = () => {
         whiteSpace: 'nowrap',
         width: 1,
     });
-
+    const truncateContent = (content, maxLength) => {
+        if (content.length > maxLength) {
+            return content.substring(0, maxLength) + "...";
+        }
+        return content;
+    };
+    const stripHtmlTags = (html) => {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent || "";
+    };
     return (<Box
         sx={{
             display: 'flex',
@@ -621,25 +631,31 @@ const EditQuiz = () => {
                                             </Box>
 
                                         </Box>
-                                        {filteredQuestions.map((question) => (<ListItem key={question.id}>
-                                            <ListItemText>
-                                                <QuestionDetail question={question}
-                                                                buttonLabel={<Typography className={"flex "}>
-                                                                    Câu : {question.id}
-                                                                    <span
-                                                                        dangerouslySetInnerHTML={{__html: question.content}}/>
-                                                                </Typography>}/>
-
-                                            </ListItemText>
-                                            <Button onClick={() => handleAddQuestion(question)}
-                                                    onChange={(e) => formik.setFieldValue('questions', e.target.value)}>
-                                                <Add/>
-                                            </Button>
-                                        </ListItem>))}
+                                        {filteredQuestions.map((question) => (
+                                            <ListItem key={question.id}>
+                                                <Grid container spacing={2} alignItems="center">
+                                                    <Grid item xs={1}>
+                                                        <span className={'font-bold'}>{question.id}.</span>
+                                                    </Grid>
+                                                    <Grid item xs={8}>
+                                                        {truncateContent(stripHtmlTags(question.content), 20)}
+                                                    </Grid>
+                                                    <Grid item xs={2}>
+                                                        <QuestionModal question={question}></QuestionModal>
+                                                    </Grid>
+                                                    <Grid item xs={1}>
+                                                        <Button
+                                                            onClick={() => handleAddQuestion(question)}>
+                                                            <Add/>
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </ListItem>))}
                                     </List>
                                 </Box>
                             </SwipeableDrawer>
-                        </React.Fragment>))}
+                        </React.Fragment>
+                    ))}
                 </div>
             </Grid>
         </div>

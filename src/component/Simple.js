@@ -172,8 +172,6 @@ const Simple = ({deviceType}) => {
                                     </Stack>
                                     <Typography gutterBottom variant="h7" component="div">
                                         {truncateContent(stripHtmlTags(quiz.title), 20)}                                    </Typography>
-                                    <Button size="small">Share</Button>
-                                    <Button size="small">Learn More</Button>
                                 </CardContent>
                             </Card>
                         ))}

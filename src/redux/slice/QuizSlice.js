@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {toast} from "react-toastify";
-import {createQuiz, deleteQuiz, findAllQuiz, findQuizById, updateQuiz} from "../service/QuizService";
+import {createQuiz, deleteQuiz, findAllQuiz, findHotQuiz, findQuizById, updateQuiz} from "../service/QuizService";
 import {findQuizByUser} from "../service/QuizService";
 
 
@@ -30,6 +30,9 @@ const QuizSlice = createSlice({
             state.quizzes = action.payload
         })
         builder.addCase(deleteQuiz.fulfilled, (state, action) => {
+            state.quizzes = action.payload
+        })
+        builder.addCase(findHotQuiz.fulfilled, (state, action) => {
             state.quizzes = action.payload
         })
     }

@@ -8,12 +8,12 @@ import QuestionDetail from "./QuestionDetail";
 
 const style = {
     position: 'absolute',
-    top: '28%',
+    top: '40%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '80%',
     height: '60%',
-    bgcolor: 'background.paper',
+    bgcolor: 'none',
 };
 
 export default function QuestionModal({question}) {
@@ -24,7 +24,7 @@ export default function QuestionModal({question}) {
     const handleClose = () => setOpen(false);
 
     return (
-        <div className={"flex"}>
+        <div className={"flex bg-none"}>
             <Button className={"justify-center"} onClick={handleOpen}> <InfoTwoTone/></Button>
             <Modal
                 open={open}
@@ -32,7 +32,7 @@ export default function QuestionModal({question}) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
+                <Box sx={style} className={'bg-none'}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                         <QuestionDetail question={question} handleClose={handleClose}/>
                     </Typography>

@@ -614,7 +614,8 @@ export default function CreateNewQuiz() {
                                             </Box>
 
                                         </Box>
-                                        {filteredQuestions.map((question) => (<ListItem key={question.id}>
+                                        {filteredQuestions.map((question) => (
+                                            <ListItem key={question.id}>
                                             <Grid container spacing={2} alignItems="center">
                                                 <Grid item xs={1}>
                                                     <span className={'font-bold'}>{question.id}.</span>
@@ -633,7 +634,8 @@ export default function CreateNewQuiz() {
                                                 </Grid>
                                             </Grid>
 
-                                        </ListItem>))}
+                                        </ListItem>
+                                        ))}
                                     </List>
                                 </Box>
                             </SwipeableDrawer>

@@ -43,7 +43,7 @@ export default function ShowAllQuiz() {
         setValue(0);
     };
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const visibleQuizzes = quizzes?.slice(startIndex, startIndex + itemsPerPage);
+    const visibleQuizzes = quizzes.slice(startIndex, startIndex + itemsPerPage);
     return (
         <>
             <div className={'mt-6'}>
@@ -58,7 +58,8 @@ export default function ShowAllQuiz() {
                             <TabsList>
                                 {visibleQuizzes?.map((quiz, index) => (
                                     <Tab value={index} sx={{display: 'block'}}>
-                                        <div style={{wordWrap: 'break-word', textAlign: 'left'}}>Bài thi: {index + 1 + (currentPage-1)*itemsPerPage}</div>
+                                        <div style={{wordWrap: 'break-word', textAlign: 'left'}}>Bài
+                                            thi: {index + 1 + (currentPage - 1) * itemsPerPage}</div>
                                         <div style={{wordWrap: 'break-word', textAlign: 'left'}}>{quiz.title}</div>
                                     </Tab>
                                 ))}
@@ -162,7 +163,7 @@ const Tabs = styled(BaseTabs)`
     gap: 16px;
     width: 20%;
     max-height: 570px;
-  
+
 `;
 
 const TabsList = styled(BaseTabsList)(

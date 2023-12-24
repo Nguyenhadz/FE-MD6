@@ -46,6 +46,14 @@ export const findAllQuiz = createAsyncThunk(
         return res.data
     }
 )
+
+export const findHotQuiz = createAsyncThunk(
+    'quiz/findHotQuiz',
+    async () => {
+        const res = await customAxios.get('quizzes/hot', axiosConfig);
+        return res.data
+    }
+)
 export const deleteQuiz = createAsyncThunk(
     'quiz/deleteQuiz',
     async (id) => {
