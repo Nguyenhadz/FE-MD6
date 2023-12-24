@@ -5,16 +5,12 @@ import {findAllTypeQuestion} from "../../redux/service/TypeQuestionService";
 import {findAllLevelQuestion} from "../../redux/service/LevelQuestionService";
 import {useDispatch, useSelector} from "react-redux";
 import {Checkbox, FormControl, FormControlLabel, Radio} from "@mui/material";
-import CustomQuill from "../../react-quill/CustomQuill";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import {
     CheckBoxOutlineBlankSharp, CheckBoxSharp, CheckCircleOutline, RadioButtonUncheckedOutlined
 } from "@mui/icons-material";
-import {QuillToolbar} from "../catequiz/QuillToolbar";
-import {toast} from "react-toastify";
-import Editor from "../catequiz/Editor";
-import ReactQuill from "react-quill";
+
 
 export default function QuestionDetail({question, handleClose}) {
     const currentUser = useSelector((store) => {
@@ -70,7 +66,8 @@ export default function QuestionDetail({question, handleClose}) {
                         onFocus={handleFocus}
                         onBlur={handleBlur}
                         style={{backgroundColor: backgroundColor}}>
-                     <Typography className={'text-amber-50'} dangerouslySetInnerHTML={{__html: question.content}}></Typography>
+                        <Typography className={'text-amber-50'}
+                                    dangerouslySetInnerHTML={{__html: question.content}}></Typography>
                     </Box>
 
                     <div className={"answer-question flex justify-around w-full"}>
@@ -126,9 +123,10 @@ export default function QuestionDetail({question, handleClose}) {
                                         <Box sx={{
                                             width: 500, maxWidth: "100%", height: "100%", overflow: "auto"
                                         }}
-                                        className={'ml-6'}
+                                             className={'ml-6'}
                                         >
-                                            <Typography sx={{fontSize:'16px'}} dangerouslySetInnerHTML={{__html: answer.content}}></Typography>
+                                            <Typography sx={{fontSize: '16px'}}
+                                                        dangerouslySetInnerHTML={{__html: answer.content}}></Typography>
 
                                         </Box>
                                     </div>
