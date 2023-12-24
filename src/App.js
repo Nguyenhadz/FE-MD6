@@ -39,6 +39,7 @@ import ColorTabs from "./page/user/TabProfile";
 import ShowListQuizByUser from "./page/quizz/ShowListQuizByUser";
 import ListQuestion from "./page/question/ListQuestion";
 import CreateQuestionOneAnswer from "./page/question/CreateQuestion";
+import ShowAllResultByQuiz from "./page/result/ShowAllResultByQuiz";
 
 
 function App() {
@@ -79,6 +80,7 @@ function App() {
                             <Route path={'/home/layoutManagerQuestion/createQuestion'} element={<CreateQuestionOneAnswer/>}></Route>
                             <Route path={'/home/layoutManagerQuestion/createQuestion'} element={<CreateQuestionOneAnswer/>}></Route>
                             <Route path={'/home/layoutManagerQuestion/createNewQuiz'} element={<CreateNewQuiz/>}></Route>
+                            <Route path={'/home/layoutManagerQuestion/showAllResultByQuiz/:idQuiz'} element={<ShowAllResultByQuiz/>}></Route>
                         </Route>
                         <Route path={'/home/editQuestion'} element={<EditQuestion/>}></Route>
                         <Route path={'/home/showListCateQuiz'} element={<ShowListCategoryQuiz/>}></Route>
@@ -91,6 +93,7 @@ function App() {
                         <Route path={'/home/doingQuiz/:idQuiz'} element={<TextMobileStepper/>}/>
                         <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
                         <Route path={'/home/listQuiz'} element={<ListQuizCard/>}></Route>
+
                      </Route>
                  )
              </Routes>

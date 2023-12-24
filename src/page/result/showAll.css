@@ -1,0 +1,15 @@
+.bold-header {
+    font-size: 20px;
+}
+
+.css-t89xny-MuiDataGrid-columnHeaderTitle {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+.MuiDataGrid-cell {
+    font-size: 18px;
+
+}
