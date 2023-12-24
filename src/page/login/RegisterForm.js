@@ -338,8 +338,8 @@ export default function RegisterForm() {
                             className={'input-login'}
                             name="roles[0].id"
                         >
-                            <option value="3" label="Student"/>
-                            <option value="2" label="Teacher"/>
+                            <option value="3" label="Học sinh"/>
+                            <option value="2" label="Giáo viên"/>
                         </Field>
                         <div style={{
                             marginTop: '30px',

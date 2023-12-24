@@ -16,8 +16,7 @@ export default function DetailTeacherPending() {
     })
     const handleApprove = (idPending) => {
         dispatch(approveTeacherPending(idPending)).then(() => {
-            toast.success('\n' +
-                'Approve successfully\n', {});
+            toast.success('Duyệt giáo viên thành công', {});
             navigate('/home/showTeacherPending')
         });
     };
