@@ -32,6 +32,7 @@ const DetailQuiz = ({quizId}) => {
         };
         fetchData();
     }, [quizId])
+    console.log(results)
     const quiz = useSelector((store) => {
         return store.quizzes.quiz
     });
@@ -54,6 +55,11 @@ const DetailQuiz = ({quizId}) => {
             navigate(`/home/layoutManagerQuestion/editQuiz/${idQuiz}`)
         }
     };
+
+    const handleShowAllResultByQuiz = (idQuiz) => {
+        navigate(`/home/layoutManagerQuestion/showAllResultByQuiz/${idQuiz}`)
+    }
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -107,7 +113,7 @@ const DetailQuiz = ({quizId}) => {
                 <div className="flex items-center">
                     <div className="ml-auto">
                         <button type="submit"
-                                className={"h-6 w-32 bg-gray-50 mt-2 border-2 rounded-full hover:hover:bg-blue-50"}>
+                                className={"h-6 w-32 bg-gray-50 mt-2 border-2 rounded-full hover:hover:bg-blue-50"} onClick={()=> {handleShowAllResultByQuiz(quizId)}}>
                             Lịch sử
                         </button>
                     </div>
