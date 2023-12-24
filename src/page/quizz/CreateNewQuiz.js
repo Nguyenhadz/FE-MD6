@@ -46,7 +46,6 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {storage} from "../../firebase/FireBase";
 import {v4} from "uuid";
-import MyQuestionDetail from "../question/MyQuestionDetail";
 import QuestionModal from "./QuestionModal";
 
 const drawerWidth = 360;

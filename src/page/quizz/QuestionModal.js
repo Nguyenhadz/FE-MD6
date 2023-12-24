@@ -35,7 +35,6 @@ export default function QuestionModal({question}) {
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                         <QuestionDetail question={question} handleClose={handleClose}/>
-                        <Button className={"justify-center"} onClick={handleOpen}> <InfoTwoTone/></Button>
                     </Typography>
                 </Box>
             </Modal>

@@ -58,11 +58,7 @@ export default function QuestionDetail({question, handleClose}) {
 
 
     return (<>
-        <div className={"w-full h-full"}>
-
-            <div className={"custom-quill-container flex"}>
-                <QuillToolbar></QuillToolbar>
-            </div>
+        <div className={"w-full h-full mt-14 bg-none"}>
             <div className={"rounded-[1rem] w-full bg-fuchsia-700 p-2 justify-center font-bold text-1xl h-max"}
                  style={{boxShadow: '30px 30px 30px 30px rgba(0, 0, 0, 0.2)'}}>
                 <form>
@@ -70,7 +66,7 @@ export default function QuestionDetail({question, handleClose}) {
                         sx={{
                             overflow: "auto"
                         }}
-                        className={"content-question w-full h-48  rounded-[0.5rem] p-2  focus: border-purple-400 border-opacity-50 border-2"}
+                        className={"content-question w-full h-48 mr-6 rounded-[0.5rem] p-2  focus: border-purple-400 border-opacity-50 border-2"}
                         onFocus={handleFocus}
                         onBlur={handleBlur}
                         style={{backgroundColor: backgroundColor}}>
@@ -111,6 +107,7 @@ export default function QuestionDetail({question, handleClose}) {
                                                 }}
                                                 control={
                                                     <Checkbox
+                                                        disabled={true}
                                                         defaultChecked={answer.status === 1}
                                                         icon={<CheckBoxOutlineBlankSharp
                                                             sx={{
@@ -128,8 +125,10 @@ export default function QuestionDetail({question, handleClose}) {
                                         </div>)}
                                         <Box sx={{
                                             width: 500, maxWidth: "100%", height: "100%", overflow: "auto"
-                                        }}>
-                                            <Typography sx={{fontSize:'16px', textJustify:'center', margin:'6'}} dangerouslySetInnerHTML={{__html: answer.content}}></Typography>
+                                        }}
+                                        className={'ml-6'}
+                                        >
+                                            <Typography sx={{fontSize:'16px'}} dangerouslySetInnerHTML={{__html: answer.content}}></Typography>
 
                                         </Box>
                                     </div>
