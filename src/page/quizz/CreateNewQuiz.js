@@ -379,7 +379,7 @@ export default function CreateNewQuiz() {
                                         </Grid>
                                     </Box>
                                 </Box>
-                                <Grid xs={4} className={'flex flex-wrap justify-center'}>
+                                <Grid xs={4} className={'flex-row justify-center'}>
                                     <Card sx={{width: 320, height: 240}}>
                                         <CardActionArea
                                             style={{

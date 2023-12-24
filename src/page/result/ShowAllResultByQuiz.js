@@ -26,14 +26,14 @@ export default function DataTable() {
                 date: result.startTime,
                 numberTrue: result.numberTrue,
                 totalScore: result.totalScore,
+                idResult: result.id,
             };
         });
         setRows(formattedResults);
     }, [results]);
 
     const handleButtonClick = (id) => {
-        // Xử lý sự kiện khi nút được nhấn, ví dụ: chuyển hướng đến trang chi tiết
-        navigate(`/resultDetails/${id}`);
+        navigate(`/home/layoutManagerQuestion/resultDetails/${id}`);
     };
 
     const columns = [
@@ -67,11 +67,12 @@ export default function DataTable() {
             headerClassName: "bold-header",
             sortable: false,
             renderCell: (params: GridCellParams) => (
-                <Button variant="contained" color="primary" onClick={() => handleButtonClick(params.row.id)}>
+                <Button variant="contained" color="primary" onClick={() => handleButtonClick(params.row.idResult)}>
                     Chi tiết
                 </Button>
             ),
         },
+        // { field: "idResult", width: 70, hide: true },
     ];
 
     return (
