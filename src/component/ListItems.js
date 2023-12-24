@@ -7,6 +7,13 @@ import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {Home} from "@mui/icons-material";
 import {PiExam} from "react-icons/pi";
+import QuizIcon from '@mui/icons-material/Quiz';
+import ArticleIcon from '@mui/icons-material/Article';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import CategoryIcon from '@mui/icons-material/Category';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import EscalatorWarningIcon from '@mui/icons-material/EscalatorWarning';
 const MainListItems = ({sidebarOpen}) => {
 
     const user = useSelector(state => state.users.currentUser);
@@ -32,38 +39,38 @@ const MainListItems = ({sidebarOpen}) => {
             <React.Fragment>
                 <ListItemButton component={Link} to="/home/showAllQuiz">
                     <ListItemIcon>
-                        <PiExam/>
+                        <ArticleIcon/>
                     </ListItemIcon>
                     <ListItemText primary="Danh sách bài thi"/>
                 </ListItemButton>
                 <ListItemButton component={Link} to="/home/showListCateQuiz">
                     <ListItemIcon>
-                        <PiExam/>
+                        <CategoryIcon/>
                     </ListItemIcon>
                     <ListItemText primary="Danh mục bài thi"/>
                 </ListItemButton>
                 <ListItemButton component={Link} to="/home/totalQuestion">
                     <ListItemIcon>
-                        <PiExam/>
+                        <QuizIcon/>
                     </ListItemIcon>
                     <ListItemText primary="Danh sách câu hỏi"/>
                 </ListItemButton>
                 <ListItemButton component={Link} to="/home/showListStudent">
                     <ListItemIcon>
-                        <LayersIcon/>
+                        <PeopleAltIcon/>
                     </ListItemIcon>
                     <ListItemText primary={'Danh sách học sinh'}/>
                 </ListItemButton>
                 <ListItemButton component={Link} to="/home/showListTeacher">
                     <ListItemIcon>
-                        <LayersIcon/>
+                        <EscalatorWarningIcon/>
                     </ListItemIcon>
                     <ListItemText primary={'Danh sách giáo viên'}/>
                 </ListItemButton>
                 <ListItemButton
                     component={Link} to="/home/showTeacherPending">
                     <ListItemIcon>
-                        <LayersIcon/>
+                        <PersonAddIcon/>
                     </ListItemIcon>
                     <ListItemText
                         primaryTypographyProps={primaryTypographyProps}
@@ -72,7 +79,7 @@ const MainListItems = ({sidebarOpen}) => {
                 </ListItemButton>
                 <ListItemButton component={Link} to="/home/layoutManagerQuestion">
                     <ListItemIcon>
-                        <LayersIcon/>
+                        <LibraryBooksIcon/>
                     </ListItemIcon>
                     <ListItemText primary={"Thư viện của tôi"}/>
                 </ListItemButton>
@@ -81,7 +88,7 @@ const MainListItems = ({sidebarOpen}) => {
             <React.Fragment>
                 <ListItemButton component={Link} to="/home/showAllQuiz">
                     <ListItemIcon>
-                        <PiExam/>
+                        <ArticleIcon/>
                     </ListItemIcon>
                     <ListItemText primary="Danh sách bài thi"
                         // primaryTypographyProps={primaryTypographyProps}
@@ -97,7 +104,7 @@ const MainListItems = ({sidebarOpen}) => {
                 </ListItemButton>
                 <ListItemButton component={Link} to="/home/totalQuestion">
                     <ListItemIcon>
-                        <PiExam/>
+                        <QuizIcon/>
                     </ListItemIcon>
                     <ListItemText primary="Danh sách câu hỏi"
                         // primaryTypographyProps={primaryTypographyProps}
@@ -111,7 +118,7 @@ const MainListItems = ({sidebarOpen}) => {
                 </ListItemButton>
                 <ListItemButton component={Link} to="/home/layoutManagerQuestion">
                     <ListItemIcon>
-                        <LayersIcon/>
+                        <LibraryBooksIcon/>
                     </ListItemIcon>
                     <ListItemText primary={"Thư viện của tôi"}
                         // primaryTypographyProps={primaryTypographyProps}
@@ -123,7 +130,7 @@ const MainListItems = ({sidebarOpen}) => {
                 <ListItemButton
                     component={Link} to="/home/showAllQuiz">
                     <ListItemIcon>
-                        <PiExam/>
+                        <ArticleIcon/>
                     </ListItemIcon>
                     <ListItemText primary="Danh sách bài thi"
                         // primaryTypographyProps={primaryTypographyProps}
@@ -131,7 +138,7 @@ const MainListItems = ({sidebarOpen}) => {
                 </ListItemButton>
                 <ListItemButton component={Link} to="/home/totalQuestion">
                     <ListItemIcon>
-                        <PiExam/>
+                        <QuizIcon/>
                     </ListItemIcon>
                     <ListItemText primary="Danh sách câu hỏi"
                         // primaryTypographyProps={primaryTypographyProps}
@@ -139,9 +146,9 @@ const MainListItems = ({sidebarOpen}) => {
                 </ListItemButton>
                 <ListItemButton component={Link} to="/home/layoutManagerQuestion">
                     <ListItemIcon>
-                        <LayersIcon/>
+                        <LibraryBooksIcon/>
                     </ListItemIcon>
-                    <ListItemText primary={"Thể viện của tôi"}
+                    <ListItemText primary={"Thư viện của tôi"}
                         // primaryTypographyProps={primaryTypographyProps}
                     />
                 </ListItemButton>

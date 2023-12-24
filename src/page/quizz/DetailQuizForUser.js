@@ -88,7 +88,7 @@ const DetailQuizForUser = ({quizId}) => {
 
 
                 {((currentUser.roles[0].authority === "TEACHER") || (currentUser.roles[0].name === "TEACHER")) &&
-                    (<div className={''}>
+                    (<div className={'mt-10'}>
                         {/*<div className={"mb-3"}>Câu hỏi:</div>*/}
                         {quiz.questions?.map((question, index) => (
                             <Accordion key={index}
@@ -147,7 +147,7 @@ const DetailQuizForUser = ({quizId}) => {
                         Làm bài thi
                     </button>
                 </div>
-                <div className="font-bold text-xl ml-8">
+                <div className="font-bold text-xl ml-8 mb-10">
                     <button type="submit"
                             className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-10  mx-auto"}
                             onClick={() => {
