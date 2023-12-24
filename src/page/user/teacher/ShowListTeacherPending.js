@@ -22,30 +22,34 @@ export default function ShowListTeacherPending() {
             headerName: 'Tên',
             width: 200,
             editable: false,
+            flex: 1
         },
         {
             field: 'email',
             headerName: 'Email',
             width: 200,
             editable: false,
+            flex: 1
         },
         {
             field: 'timeCreate',
             headerName: 'Ngày tạo tài khoản',
             width: 200,
             editable: false,
+            flex: 1
         },
-        {
-            field: 'lastTime',
-            headerName: 'Lần truy cập cuối cùng',
-            sortable: false,
-            width: 200,
-        },
+        // {
+        //     field: 'lastTime',
+        //     headerName: 'Lần truy cập cuối cùng',
+        //     sortable: false,
+        //     width: 200,
+        // },
         {
             field: 'details',
             headerName: '',
             width: 150,
             align: 'center',
+            flex: 1,
             renderCell: (params) => (
                 <Link to={`/home/detailTeacherPending/${params.row.hiddenColumn}`}>
                     <button>Chi tiết</button>
@@ -72,7 +76,7 @@ export default function ShowListTeacherPending() {
                 name: teacherPending[i].name,
                 email: teacherPending[i].username,
                 timeCreate: (dayCreate + '-' + ((monthCreate < 10) ? '0' + monthCreate : monthCreate) + '-' + yearCreate),
-                lastTime: (dayLast + '-' + ((monthLast < 10) ? '0' + monthLast : monthLast) + '-' + yearLast + ' ' + ((hoursLast < 10) ? '0' + hoursLast : hoursLast) + ':' + ((minutesLast < 10) ? '0' + minutesLast : minutesLast) + ':' + millisecondsLast),
+                // lastTime: (dayLast + '-' + ((monthLast < 10) ? '0' + monthLast : monthLast) + '-' + yearLast + ' ' + ((hoursLast < 10) ? '0' + hoursLast : hoursLast) + ':' + ((minutesLast < 10) ? '0' + minutesLast : minutesLast) + ':' + millisecondsLast),
                 hiddenColumn: teacherPending[i].id,
             }
         )

@@ -116,7 +116,7 @@ const Tab = styled(BaseTab)`
     font-family: 'IBM Plex Sans', sans-serif;
     color: white;
     cursor: pointer;
-    font-size: 0.875rem;
+    font-size: 18px;
     font-weight: bold;
     background-color: transparent;
     width: 100%;
@@ -161,7 +161,8 @@ const TabPanel = styled(BaseTabPanel)`
 const Tabs = styled(BaseTabs)`
     display: flex;
     gap: 16px;
-    width: 30%;
+    width: 20%;
+    max-height: 570px;
 `;
 
 const TabsList = styled(BaseTabsList)(
