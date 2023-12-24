@@ -24,8 +24,8 @@ export default function Login() {
                         <div className="main-left">
                             <Outlet></Outlet>
                             <div className="main-left-bot">
-                                <span>Don't have an account?</span>
-                                <button className="btn btn-btn-primary signup" onClick={handleSignUpClick}>Sign up
+                                <span>Bạn chưa có tài khoản?</span>
+                                <button className="btn btn-btn-primary signup" onClick={handleSignUpClick}>Đăng ký
                                 </button>
                             </div>
                         </div>
