@@ -129,7 +129,8 @@ export default function RegisterForm() {
                                         border: 'none',
                                         padding: '0',
                                         marginLeft: '10px',
-                                        fontSize: '14px'
+                                        fontSize: '14px',
+                                        color: 'black'
                                     }}
                                     className={'input-login'}
                                     type="text"
@@ -186,7 +187,8 @@ export default function RegisterForm() {
                                         border: 'none',
                                         padding: '0',
                                         marginLeft: '10px',
-                                        fontSize: '14px'
+                                        fontSize: '14px',
+                                        color: 'black'
                                     }}
                                     className={'input-login'}
                                     type="text"
@@ -244,7 +246,8 @@ export default function RegisterForm() {
                                         border: 'none',
                                         padding: '0',
                                         marginLeft: '10px',
-                                        fontSize: '14px'
+                                        fontSize: '14px',
+                                        color: 'black'
                                     }}
                                     className={'input-login'}
                                     type="password"
@@ -302,7 +305,8 @@ export default function RegisterForm() {
                                         border: 'none',
                                         padding: '0',
                                         marginLeft: '10px',
-                                        fontSize: '14px'
+                                        fontSize: '14px',
+                                        color: 'black'
                                     }}
                                     className={'input-login'}
                                     type="password"
@@ -333,7 +337,8 @@ export default function RegisterForm() {
                                 padding: '0',
                                 marginLeft: '10px',
                                 marginTop: '30px',
-                                fontSize: '16px'
+                                fontSize: '16px',
+                                color: 'black'
                             }}
                             className={'input-login'}
                             name="roles[0].id"

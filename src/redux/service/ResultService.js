@@ -39,3 +39,10 @@ export const findResultByQuiz = createAsyncThunk(
         return res.data
     }
 )
+export const findResultByUser = createAsyncThunk(
+    'result/findResultByUser',
+    async (id) => {
+        const res = await customAxios.get('results/fbu/' + id, axiosConfig);
+        return res.data
+    }
+)

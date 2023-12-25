@@ -41,7 +41,7 @@ function ResponsiveAppBar() {
     })
     const settings = [
         {name: 'Cài Đặt', href: '/home/findUserById/' + user.id},
-        {name: 'Bảng Điều Khiển', href: '/home/totalQuestion'},
+        // {name: 'Bảng Điều Khiển', href: '/home/totalQuestion'},
         {name: 'Đăng Xuất'},
     ];
 
@@ -54,8 +54,6 @@ function ResponsiveAppBar() {
 
     const handleLogout = () => {
         dispatch(logout());
-        toast.success('\n' +
-            'Logout successfully\n', {});
         navigate('/')
     };
     const handleCloseUserMenu = () => {
@@ -116,37 +114,37 @@ function ResponsiveAppBar() {
     };
     const renderMenuItems = () => {
         switch (showSelect) {
-            case '/login/showListStudent':
+            case '/home/showListStudent':
                 return [
                     <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm học sinh theo</MenuItem>,
                     <MenuItem value={1} valueText="Theo tên">Tên</MenuItem>,
                     <MenuItem value={2} valueText="Theo email">Email</MenuItem>,
                 ];
-            case '/login/showListTeacher':
+            case '/home/showListTeacher':
                 return [
                     <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm danh mục theo</MenuItem>,
                     <MenuItem value={3} valueText="Theo tên">Tên</MenuItem>,
                     <MenuItem value={4} valueText="Theo email">Email</MenuItem>,
                 ];
-            case '/login/showTeacherPending':
+            case '/home/showTeacherPending':
                 return [
                     <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm giáo viên theo</MenuItem>,
                     <MenuItem value={3} valueText="Theo tên">Tên</MenuItem>,
                     <MenuItem value={4} valueText="Theo email">Email</MenuItem>,
                 ];
-            case '/login/showListCateQuestion':
+            case '/home/showListCateQuestion':
                 return [
                     <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm danh mục câu hỏi theo</MenuItem>,
                     <MenuItem value={5}>Tên</MenuItem>,
                     <MenuItem value={6}>Nội dung</MenuItem>,
                 ];
-            case '/login/showListCateQuiz':
+            case '/home/showListCateQuiz':
                 return [
                     <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Tìm danh mục bài thi theo</MenuItem>,
                     <MenuItem value={7}>Tên</MenuItem>,
                     <MenuItem value={8}>Nội dung</MenuItem>,
                 ];
-            case '/login/totalQuestion':
+            case '/home/totalQuestion':
                 return [
                     <MenuItem value={0} valueText="Chọn danh mục muốn tìm">Chọn danh mục muốn tìm</MenuItem>,
                     <MenuItem value={7}>Theo tên</MenuItem>,

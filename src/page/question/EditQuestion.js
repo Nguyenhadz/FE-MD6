@@ -245,7 +245,7 @@ export default function EditQuestion({question, handleClose}) {
                     <div className={"flex justify-center"}>
                         <button type="submit"
                                 className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>
-                            Tạo câu hỏi
+                            Cập nhật
                         </button>
                         <button type="button" onClick={() => handleClose()}
                                 className={"h-10 w-40 bg-gray-50 mt-2 border-2 rounded-full hover:text-white hover:bg-slate-900"}>

@@ -116,7 +116,8 @@ export default function LoginWithGmailForm() {
                                         border: 'none',
                                         padding: '0',
                                         marginLeft: '10px',
-                                        fontSize: '14px'
+                                        fontSize: '14px',
+                                        color: 'black'
                                     }}
                                     className={'input-login'}
                                     type="text"
@@ -171,7 +172,8 @@ export default function LoginWithGmailForm() {
                                         border: 'none',
                                         padding: '0',
                                         marginLeft: '10px',
-                                        fontSize: '14px'
+                                        fontSize: '14px',
+                                        color: 'black'
                                     }}
                                     className={'input-login'}
                                     type="password"

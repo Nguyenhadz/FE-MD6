@@ -87,7 +87,7 @@ const DetailQuizForUser = ({quizId}) => {
                 </div>
 
 
-                {((currentUser.roles[0].authority === "TEACHER") || (currentUser.roles[0].name === "TEACHER")) &&
+                {((currentUser.roles[0].authority === "TEACHER") || (currentUser.roles[0].name === "TEACHER") || (currentUser.roles[0].authority === "ADMIN") || (currentUser.roles[0].name === "ADMIN")) &&
                     (<div className={'mt-10'}>
                         {/*<div className={"mb-3"}>Câu hỏi:</div>*/}
                         {quiz.questions?.map((question, index) => (
@@ -148,39 +148,44 @@ const DetailQuizForUser = ({quizId}) => {
                     </button>
                 </div>
                 <div className="font-bold text-xl ml-8 mb-10">
-                    <button type="submit"
-                            className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-10  mx-auto"}
-                            onClick={() => {
-                                const toast1Id = toast.warning(
-                                    <>
-                                        <div>
-                                            <p>Bạn có chắc chắn muốn xóa?</p>
-                                            <button className={"w-20 h-10 bg-amber-600 rounded text-white"} type="submit"
-                                                    style={{margin: '20px'}} onClick={() => {
-                                                handleDelete();
-                                                toast.dismiss(toast1Id);
-                                            }}>Xác nhận
-                                            </button>
-                                            <button className={"w-20 h-10 bg-amber-600 rounded text-white"} type="submit"
-                                                    style={{margin: '20px'}} onClick={() => toast.dismiss()}>Hủy bỏ
-                                            </button>
-                                        </div>
-                                    </>,
-                                    {
-                                        position: 'top-center',
-                                        autoClose: false,
-                                        hideProgressBar: false,
-                                        closeOnClick: false,
-                                        pauseOnHover: true,
-                                        draggable: true,
-                                        progress: undefined,
-                                        closeButton: false,
-                                    }
-                                );
-                            }}
-                    >
-                        Xoá bài thi
-                    </button>
+                    {(currentUser.id === quiz.user?.id) && (
+                        <button type="submit"
+                                className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-10  mx-auto"}
+                                onClick={() => {
+                                    const toast1Id = toast.warning(
+                                        <>
+                                            <div>
+                                                <p>Bạn có chắc chắn muốn xóa?</p>
+                                                <button className={"w-20 h-10 bg-amber-600 rounded text-white"}
+                                                        type="submit"
+                                                        style={{margin: '20px'}} onClick={() => {
+                                                    handleDelete();
+                                                    toast.dismiss(toast1Id);
+                                                }}>Xác nhận
+                                                </button>
+                                                <button className={"w-20 h-10 bg-amber-600 rounded text-white"}
+                                                        type="submit"
+                                                        style={{margin: '20px'}} onClick={() => toast.dismiss()}>Hủy bỏ
+                                                </button>
+                                            </div>
+                                        </>,
+                                        {
+                                            position: 'top-center',
+                                            autoClose: false,
+                                            hideProgressBar: false,
+                                            closeOnClick: false,
+                                            pauseOnHover: true,
+                                            draggable: true,
+                                            progress: undefined,
+                                            closeButton: false,
+                                        }
+                                    );
+                                }}
+                        >
+                            Xoá bài thi
+                        </button>
+                    )}
+
                 </div>
             </div>
         </div>

@@ -87,7 +87,7 @@ export default function ShowListTeacher() {
 
             <Box sx={{
                 height: '630px',
-                width: '70%',
+                width: '80%',
                 textAlign: 'center',
                 margin: 'auto',
                 backgroundColor: 'white',

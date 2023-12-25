@@ -77,12 +77,12 @@ const MainListItems = ({sidebarOpen}) => {
                         primary={'Danh sách giáo viên chờ duyệt'}
                     />
                 </ListItemButton>
-                <ListItemButton component={Link} to="/home/layoutManagerQuestion">
-                    <ListItemIcon>
-                        <LibraryBooksIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary={"Thư viện của tôi"}/>
-                </ListItemButton>
+                {/*<ListItemButton component={Link} to="/home/layoutManagerQuestion">*/}
+                {/*    <ListItemIcon>*/}
+                {/*        <LibraryBooksIcon/>*/}
+                {/*    </ListItemIcon>*/}
+                {/*    <ListItemText primary={"Thư viện của tôi"}/>*/}
+                {/*</ListItemButton>*/}
             </React.Fragment>)}
         {isTeacher && ( // nếu là teacher hoặc student thì hiển thị các ListItemButton sau
             <React.Fragment>
@@ -152,11 +152,11 @@ const MainListItems = ({sidebarOpen}) => {
                         // primaryTypographyProps={primaryTypographyProps}
                     />
                 </ListItemButton>
-                <ListItemButton component={Link} to="/home/layoutManagerQuestion">
+                <ListItemButton component={Link} to="/home/listResult">
                     <ListItemIcon>
                         <LibraryBooksIcon/>
                     </ListItemIcon>
-                    <ListItemText primary={"Thư viện của tôi"}
+                    <ListItemText primary={"Lịch sử thi"}
                         // primaryTypographyProps={primaryTypographyProps}
                     />
                 </ListItemButton>
