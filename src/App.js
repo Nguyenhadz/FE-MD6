@@ -41,6 +41,7 @@ import ListQuestion from "./page/question/ListQuestion";
 import CreateQuestionOneAnswer from "./page/question/CreateQuestion";
 import ShowAllResultByQuiz from "./page/result/ShowAllResultByQuiz";
 import DetailResult from "./page/result/DetailResult";
+import ListResultByUser from "./page/result/ListResultByUser";
 
 
 function App() {
@@ -94,6 +95,7 @@ function App() {
                         <Route path={'/home/doingQuiz/:idQuiz'} element={<TextMobileStepper/>}/>
                         <Route path={'/home/createQuiz'} element={<CreateNewQuiz/>}></Route>
                         <Route path={'/home/listQuiz'} element={<ListQuizCard/>}></Route>
+                        <Route path={'/home/listResult'} element={<ListResultByUser/>}></Route>
 
                      </Route>
                  )

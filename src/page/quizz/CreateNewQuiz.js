@@ -150,7 +150,6 @@ export default function CreateNewQuiz() {
             const updatedContent = [...selectedQuestionContent, question];
             await setSelectedQuestionContent(updatedContent);
             await formik.setFieldValue('questions', updatedContent).then(() => {
-                toast.success("Thêm câu hỏi thành công", [200]);
 
             })
         } else {

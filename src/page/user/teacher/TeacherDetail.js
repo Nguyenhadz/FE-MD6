@@ -1,8 +1,9 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteUser, getStudentById} from "../../../redux/service/UserService";
+import {deleteTeacher, deleteUser, getStudentById} from "../../../redux/service/UserService";
 import {useEffect} from "react";
 import ConfirmDeleteComponent from "../../../component/ConfirmDeleteComponent";
+import "../Detail.css"
 
 export default function TeacherDetail() {
     const {id} = useParams();
@@ -15,7 +16,7 @@ export default function TeacherDetail() {
         return state.users.user;
     })
     const handleDelete = () => {
-        dispatch(deleteUser(id))
+        dispatch(deleteTeacher(id))
         navigate('/home/showListTeacher')
     };
     const timeCreate = new Date(user.timeCreate);
@@ -27,7 +28,7 @@ export default function TeacherDetail() {
     const monthLast = lastTimeVisit.getMonth() + 1;
     const yearLast = lastTimeVisit.getFullYear();
     return (
-        <div className={" flex justify-center items-center h-full"}
+        <div className={"flex justify-center items-center h-full"}
              style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
             <div className="col-xl-6 col-md-12">
                 <div className="card user-card-full">

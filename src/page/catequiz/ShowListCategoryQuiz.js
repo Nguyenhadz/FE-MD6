@@ -114,7 +114,7 @@ export default function ShowListCategoryQuiz() {
         <div className="w-full h-full items-center"
              style={{backgroundImage: `url('https://cf.quizizz.com/img/q_og_marketing.png')`}}>
             <div className={"flex items-center justify-center mb-5"}>
-                <div className={"text-5xl font-extrabold font-sans text-orange-500 mt-2 ml-96 flex justify-center"}>
+                <div className={"text-4xl font-extrabold font-sans text-orange-500 mt-2 ml-96 flex justify-center"}>
                     Danh sách danh mục bài thi
                 </div>
                 <Link to={"/home/createCateQuiz"}>

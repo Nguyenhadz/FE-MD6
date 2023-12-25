@@ -33,6 +33,14 @@ export const deleteUser = createAsyncThunk(
         return res.data;
     }
 )
+export const deleteTeacher = createAsyncThunk(
+    'user/deleteTeacher',
+    async (id) => {
+        await customAxios.delete('/admin/users/' + id, axiosConfig);
+        const res = await customAxios.get('admin/teachers/active/sort', axiosConfig);
+        return res.data;
+    }
+)
 export const login = createAsyncThunk(
     'user/login',
     async (data) => {

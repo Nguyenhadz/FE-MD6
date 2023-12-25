@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {deleteUser, getStudentById} from "../../redux/service/UserService";
 import {useEffect} from "react";
 import ConfirmDeleteComponent from "../../component/ConfirmDeleteComponent";
+import "./Detail.css"
 
 export default function UserDetail() {
     const {id} = useParams();
@@ -15,7 +16,9 @@ export default function UserDetail() {
         return state.users.user;
     })
 
-    console.log()
+    const currentUser = useSelector((state)=>{
+        return state.users.currentUser;
+    })
     const handleDelete = () => {
         dispatch(deleteUser(id))
         navigate('/home/showListStudent')
@@ -78,12 +81,14 @@ export default function UserDetail() {
                                             </button>
                                         </div>
                                     </div>
-                                    <div className="col-sm-6">
+                                    {((currentUser.roles[0].authority === "ADMIN") || (currentUser.roles[0].name === "ADMIN")) && (
+                                        <div className="col-sm-6">
                                         <ConfirmDeleteComponent
                                             onDelete={handleDelete}
                                             id={id}
                                         />
                                     </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

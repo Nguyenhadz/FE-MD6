@@ -90,9 +90,10 @@ export default function TotalQuestion() {
                             >
                                 <div className={"flex justify-content-lg-start rounded w-full h-full"}>
                                     <div>
-                                        <Typography className={"font-sans font-bold hover:font-serif"}>
-                                            Câu {questionNumber}: &nbsp;{parser.parseFromString(question.content, 'text/html').body.firstChild?.textContent}
+                                        <Typography className={"font-sans font-bold text-left"}>
+                                            Câu {questionNumber}: &nbsp;
                                         </Typography>
+                                        <span dangerouslySetInnerHTML={{__html: question.content}}></span>
                                     </div>
 
                                 </div>
@@ -104,7 +105,7 @@ export default function TotalQuestion() {
                                         letterIndex++;
                                         return (
 
-                                            <Typography className="font-mono" key={answer?.id}
+                                            <Typography className="font-mono flex" key={answer?.id}
                                                         style={{
                                                             color: answer?.status === 1 ? "#1976d2" : "black",
                                                             textAlign: "left",
@@ -112,8 +113,7 @@ export default function TotalQuestion() {
 
                                                         }}>
                                                 {currentLetter}.
-                                                {parser.parseFromString(answer?.content, "text/html").body.firstChild
-                                                    ?.textContent}
+                                                <span dangerouslySetInnerHTML={{__html: answer.content}}></span>
                                             </Typography>
                                         );
                                     })}

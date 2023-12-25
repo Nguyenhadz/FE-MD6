@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
     approveTeacherPending,
-    changePassword,
+    changePassword, deleteTeacher,
     deleteUser,
     findStudentByMail,
     findStudentByName,
@@ -71,6 +71,9 @@ const userSlice = createSlice({
         })
         builder.addCase(changePassword.fulfilled, (state, action) => {
             toast.success("Đổi mật khẩu thành công", {})
+        })
+        builder.addCase(deleteTeacher.fulfilled, (state, action) => {
+            state.users = action.payload
         })
     }
 })
